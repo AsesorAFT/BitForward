@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitForward | Enterprise DeFi Platform</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/corporate.css">
+    <link rel="stylesheet" href="css/enterprise-dashboard.css">
+</head>
+<body>
+    <!-- Header Empresarial -->
+    <header class="bf-header">
+        <div class="bf-container">
+            <div class="bf-header-content">
+                <!-- Logo Corporativo -->
+                <div class="bf-brand">
+                    <a href="#" class="bf-logo">
+                        <div class="bf-logo-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="bf-logo-text">
+                            <div class="bf-logo-primary">BitForward</div>
+                            <div class="bf-logo-tagline">Financial Technologies</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Navegación Principal -->
+                <nav class="bf-nav">
+                    <a href="#dashboard" class="bf-nav-link active">
+                        <i class="fas fa-chart-area"></i>
+                        Dashboard
+                    </a>
+                    <a href="#contracts" class="bf-nav-link">
+                        <i class="fas fa-file-contract"></i>
+                        Contratos
+                    </a>
+                    <a href="#lending" class="bf-nav-link">
+                        <i class="fas fa-coins"></i>
+                        Préstamos
+                    </a>
+                    <a href="#insurance" class="bf-nav-link">
+                        <i class="fas fa-shield-alt"></i>
+                        Coberturas
+                    </a>
+                    <a href="#analytics" class="bf-nav-link">
+                        <i class="fas fa-analytics"></i>
+                        Analytics
+                    </a>
+                </nav>
+                
+                <!-- User Menu -->
+                <div class="bf-user-menu">
+                    <div class="bf-user-balance">
+                        <span class="bf-balance-label">Portfolio</span>
+                        <span class="bf-balance-value">$1,234,567.89</span>
+                    </div>
+                    <div class="bf-user-avatar">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User">
+                        <div class="bf-user-status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="bf-main">
+        <div class="bf-container">
+            
+            <!-- Hero Section -->
+            <section class="bf-hero">
+                <div class="bf-hero-content">
+                    <h1 class="bf-hero-title">
+                        Bienvenido a BitForward
+                        <span class="bf-hero-subtitle">La plataforma DeFi empresarial del futuro</span>
+                    </h1>
+                    <p class="bf-hero-description">
+                        Gestiona contratos forward, préstamos con colateral y coberturas de riesgo 
+                        con la seguridad y transparencia de la blockchain.
+                    </p>
+                    <div class="bf-hero-actions">
+                        <button class="bf-btn bf-btn-primary bf-btn-lg">
+                            <i class="fas fa-plus"></i>
+                            Crear Contrato
+                        </button>
+                        <button class="bf-btn bf-btn-secondary bf-btn-lg">
+                            <i class="fas fa-book"></i>
+                            Documentación
+                        </button>
+                    </div>
+                </div>
+                <div class="bf-hero-visual">
+                    <div class="bf-trading-widget">
+                        <div class="bf-widget-header">
+                            <h3>Mercados en Vivo</h3>
+                            <span class="bf-badge bf-badge-success">
+                                <i class="fas fa-circle"></i>
+                                En línea
+                            </span>
+                        </div>
+                        <div class="bf-price-ticker">
+                            <div class="bf-price-item">
+                                <span class="bf-asset">BTC/USD</span>
+                                <span class="bf-price positive">$67,234.56</span>
+                                <span class="bf-change positive">+2.34%</span>
+                            </div>
+                            <div class="bf-price-item">
+                                <span class="bf-asset">ETH/USD</span>
+                                <span class="bf-price positive">$3,456.78</span>
+                                <span class="bf-change positive">+1.23%</span>
+                            </div>
+                            <div class="bf-price-item">
+                                <span class="bf-asset">SOL/USD</span>
+                                <span class="bf-price negative">$156.78</span>
+                                <span class="bf-change negative">-0.45%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KPIs Dashboard -->
+            <section class="bf-kpis">
+                <div class="bf-kpis-grid">
+                    <div class="bf-metric">
+                        <div class="bf-metric-value">$24.5M</div>
+                        <div class="bf-metric-label">Total Value Locked</div>
+                        <div class="bf-metric-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            +15.2% este mes
+                        </div>
+                    </div>
+                    <div class="bf-metric">
+                        <div class="bf-metric-value">1,247</div>
+                        <div class="bf-metric-label">Contratos Activos</div>
+                        <div class="bf-metric-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            +8.7% esta semana
+                        </div>
+                    </div>
+                    <div class="bf-metric">
+                        <div class="bf-metric-value">98.9%</div>
+                        <div class="bf-metric-label">Uptime</div>
+                        <div class="bf-metric-change neutral">
+                            <i class="fas fa-check"></i>
+                            Operativo
+                        </div>
+                    </div>
+                    <div class="bf-metric">
+                        <div class="bf-metric-value">$156K</div>
+                        <div class="bf-metric-label">Ingresos Diarios</div>
+                        <div class="bf-metric-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            +23.1% vs ayer
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Productos Principales -->
+            <section class="bf-products">
+                <div class="bf-section-header">
+                    <h2>Productos Financieros</h2>
+                    <p>Explora nuestra suite completa de herramientas DeFi empresariales</p>
+                </div>
+                
+                <div class="bf-products-grid">
+                    <!-- Forward Contracts -->
+                    <div class="bf-product-card">
+                        <div class="bf-product-icon primary">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="bf-product-content">
+                            <h3>Contratos Forward</h3>
+                            <p>Asegura precios futuros para activos digitales con contratos inteligentes auditados.</p>
+                            <ul class="bf-product-features">
+                                <li><i class="fas fa-check"></i> Liquidación automática</li>
+                                <li><i class="fas fa-check"></i> Sin contrapartes centralizadas</li>
+                                <li><i class="fas fa-check"></i> Collateral dinámico</li>
+                            </ul>
+                        </div>
+                        <div class="bf-product-actions">
+                            <button class="bf-btn bf-btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Crear Forward
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lending Platform -->
+                    <div class="bf-product-card">
+                        <div class="bf-product-icon gold">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="bf-product-content">
+                            <h3>Préstamos Garantizados</h3>
+                            <p>Obtén liquidez instantánea usando tus cripto activos como colateral.</p>
+                            <ul class="bf-product-features">
+                                <li><i class="fas fa-check"></i> APR desde 3.5%</li>
+                                <li><i class="fas fa-check"></i> Liquidación en 24h</li>
+                                <li><i class="fas fa-check"></i> Múltiples colaterales</li>
+                            </ul>
+                        </div>
+                        <div class="bf-product-actions">
+                            <button class="bf-btn bf-btn-gold">
+                                <i class="fas fa-money-bill-wave"></i>
+                                Solicitar Préstamo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Insurance Coverage -->
+                    <div class="bf-product-card">
+                        <div class="bf-product-icon success">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="bf-product-content">
+                            <h3>Coberturas DeFi</h3>
+                            <p>Protege tus inversiones contra volatilidad y riesgos de smart contracts.</p>
+                            <ul class="bf-product-features">
+                                <li><i class="fas fa-check"></i> Cobertura hasta $10M</li>
+                                <li><i class="fas fa-check"></i> Claims automáticos</li>
+                                <li><i class="fas fa-check"></i> Primas competitivas</li>
+                            </ul>
+                        </div>
+                        <div class="bf-product-actions">
+                            <button class="bf-btn bf-btn-success">
+                                <i class="fas fa-umbrella"></i>
+                                Asegurar Portfolio
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activos Soportados -->
+            <section class="bf-assets">
+                <div class="bf-section-header">
+                    <h2>Activos Soportados</h2>
+                    <p>Trabaja con los principales activos digitales del ecosistema</p>
+                </div>
+                
+                <div class="bf-assets-grid">
+                    <div class="bf-asset-card">
+                        <div class="bf-asset-icon btc">₿</div>
+                        <div class="bf-asset-info">
+                            <h4>Bitcoin</h4>
+                            <span class="bf-asset-symbol">BTC</span>
+                        </div>
+                        <div class="bf-asset-price">
+                            <span class="bf-price">$67,234.56</span>
+                            <span class="bf-change positive">+2.34%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bf-asset-card">
+                        <div class="bf-asset-icon eth">Ξ</div>
+                        <div class="bf-asset-info">
+                            <h4>Ethereum</h4>
+                            <span class="bf-asset-symbol">ETH</span>
+                        </div>
+                        <div class="bf-asset-price">
+                            <span class="bf-price">$3,456.78</span>
+                            <span class="bf-change positive">+1.23%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bf-asset-card">
+                        <div class="bf-asset-icon usdt">₮</div>
+                        <div class="bf-asset-info">
+                            <h4>Tether USD</h4>
+                            <span class="bf-asset-symbol">USDT</span>
+                        </div>
+                        <div class="bf-asset-price">
+                            <span class="bf-price">$1.00</span>
+                            <span class="bf-change neutral">±0.00%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bf-asset-card">
+                        <div class="bf-asset-icon sol">◎</div>
+                        <div class="bf-asset-info">
+                            <h4>Solana</h4>
+                            <span class="bf-asset-symbol">SOL</span>
+                        </div>
+                        <div class="bf-asset-price">
+                            <span class="bf-price">$156.78</span>
+                            <span class="bf-change negative">-0.45%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer Empresarial -->
+    <footer class="bf-footer">
+        <div class="bf-container">
+            <div class="bf-footer-content">
+                <div class="bf-footer-brand">
+                    <div class="bf-logo">
+                        <div class="bf-logo-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="bf-logo-text">
+                            <div class="bf-logo-primary">BitForward</div>
+                            <div class="bf-logo-tagline">Financial Technologies</div>
+                        </div>
+                    </div>
+                    <p class="bf-footer-description">
+                        La plataforma DeFi empresarial que democratiza el acceso 
+                        a instrumentos financieros sofisticados.
+                    </p>
+                </div>
+                
+                <div class="bf-footer-links">
+                    <div class="bf-footer-section">
+                        <h4>Productos</h4>
+                        <ul>
+                            <li><a href="#">Contratos Forward</a></li>
+                            <li><a href="#">Préstamos</a></li>
+                            <li><a href="#">Coberturas</a></li>
+                            <li><a href="#">Analytics</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bf-footer-section">
+                        <h4>Desarrolladores</h4>
+                        <ul>
+                            <li><a href="#">API Docs</a></li>
+                            <li><a href="#">SDK</a></li>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Auditorías</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bf-footer-section">
+                        <h4>Empresa</h4>
+                        <ul>
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#">Carrera</a></li>
+                            <li><a href="#">Prensa</a></li>
+                            <li><a href="#">Contacto</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bf-footer-section">
+                        <h4>Soporte</h4>
+                        <ul>
+                            <li><a href="#">Centro de Ayuda</a></li>
+                            <li><a href="#">Status</a></li>
+                            <li><a href="#">Términos</a></li>
+                            <li><a href="#">Privacidad</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bf-footer-bottom">
+                <div class="bf-footer-legal">
+                    <p>&copy; 2025 BitForward Financial Technologies. Todos los derechos reservados.</p>
+                    <p class="bf-disclaimer">
+                        Los productos DeFi involucran riesgos significativos. Las inversiones pueden perder valor.
+                    </p>
+                </div>
+                <div class="bf-footer-social">
+                    <a href="#" class="bf-social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="bf-social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="bf-social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="bf-social-link">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
