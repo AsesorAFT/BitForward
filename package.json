@@ -1,0 +1,32 @@
+{
+  "name": "bitforward",
+  "version": "1.0.0",
+  "description": "BitForward - Forward Contracts on Bitcoin",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s . -l 3000",
+    "dev": "serve -s . -l 3000",
+    "build": "echo 'No build process needed for static site'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "bitcoin",
+    "forward-contracts",
+    "blockchain",
+    "defi",
+    "cryptocurrency"
+  ],
+  "author": "AsesorAFT",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AsesorAFT/BitForward.git"
+  },
+  "homepage": "https://github.com/AsesorAFT/BitForward",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
