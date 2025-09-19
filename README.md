@@ -69,4 +69,4 @@ BitForward generará ingresos a través de un modelo de comisiones transparente 
 Este es un proyecto ambicioso y en constante construcción. Si te interesa el futuro de las finanzas descentralizadas y quieres contribuir, ¡eres bienvenido!
 
 ---
-*Powered by AsesorAFT*
+*Powered by AsesorBF*
