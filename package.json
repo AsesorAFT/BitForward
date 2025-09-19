@@ -1,0 +1,67 @@
+{
+  "name": "bitforward",
+  "version": "2.0.0",
+  "description": "Advanced DeFi Forward Contracts Platform - Building the future of financial agreements on Bitcoin and other blockchains",
+  "main": "src/prototype.js",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8080",
+    "test": "node tests/run-tests.js",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "echo 'CSS build - placeholder for production minification'",
+    "build:js": "echo 'JS build - placeholder for production bundling'",
+    "lint": "echo 'Linting - placeholder for ESLint integration'",
+    "format": "echo 'Formatting - placeholder for Prettier integration'",
+    "deploy": "echo 'Deployment script - placeholder for production deployment'"
+  },
+  "keywords": [
+    "defi",
+    "forward-contracts",
+    "bitcoin",
+    "ethereum",
+    "solana",
+    "blockchain",
+    "smart-contracts",
+    "fintech",
+    "derivatives",
+    "crypto"
+  ],
+  "author": "AsesorAFT",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AsesorAFT/BitForward.git"
+  },
+  "homepage": "https://github.com/AsesorAFT/BitForward#readme",
+  "bugs": {
+    "url": "https://github.com/AsesorAFT/BitForward/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^2.0.0",
+    "jest": "^29.0.0"
+  },
+  "dependencies": {
+    "web3": "^4.0.0",
+    "@solana/web3.js": "^1.0.0",
+    "bitcoinjs-lib": "^6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "config": {
+    "supportedChains": ["bitcoin", "ethereum", "solana"],
+    "defaultNetwork": "mainnet",
+    "apiEndpoints": {
+      "bitcoin": "https://blockstream.info/api",
+      "ethereum": "https://api.etherscan.io/api",
+      "solana": "https://api.mainnet-beta.solana.com"
+    }
+  }
+}

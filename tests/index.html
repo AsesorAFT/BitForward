@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pruebas de BitForward</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 2rem;
+            background-color: #f8f9fa;
+        }
+        .test-result {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 6px;
+            border: 1px solid;
+        }
+        .test-pass {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .test-fail {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .test-summary {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pruebas de BitForward</h1>
+    <div class="test-summary" id="test-summary">
+        <h3>Resumen de Pruebas</h3>
+        <p>Ejecutando pruebas...</p>
+    </div>
+    <div id="test-results"></div>
+
+    <!-- Cargar dependencias -->
+    <script src="../src/prototype.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="test-config.js"></script>
+
+    <script>
+        // Suite de pruebas básicas
+        class TestSuite {
+            constructor() {
+                this.tests = [];
+                this.passed = 0;
+                this.failed = 0;
+            }
+
+            test(name, testFunction) {
+                this.tests.push({ name, testFunction });
+            }
+
+            run() {
+                console.log('Ejecutando pruebas...');
+                const resultsDiv = document.getElementById('test-results');
+                resultsDiv.innerHTML = '';
+
+                this.tests.forEach(test => {
+                    try {
+                        test.testFunction();
+                        this.passed++;
+                        this.addResult(test.name, true);
+                    } catch (error) {
+                        this.failed++;
+                        this.addResult(test.name, false, error.message);
+                    }
+                });
+
+                this.updateSummary();
+            }
+
+            addResult(name, passed, error = '') {
+                const resultsDiv = document.getElementById('test-results');
+                const div = document.createElement('div');
+                div.className = `test-result ${passed ? 'test-pass' : 'test-fail'}`;
+                div.innerHTML = `
+                    <strong>${passed ? '✅' : '❌'} ${name}</strong>
+                    ${error ? `<br><small>Error: ${error}</small>` : ''}
+                `;
+                resultsDiv.appendChild(div);
+            }
+
+            updateSummary() {
+                const summaryDiv = document.getElementById('test-summary');
+                const total = this.passed + this.failed;
+                summaryDiv.innerHTML = `
+                    <h3>Resumen de Pruebas</h3>
+                    <p><strong>Total:</strong> ${total} pruebas</p>
+                    <p><strong>Pasaron:</strong> ${this.passed}</p>
+                    <p><strong>Fallaron:</strong> ${this.failed}</p>
+                    <p><strong>Porcentaje de éxito:</strong> ${total > 0 ? Math.round((this.passed / total) * 100) : 0}%</p>
+                `;
+            }
+
+            assert(condition, message) {
+                if (!condition) {
+                    throw new Error(message || 'Assertion failed');
+                }
+            }
+        }
+
+        // Crear instancia de pruebas
+        const testSuite = new TestSuite();
+
+        // Pruebas de validación de direcciones
+        testSuite.test('Validar direcciones Bitcoin válidas', () => {
+            TEST_CONFIG.VALID_ADDRESSES.bitcoin.forEach(address => {
+                testSuite.assert(
+                    validateAddress(address, 'bitcoin'),
+                    `Dirección Bitcoin válida falló: ${address}`
+                );
+            });
+        });
+
+        testSuite.test('Validar direcciones Bitcoin inválidas', () => {
+            TEST_CONFIG.INVALID_ADDRESSES.bitcoin.forEach(address => {
+                testSuite.assert(
+                    !validateAddress(address, 'bitcoin'),
+                    `Dirección Bitcoin inválida pasó: ${address}`
+                );
+            });
+        });
+
+        testSuite.test('Validar direcciones Solana válidas', () => {
+            TEST_CONFIG.VALID_ADDRESSES.solana.forEach(address => {
+                testSuite.assert(
+                    validateAddress(address, 'solana'),
+                    `Dirección Solana válida falló: ${address}`
+                );
+            });
+        });
+
+        testSuite.test('Validar direcciones Solana inválidas', () => {
+            TEST_CONFIG.INVALID_ADDRESSES.solana.forEach(address => {
+                testSuite.assert(
+                    !validateAddress(address, 'solana'),
+                    `Dirección Solana inválida pasó: ${address}`
+                );
+            });
+        });
+
+        // Pruebas de validación de fechas
+        testSuite.test('Validar fechas futuras', () => {
+            const futureDate = new Date();
+            futureDate.setDate(futureDate.getDate() + 1);
+            const dateString = futureDate.toISOString().split('T')[0];
+            
+            testSuite.assert(
+                validateExecutionDate(dateString),
+                'Fecha futura debería ser válida'
+            );
+        });
+
+        testSuite.test('Invalidar fechas pasadas', () => {
+            const pastDate = new Date();
+            pastDate.setDate(pastDate.getDate() - 1);
+            const dateString = pastDate.toISOString().split('T')[0];
+            
+            testSuite.assert(
+                !validateExecutionDate(dateString),
+                'Fecha pasada debería ser inválida'
+            );
+        });
+
+        // Pruebas de la clase BitForward
+        testSuite.test('Crear instancia de BitForward', () => {
+            const bf = new BitForward();
+            testSuite.assert(bf instanceof BitForward, 'Debería crear una instancia válida');
+            testSuite.assert(Array.isArray(bf.projects), 'Debería inicializar array de proyectos');
+            testSuite.assert(bf.currentUser === null, 'Usuario inicial debería ser null');
+        });
+
+        testSuite.test('Login de usuario', () => {
+            const bf = new BitForward();
+            const result = bf.login('testuser', 'password123');
+            testSuite.assert(result === true, 'Login debería ser exitoso');
+            testSuite.assert(bf.currentUser.username === 'testuser', 'Usuario debería estar establecido');
+        });
+
+        testSuite.test('Crear contrato forward', () => {
+            const bf = new BitForward();
+            bf.login('testuser', 'password123');
+            
+            const contract = bf.createForwardContract(
+                'bitcoin',
+                0.1,
+                'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+                '2024-12-31',
+                50000
+            );
+            
+            testSuite.assert(contract !== null, 'Contrato debería crearse');
+            testSuite.assert(contract.blockchain === 'bitcoin', 'Blockchain debería ser bitcoin');
+            testSuite.assert(contract.amount === 0.1, 'Cantidad debería ser 0.1');
+        });
+
+        // Ejecutar todas las pruebas
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                testSuite.run();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
