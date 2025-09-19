@@ -1,0 +1,38 @@
+{
+  "name": "bitforward",
+  "version": "0.1.0",
+  "description": "Construyendo el futuro de los acuerdos financieros sobre Bitcoin",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/ tests/",
+    "lint:fix": "eslint src/ tests/ --fix"
+  },
+  "keywords": [
+    "bitcoin",
+    "forward-contracts",
+    "cryptocurrency",
+    "blockchain",
+    "fintech",
+    "defi"
+  ],
+  "author": "AsesorAFT",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AsesorAFT/BitForward.git"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "eslint": "^8.57.0"
+  },
+  "dependencies": {
+    "bitcoinjs-lib": "^6.1.5"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
