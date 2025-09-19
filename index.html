@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitForward - Contratos Forward sobre Bitcoin</title>
+    <meta name="description" content="Plataforma segura para crear y ejecutar contratos forward sobre Bitcoin - Construyendo el futuro de los acuerdos financieros">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>BitForward</h1>
+                <span class="brand-tagline">Forward Contracts on Bitcoin</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#create-contract" class="nav-link">Crear Contrato</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-primary">Conectar Wallet</button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Construyendo el futuro de los 
+                        <span class="accent">acuerdos financieros</span> 
+                        sobre Bitcoin
+                    </h1>
+                    <p class="hero-subtitle">
+                        Plataforma segura, transparente y fácil de usar para crear y ejecutar 
+                        contratos forward sobre activos digitales con la robustez de la red Bitcoin.
+                    </p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary btn-large">Comenzar Ahora</button>
+                        <button class="btn btn-secondary btn-large">Ver Demo</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="bitcoin-network">
+                        <div class="bitcoin-node active"></div>
+                        <div class="bitcoin-node"></div>
+                        <div class="bitcoin-node"></div>
+                        <div class="connection-line"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">¿Por qué BitForward?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Seguridad Total</h3>
+                        <p>Contratos ejecutados automáticamente con Bitcoin Script, sin intermediarios de confianza.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Ejecución Automática</h3>
+                        <p>Los contratos se ejecutan automáticamente en la fecha acordada, sin intervención manual.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Acceso Global</h3>
+                        <p>Disponible para individuos y empresas en toda América Latina, comenzando por México.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Transparente</h3>
+                        <p>Todos los términos del contrato son públicos y verificables en la blockchain.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Preview -->
+        <section id="dashboard" class="dashboard-preview">
+            <div class="container">
+                <h2 class="section-title">Gestiona tus Contratos</h2>
+                <div class="dashboard-container">
+                    <div class="dashboard-sidebar">
+                        <h3>Panel de Control</h3>
+                        <ul class="dashboard-nav">
+                            <li><a href="#" class="active">Mis Contratos</a></li>
+                            <li><a href="#">Crear Nuevo</a></li>
+                            <li><a href="#">Historial</a></li>
+                            <li><a href="#">Configuración</a></li>
+                        </ul>
+                    </div>
+                    <div class="dashboard-main">
+                        <div class="stats-row">
+                            <div class="stat-card">
+                                <h4>Contratos Activos</h4>
+                                <div class="stat-value">12</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Valor Total</h4>
+                                <div class="stat-value">2.45 BTC</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Próximo Vencimiento</h4>
+                                <div class="stat-value">15 días</div>
+                            </div>
+                        </div>
+                        <div class="contracts-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Contrato</th>
+                                        <th>Tipo</th>
+                                        <th>Valor</th>
+                                        <th>Vencimiento</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>FWD-001</td>
+                                        <td>Compra BTC</td>
+                                        <td>0.5 BTC</td>
+                                        <td>2024-03-15</td>
+                                        <td><span class="status active">Activo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FWD-002</td>
+                                        <td>Venta BTC</td>
+                                        <td>1.2 BTC</td>
+                                        <td>2024-04-20</td>
+                                        <td><span class="status pending">Pendiente</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contract Creation Form -->
+        <section id="create-contract" class="contract-form">
+            <div class="container">
+                <h2 class="section-title">Crear Nuevo Contrato Forward</h2>
+                <form class="contract-form-container">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="contract-type">Tipo de Contrato</label>
+                            <select id="contract-type" name="contractType" required>
+                                <option value="">Seleccionar tipo</option>
+                                <option value="buy">Compra Forward</option>
+                                <option value="sell">Venta Forward</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="asset">Activo</label>
+                            <select id="asset" name="asset" required>
+                                <option value="">Seleccionar activo</option>
+                                <option value="BTC">Bitcoin (BTC)</option>
+                                <option value="ETH">Ethereum (ETH)</option>
+                                <option value="USDT">Tether (USDT)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Cantidad</label>
+                            <input type="number" id="amount" name="amount" step="0.00000001" placeholder="0.00000000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Precio Forward</label>
+                            <input type="number" id="price" name="price" step="0.01" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expiry-date">Fecha de Vencimiento</label>
+                            <input type="date" id="expiry-date" name="expiryDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="counterparty">Contraparte (Opcional)</label>
+                            <input type="text" id="counterparty" name="counterparty" placeholder="Dirección Bitcoin o ID de usuario">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary">Vista Previa</button>
+                        <button type="submit" class="btn btn-primary">Crear Contrato</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Sobre BitForward</h2>
+                        <p>
+                            BitForward es la plataforma líder para contratos forward descentralizados sobre Bitcoin. 
+                            Utilizamos la tecnología más avanzada de Bitcoin Script para garantizar que los acuerdos 
+                            se ejecuten de forma automática, segura y sin intermediarios.
+                        </p>
+                        <h3>Nuestra Misión</h3>
+                        <p>
+                            Democratizar el acceso a herramientas financieras sofisticadas en América Latina, 
+                            comenzando por México, y construir el futuro de los contratos descentralizados sobre 
+                            la red más segura del mundo.
+                        </p>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Seguro</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Intermediarios</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Disponible</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>BitForward</h3>
+                    <p>Construyendo el futuro de los acuerdos financieros sobre Bitcoin.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Producto</h4>
+                        <ul>
+                            <li><a href="#">Características</a></li>
+                            <li><a href="#">Precios</a></li>
+                            <li><a href="#">API</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Soporte</h4>
+                        <ul>
+                            <li><a href="#">Documentación</a></li>
+                            <li><a href="#">Contacto</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Términos</a></li>
+                            <li><a href="#">Privacidad</a></li>
+                            <li><a href="#">Licencias</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AsesorAFT. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="src/js/main.js"></script>
+</body>
+</html>
