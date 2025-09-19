@@ -1,205 +1,132 @@
 # BitForward v2.0 🚀
 
-**La plataforma DeFi más avanzada para contratos forward descentralizados sobre Bitcoin, Ethereum y Solana.**
+**La plataforma DeFi más avanzada para contratos forward y productos financieros descentralizados sobre Bitcoin, Ethereum y Solana.**
 
 ---
 
 ## 🎯 **Visión 2025**
 
-BitForward revoluciona los contratos forward tradicionales llevándolos al ecosistema DeFi. Nuestra plataforma permite crear, ejecutar y gestionar contratos forward de manera completamente descentralizada, ofreciendo transparencia, seguridad y eficiencia sin precedentes.
+BitForward revoluciona los contratos financieros tradicionales llevándolos al ecosistema DeFi. Nuestra plataforma permite crear, ejecutar y gestionar contratos forward, préstamos colateralizados y otros derivados de manera completamente descentralizada, ofreciendo transparencia, seguridad y eficiencia sin precedentes.
+
+Nuestra visión es convertirnos en la empresa líder de finanzas programables en América Latina, democratizando el acceso a herramientas financieras sofisticadas y construyendo el futuro de los contratos inteligentes multi-cadena.
 
 ## ✨ **Características Principales**
 
 ### 🔗 **Multi-Blockchain Support**
-- **Bitcoin**: Contratos usando Bitcoin Script avanzado
-- **Ethereum**: Smart contracts en Solidity con integración EVM
-- **Solana**: Programas nativos en Rust para alta performance
+- **Bitcoin**: Contratos usando Bitcoin Script avanzado (Taproot, SegWit).
+- **Ethereum**: Smart contracts en Solidity con integración EVM y Layer 2.
+- **Solana**: Programas nativos en Rust para alta performance y bajo costo.
 
 ### 📊 **Dashboard Profesional**
-- Analytics en tiempo real
-- Gestión avanzada de portfolio
-- Métricas de riesgo integradas
-- Visualización interactiva de datos
+- Analytics en tiempo real y KPIs (TVL, Volumen, Contratos Activos).
+- Gestión avanzada de portfolio y posiciones.
+- Métricas de riesgo integradas y monitoreo de salud de préstamos.
+- Visualización interactiva de datos.
+
+### 💰 **Plataforma de Préstamos**
+- Préstamos colateralizados con LTV dinámico.
+- Múltiples activos para colateral y préstamo (BTC, ETH, SOL, stablecoins).
+- Liquidación automática y gestión de riesgos.
 
 ### 🛡️ **Seguridad Enterprise**
-- Auditorías automáticas de contratos
-- Sistema de validación multi-capa
-- Gestión descentralizada de colateral
-- Oracle system con feeds redundantes
-
-### ⚡ **Performance**
-- Ejecución automática de contratos
-- Fees optimizados por blockchain
-- Interfaz responsive y moderna
-- Sistema de notificaciones en tiempo real
+- Auditorías de smart contracts planificadas.
+- Sistema de validación multi-capa (Guardián de Contratos).
+- Gestión descentralizada de colateral.
+- Oracle system con feeds de precios redundantes.
 
 ## 🏗️ **Arquitectura del Sistema**
 
 ```
 BitForward v2.0 Architecture
 ├── Frontend Layer
-│   ├── Dashboard Avanzado (dashboard.html)
-│   ├── Sistema de Componentes (dashboard.js)
-│   └── UI/UX Responsive (dashboard.css)
-├── Core Engine
-│   ├── Gestión de Contratos (prototype.js)
-│   ├── Sistema de Eventos
-│   ├── Portfolio Management
-│   └── Risk Analytics
+│   ├── Dashboard Empresarial (enterprise.html)
+│   ├── Plataforma de Préstamos (lending.html)
+│   └── Sistema de Componentes y Estilos (corporate.css)
+├── Backend Layer (Node.js/Express)
+│   ├── API RESTful (Autenticación, Contratos, Préstamos)
+│   ├── Motor Financiero (Lógica de LTV, Intereses)
+│   └── Oráculo de Precios (Integración con APIs externas)
 ├── Blockchain Layer
-│   ├── Bitcoin Integration (blockchain.js)
-│   ├── Ethereum Smart Contracts
-│   ├── Solana Programs
-│   └── Cross-chain Bridge
-└── Infrastructure
-    ├── Oracle System
-    ├── Price Feeds
-    ├── Transaction Monitoring
-    └── Security Layer
+│   ├── Integración con Wallets (MetaMask, Phantom, etc.)
+│   ├── Smart Contracts (Solidity, Rust)
+│   └── Cross-chain Bridge (Futuro)
+└── Database Layer (SQLite/PostgreSQL)
+    ├── Esquema Relacional (Usuarios, Contratos, Préstamos)
+    └── Índices Optimizados para Consultas Financieras
 ```
 
 ## 🚀 **Quick Start**
 
-### Desarrollo Local
+### Desarrollo Local (Full-Stack)
+Se necesitan **dos** terminales para ejecutar el proyecto completo.
+
 ```bash
 # Clonar el repositorio
 git clone https://github.com/AsesorAFT/BitForward.git
 cd BitForward
 
-# Instalar dependencias (opcional para desarrollo avanzado)
+# Instalar dependencias
 npm install
 
-# Iniciar servidor de desarrollo
+# Terminal 1: Iniciar el Servidor Backend
+npm run server:dev
+
+# Terminal 2: Iniciar el Servidor Frontend
 npm run dev
 
 # Abrir en el navegador
-open http://localhost:8080/dashboard.html
+open http://localhost:5173/enterprise.html
 ```
-
-### Demo Credentials
-- **Usuario**: `demo`
-- **Contraseña**: `password123`
 
 ## 📋 **Roadmap 2025**
 
 ### ✅ **Q4 2024 - Foundation** (Completado)
-- [x] Core engine v2.0
-- [x] Multi-blockchain architecture
-- [x] Advanced dashboard
-- [x] Risk management system
+- [x] Arquitectura Full-Stack (Frontend, Backend, API).
+- [x] Identidad Corporativa "BitForward Financial Technologies".
+- [x] Sistema de Autenticación (BiT-ID) con JWT.
+- [x] Motor Financiero v1 para Préstamos (Backend).
 
 ### 🔥 **Q1 2025 - MVP Launch**
-- [ ] Mainnet deployment
-- [ ] Wallet integrations (MetaMask, Phantom, Hardware wallets)
-- [ ] Real blockchain contracts deployment
-- [ ] Security audits
+- [ ] Integración de Wallets (MetaMask, Phantom).
+- [ ] Despliegue de Smart Contracts en Testnet.
+- [ ] Conexión completa del Frontend con el Motor Financiero.
+- [ ] Auditorías de seguridad iniciales.
 
 ### 🚀 **Q2 2025 - Growth**
-- [ ] Mobile app (React Native)
-- [ ] Advanced trading features
-- [ ] Institutional API
-- [ ] Liquidity mining program
+- [ ] Lanzamiento en Mainnet.
+- [ ] Aplicación Móvil (React Native o PWA).
+- [ ] Funcionalidades de trading avanzadas.
+- [ ] API para clientes institucionales.
 
 ### 🌟 **Q3 2025 - Scale**
-- [ ] Cross-chain swaps
-- [ ] Derivatives marketplace
-- [ ] DAO governance token
-- [ ] Global expansion
-
-## 💼 **Business Model**
-
-### **Revenue Streams**
-1. **Transaction Fees**: 0.5% creation + 0.2% execution
-2. **Premium Features**: Advanced analytics, API access
-3. **Institutional Services**: White-label solutions
-4. **Liquidity Provision**: Market making services
-
-### **Value Proposition**
-- **Para Traders**: Herramientas DeFi avanzadas con máxima seguridad
-- **Para Instituciones**: Infraestructura enterprise-grade
-- **Para Desarrolladores**: APIs robustas y documentación completa
-- **Para el Ecosistema**: Innovación en productos financieros descentralizados
-
-## 🛠️ **Tecnologías**
-
-### **Frontend**
-- Vanilla JavaScript (Enterprise-grade)
-- CSS3 con animaciones avanzadas
-- Progressive Web App capabilities
-- Real-time WebSocket connections
-
-### **Blockchain**
-- **Bitcoin**: Script nativo, SegWit, Taproot
-- **Ethereum**: Solidity, EIP-1559, Layer 2 ready
-- **Solana**: Rust programs, high throughput
-
-### **Infrastructure**
-- Decentralized Oracle Network
-- IPFS for data storage
-- GraphQL APIs
-- Real-time analytics
-
-## 📊 **Métricas del Proyecto**
-
-```
-Líneas de Código:     ~2,500 (Optimizado para calidad)
-Archivos:             15+ (Arquitectura modular)
-Blockchains:          3 (Bitcoin, Ethereum, Solana)
-Test Coverage:        Implementación en curso
-Performance Score:    95+ (Lighthouse)
-Security Audits:      Planificado Q1 2025
-```
+- [ ] Swaps Cross-chain.
+- [ ] Mercado de derivados.
+- [ ] Token de Gobernanza y DAO.
+- [ ] Expansión global.
 
 ## 🤝 **Contribuir al Proyecto**
 
 ¡Buscamos colaboradores apasionados por DeFi y blockchain!
 
 ### **Áreas de Contribución**
-- **Development**: Frontend, Smart Contracts, APIs
-- **Security**: Auditorías, penetration testing
-- **Design**: UI/UX, branding, marketing materials
-- **Business**: Strategy, partnerships, tokenomics
+- **Development**: Frontend, Smart Contracts, APIs.
+- **Security**: Auditorías, penetration testing.
+- **Design**: UI/UX, branding.
+- **Business**: Estrategia, partnerships, tokenomics.
 
 ### **Cómo Contribuir**
-1. Fork el repositorio
-2. Crea tu feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add AmazingFeature'`)
-4. Push al branch (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 💰 **Tokenomics y Recompensas**
-
-### **BitForward Token (BFW)**
-- **Total Supply**: 100,000,000 BFW
-- **Distribution**:
-  - 40% - Community & Contributors
-  - 25% - Team & Advisors (4 year vesting)
-  - 20% - Ecosystem Development
-  - 15% - Treasury & Operations
-
-### **Contributor Rewards**
-- **Code Contributions**: 10-1000 BFW por PR merged
-- **Bug Reports**: 1-100 BFW según severidad
-- **Documentation**: 5-50 BFW por artículo
-- **Community**: 1-25 BFW por actividad
+1.  Haz un Fork del repositorio.
+2.  Crea tu rama de feature (`git checkout -b feature/AmazingFeature`).
+3.  Haz commit de tus cambios (`git commit -m 'Add some AmazingFeature'`).
+4.  Haz push a la rama (`git push origin feature/AmazingFeature`).
+5.  Abre un Pull Request.
 
 ## 📞 **Contacto y Comunidad**
 
 ### **Canales Oficiales**
 - **GitHub**: [@AsesorAFT/BitForward](https://github.com/AsesorAFT/BitForward)
-- **Twitter**: Coming soon
-- **Discord**: Community server planned
-- **Email**: Accepting collaboration proposals
-
-### **Para Colaboraciones**
-Si estás interesado en ser parte activa del proyecto BitForward y disfrutar de las recompensas del ecosistema, contacta a través de:
-- **Issues**: Para reportes técnicos
-- **Discussions**: Para ideas y propuestas
-- **Direct Contact**: Para partnerships empresariales
-
-## 📜 **Licencia**
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+- **Discussions**: Para ideas y propuestas.
+- **Issues**: Para reportes técnicos y bugs.
 
 ---
 
