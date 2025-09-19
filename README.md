@@ -6,7 +6,7 @@
 
 ## Misión
 
-Nuestra misión es ofrecer a individuos y empresas en México una plataforma segura, transparente y fácil de usar para crear y ejecutar contratos forward sobre activos digitales, protegiendo el valor de sus acuerdos futuros con la robustez de la red Bitcoin.
+Nuestra misión es ofrecer a individuos y empresas una plataforma segura, transparente y fácil de usar para crear y ejecutar contratos forward sobre activos digitales, protegiendo el valor de sus acuerdos futuros con la robustez de la red Bitcoin.
 
 ## Visión
 
