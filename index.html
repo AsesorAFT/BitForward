@@ -3,33 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitForward - Gestión de Proyectos</title>
+    <title>BitForward - Contratos Forward Descentralizados</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <h1>BitForward</h1>
         <nav>
-            <a href="#">Proyectos</a>
-            <a href="#">Tareas</a>
-            <a href="#">Equipo</a>
+            <a href="#new-contract">Nuevo Contrato</a>
+            <a href="#my-contracts">Mis Contratos</a>
+            <a href="#about">Acerca de</a>
         </nav>
     </header>
 
     <main>
-        <section id="projects">
-            <h2>Mis Proyectos</h2>
-            <div class="project-list">
-                <!-- Los proyectos se cargarán aquí dinámicamente -->
-                <p>Cargando proyectos...</p>
-            </div>
+        <section id="new-contract">
+            <h2>Crear Nuevo Contrato</h2>
+            <form id="contract-form" class="contract-form">
+                <div class="form-group">
+                    <label for="blockchain-select">Selecciona la Blockchain:</label>
+                    <select id="blockchain-select" name="blockchain" required>
+                        <option value="">-- Selecciona una opción --</option>
+                        <option value="bitcoin">Bitcoin (BTC)</option>
+                        <option value="solana">Solana (SOL)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contract-amount">Cantidad del Contrato:</label>
+                    <input type="number" id="contract-amount" name="amount" placeholder="Ejemplo: 0.1" step="0.001" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="counterparty">Dirección de la Contraparte:</label>
+                    <input type="text" id="counterparty" name="counterparty" placeholder="Dirección de la contraparte" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="execution-date">Fecha de Ejecución:</label>
+                    <input type="date" id="execution-date" name="executionDate" required>
+                </div>
+                
+                <button type="submit" class="create-btn">Crear Contrato</button>
+            </form>
         </section>
 
-        <section id="tasks">
-            <h2>Mis Tareas Pendientes</h2>
-            <div class="task-list">
-                <!-- Las tareas se cargarán aquí dinámicamente -->
-                <p>Cargando tareas...</p>
+        <section id="my-contracts">
+            <h2>Mis Contratos</h2>
+            <div class="contracts-list" id="contracts-list">
+                <!-- Los contratos se cargarán aquí dinámicamente -->
+                <p class="loading-message">Cargando contratos...</p>
             </div>
         </section>
     </main>
