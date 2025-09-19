@@ -14,7 +14,7 @@ Nuestra visión es convertirnos en la empresa líder de finanzas programables en
 
 ## ¿Qué son los Contratos Forward?
 
-Un contrato forward es un acuerdo privado para comprar o vender un activo a un precio pactado hoy, pero en una fecha futura. BitForward utiliza la tecnología de Bitcoin (Script) para que estos acuerdos se ejecuten de forma automática, segura y sin necesidad de intermediarios de confianza.
+Un contrato forward es un acuerdo privado para comprar o vender un activo a un precio pactado hoy, pero en una fecha futura. BitForward utiliza la tecnología de Bitcoin (Script) para que estos acuerdos se ejecuten de forma automática, segura y sin necesidad de intermediarios.
 
 ## Próximos Pasos
 
