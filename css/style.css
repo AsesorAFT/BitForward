@@ -61,3 +61,145 @@ footer {
     color: #777;
     font-size: 0.9rem;
 }
+
+/* Estilos para formularios */
+.contract-form {
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-group input:read-only {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 0.25rem;
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: #2980b9;
+}
+
+.btn-primary:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* Estilos para la lista de contratos */
+.contracts-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.contract-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease;
+}
+
+.contract-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contract-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.contract-id {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.contract-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-expired {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.contract-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.contract-detail {
+    padding: 0.5rem 0;
+}
+
+.contract-detail-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+
+.contract-detail-value {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.loading-message {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+}

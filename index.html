@@ -3,33 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitForward - Gestión de Proyectos</title>
+    <title>BitForward - Contratos Forward</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <h1>BitForward</h1>
         <nav>
-            <a href="#">Proyectos</a>
-            <a href="#">Tareas</a>
-            <a href="#">Equipo</a>
+            <a href="#crear-contrato">Crear Contrato</a>
+            <a href="#mis-contratos">Mis Contratos</a>
+            <a href="#ayuda">Ayuda</a>
         </nav>
     </header>
 
     <main>
-        <section id="projects">
-            <h2>Mis Proyectos</h2>
-            <div class="project-list">
-                <!-- Los proyectos se cargarán aquí dinámicamente -->
-                <p>Cargando proyectos...</p>
-            </div>
+        <section id="crear-contrato">
+            <h2>Crear Nuevo Contrato</h2>
+            <form id="form-nuevo-contrato" class="contract-form">
+                <div class="form-group">
+                    <label for="contract-id">ID del Contrato:</label>
+                    <input type="text" id="contract-id" name="contractId" readonly value="">
+                    <small>Se genera automáticamente al crear el contrato</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="counterpart-address">Dirección de la Contraparte:</label>
+                    <input type="text" id="counterpart-address" name="counterpartAddress" 
+                           placeholder="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" required>
+                    <small>Dirección Bitcoin de la contraparte</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Monto a Bloquear:</label>
+                    <input type="number" id="amount" name="amount" step="0.00000001" 
+                           placeholder="0.01000000" required>
+                    <small>Cantidad en BTC</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="expiry-date">Fecha de Vencimiento:</label>
+                    <input type="datetime-local" id="expiry-date" name="expiryDate" required>
+                    <small>Fecha y hora de vencimiento del contrato</small>
+                </div>
+                
+                <button type="submit" id="create-contract-btn" class="btn-primary" disabled>
+                    Crear Contrato
+                </button>
+            </form>
         </section>
 
-        <section id="tasks">
-            <h2>Mis Tareas Pendientes</h2>
-            <div class="task-list">
-                <!-- Las tareas se cargarán aquí dinámicamente -->
-                <p>Cargando tareas...</p>
+        <section id="mis-contratos">
+            <h2>Mis Contratos</h2>
+            <div class="contracts-list">
+                <!-- Los contratos se cargarán aquí dinámicamente -->
+                <p class="loading-message">Cargando contratos...</p>
             </div>
         </section>
     </main>
