@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitForward Dashboard - Advanced DeFi Forward Contracts</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="loading-screen">
+            <div class="loading-content">
+                <div class="loading-logo">BitForward</div>
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Initializing DeFi Forward Contracts Platform...</div>
+            </div>
+        </div>
+
+        <!-- Login Screen -->
+        <div id="login-screen" class="login-screen" style="display: none;">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>BitForward</h1>
+                    <p>Advanced DeFi Forward Contracts Platform</p>
+                </div>
+                
+                <form id="login-form" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">
+                        <span class="btn-text">Login to Dashboard</span>
+                        <span class="btn-spinner" style="display: none;"></span>
+                    </button>
+                </form>
+                
+                <div class="login-demo">
+                    <p>Demo credentials: <strong>demo</strong> / <strong>password123</strong></p>
+                </div>
+                
+                <div class="wallet-connect">
+                    <h3>Or connect with wallet</h3>
+                    <div class="wallet-buttons">
+                        <button class="wallet-btn" data-wallet="metamask">
+                            <span>🦊</span> MetaMask
+                        </button>
+                        <button class="wallet-btn" data-wallet="phantom">
+                            <span>👻</span> Phantom
+                        </button>
+                        <button class="wallet-btn" data-wallet="bitcoin">
+                            <span>₿</span> Bitcoin Wallet
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="main-dashboard" style="display: none;">
+            <!-- Dashboard content will be rendered here -->
+        </div>
+
+        <!-- Quick Actions FAB -->
+        <div id="fab-menu" class="fab-menu" style="display: none;">
+            <div class="fab-main">
+                <span>+</span>
+            </div>
+            <div class="fab-options">
+                <div class="fab-option" data-action="new-contract">
+                    <span>📄</span>
+                    <div class="fab-tooltip">New Contract</div>
+                </div>
+                <div class="fab-option" data-action="connect-wallet">
+                    <span>🔗</span>
+                    <div class="fab-tooltip">Connect Wallet</div>
+                </div>
+                <div class="fab-option" data-action="analytics">
+                    <span>📊</span>
+                    <div class="fab-tooltip">Analytics</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contract Creation Modal -->
+    <div id="contract-modal" class="bitforward-modal" style="display: none;">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <header class="modal-header">
+                <h3>Create Forward Contract</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <div class="modal-body">
+                <form id="advanced-contract-form" class="advanced-contract-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contract-blockchain">Blockchain</label>
+                            <select id="contract-blockchain" name="blockchain" required>
+                                <option value="">Select Blockchain</option>
+                                <option value="bitcoin">Bitcoin (BTC)</option>
+                                <option value="ethereum">Ethereum (ETH)</option>
+                                <option value="solana">Solana (SOL)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contract-type">Contract Type</label>
+                            <select id="contract-type" name="contractType" required>
+                                <option value="standard">Standard Forward</option>
+                                <option value="american">American Style</option>
+                                <option value="european">European Style</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contract-amount-adv">Amount</label>
+                            <input type="number" id="contract-amount-adv" name="amount" 
+                                   placeholder="0.00" step="0.0001" min="0" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contract-strike">Strike Price (USD)</label>
+                            <input type="number" id="contract-strike" name="strikePrice" 
+                                   placeholder="45000" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contract-counterparty-adv">Counterparty Address</label>
+                        <input type="text" id="contract-counterparty-adv" name="counterparty" 
+                               placeholder="Enter counterparty wallet address" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contract-execution-adv">Execution Date</label>
+                            <input type="date" id="contract-execution-adv" name="executionDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contract-collateral">Collateral (%)</label>
+                            <input type="number" id="contract-collateral" name="collateral" 
+                                   placeholder="10" min="0" max="100" value="10">
+                        </div>
+                    </div>
+                    
+                    <div class="contract-preview" id="contract-preview" style="display: none;">
+                        <h4>Contract Preview</h4>
+                        <div class="preview-content"></div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="preview-btn">Preview</button>
+                        <button type="submit" class="btn-primary">Create Contract</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification System -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- Scripts -->
+    <script src="src/prototype.js"></script>
+    <script src="src/blockchain.js"></script>
+    <script src="src/dashboard.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        // Advanced Dashboard Application
+        class BitForwardApp {
+            constructor() {
+                this.dashboard = null;
+                this.blockchain = null;
+                this.oracle = null;
+                this.currentScreen = 'loading';
+                this.initialize();
+            }
+
+            async initialize() {
+                console.log('🚀 Initializing BitForward App v2.0');
+                
+                // Initialize services
+                this.blockchain = new BlockchainIntegration();
+                this.oracle = new BitForwardOracle();
+                
+                // Setup event listeners
+                this.setupEventListeners();
+                
+                // Show login after loading
+                setTimeout(() => {
+                    this.showLogin();
+                }, 2000);
+            }
+
+            setupEventListeners() {
+                // Login form
+                document.getElementById('login-form').addEventListener('submit', (e) => {
+                    this.handleLogin(e);
+                });
+
+                // Wallet connection buttons
+                document.querySelectorAll('.wallet-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.handleWalletConnect(e.target.dataset.wallet);
+                    });
+                });
+
+                // FAB menu
+                document.querySelector('.fab-main').addEventListener('click', () => {
+                    this.toggleFABMenu();
+                });
+
+                document.querySelectorAll('.fab-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        this.handleFABAction(e.target.closest('.fab-option').dataset.action);
+                    });
+                });
+
+                // Contract form
+                document.getElementById('advanced-contract-form').addEventListener('submit', (e) => {
+                    this.handleAdvancedContractSubmission(e);
+                });
+
+                document.getElementById('preview-btn').addEventListener('click', () => {
+                    this.previewContract();
+                });
+
+                // Modal close handlers
+                document.querySelectorAll('.modal-close, .modal-backdrop').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('modal-close') || 
+                            e.target.classList.contains('modal-backdrop')) {
+                            this.closeModal();
+                        }
+                    });
+                });
+
+                // Real-time form updates
+                document.getElementById('contract-blockchain').addEventListener('change', () => {
+                    this.updateContractForm();
+                });
+            }
+
+            showLogin() {
+                document.getElementById('loading-screen').style.display = 'none';
+                document.getElementById('login-screen').style.display = 'flex';
+                this.currentScreen = 'login';
+            }
+
+            async handleLogin(event) {
+                event.preventDefault();
+                
+                const formData = new FormData(event.target);
+                const username = formData.get('username');
+                const password = formData.get('password');
+
+                const loginBtn = event.target.querySelector('.login-btn');
+                const btnText = loginBtn.querySelector('.btn-text');
+                const btnSpinner = loginBtn.querySelector('.btn-spinner');
+
+                // Show loading
+                btnText.style.display = 'none';
+                btnSpinner.style.display = 'inline-block';
+                loginBtn.disabled = true;
+
+                try {
+                    const result = await bitForward.login(username, password);
+                    
+                    if (result.success) {
+                        this.showNotification('Login successful! Welcome to BitForward Dashboard', 'success');
+                        setTimeout(() => {
+                            this.showDashboard();
+                        }, 1000);
+                    } else {
+                        throw new Error(result.error);
+                    }
+                } catch (error) {
+                    this.showNotification(`Login failed: ${error.message}`, 'error');
+                } finally {
+                    btnText.style.display = 'inline';
+                    btnSpinner.style.display = 'none';
+                    loginBtn.disabled = false;
+                }
+            }
+
+            async handleWalletConnect(walletType) {
+                try {
+                    this.showNotification(`Connecting to ${walletType}...`, 'info');
+                    
+                    const blockchain = this.getBlockchainFromWallet(walletType);
+                    const connection = await this.blockchain.connectWallet(blockchain, walletType);
+                    
+                    if (connection.connected) {
+                        // Auto-login with wallet
+                        const loginResult = await bitForward.login(connection.address, 'wallet_auth');
+                        
+                        if (loginResult.success) {
+                            await bitForward.connectWallet(blockchain, connection.address);
+                            this.showNotification(`${walletType} connected successfully!`, 'success');
+                            
+                            setTimeout(() => {
+                                this.showDashboard();
+                            }, 1000);
+                        }
+                    }
+                } catch (error) {
+                    this.showNotification(`Failed to connect ${walletType}: ${error.message}`, 'error');
+                }
+            }
+
+            getBlockchainFromWallet(walletType) {
+                const mapping = {
+                    'metamask': 'ethereum',
+                    'phantom': 'solana',
+                    'bitcoin': 'bitcoin'
+                };
+                return mapping[walletType] || 'ethereum';
+            }
+
+            showDashboard() {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-dashboard').style.display = 'block';
+                document.getElementById('fab-menu').style.display = 'block';
+                
+                // Initialize dashboard
+                this.dashboard = new BitForwardDashboard(bitForward);
+                this.dashboard.renderDashboard('main-dashboard');
+                
+                this.currentScreen = 'dashboard';
+            }
+
+            toggleFABMenu() {
+                const fabMenu = document.getElementById('fab-menu');
+                fabMenu.classList.toggle('active');
+            }
+
+            handleFABAction(action) {
+                switch (action) {
+                    case 'new-contract':
+                        this.openContractModal();
+                        break;
+                    case 'connect-wallet':
+                        this.showWalletOptions();
+                        break;
+                    case 'analytics':
+                        this.showAnalytics();
+                        break;
+                }
+                this.toggleFABMenu();
+            }
+
+            openContractModal() {
+                document.getElementById('contract-modal').style.display = 'flex';
+                this.updateMinDate();
+            }
+
+            closeModal() {
+                document.querySelectorAll('.bitforward-modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+
+            updateMinDate() {
+                const today = new Date();
+                const tomorrow = new Date(today);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                
+                const dateInput = document.getElementById('contract-execution-adv');
+                dateInput.min = tomorrow.toISOString().split('T')[0];
+            }
+
+            updateContractForm() {
+                const blockchain = document.getElementById('contract-blockchain').value;
+                const amountInput = document.getElementById('contract-amount-adv');
+                
+                if (blockchain && bitForward.config.minContractAmount[blockchain]) {
+                    amountInput.min = bitForward.config.minContractAmount[blockchain];
+                    amountInput.placeholder = `Min: ${bitForward.config.minContractAmount[blockchain]}`;
+                }
+            }
+
+            previewContract() {
+                const form = document.getElementById('advanced-contract-form');
+                const formData = new FormData(form);
+                
+                const contractData = {
+                    blockchain: formData.get('blockchain'),
+                    amount: parseFloat(formData.get('amount')),
+                    strikePrice: parseFloat(formData.get('strikePrice')),
+                    executionDate: formData.get('executionDate'),
+                    contractType: formData.get('contractType'),
+                    counterparty: formData.get('counterparty'),
+                    collateral: parseFloat(formData.get('collateral'))
+                };
+
+                const preview = document.getElementById('contract-preview');
+                const previewContent = preview.querySelector('.preview-content');
+                
+                const fees = bitForward.calculateFees(contractData.amount, contractData.blockchain);
+                const riskMetrics = bitForward.calculateRiskMetrics(contractData);
+                
+                previewContent.innerHTML = `
+                    <div class="preview-grid">
+                        <div class="preview-item">
+                            <label>Asset:</label>
+                            <span>${contractData.amount} ${contractData.blockchain.toUpperCase()}</span>
+                        </div>
+                        <div class="preview-item">
+                            <label>Strike Price:</label>
+                            <span>$${contractData.strikePrice.toLocaleString()}</span>
+                        </div>
+                        <div class="preview-item">
+                            <label>Expiry:</label>
+                            <span>${BitForwardUtils.calculateTimeToExpiry(contractData.executionDate)}</span>
+                        </div>
+                        <div class="preview-item">
+                            <label>Risk Level:</label>
+                            <span class="risk-badge ${riskMetrics.exposureLevel.toLowerCase()}">${riskMetrics.exposureLevel}</span>
+                        </div>
+                        <div class="preview-item">
+                            <label>Creation Fee:</label>
+                            <span>${fees.creation.toFixed(6)} ${contractData.blockchain.toUpperCase()}</span>
+                        </div>
+                        <div class="preview-item">
+                            <label>Total Fees:</label>
+                            <span>${fees.total.toFixed(6)} ${contractData.blockchain.toUpperCase()}</span>
+                        </div>
+                    </div>
+                `;
+                
+                preview.style.display = 'block';
+            }
+
+            async handleAdvancedContractSubmission(event) {
+                event.preventDefault();
+                
+                const formData = new FormData(event.target);
+                const contractData = {
+                    blockchain: formData.get('blockchain'),
+                    amount: parseFloat(formData.get('amount')),
+                    strikePrice: parseFloat(formData.get('strikePrice')),
+                    executionDate: formData.get('executionDate'),
+                    contractType: formData.get('contractType'),
+                    counterparty: formData.get('counterparty'),
+                    collateral: parseFloat(formData.get('collateral'))
+                };
+
+                const submitBtn = event.target.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Creating Contract...';
+
+                try {
+                    const contract = await bitForward.createForwardContract(contractData);
+                    
+                    this.showNotification(
+                        `Contract ${contract.id} created successfully!`, 
+                        'success'
+                    );
+                    
+                    this.closeModal();
+                    
+                    // Refresh dashboard
+                    if (this.dashboard) {
+                        this.dashboard.updateAllWidgets();
+                    }
+                    
+                    // Reset form
+                    event.target.reset();
+                    document.getElementById('contract-preview').style.display = 'none';
+                    
+                } catch (error) {
+                    this.showNotification(`Failed to create contract: ${error.message}`, 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Create Contract';
+                }
+            }
+
+            showWalletOptions() {
+                // Implementation for wallet options modal
+                this.showNotification('Wallet connection options coming soon!', 'info');
+            }
+
+            showAnalytics() {
+                const analytics = bitForward.generateAnalytics();
+                const analyticsModal = `
+                    <div class="bitforward-modal" style="display: flex;">
+                        <div class="modal-backdrop"></div>
+                        <div class="modal-content">
+                            <header class="modal-header">
+                                <h3>Analytics Overview</h3>
+                                <button class="modal-close">&times;</button>
+                            </header>
+                            <div class="modal-body">
+                                <div class="analytics-grid">
+                                    <div class="analytics-card">
+                                        <h4>Portfolio Performance</h4>
+                                        <p>Total P&L: <span class="${analytics.performance.totalPnL >= 0 ? 'profit' : 'loss'}">${BitForwardUtils.formatCurrency(analytics.performance.totalPnL)}</span></p>
+                                        <p>Win Rate: ${analytics.performance.winRate.toFixed(1)}%</p>
+                                    </div>
+                                    <div class="analytics-card">
+                                        <h4>Market Data</h4>
+                                        <p>Total Contracts: ${analytics.marketData.totalContracts}</p>
+                                        <p>Success Rate: ${analytics.marketData.successRate.toFixed(1)}%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.insertAdjacentHTML('beforeend', analyticsModal);
+            }
+
+            showNotification(message, type = 'info') {
+                const container = document.getElementById('notification-container');
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <span class="notification-icon">${this.getNotificationIcon(type)}</span>
+                        <span class="notification-message">${message}</span>
+                        <button class="notification-close">&times;</button>
+                    </div>
+                `;
+                
+                container.appendChild(notification);
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+                
+                // Close button
+                notification.querySelector('.notification-close').addEventListener('click', () => {
+                    notification.remove();
+                });
+            }
+
+            getNotificationIcon(type) {
+                const icons = {
+                    success: '✅',
+                    error: '❌',
+                    warning: '⚠️',
+                    info: 'ℹ️'
+                };
+                return icons[type] || 'ℹ️';
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            window.bitForwardApp = new BitForwardApp();
+        });
+    </script>
+
+    <style>
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-logo {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            margin: 0 0 0.5rem 0;
+            color: #2c3e50;
+            font-size: 2.5rem;
+        }
+
+        .login-form {
+            margin-bottom: 1.5rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            background: #2980b9;
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .login-demo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .wallet-connect {
+            text-align: center;
+        }
+
+        .wallet-connect h3 {
+            margin: 0 0 1rem 0;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .wallet-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .wallet-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .wallet-btn:hover {
+            border-color: #3498db;
+            background: #f8f9fa;
+        }
+
+        /* FAB Menu */
+        .fab-menu {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .fab-main {
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .fab-main:hover {
+            transform: scale(1.1);
+        }
+
+        .fab-options {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .fab-menu.active .fab-options {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .fab-option {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .fab-option:hover {
+            transform: scale(1.1);
+        }
+
+        .fab-tooltip {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .fab-option:hover .fab-tooltip {
+            opacity: 1;
+        }
+
+        /* Advanced Contract Form */
+        .advanced-contract-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .contract-preview {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .preview-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #2980b9;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        /* Notification System */
+        .notification-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .notification {
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            min-width: 300px;
+            max-width: 400px;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .notification-success {
+            border-left: 4px solid #27ae60;
+        }
+
+        .notification-error {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .notification-warning {
+            border-left: 4px solid #f39c12;
+        }
+
+        .notification-info {
+            border-left: 4px solid #3498db;
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            gap: 0.75rem;
+        }
+
+        .notification-message {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #7f8c8d;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .fab-menu {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .notification-container {
+                top: 1rem;
+                right: 1rem;
+                left: 1rem;
+            }
+            
+            .notification {
+                min-width: auto;
+            }
+        }
+    </style>
+</body>
+</html>
