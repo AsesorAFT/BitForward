@@ -1,41 +1,7 @@
 // js/main.js
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log("¡Interfaz de BitForward cargada y lista!");
-
-    // Simulando datos de contratos existentes
-    const mockContracts = [
-        {
-            id: 1,
-            blockchain: 'bitcoin',
-            amount: 0.05,
-            counterparty: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
-            executionDate: '2024-12-15',
-            status: 'activo',
-            createdAt: '2024-09-01'
-        },
-        {
-            id: 2,
-            blockchain: 'solana',
-            amount: 2.5,
-            counterparty: '9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM',
-            executionDate: '2024-11-30',
-            status: 'pendiente',
-            createdAt: '2024-09-10'
-        },
-        {
-            id: 3,
-            blockchain: 'bitcoin',
-            amount: 0.1,
-            counterparty: 'bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq',
-            executionDate: '2024-10-20',
-            status: 'completado',
-            createdAt: '2024-08-15'
-        }
-    ];
-
-    // Cargar y mostrar contratos existentes
-    loadContracts(mockContracts);
 
     // Configurar el formulario de creación de contratos
     const contractForm = document.getElementById('contract-form');
@@ -46,10 +12,24 @@ document.addEventListener('DOMContentLoaded', () => {
         setupRealTimeValidation(contractForm);
     }
 
+    // Cargar contratos desde la API
+    await loadContractsFromAPI();
+
+    // Verificar estado de la API
+    try {
+        const healthResponse = await window.bitForwardAPI.getHealth();
+        if (healthResponse.success) {
+            console.log('✅ API conectada exitosamente');
+        }
+    } catch (error) {
+        console.warn('⚠️ API no disponible, usando modo offline');
+        loadMockContracts(); // Fallback a datos simulados
+    }
+
     // Mostrar notificación de bienvenida
     if (typeof notificationSystem !== 'undefined') {
         notificationSystem.info(
-            'BitForward v2.0 cargado exitosamente',
+            'BitForward v2.0 con Motor de Persistencia cargado exitosamente',
             {
                 title: '🚀 Sistema Iniciado',
                 details: 'Todas las funcionalidades están disponibles',
@@ -58,6 +38,99 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 });
+
+/**
+ * Maneja el envío del formulario de creación de contratos
+ */
+async function handleContractSubmission(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    // Recopilar datos del contrato
+    const contractData = {
+        blockchain: formData.get('blockchain'),
+        amount: parseFloat(formData.get('amount')),
+        counterpartyAddress: formData.get('counterparty'),
+        executionDate: formData.get('executionDate'),
+        contractType: 'forward'
+    };
+
+    // Validación del lado del cliente
+    if (window.bitForwardValidator) {
+        const errors = bitForwardValidator.validateContract(contractData);
+        if (errors.length > 0) {
+            notificationSystem.error(
+                'Por favor corrige los errores en el formulario',
+                {
+                    title: '❌ Validación Fallida',
+                    details: `${errors.length} errores encontrados`,
+                    duration: 5000
+                }
+            );
+            
+            // Mostrar primer error
+            errors.forEach(error => {
+                notificationSystem.validation(error, { duration: 3000 });
+            });
+            return;
+        }
+    }
+
+    // Mostrar indicador de carga
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Creando contrato...';
+    submitButton.disabled = true;
+
+    try {
+        // Crear contrato usando la API
+        const response = await window.bitForwardAPI.createContract(contractData);
+        
+        if (response.success) {
+            // Éxito
+            notificationSystem.success(
+                '¡Contrato creado exitosamente!',
+                {
+                    title: '✅ Contrato Creado',
+                    details: `ID: ${response.data.id}`,
+                    duration: 5000
+                }
+            );
+
+            // Limpiar formulario
+            form.reset();
+            
+            // Limpiar validaciones visuales
+            clearAllFieldErrors(form);
+
+            // Recargar contratos
+            await loadContractsFromAPI();
+
+            // Mostrar URL para compartir
+            if (response.data.shareUrl) {
+                notificationSystem.info(
+                    `Enlace para compartir: ${response.data.shareUrl}`,
+                    {
+                        title: '� Contrato Compartible',
+                        duration: 8000
+                    }
+                );
+            }
+
+        } else {
+            throw new Error(response.message || 'Error al crear el contrato');
+        }
+
+    } catch (error) {
+        window.bitForwardAPI.handleError(error, 'creación de contrato');
+    } finally {
+        // Restaurar botón
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+    }
+}
 
 /**
  * Configura validación en tiempo real para el formulario
@@ -178,9 +251,113 @@ function clearFieldError(element) {
 }
 
 /**
- * Carga y muestra los contratos en la interfaz
+ * Carga contratos desde la API
  */
-function loadContracts(contracts) {
+async function loadContractsFromAPI() {
+    try {
+        const response = await window.bitForwardAPI.getContracts({
+            limit: 20,
+            sortBy: 'created_at',
+            sortOrder: 'DESC'
+        });
+
+        if (response.success) {
+            loadContracts(response.data.contracts);
+            
+            // Actualizar estadísticas si están disponibles
+            if (response.data.contracts.length > 0) {
+                await updateDashboardStats();
+            }
+        } else {
+            throw new Error(response.message || 'Error al cargar contratos');
+        }
+
+    } catch (error) {
+        console.error('Error cargando contratos:', error);
+        
+        // Fallback a datos mock
+        loadMockContracts();
+    }
+}
+
+/**
+ * Carga datos mock como fallback
+ */
+function loadMockContracts() {
+    const mockContracts = [
+        {
+            id: 'mock-1',
+            blockchain: 'bitcoin',
+            amount: 0.05,
+            counterparty_address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+            execution_date: '2024-12-15',
+            status: 'active',
+            created_at: '2024-09-01'
+        },
+        {
+            id: 'mock-2',
+            blockchain: 'ethereum', 
+            amount: 2.5,
+            counterparty_address: '0x742d35Cc6634C0532925a3b8D4e6b8f8Ca3EB3',
+            execution_date: '2024-11-30',
+            status: 'pending',
+            created_at: '2024-09-10'
+        },
+        {
+            id: 'mock-3',
+            blockchain: 'solana',
+            amount: 10.0,
+            counterparty_address: '9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM',
+            execution_date: '2024-10-20',
+            status: 'completed',
+            created_at: '2024-08-15'
+        }
+    ];
+
+    loadContracts(mockContracts);
+    
+    // Mostrar notificación de modo offline
+    if (window.notificationSystem) {
+        notificationSystem.warning(
+            'Modo offline activado - Usando datos de ejemplo',
+            {
+                title: '⚠️ Sin conexión a API',
+                duration: 4000
+            }
+        );
+    }
+}
+
+/**
+ * Actualiza las estadísticas del dashboard desde la API
+ */
+async function updateDashboardStats() {
+    try {
+        const response = await window.bitForwardAPI.getDashboardStats();
+        
+        if (response.success) {
+            const stats = response.data.overview;
+            updateContractsStats(
+                stats.totalContracts,
+                stats.activeContracts,
+                stats.completedContracts
+            );
+        }
+
+    } catch (error) {
+        console.error('Error actualizando estadísticas:', error);
+    }
+}
+
+/**
+ * Limpia todos los errores de campos en el formulario
+ */
+function clearAllFieldErrors(form) {
+    const fields = form.querySelectorAll('input, select');
+    fields.forEach(field => {
+        clearFieldError(field);
+    });
+}
     const contractsList = document.getElementById('contracts-list');
     
     if (!contracts || contracts.length === 0) {
@@ -199,6 +376,28 @@ function loadContracts(contracts) {
     const completedCount = contracts.filter(c => c.status === 'completado').length;
     updateContractsStats(contracts.length, activeCount, completedCount);
 
+/**
+ * Carga y muestra los contratos en la interfaz
+ */
+function loadContracts(contracts) {
+    const contractsList = document.getElementById('contracts-list');
+    
+    if (!contracts || contracts.length === 0) {
+        contractsList.innerHTML = `
+            <div class="no-contracts">
+                <p>📋 No tienes contratos creados aún.</p>
+                <p>¡Crea tu primer contrato usando el formulario de arriba!</p>
+            </div>
+        `;
+        updateContractsStats(0, 0, 0);
+        return;
+    }
+
+    // Actualizar estadísticas
+    const activeCount = contracts.filter(c => c.status === 'active').length;
+    const completedCount = contracts.filter(c => c.status === 'completed').length;
+    updateContractsStats(contracts.length, activeCount, completedCount);
+
     const contractsHTML = contracts.map(contract => `
         <div class="contract-card" data-contract-id="${contract.id}">
             <div class="contract-header">
@@ -207,12 +406,12 @@ function loadContracts(contracts) {
             </div>
             <div class="contract-details">
                 <p><strong>💰 Cantidad:</strong> <span>${contract.amount} ${contract.blockchain === 'bitcoin' ? 'BTC' : contract.blockchain === 'ethereum' ? 'ETH' : 'SOL'}</span></p>
-                <p><strong>👤 Contraparte:</strong> <span class="address-short">${shortenAddress(contract.counterparty)}</span></p>
-                <p><strong>📅 Ejecución:</strong> <span>${formatDate(contract.executionDate)}</span></p>
-                <p><strong>📝 Creado:</strong> <span>${formatDate(contract.createdAt)}</span></p>
+                <p><strong>👤 Contraparte:</strong> <span class="address-short">${shortenAddress(contract.counterparty_address || contract.counterparty)}</span></p>
+                <p><strong>📅 Ejecución:</strong> <span>${formatDate(contract.execution_date || contract.executionDate)}</span></p>
+                <p><strong>📝 Creado:</strong> <span>${formatDate(contract.created_at || contract.createdAt)}</span></p>
             </div>
             <div class="contract-actions">
-                <button class="btn-secondary" onclick="viewContractDetails(${contract.id})">
+                <button class="btn-secondary" onclick="viewContractDetails('${contract.id}')">
                     Ver Detalles
                 </button>
             </div>
