@@ -1,44 +1,27 @@
-// Prototipo de BitForward
-// Fecha: 2025-09-19
+// Datos de ejemplo para simular una base de datos o una API
+const mockProjects = [
+  {
+    id: 1,
+    name: "Contrato de Suministro de Café",
+    description: "Acuerdo a 6 meses para la entrega de 1 tonelada de café a un precio fijo.",
+    status: "Activo"
+  },
+  {
+    id: 2,
+    name: "Acuerdo de Desarrollo de Software",
+    description: "Contrato para desarrollar una nueva app de trading para el Cliente Y.",
+    status: "Pendiente"
+  },
+  {
+    id: 3,
+    name: "Contrato de Arrendamiento de Maquinaria",
+    description: "Alquiler de equipo pesado para construcción por 3 meses.",
+    status: "Completado"
+  }
+];
 
-class BitForward {
-    constructor() {
-        this.projects = [];
-        this.currentUser = null;
-    }
-
-    // --- Métodos de Autenticación ---
-
-    login(username, password) {
-        // Lógica de autenticación simulada
-        if (username && password) {
-            this.currentUser = { username };
-            console.log(`Bienvenido, ${username}.`);
-            return true;
-        }
-        console.log("Credenciales incorrectas.");
-        return false;
-    }
-
-    logout() {
-        console.log(`Hasta luego, ${this.currentUser.username}.`);
-        this.currentUser = null;
-    }
-
-    // --- Métodos de Gestión de Proyectos ---
-
-    createProject(projectName, description) {
-        if (!this.currentUser) {
-            console.log("Error: Debes iniciar sesión para crear un proyecto.");
-            return null;
-        }
-        const project = {
-            id: Date.now(),
-            name: projectName,
-            description: description,
-            owner: this.currentUser.username,
-            tasks: [],
-            files: []
-        };
-        this.projects.push(project);
-        console.log(`Proyecto \
+const mockTasks = [
+    { id: 1, text: "Revisar borrador del contrato de café.", completed: false },
+    { id: 2, text: "Enviar propuesta final al Cliente Y.", completed: true },
+    { id: 3, text: "Confirmar recepción de maquinaria.", completed: false }
+];

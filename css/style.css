@@ -1,63 +1,130 @@
-/* Estilos Generales */
+/* Estilos generales del cuerpo */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 0;
     background-color: #f4f7f9;
     color: #333;
 }
 
+/* Contenedor principal para centrar contenido */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos del encabezado */
 header {
-    background-color: #fff;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid #e0e0e0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 header h1 {
-    color: #2c3e50;
     margin: 0;
+    font-size: 24px;
+    color: #0366d6;
 }
 
-nav a {
-    color: #555;
+header nav a {
+    margin-left: 20px;
     text-decoration: none;
-    margin-left: 1.5rem;
+    color: #555;
     font-weight: 500;
 }
 
-nav a:hover {
-    color: #3498db;
+header nav a:hover {
+    color: #0366d6;
 }
 
+/* Estilos de las secciones principales */
 main {
-    padding: 2rem;
+    padding: 20px 0;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 section {
     background-color: #fff;
-    padding: 2rem;
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
 }
 
-h2 {
-    color: #2c3e50;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.5rem;
+section h2 {
     margin-top: 0;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #2c3e50;
 }
 
+/* Estilos para las tarjetas de proyecto (¡NUEVO!) */
+.project-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fcfcfc;
+    position: relative;
+}
+
+.project-card h4 {
+    margin: 0 0 10px 0;
+    color: #0366d6;
+}
+
+.project-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Estilos para los estados del proyecto (¡NUEVO!) */
+.status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.status-activo { background-color: #28a745; }
+.status-pendiente { background-color: #ffc107; color: #333; }
+.status-completado { background-color: #6c757d; }
+
+/* Estilos para las tareas (¡NUEVO!) */
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.task-item.completed label {
+    text-decoration: line-through;
+    color: #888;
+}
+
+/* Estilos del pie de página */
 footer {
     text-align: center;
-    padding: 1.5rem;
-    margin-top: 2rem;
-    color: #777;
-    font-size: 0.9rem;
+    padding: 20px;
+    font-size: 14px;
+    color: #888;
 }
