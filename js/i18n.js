@@ -445,7 +445,7 @@ style.textContent = `
     
     .language-selector.login-language {
         position: absolute;
-        top: 1rem;
+        bottom: 1rem;
         right: 1rem;
         margin: 0;
         z-index: 10;

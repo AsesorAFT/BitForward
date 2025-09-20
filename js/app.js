@@ -148,27 +148,43 @@ class BitForwardApp {
         loginBtn.disabled = true;
 
         try {
-            const response = await this.apiCall('/auth/login', 'POST', {
-                username,
-                password
-            });
+            // Simular autenticación local para demo
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Simular delay
             
-            if (response.success) {
-                // Guardar tokens
-                localStorage.setItem('bitforward_token', response.data.tokens.accessToken);
-                localStorage.setItem('bitforward_refresh_token', response.data.tokens.refreshToken);
+            // Validar credenciales de demo
+            if ((username === 'demo' && password === 'password123') || 
+                (username === 'admin' && password === 'admin123') ||
+                (username.length >= 3 && password.length >= 6)) {
                 
-                this.user = response.data.user;
-                this.showNotification('Login successful! Welcome to BitForward Dashboard', 'success');
+                // Simular datos de usuario
+                this.user = {
+                    username: username,
+                    id: `user_${Date.now()}`,
+                    wallets: {},
+                    permissions: ['basic'],
+                    loginTime: new Date().toISOString()
+                };
+                
+                // Guardar en localStorage
+                localStorage.setItem('bitforward_user', JSON.stringify(this.user));
+                localStorage.setItem('bitforward_token', 'demo_token_' + Date.now());
+                
+                const message = window.i18n ? 
+                    window.i18n.t('notification.login.success') : 
+                    '¡Inicio de sesión exitoso! Bienvenido al Panel de BitForward';
+                this.showNotification(message, 'success');
                 
                 setTimeout(() => {
                     this.showDashboard();
                 }, 1000);
             } else {
-                throw new Error(response.error || 'Login failed');
+                throw new Error('Credenciales incorrectas. Usa: demo/password123');
             }
         } catch (error) {
-            this.showNotification(`Login failed: ${error.message}`, 'error');
+            const message = window.i18n ? 
+                window.i18n.t('notification.login.failed') : 
+                'Error en el inicio de sesión';
+            this.showNotification(`${message}: ${error.message}`, 'error');
         } finally {
             btnText.style.display = 'inline';
             btnSpinner.style.display = 'none';
