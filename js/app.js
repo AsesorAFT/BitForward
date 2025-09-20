@@ -57,23 +57,33 @@ class BitForwardApp {
 
     async checkExistingAuth() {
         const token = localStorage.getItem('bitforward_token');
-        if (token) {
+        const userData = localStorage.getItem('bitforward_user');
+        
+        if (token && userData) {
             try {
-                const response = await this.apiCall('/auth/verify', 'GET', null, {
-                    'Authorization': `Bearer ${token}`
-                });
+                // Para demo, simplemente verificar que los datos existen localmente
+                this.user = JSON.parse(userData);
                 
-                if (response.success) {
-                    this.user = response.data.user;
+                // Verificar que el token no haya expirado (24 horas)
+                const tokenTime = parseInt(token.split('_')[2]);
+                const currentTime = Date.now();
+                const tokenAge = currentTime - tokenTime;
+                const twentyFourHours = 24 * 60 * 60 * 1000;
+                
+                if (tokenAge < twentyFourHours) {
+                    console.log('✅ Sesión válida encontrada para:', this.user.username);
                     this.showDashboard();
                     return;
                 }
             } catch (error) {
-                // Token inválido, limpiar storage
-                localStorage.removeItem('bitforward_token');
-                localStorage.removeItem('bitforward_refresh_token');
+                console.log('⚠️ Error al verificar sesión:', error);
             }
         }
+        
+        // Limpiar datos inválidos
+        localStorage.removeItem('bitforward_token');
+        localStorage.removeItem('bitforward_user');
+        localStorage.removeItem('bitforward_refresh_token');
     }
 
     setupEventListeners() {
@@ -194,35 +204,46 @@ class BitForwardApp {
 
     async handleWalletConnect(walletType) {
         try {
-            this.showNotification(`Connecting to ${walletType}...`, 'info');
+            const message = window.i18n ? 
+                window.i18n.t('notification.wallet.connecting') : 
+                'Conectando a';
+            this.showNotification(`${message} ${walletType}...`, 'info');
             
-            if (!this.blockchain) {
-                throw new Error('Blockchain service not available');
-            }
-
-            const blockchain = this.getBlockchainFromWallet(walletType);
-            const connection = await this.blockchain.connectWallet(blockchain, walletType);
+            // Simular conexión de wallet para demo
+            await new Promise(resolve => setTimeout(resolve, 2000));
             
-            if (connection.connected) {
-                // Auto-login with wallet
-                const loginResult = await this.apiCall('/auth/wallet-login', 'POST', {
-                    walletType,
-                    address: connection.address,
-                    signature: connection.signature
-                });
-                
-                if (loginResult.success) {
-                    localStorage.setItem('bitforward_token', loginResult.data.tokens.accessToken);
-                    this.user = loginResult.data.user;
-                    this.showNotification(`${walletType} connected successfully!`, 'success');
-                    
-                    setTimeout(() => {
-                        this.showDashboard();
-                    }, 1000);
-                }
-            }
+            // Simular wallet conectada exitosamente
+            this.user = {
+                username: `wallet_${walletType}`,
+                id: `wallet_${Date.now()}`,
+                wallets: {
+                    [walletType]: {
+                        address: '0x' + Math.random().toString(16).substr(2, 40),
+                        connected: true
+                    }
+                },
+                permissions: ['basic', 'wallet'],
+                loginTime: new Date().toISOString()
+            };
+            
+            // Guardar en localStorage
+            localStorage.setItem('bitforward_user', JSON.stringify(this.user));
+            localStorage.setItem('bitforward_token', 'wallet_token_' + Date.now());
+            
+            const successMessage = window.i18n ? 
+                window.i18n.t('notification.wallet.connected') : 
+                'conectado exitosamente';
+            this.showNotification(`${walletType} ${successMessage}!`, 'success');
+            
+            setTimeout(() => {
+                this.showDashboard();
+            }, 1000);
+            
         } catch (error) {
-            this.showNotification(`Failed to connect ${walletType}: ${error.message}`, 'error');
+            const errorMessage = window.i18n ? 
+                window.i18n.t('notification.wallet.failed') : 
+                'Error al conectar';
+            this.showNotification(`${errorMessage} ${walletType}: ${error.message}`, 'error');
         }
     }
 
@@ -260,55 +281,25 @@ class BitForwardApp {
         this.showNotification(message, 'error');
     }
 
-    // API utilities
+    // API utilities - simplified for demo mode
     async apiCall(endpoint, method = 'GET', data = null, headers = {}) {
-        const url = `${this.config.apiBaseUrl}${endpoint}`;
-        const token = localStorage.getItem('bitforward_token');
+        // Para modo demo, evitar llamadas reales a API
+        console.log(`🚫 API call blocked (demo mode): ${method} ${endpoint}`);
         
-        const config = {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-                ...headers
-            }
+        // Simular respuestas según el endpoint
+        if (endpoint.includes('/auth/verify')) {
+            throw new Error('Demo mode - no API verification needed');
+        }
+        
+        if (endpoint.includes('/auth/refresh')) {
+            throw new Error('Demo mode - token refresh not needed');
+        }
+        
+        // Respuesta por defecto para otros endpoints
+        return {
+            success: false,
+            error: 'Demo mode - API not available'
         };
-
-        if (token && !headers.Authorization) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-
-        if (data && (method === 'POST' || method === 'PUT')) {
-            config.body = JSON.stringify(data);
-        }
-
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), this.config.requestTimeout);
-        config.signal = controller.signal;
-
-        try {
-            const response = await fetch(url, config);
-            clearTimeout(timeoutId);
-            
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.message || `HTTP ${response.status}`);
-            }
-            
-            return await response.json();
-        } catch (error) {
-            clearTimeout(timeoutId);
-            
-            if (error.name === 'AbortError') {
-                throw new Error('Request timeout');
-            }
-            
-            // Handle token expiration
-            if (error.message.includes('401') || error.message.includes('token')) {
-                await this.handleTokenExpiration();
-            }
-            
-            throw error;
-        }
     }
 
     async handleTokenExpiration() {
