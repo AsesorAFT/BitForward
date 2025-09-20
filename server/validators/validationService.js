@@ -43,15 +43,8 @@ class ValidationService {
                 return value;
             }, 'Solana address validation'),
 
-            // Validador de blockchain dinámico
-            blockchainAddress: Joi.alternatives().conditional('blockchain', {
-                switch: [
-                    { is: 'bitcoin', then: this.bitcoinAddress },
-                    { is: 'ethereum', then: this.ethereumAddress },
-                    { is: 'solana', then: this.solanaAddress }
-                ],
-                otherwise: Joi.string().required()
-            }),
+            // Validador de blockchain dinámico (simplificado)
+            blockchainAddress: Joi.string().required(),
 
             // Validador de fecha futura
             futureDate: Joi.date().custom((value, helpers) => {

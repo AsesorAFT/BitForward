@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BitForward | Proyecto Fénix - Enterprise DeFi Platform</title>
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="icon" type="image/svg+xml" href="/icons/bitforward.svg">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,13 +24,11 @@
             <header class="text-center mb-16">
                 <div class="flex items-center justify-center mb-6">
                     <div class="bg-gradient-to-r from-bf-secondary to-yellow-400 p-3 rounded-2xl shadow-crypto-glow">
-                        <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
+                        <img src="assets/logo.svg" alt="BitForward" class="w-12 h-12 text-white" style="filter: brightness(0) invert(1);">
                     </div>
                 </div>
                 <h1 class="text-6xl font-bold bg-gradient-to-r from-white via-bf-secondary to-white bg-clip-text text-transparent mb-4">
-                    BitForward
+                    <span class="bitforward-brand animated size-2xl">BitForward</span>
                 </h1>
                 <h2 class="text-2xl font-light text-blue-200 mb-4">
                     Proyecto Fénix
@@ -197,6 +196,7 @@
         </div>
     </div>
 
+    <script src="js/logo-manager.js"></script>
     <script type="module">
         // Inicialización del Proyecto Fénix
         console.log('🔥 Proyecto Fénix - BitForward Phoenix UI iniciado');

@@ -60,39 +60,43 @@ class BitForwardDashboard {
     }
 
     generateDashboardHTML() {
+        const i18n = window.i18n;
         return `
             <div class="bitforward-dashboard">
                 <header class="dashboard-header">
-                    <h1>BitForward Dashboard</h1>
+                    <div class="dashboard-logo">
+                        <img src="assets/logo.svg" alt="BitForward" class="logo-icon">
+                        <h1 data-i18n="dashboard.title" class="bitforward-brand animated size-lg">${i18n ? i18n.t('dashboard.title') : 'BitForward Dashboard'}</h1>
+                    </div>
                     <div class="user-info">
                         <span class="user-name">${this.bf.currentUser?.username || 'No autenticado'}</span>
-                        <span class="last-update" id="last-update">Actualizado: ${new Date().toLocaleTimeString()}</span>
+                        <span class="last-update" id="last-update">${i18n ? i18n.t('user.updated') : 'Actualizado'}: ${new Date().toLocaleTimeString()}</span>
                     </div>
                 </header>
                 
                 <div class="dashboard-grid">
                     <div class="widget-container" id="portfolio-widget">
-                        <h3>Portfolio Overview</h3>
+                        <h3 data-i18n="portfolio.overview">${i18n ? i18n.t('portfolio.overview') : 'Portfolio Overview'}</h3>
                         <div class="widget-content" id="portfolio-content"></div>
                     </div>
                     
                     <div class="widget-container" id="performance-widget">
-                        <h3>Performance</h3>
+                        <h3 data-i18n="performance.title">${i18n ? i18n.t('performance.title') : 'Performance'}</h3>
                         <div class="widget-content" id="performance-content"></div>
                     </div>
                     
                     <div class="widget-container" id="risk-widget">
-                        <h3>Risk Metrics</h3>
+                        <h3 data-i18n="risk.metrics">${i18n ? i18n.t('risk.metrics') : 'Risk Metrics'}</h3>
                         <div class="widget-content" id="risk-content"></div>
                     </div>
                     
                     <div class="widget-container" id="market-widget">
-                        <h3>Market Overview</h3>
+                        <h3 data-i18n="market.overview">${i18n ? i18n.t('market.overview') : 'Market Overview'}</h3>
                         <div class="widget-content" id="market-content"></div>
                     </div>
                     
                     <div class="widget-container full-width" id="contracts-widget">
-                        <h3>Active Contracts</h3>
+                        <h3 data-i18n="contracts.active">${i18n ? i18n.t('contracts.active') : 'Active Contracts'}</h3>
                         <div class="widget-content" id="contracts-content"></div>
                     </div>
                 </div>
@@ -212,23 +216,25 @@ class PortfolioWidget {
     render(container) {
         if (!this.data) this.update();
         
+        const i18n = window.i18n;
+        
         container.innerHTML = `
             <div class="portfolio-summary">
                 <div class="metric">
                     <span class="value">${this.data.contracts}</span>
-                    <span class="label">Total Contracts</span>
+                    <span class="label" data-i18n="portfolio.total.contracts">${i18n ? i18n.t('portfolio.total.contracts') : 'Total Contracts'}</span>
                 </div>
                 <div class="metric">
                     <span class="value">${this.data.active}</span>
-                    <span class="label">Active</span>
+                    <span class="label" data-i18n="portfolio.active">${i18n ? i18n.t('portfolio.active') : 'Active'}</span>
                 </div>
                 <div class="metric">
                     <span class="value ${this.data.totalPnL >= 0 ? 'positive' : 'negative'}">${BitForwardUtils.formatCurrency(this.data.totalPnL)}</span>
-                    <span class="label">Total P&L</span>
+                    <span class="label" data-i18n="portfolio.total.pnl">${i18n ? i18n.t('portfolio.total.pnl') : 'Total P&L'}</span>
                 </div>
                 <div class="metric">
-                    <span class="value risk-${this.data.riskExposure.toLowerCase()}">${this.data.riskExposure}</span>
-                    <span class="label">Risk Level</span>
+                    <span class="value risk-${this.data.riskExposure.toLowerCase()}">${i18n ? i18n.t(`portfolio.risk.${this.data.riskExposure.toLowerCase()}`) : this.data.riskExposure}</span>
+                    <span class="label" data-i18n="portfolio.risk.level">${i18n ? i18n.t('portfolio.risk.level') : 'Risk Level'}</span>
                 </div>
             </div>
             <div class="blockchain-breakdown">
@@ -258,19 +264,20 @@ class PerformanceWidget {
         if (!this.analytics) this.update();
         
         const perf = this.analytics.performance;
+        const i18n = window.i18n;
         
         container.innerHTML = `
             <div class="performance-metrics">
                 <div class="metric-card">
-                    <h4>Win Rate</h4>
+                    <h4 data-i18n="performance.win.rate">${i18n ? i18n.t('performance.win.rate') : 'Win Rate'}</h4>
                     <span class="big-number">${perf.winRate.toFixed(1)}%</span>
                 </div>
                 <div class="metric-card">
-                    <h4>Avg Holding Period</h4>
-                    <span class="big-number">${perf.avgHoldingPeriod.toFixed(0)} days</span>
+                    <h4 data-i18n="performance.avg.holding">${i18n ? i18n.t('performance.avg.holding') : 'Avg Holding Period'}</h4>
+                    <span class="big-number">${perf.avgHoldingPeriod.toFixed(0)} ${i18n ? i18n.t('performance.days') : 'days'}</span>
                 </div>
                 <div class="metric-card">
-                    <h4>Success Rate</h4>
+                    <h4 data-i18n="performance.success.rate">${i18n ? i18n.t('performance.success.rate') : 'Success Rate'}</h4>
                     <span class="big-number">${this.analytics.marketData.successRate.toFixed(1)}%</span>
                 </div>
             </div>

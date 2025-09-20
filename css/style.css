@@ -46,6 +46,21 @@
     --transition-slow: 0.5s ease;
 }
 
+/* ===== LOGO STYLES ===== */
+.logo-icon {
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo-icon:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 8px rgba(74, 144, 226, 0.3));
+}
+
+.bf-logo-icon .logo-icon {
+    width: 32px;
+    height: 32px;
+}
+
 /* ===== ESTILOS GENERALES ===== */
 * {
     box-sizing: border-box;

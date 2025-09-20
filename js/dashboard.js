@@ -23,6 +23,11 @@ class BitForwardEnterprise {
             console.log('ℹ️ Usuario no autenticado, funcionalidad limitada');
         }
         
+        // Esperar a que el sistema de i18n esté listo
+        if (window.i18n) {
+            window.i18n.translatePage();
+        }
+        
         // Inicializar conexiones
         await this.initializeAPI();
         this.initializeWebSocket();
@@ -379,7 +384,8 @@ class BitForwardEnterprise {
         
         // Verificar autenticación
         if (!this.isUserAuthenticated()) {
-            this.showNotification('Debes iniciar sesión para acceder a este producto', 'warning');
+            const message = window.i18n ? window.i18n.t('notification.login.required') : 'Debes iniciar sesión para acceder a este producto';
+            this.showNotification(message, 'warning');
             // Trigger login modal if auth system is available
             if (window.BitForwardAuth) {
                 window.BitForwardAuth.openModal('login-modal');
@@ -784,6 +790,10 @@ class BitForwardEnterprise {
     }
 
     getStatusText(status) {
+        if (window.i18n) {
+            return window.i18n.t(`status.${status}`) || status;
+        }
+        
         const statusMap = {
             'active': 'Activo',
             'pending': 'Pendiente',
