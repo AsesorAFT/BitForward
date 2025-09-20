@@ -15,6 +15,7 @@ const { ErrorFactory } = require('../errors/AppError');
 const { asyncHandler } = require('../middleware/errorHandler');
 const { 
     authenticateToken, 
+    authMiddleware,
     loginLimiter, 
     recordFailedAttempt, 
     clearFailedAttempts, 

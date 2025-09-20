@@ -24,7 +24,11 @@ class WalletUI {
         button.id = 'wallet-connect-btn';
         button.className = 'wallet-connect-btn';
         button.innerHTML = `
-            <span class="wallet-icon">👛</span>
+            <span class="wallet-icon">
+                <span style="font-size: 14px; margin-right: 2px;">₿</span>
+                <span style="font-size: 12px; margin-right: 2px;">Ξ</span>
+                <span style="font-size: 14px;">◎</span>
+            </span>
             <span class="wallet-text">Connect Wallet</span>
             <span class="wallet-status-indicator"></span>
         `;

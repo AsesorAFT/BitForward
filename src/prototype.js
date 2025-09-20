@@ -118,7 +118,10 @@ class BitForward {
         // Simulación - en producción sería una llamada a API/blockchain
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                if (username.length >= 3 && password.length >= 6) {
+                // Credenciales de demostración válidas
+                if ((username === 'demo' && password === 'password123') || 
+                    (username === 'admin' && password === 'admin123') ||
+                    (username.length >= 3 && password.length >= 6)) {
                     resolve({
                         username,
                         id: `user_${Date.now()}`,

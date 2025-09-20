@@ -20,8 +20,9 @@ const path = require('path');
 const contractRoutes = require('./routes/contracts');
 const statsRoutes = require('./routes/stats');
 const authRoutes = require('./routes/auth');
+const lendingRoutes = require('./routes/lending');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
-const rateLimiter = require('./middleware/rateLimiter');
+const { rateLimitMiddleware } = require('./middleware/rateLimiter');
 const { authenticateToken } = require('./middleware/auth');
 const validationService = require('./validators/validationService');
 const logger = require('./utils/logger');
@@ -84,7 +85,7 @@ class BitForwardServer {
         this.app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
         // Rate limiting global
-        this.app.use(rateLimiter);
+        this.app.use(rateLimitMiddleware);
 
         // Servir archivos estáticos del frontend
         this.app.use(express.static(path.join(__dirname, '../')));
@@ -97,7 +98,7 @@ class BitForwardServer {
         // Health check con información de base de datos
         this.app.get('/api/health', async (req, res) => {
             try {
-                const dbConnected = await testConnection();
+                const dbConnected = await database.testConnection();
                 res.json({
                     status: 'OK',
                     timestamp: new Date().toISOString(),
@@ -177,7 +178,7 @@ class BitForwardServer {
         try {
             // Verificar conexión a la base de datos
             console.log('🔍 Verificando conexión a la base de datos...');
-            const dbConnected = await testConnection();
+            const dbConnected = await database.testConnection();
             
             if (!dbConnected) {
                 console.log('⚠️  La base de datos no está inicializada.');

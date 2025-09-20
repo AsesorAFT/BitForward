@@ -227,6 +227,7 @@ const authMiddleware = new AuthMiddleware();
 
 module.exports = {
     authenticateToken: authMiddleware.authenticateToken,
+    authMiddleware: authMiddleware.authenticateToken,
     optionalAuth: authMiddleware.optionalAuth,
     requireRole: authMiddleware.requireRole,
     loginLimiter: authMiddleware.createLoginLimiter(),

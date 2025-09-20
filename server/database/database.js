@@ -314,6 +314,35 @@ class BitForwardDatabase {
             }
         });
     }
+
+    /**
+     * Prueba la conexión a la base de datos
+     */
+    async testConnection() {
+        try {
+            await this.get('SELECT 1 as test');
+            return true;
+        } catch (error) {
+            console.error('Error testing database connection:', error);
+            return false;
+        }
+    }
+
+    /**
+     * Inicializa la base de datos y crea las tablas
+     */
+    async init() {
+        try {
+            if (!this.connected) {
+                await this.initialize();
+            }
+            console.log('✅ Base de datos inicializada correctamente');
+            return true;
+        } catch (error) {
+            console.error('❌ Error inicializando base de datos:', error);
+            return false;
+        }
+    }
 }
 
 // Instancia singleton

@@ -152,6 +152,18 @@
     justify-content: center;
     color: white;
     font-weight: var(--bf-font-bold);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bf-logo-icon:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 102, 255, 0.3);
+}
+
+.bf-logo-icon .logo-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
 }
 
 /* Botones Corporativos */
