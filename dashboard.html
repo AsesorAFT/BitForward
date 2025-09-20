@@ -6,6 +6,7 @@
     <title>BitForward Dashboard - Advanced DeFi Forward Contracts</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/wallet.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
 </head>
 <body>
@@ -50,16 +51,8 @@
                 
                 <div class="wallet-connect">
                     <h3>Or connect with wallet</h3>
-                    <div class="wallet-buttons">
-                        <button class="wallet-btn" data-wallet="metamask">
-                            <span>🦊</span> MetaMask
-                        </button>
-                        <button class="wallet-btn" data-wallet="phantom">
-                            <span>👻</span> Phantom
-                        </button>
-                        <button class="wallet-btn" data-wallet="bitcoin">
-                            <span>₿</span> Bitcoin Wallet
-                        </button>
+                    <div id="wallet-container" class="wallet-buttons">
+                        <!-- Wallet UI will be initialized here -->
                     </div>
                 </div>
             </div>
@@ -983,5 +976,14 @@
             }
         }
     </style>
+    
+    <!-- Wallet Integration Scripts -->
+    <script src="js/wallet.js"></script>
+    <script src="js/wallet-ui.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

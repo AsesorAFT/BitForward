@@ -668,3 +668,301 @@ body {
         text-align: center;
     }
 }
+
+/* ===============================================
+   CONTRACTS TABLE STYLES
+   =============================================== */
+
+/* Sección de Contratos */
+.bf-contracts {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: var(--bf-card-bg);
+    border-radius: 16px;
+    box-shadow: var(--bf-shadow-card);
+}
+
+.bf-contracts .bf-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.bf-contracts .bf-section-header h2 {
+    margin: 0;
+    color: var(--bf-text-primary);
+}
+
+.bf-contracts .bf-section-header p {
+    margin: 0.5rem 0 0 0;
+    color: var(--bf-text-secondary);
+}
+
+/* Tabla de Contratos */
+.bf-contracts-table-container {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: var(--bf-shadow-subtle);
+}
+
+.bf-contracts-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.bf-contracts-table thead {
+    background: linear-gradient(135deg, var(--bf-primary), var(--bf-accent));
+}
+
+.bf-contracts-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: white;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.bf-contracts-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: var(--bf-text-primary);
+    vertical-align: middle;
+}
+
+.bf-contracts-table tbody tr {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.bf-contracts-table tbody tr:hover {
+    background: #f8fafc;
+    transform: translateY(-1px);
+}
+
+.bf-contract-id {
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 0.875rem;
+    color: var(--bf-primary);
+    font-weight: 500;
+}
+
+.bf-contract-asset {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.bf-contract-amount {
+    font-weight: 600;
+    color: var(--bf-text-primary);
+}
+
+.bf-contract-price {
+    font-weight: 600;
+    color: var(--bf-success);
+}
+
+.bf-contract-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.bf-contract-status.active {
+    background: rgba(0, 212, 170, 0.1);
+    color: var(--bf-success);
+}
+
+.bf-contract-status.pending {
+    background: rgba(253, 203, 110, 0.1);
+    color: var(--bf-warning);
+}
+
+.bf-contract-status.expired {
+    background: rgba(232, 67, 147, 0.1);
+    color: var(--bf-error);
+}
+
+.bf-contract-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.bf-btn-table {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    min-width: auto;
+}
+
+/* Estado vacío */
+.bf-no-contracts {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--bf-text-secondary);
+}
+
+.bf-no-contracts-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(116, 185, 255, 0.1));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--bf-primary);
+}
+
+.bf-no-contracts h3 {
+    margin: 0 0 1rem 0;
+    color: var(--bf-text-primary);
+}
+
+.bf-no-contracts p {
+    margin: 0 0 2rem 0;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===============================================
+   CONTRACT DETAILS VIEW STYLES
+   =============================================== */
+
+.bf-contract-details {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: var(--bf-card-bg);
+    border-radius: 16px;
+    box-shadow: var(--bf-shadow-card);
+    border-left: 4px solid var(--bf-primary);
+}
+
+.bf-contract-details-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.bf-details-title h2 {
+    margin: 0;
+    color: var(--bf-text-primary);
+    font-size: 1.5rem;
+}
+
+.bf-details-title .bf-contract-id {
+    display: block;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    opacity: 0.7;
+}
+
+.bf-contract-details-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.bf-detail-item {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--bf-primary);
+    transition: all 0.2s ease;
+}
+
+.bf-detail-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--bf-shadow-subtle);
+}
+
+.bf-detail-item h4 {
+    margin: 0 0 0.5rem 0;
+    color: var(--bf-text-secondary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.bf-detail-item p {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--bf-text-primary);
+    word-break: break-all;
+}
+
+.bf-detail-item.large-value p {
+    font-size: 1.5rem;
+    color: var(--bf-primary);
+}
+
+.bf-detail-item.status p {
+    text-transform: capitalize;
+}
+
+.bf-detail-item.amount p {
+    color: var(--bf-success);
+}
+
+.bf-detail-item.price p {
+    color: var(--bf-warning);
+}
+
+.bf-contract-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding-top: 1.5rem;
+    border-top: 2px solid #f0f0f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .bf-contracts .bf-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .bf-contracts-table-container {
+        overflow-x: scroll;
+    }
+    
+    .bf-contracts-table {
+        min-width: 800px;
+    }
+    
+    .bf-contract-details-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .bf-contract-actions {
+        flex-wrap: wrap;
+        justify-content: stretch;
+    }
+    
+    .bf-contract-actions .bf-btn {
+        flex: 1;
+        min-width: 120px;
+    }
+}

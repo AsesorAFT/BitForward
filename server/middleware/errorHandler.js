@@ -1,25 +1,76 @@
 /**
- * Middleware de Manejo de Errores para BitForward API
- * Centraliza el manejo de errores y proporciona respuestas consistentes
+ * Middleware de Manejo de Errores BitForward v2.0
+ * Sistema robusto con logging, categorización y respuestas estandarizadas
  */
 
+const { AppError } = require('../errors/AppError');
 const config = require('../config/config');
 
-/**
- * Middleware de manejo de errores global
- */
-const errorHandler = (error, req, res, next) => {
-    console.error('Error capturado por errorHandler:', {
-        message: error.message,
-        stack: config.NODE_ENV === 'development' ? error.stack : undefined,
-        url: req.url,
-        method: req.method,
-        ip: req.ip,
-        timestamp: new Date().toISOString()
-    });
+class ErrorHandler {
+    constructor() {
+        this.errorCounts = new Map();
+        this.errorPatterns = new Map();
+    }
 
-    // Error de validación de Joi
-    if (error.isJoi) {
+    /**
+     * Middleware principal de manejo de errores
+     */
+    handle = (error, req, res, next) => {
+        // Registrar error para análisis
+        this.logError(error, req);
+        
+        // Contar errores para detectar patrones
+        this.trackError(error);
+
+        // Si es un error operacional conocido
+        if (error.isOperational) {
+            return this.handleOperationalError(error, req, res);
+        }
+
+        // Manejar errores específicos de bibliotecas
+        if (error.isJoi) {
+            return this.handleJoiValidationError(error, req, res);
+        }
+
+        if (error.code && error.code.startsWith('SQLITE_')) {
+            return this.handleDatabaseError(error, req, res);
+        }
+
+        if (error instanceof SyntaxError && error.status === 400) {
+            return this.handleJSONError(error, req, res);
+        }
+
+        if (error.status || error.statusCode) {
+            return this.handleStatusError(error, req, res);
+        }
+
+        // Error no manejado - crítico
+        return this.handleUnknownError(error, req, res);
+    };
+
+    /**
+     * Maneja errores operacionales (AppError)
+     */
+    handleOperationalError(error, req, res) {
+        const response = {
+            success: false,
+            error: error.message,
+            code: error.code,
+            timestamp: error.timestamp
+        };
+
+        // Agregar detalles en desarrollo
+        if (config.NODE_ENV === 'development' && error.details) {
+            response.details = error.details;
+        }
+
+        return res.status(error.statusCode).json(response);
+    }
+
+    /**
+     * Maneja errores de validación Joi
+     */
+    handleJoiValidationError(error, req, res) {
         return res.status(400).json({
             success: false,
             error: 'Validation Error',
@@ -34,20 +85,20 @@ const errorHandler = (error, req, res, next) => {
         });
     }
 
-    // Error de base de datos SQLite
-    if (error.code === 'SQLITE_CONSTRAINT') {
-        return res.status(409).json({
-            success: false,
-            error: 'Database Constraint Error',
-            message: 'Violación de restricción en la base de datos',
-            details: error.message,
-            code: 'DATABASE_CONSTRAINT_ERROR',
-            timestamp: new Date().toISOString()
-        });
-    }
+    /**
+     * Maneja errores de base de datos
+     */
+    handleDatabaseError(error, req, res) {
+        if (error.code === 'SQLITE_CONSTRAINT') {
+            return res.status(409).json({
+                success: false,
+                error: 'Database Constraint Error',
+                message: 'Violación de restricción en la base de datos',
+                code: 'DATABASE_CONSTRAINT_ERROR',
+                timestamp: new Date().toISOString()
+            });
+        }
 
-    // Error de base de datos general
-    if (error.code && error.code.startsWith('SQLITE_')) {
         return res.status(500).json({
             success: false,
             error: 'Database Error',
@@ -57,8 +108,10 @@ const errorHandler = (error, req, res, next) => {
         });
     }
 
-    // Error de JSON malformado
-    if (error instanceof SyntaxError && error.status === 400 && 'body' in error) {
+    /**
+     * Maneja errores de JSON malformado
+     */
+    handleJSONError(error, req, res) {
         return res.status(400).json({
             success: false,
             error: 'Invalid JSON',
@@ -68,8 +121,10 @@ const errorHandler = (error, req, res, next) => {
         });
     }
 
-    // Error personalizado con status
-    if (error.status || error.statusCode) {
+    /**
+     * Maneja errores con status personalizado
+     */
+    handleStatusError(error, req, res) {
         const status = error.status || error.statusCode;
         return res.status(status).json({
             success: false,
@@ -81,21 +136,77 @@ const errorHandler = (error, req, res, next) => {
         });
     }
 
-    // Error interno del servidor (500)
-    res.status(500).json({
-        success: false,
-        error: 'Internal Server Error',
-        message: config.NODE_ENV === 'production' 
-            ? 'Ha ocurrido un error interno del servidor'
-            : error.message,
-        code: 'INTERNAL_SERVER_ERROR',
-        ...(config.NODE_ENV === 'development' && { 
+    /**
+     * Maneja errores desconocidos/críticos
+     */
+    handleUnknownError(error, req, res) {
+        // Log crítico del error
+        this.logCriticalError(error, req);
+
+        return res.status(500).json({
+            success: false,
+            error: 'Internal Server Error',
+            message: config.NODE_ENV === 'production' 
+                ? 'Ha ocurrido un error interno del servidor'
+                : error.message,
+            code: 'INTERNAL_SERVER_ERROR',
+            ...(config.NODE_ENV === 'development' && { 
+                stack: error.stack,
+                details: error.toString()
+            }),
+            timestamp: new Date().toISOString()
+        });
+    }
+
+    /**
+     * Registra el error para análisis
+     */
+    logError(error, req) {
+        console.error('Error capturado por errorHandler:', {
+            message: error.message,
+            code: error.code || 'UNKNOWN',
+            stack: config.NODE_ENV === 'development' ? error.stack : undefined,
+            url: req.url,
+            method: req.method,
+            ip: req.ip,
+            user: req.user?.id || 'anonymous',
+            timestamp: new Date().toISOString()
+        });
+    }
+
+    /**
+     * Log específico para errores críticos
+     */
+    logCriticalError(error, req) {
+        console.error('🚨 CRITICAL ERROR:', {
+            error: error.message,
             stack: error.stack,
-            details: error.toString()
-        }),
-        timestamp: new Date().toISOString()
-    });
-};
+            url: req.url,
+            method: req.method,
+            userAgent: req.get('User-Agent'),
+            ip: req.ip,
+            user: req.user?.id || 'anonymous',
+            timestamp: new Date().toISOString()
+        });
+    }
+
+    /**
+     * Rastrea errores para detectar patrones
+     */
+    trackError(error) {
+        const errorKey = error.code || error.name || 'UNKNOWN';
+        const currentCount = this.errorCounts.get(errorKey) || 0;
+        this.errorCounts.set(errorKey, currentCount + 1);
+
+        // Detectar spike de errores
+        if (currentCount > 10) {
+            console.warn(`⚠️ Error spike detected: ${errorKey} occurred ${currentCount} times`);
+        }
+    }
+}
+
+// Crear instancia global del error handler
+const errorHandler = new ErrorHandler();
 
 /**
  * Middleware para manejar rutas no encontradas (404)
@@ -150,7 +261,7 @@ const createError = (status, message, code = null) => {
 };
 
 module.exports = {
-    errorHandler,
+    errorHandler: errorHandler.handle,
     notFoundHandler,
     asyncHandler,
     validateContentType,

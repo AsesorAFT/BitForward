@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Acceso | BitForward Phoenix</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="icon" type="image/svg+xml" href="/icons/bitforward.svg">
+</head>
+<body class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen flex items-center justify-center p-4">
+    
+    <!-- Background Animation -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-1/2 -left-1/2 w-96 h-96 bg-bf-secondary opacity-10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute -bottom-1/2 -right-1/2 w-96 h-96 bg-bf-accent opacity-10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 w-full max-w-md">
+        
+        <!-- Back Button -->
+        <a href="/" class="inline-flex items-center text-blue-200 hover:text-white mb-8 transition-colors group">
+            <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Volver al portal
+        </a>
+
+        <!-- Login Card -->
+        <div class="glass-effect rounded-2xl p-8 border border-white/20 shadow-2xl">
+            
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="bg-gradient-to-r from-bf-secondary to-yellow-400 p-4 rounded-2xl w-fit mx-auto mb-4 shadow-crypto-glow">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-white mb-2">Portal de Acceso</h1>
+                <p class="text-blue-200 text-sm">Proyecto Fénix • Autenticación Avanzada</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-6">
+                
+                <!-- Email Field -->
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-medium text-blue-200">Email Corporativo</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                            </svg>
+                        </div>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            required
+                            class="input-primary pl-10"
+                            placeholder="usuario@empresa.com"
+                            autocomplete="email"
+                        >
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium text-blue-200">Contraseña Segura</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            required
+                            class="input-primary pl-10 pr-10"
+                            placeholder="••••••••••"
+                            autocomplete="current-password"
+                        >
+                        <button 
+                            type="button" 
+                            id="togglePassword"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                            <svg class="h-5 w-5" id="eyeIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Remember Me -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input 
+                            id="remember" 
+                            type="checkbox" 
+                            class="h-4 w-4 text-bf-secondary focus:ring-bf-secondary border-gray-600 rounded bg-gray-700"
+                        >
+                        <label for="remember" class="ml-2 block text-sm text-blue-200">
+                            Recordar sesión
+                        </label>
+                    </div>
+                    <a href="#" class="text-sm text-bf-secondary hover:text-yellow-300 transition-colors">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <!-- Submit Button -->
+                <button 
+                    type="submit" 
+                    class="btn-primary w-full relative overflow-hidden group"
+                    id="loginButton"
+                >
+                    <span class="relative z-10 flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                        </svg>
+                        Acceder al Sistema
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-bf-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+
+                <!-- Loading State -->
+                <div id="loadingState" class="hidden text-center py-4">
+                    <div class="inline-flex items-center px-4 py-2 bg-bf-primary/20 rounded-lg">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-bf-secondary" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="text-blue-200">Validando credenciales...</span>
+                    </div>
+                </div>
+
+            </form>
+
+            <!-- Divider -->
+            <div class="mt-8 pt-6 border-t border-white/10">
+                <p class="text-center text-sm text-blue-300">
+                    ¿Nuevo en BitForward? 
+                    <a href="#" class="text-bf-secondary hover:text-yellow-300 transition-colors font-medium">
+                        Solicitar acceso empresarial
+                    </a>
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Security Info -->
+        <div class="mt-6 text-center">
+            <div class="inline-flex items-center px-4 py-2 bg-black/20 rounded-lg border border-white/10">
+                <svg class="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-xs text-green-300">Conexión segura SSL/TLS • JWT Authentication</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        // Phoenix Login Portal
+        console.log('🔥 Phoenix Login Portal iniciado');
+
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            
+            // Toggle eye icon
+            if (type === 'text') {
+                eyeIcon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L8.464 8.464M9.878 9.878l-1.415-1.414M14.12 14.12l1.415 1.415M14.12 14.12L15.536 15.536M14.12 14.12l-4.243-4.243"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18"/>
+                `;
+            } else {
+                eyeIcon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                `;
+            }
+        });
+
+        // Form submission
+        const loginForm = document.getElementById('loginForm');
+        const loginButton = document.getElementById('loginButton');
+        const loadingState = document.getElementById('loadingState');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading state
+            loginButton.style.display = 'none';
+            loadingState.classList.remove('hidden');
+
+            const formData = new FormData(loginForm);
+            const email = formData.get('email') || passwordField.previousElementSibling.previousElementSibling.value;
+            const password = formData.get('password') || passwordField.value;
+
+            try {
+                // Simulated authentication request
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('bitforward_token', data.token);
+                    
+                    // Success animation
+                    loadingState.innerHTML = `
+                        <div class="inline-flex items-center px-4 py-2 bg-green-500/20 rounded-lg">
+                            <svg class="w-5 h-5 text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-green-300">¡Acceso autorizado!</span>
+                        </div>
+                    `;
+                    
+                    setTimeout(() => {
+                        window.location.href = '/phoenix/guardian-contracts.html';
+                    }, 1500);
+                } else {
+                    throw new Error('Credenciales inválidas');
+                }
+            } catch (error) {
+                console.error('Error de autenticación:', error);
+                
+                // Error state
+                loadingState.innerHTML = `
+                    <div class="inline-flex items-center px-4 py-2 bg-red-500/20 rounded-lg">
+                        <svg class="w-5 h-5 text-red-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-red-300">Credenciales incorrectas</span>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    loadingState.classList.add('hidden');
+                    loginButton.style.display = 'block';
+                }, 2000);
+            }
+        });
+
+        // Input animations
+        const inputs = document.querySelectorAll('input[type="email"], input[type="password"]');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('ring-2', 'ring-bf-secondary');
+            });
+            
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('ring-2', 'ring-bf-secondary');
+            });
+        });
+    </script>
+</body>
+</html>

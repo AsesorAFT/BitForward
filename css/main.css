@@ -1,0 +1,168 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Fuentes personalizadas */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* Componentes personalizados BitForward */
+@layer components {
+  .bf-btn {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .bf-btn-primary {
+    @apply bg-bf-primary text-white hover:bg-blue-700 focus:ring-bf-primary;
+  }
+
+  .bf-btn-secondary {
+    @apply bg-bf-secondary text-white hover:bg-amber-600 focus:ring-bf-secondary;
+  }
+
+  .bf-btn-success {
+    @apply bg-success text-white hover:bg-green-700 focus:ring-success;
+  }
+
+  .bf-btn-error {
+    @apply bg-error text-white hover:bg-red-700 focus:ring-error;
+  }
+
+  .bf-btn-ghost {
+    @apply bg-transparent text-bf-primary border-bf-primary hover:bg-bf-primary hover:text-white;
+  }
+
+  .bf-card {
+    @apply bg-white rounded-xl shadow-bf-md border border-gray-200 overflow-hidden;
+  }
+
+  .bf-card-dark {
+    @apply bg-gray-800 rounded-xl shadow-bf-md border border-gray-700 overflow-hidden;
+  }
+
+  .bf-input {
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-bf-primary focus:border-bf-primary;
+  }
+
+  .bf-input-dark {
+    @apply block w-full px-3 py-2 border border-gray-600 rounded-lg shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-bf-primary focus:border-bf-primary;
+  }
+
+  .bf-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .bf-badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .bf-badge-warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .bf-badge-error {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .bf-badge-info {
+    @apply bg-blue-100 text-blue-800;
+  }
+
+  .crypto-icon {
+    @apply w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-sm;
+  }
+
+  .crypto-btc {
+    @apply bg-crypto-btc;
+  }
+
+  .crypto-eth {
+    @apply bg-crypto-eth;
+  }
+
+  .crypto-sol {
+    @apply bg-crypto-sol;
+  }
+
+  .crypto-usdt {
+    @apply bg-crypto-usdt;
+  }
+
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/10 border border-white/20;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-bf-primary to-bf-secondary bg-clip-text text-transparent;
+  }
+}
+
+/* Animaciones personalizadas */
+@layer utilities {
+  .animate-gradient {
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Estilos globales */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-feature-settings: 'cv03', 'cv04', 'cv11';
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-600;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}

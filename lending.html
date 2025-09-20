@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/corporate.css">
     <link rel="stylesheet" href="css/enterprise-dashboard.css">
     <link rel="stylesheet" href="css/lending.css">
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
     <!-- Header -->
@@ -54,15 +55,35 @@
                     </a>
                 </nav>
                 
-                <div class="bf-user-menu">
+                <!-- User Menu -->
+                <div class="bf-user-menu" id="authenticated-menu" style="display: none;">
                     <div class="bf-user-balance">
                         <span class="bf-balance-label">Disponible</span>
-                        <span class="bf-balance-value">$1,234,567.89</span>
+                        <span class="bf-balance-value" id="user-balance">$0.00</span>
+                    </div>
+                    <div class="bf-user-info">
+                        <span class="bf-user-name" id="user-name">Usuario</span>
+                        <button class="bf-btn-logout" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Salir
+                        </button>
                     </div>
                     <div class="bf-user-avatar">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User" id="user-avatar">
                         <div class="bf-user-status"></div>
                     </div>
+                </div>
+                
+                <!-- Auth Buttons (cuando no está autenticado) -->
+                <div class="bf-auth-buttons" id="auth-buttons">
+                    <button class="bf-btn bf-btn-secondary" id="login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Iniciar Sesión
+                    </button>
+                    <button class="bf-btn bf-btn-primary" id="register-btn">
+                        <i class="fas fa-user-plus"></i>
+                        Registrarse
+                    </button>
                 </div>
             </div>
         </div>
@@ -402,5 +423,6 @@
     <!-- Scripts -->
     <script src="js/dashboard.js"></script>
     <script src="js/lending.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>
