@@ -1,5 +1,17 @@
 /**
- * BitForward Lending Platform JavaScript
+ * BitForward Lending Platf    init() {
+        console.log('🚀 Inicializando BiT Lending Platform...');
+        
+        // Verificar autenticación
+        if (!this.isUserAuthenticated()) {
+            this.showAuthRequired();
+            return;
+        }
+        
+        this.setupEventListeners();
+        this.updateSummary();
+        console.log('✅ Plataforma de préstamos lista');
+    }t
  * Sistema de préstamos con colateral
  */
 
@@ -31,6 +43,13 @@ class BitForwardLending {
 
     init() {
         console.log('💰 Inicializando BitForward Lending Platform...');
+        
+        // Verificar autenticación
+        if (!this.isUserAuthenticated()) {
+            this.showAuthRequired();
+            return;
+        }
+        
         this.setupEventListeners();
         this.updateSummary();
         console.log('✅ Plataforma de préstamos lista');
@@ -189,6 +208,14 @@ class BitForwardLending {
             return;
         }
         
+        if (!this.isUserAuthenticated()) {
+            this.showNotification('Debes iniciar sesión para solicitar un préstamo', 'warning');
+            if (window.BitForwardAuth) {
+                window.BitForwardAuth.openModal('login-modal');
+            }
+            return;
+        }
+        
         const loanData = {
             collateral: this.selectedCollateral,
             collateralValue: this.getCollateralValue(),
@@ -197,17 +224,15 @@ class BitForwardLending {
             term: this.selectedTerm,
             apr: this.loanTerms[this.selectedTerm].apr,
             totalRepayment: this.calculateTotalRepayment(),
-            totalInterest: this.calculateTotalInterest()
+            totalInterest: this.calculateTotalInterest(),
+            user: this.getCurrentUser()
         };
         
         console.log('📋 Solicitud de préstamo:', loanData);
         this.showNotification('Procesando solicitud de préstamo...', 'info');
         
-        // Simular procesamiento
-        setTimeout(() => {
-            this.showNotification('¡Préstamo aprobado! Revisa tu dashboard.', 'success');
-            this.resetForm();
-        }, 2000);
+        // Simular procesamiento con backend
+        this.submitLoanRequest(loanData);
     }
 
     getCollateralValue() {
@@ -455,6 +480,92 @@ class BitForwardLending {
             info: '#74b9ff'
         };
         return colors[type] || '#74b9ff';
+    }
+
+    // Verificar autenticación
+    isUserAuthenticated() {
+        return window.BitForwardAuth && window.BitForwardAuth.isAuthenticated();
+    }
+
+    // Obtener usuario actual
+    getCurrentUser() {
+        return window.BitForwardAuth ? window.BitForwardAuth.getCurrentUser() : null;
+    }
+
+    // Mostrar mensaje de autenticación requerida
+    showAuthRequired() {
+        const calculator = document.querySelector('.bf-loan-calculator');
+        if (calculator) {
+            calculator.innerHTML = `
+                <div class="bf-auth-required">
+                    <div class="bf-auth-required-content">
+                        <div class="bf-auth-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>Autenticación Requerida</h3>
+                        <p>Para acceder a la plataforma de préstamos, necesitas iniciar sesión o crear una cuenta.</p>
+                        <div class="bf-auth-actions">
+                            <button class="bf-btn bf-btn-primary" id="auth-login-btn">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Iniciar Sesión
+                            </button>
+                            <button class="bf-btn bf-btn-secondary" id="auth-register-btn">
+                                <i class="fas fa-user-plus"></i>
+                                Crear Cuenta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Configurar event listeners para los botones de auth
+            const loginBtn = document.getElementById('auth-login-btn');
+            const registerBtn = document.getElementById('auth-register-btn');
+            
+            if (loginBtn && window.BitForwardAuth) {
+                loginBtn.addEventListener('click', () => {
+                    window.BitForwardAuth.openModal('login-modal');
+                });
+            }
+            
+            if (registerBtn && window.BitForwardAuth) {
+                registerBtn.addEventListener('click', () => {
+                    window.BitForwardAuth.openModal('register-modal');
+                });
+            }
+        }
+    }
+
+    // Procesar solicitud de préstamo con el backend
+    async submitLoanRequest(loanData) {
+        try {
+            if (window.BitForwardAuth) {
+                const response = await window.BitForwardAuth.authenticatedRequest(
+                    `${window.BitForwardAuth.apiUrl}/loans/request`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify(loanData)
+                    }
+                );
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    this.showNotification('¡Préstamo aprobado! Revisa tu dashboard.', 'success');
+                    this.resetForm();
+                } else {
+                    throw new Error('Error procesando la solicitud');
+                }
+            } else {
+                // Fallback para simulación
+                setTimeout(() => {
+                    this.showNotification('¡Préstamo aprobado! Revisa tu dashboard.', 'success');
+                    this.resetForm();
+                }, 2000);
+            }
+        } catch (error) {
+            console.error('Error en solicitud de préstamo:', error);
+            this.showNotification('Error procesando la solicitud. Intenta nuevamente.', 'error');
+        }
     }
 }
 

@@ -1,479 +1,347 @@
 /**
  * API Routes para Contratos BitForward
- * Maneja todas las operaciones CRUD de contratos
+ * Maneja la creación, gestión y consulta de contratos forward con persistencia SQLite
  */
 
 const express = require('express');
-const { v4: uuidv4 } = require('uuid');
-const Joi = require('joi');
-const database = require('../database/database');
-const { BitForwardValidator } = require('../validators/contractValidator');
-const auth = require('../middleware/auth');
+const { authMiddleware } = require('../middleware/auth');
+const { db } = require('../database/config');
 
 const router = express.Router();
 
-// Esquemas de validación con Joi
-const contractCreateSchema = Joi.object({
-    blockchain: Joi.string().valid('bitcoin', 'ethereum', 'solana').required(),
-    amount: Joi.number().positive().min(0.001).max(10000).required(),
-    strikePrice: Joi.number().positive().min(0.01).optional(),
-    counterpartyAddress: Joi.string().min(26).max(62).required(),
-    executionDate: Joi.date().iso().min('now').required(),
-    contractType: Joi.string().valid('forward', 'option', 'swap').default('forward'),
-    metadata: Joi.object().optional()
-});
-
-const contractUpdateSchema = Joi.object({
-    status: Joi.string().valid('pending', 'active', 'completed', 'cancelled', 'expired'),
-    transactionHash: Joi.string().optional(),
-    executedAt: Joi.date().iso().optional(),
-    metadata: Joi.object().optional()
-}).min(1);
-
 /**
- * GET /api/contracts
- * Obtiene lista de contratos con filtros opcionales
+ * @route   GET /api/contracts
+ * @desc    Obtener todos los contratos del usuario autenticado
+ * @access  Privado (requiere token)
  */
-router.get('/', async (req, res, next) => {
+router.get('/', authMiddleware, async (req, res) => {
     try {
-        const {
-            page = 1,
-            limit = 20,
-            status,
-            blockchain,
-            creator,
-            sortBy = 'created_at',
-            sortOrder = 'DESC'
-        } = req.query;
+        const userId = req.user.id;
 
-        // Validar parámetros
-        const pageNum = Math.max(1, parseInt(page));
-        const limitNum = Math.min(100, Math.max(1, parseInt(limit)));
-        const offset = (pageNum - 1) * limitNum;
+        const contracts = await db('contracts')
+            .where('user_id', userId)
+            .orderBy('created_at', 'desc');
 
-        // Construir query dinámicamente
-        let whereConditions = [];
-        let params = [];
-
-        if (status) {
-            whereConditions.push('status = ?');
-            params.push(status);
-        }
-
-        if (blockchain) {
-            whereConditions.push('blockchain = ?');
-            params.push(blockchain);
-        }
-
-        if (creator) {
-            whereConditions.push('creator_id = ?');
-            params.push(creator);
-        }
-
-        const whereClause = whereConditions.length > 0 ? 
-            'WHERE ' + whereConditions.join(' AND ') : '';
-
-        // Query principal
-        const contractsQuery = `
-            SELECT 
-                c.*,
-                COUNT(cp.id) as participant_count,
-                GROUP_CONCAT(cp.participant_address) as participants
-            FROM contracts c
-            LEFT JOIN contract_participants cp ON c.id = cp.contract_id
-            ${whereClause}
-            GROUP BY c.id
-            ORDER BY c.${sortBy} ${sortOrder}
-            LIMIT ? OFFSET ?
-        `;
-
-        // Query para contar total
-        const countQuery = `
-            SELECT COUNT(DISTINCT c.id) as total
-            FROM contracts c
-            ${whereClause}
-        `;
-
-        // Ejecutar queries
-        const contracts = await database.all(contractsQuery, [...params, limitNum, offset]);
-        const countResult = await database.get(countQuery, params);
-        const total = countResult.total;
-
-        // Procesar resultados
-        const processedContracts = contracts.map(contract => ({
-            ...contract,
-            metadata: contract.metadata ? JSON.parse(contract.metadata) : null,
-            participants: contract.participants ? contract.participants.split(',') : [],
-            participantCount: contract.participant_count
-        }));
-
-        res.json({
-            success: true,
-            data: {
-                contracts: processedContracts,
-                pagination: {
-                    page: pageNum,
-                    limit: limitNum,
-                    total,
-                    pages: Math.ceil(total / limitNum),
-                    hasNext: pageNum * limitNum < total,
-                    hasPrev: pageNum > 1
+        // Calcular métricas adicionales para cada contrato
+        const contractsWithMetrics = contracts.map(contract => {
+            const currentPrice = parseFloat(contract.current_price) || 0;
+            const strikePrice = parseFloat(contract.strike_price);
+            const amount = parseFloat(contract.amount);
+            
+            // Calcular P&L
+            const unrealizedPnL = contract.status === 'active' 
+                ? (currentPrice - strikePrice) * amount 
+                : 0;
+            
+            // Calcular días hasta vencimiento
+            const expirationDate = new Date(contract.expiration_date);
+            const today = new Date();
+            const daysToExpiration = Math.ceil((expirationDate - today) / (1000 * 60 * 60 * 24));
+            
+            return {
+                ...contract,
+                amount: parseFloat(contract.amount),
+                strike_price: parseFloat(contract.strike_price),
+                current_price: currentPrice,
+                collateral_amount: parseFloat(contract.collateral_amount) || 0,
+                metadata: contract.metadata ? JSON.parse(contract.metadata) : {},
+                metrics: {
+                    unrealizedPnL,
+                    daysToExpiration,
+                    isExpiring: daysToExpiration <= 7 && daysToExpiration > 0,
+                    isExpired: daysToExpiration <= 0
                 }
-            },
-            timestamp: new Date().toISOString()
+            };
         });
 
-    } catch (error) {
-        next(error);
-    }
-});
-
-/**
- * GET /api/contracts/:id
- * Obtiene un contrato específico por ID
- */
-router.get('/:id', async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        // Validar UUID
-        if (!id.match(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i)) {
-            return res.status(400).json({
-                success: false,
-                error: 'ID de contrato inválido',
-                code: 'INVALID_CONTRACT_ID'
-            });
-        }
-
-        const contract = await database.get(`
-            SELECT c.*, 
-                   GROUP_CONCAT(cp.participant_address) as participants,
-                   GROUP_CONCAT(cp.role) as participant_roles
-            FROM contracts c
-            LEFT JOIN contract_participants cp ON c.id = cp.contract_id
-            WHERE c.id = ?
-            GROUP BY c.id
-        `, [id]);
-
-        if (!contract) {
-            return res.status(404).json({
-                success: false,
-                error: 'Contrato no encontrado',
-                code: 'CONTRACT_NOT_FOUND'
-            });
-        }
-
-        // Obtener transacciones relacionadas
-        const transactions = await database.all(`
-            SELECT * FROM transactions 
-            WHERE contract_id = ? 
-            ORDER BY timestamp DESC
-        `, [id]);
-
-        // Procesar respuesta
-        const response = {
-            ...contract,
-            metadata: contract.metadata ? JSON.parse(contract.metadata) : null,
-            participants: contract.participants ? 
-                contract.participants.split(',').map((addr, idx) => ({
-                    address: addr,
-                    role: contract.participant_roles.split(',')[idx]
-                })) : [],
-            transactions
-        };
-
-        delete response.participant_roles;
+        console.log(`📋 Consultando contratos para usuario ${userId}: ${contracts.length} encontrados`);
 
         res.json({
             success: true,
-            data: response,
-            timestamp: new Date().toISOString()
-        });
-
-    } catch (error) {
-        next(error);
-    }
-});
-
-/**
- * POST /api/contracts
- * Crea un nuevo contrato
- */
-router.post('/', async (req, res, next) => {
-    try {
-        // Validar datos de entrada
-        const { error, value } = contractCreateSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json({
-                success: false,
-                error: 'Datos de contrato inválidos',
-                details: error.details.map(d => d.message),
-                code: 'VALIDATION_ERROR'
-            });
-        }
-
-        // Validación personalizada con BitForwardValidator
-        const validationErrors = BitForwardValidator.validateContract(value);
-        if (validationErrors.length > 0) {
-            return res.status(400).json({
-                success: false,
-                error: 'Validación de contrato fallida',
-                details: validationErrors,
-                code: 'CONTRACT_VALIDATION_ERROR'
-            });
-        }
-
-        const contractId = uuidv4();
-        const now = new Date().toISOString();
-
-        await database.beginTransaction();
-
-        try {
-            // Insertar contrato
-            await database.run(`
-                INSERT INTO contracts (
-                    id, blockchain, amount, strike_price, counterparty_address,
-                    execution_date, contract_type, created_at, metadata
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            `, [
-                contractId,
-                value.blockchain,
-                value.amount,
-                value.strikePrice || null,
-                value.counterpartyAddress,
-                value.executionDate,
-                value.contractType,
-                now,
-                value.metadata ? JSON.stringify(value.metadata) : null
-            ]);
-
-            // Registrar evento
-            await database.run(`
-                INSERT INTO system_events (id, event_type, entity_type, entity_id, data)
-                VALUES (?, ?, ?, ?, ?)
-            `, [
-                uuidv4(),
-                'contract_created',
-                'contract',
-                contractId,
-                JSON.stringify({ 
-                    blockchain: value.blockchain, 
-                    amount: value.amount,
-                    creator_ip: req.ip 
-                })
-            ]);
-
-            await database.commit();
-
-            // Obtener contrato creado
-            const createdContract = await database.get(`
-                SELECT * FROM contracts WHERE id = ?
-            `, [contractId]);
-
-            res.status(201).json({
-                success: true,
-                data: {
-                    ...createdContract,
-                    metadata: createdContract.metadata ? JSON.parse(createdContract.metadata) : null,
-                    shareUrl: `${req.protocol}://${req.get('host')}/contract/${contractId}`
-                },
-                message: 'Contrato creado exitosamente',
-                timestamp: new Date().toISOString()
-            });
-
-        } catch (error) {
-            await database.rollback();
-            throw error;
-        }
-
-    } catch (error) {
-        next(error);
-    }
-});
-
-/**
- * PUT /api/contracts/:id
- * Actualiza un contrato existente
- */
-router.put('/:id', async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        // Validar datos
-        const { error, value } = contractUpdateSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json({
-                success: false,
-                error: 'Datos de actualización inválidos',
-                details: error.details.map(d => d.message),
-                code: 'VALIDATION_ERROR'
-            });
-        }
-
-        // Verificar que el contrato existe
-        const existingContract = await database.get('SELECT * FROM contracts WHERE id = ?', [id]);
-        if (!existingContract) {
-            return res.status(404).json({
-                success: false,
-                error: 'Contrato no encontrado',
-                code: 'CONTRACT_NOT_FOUND'
-            });
-        }
-
-        // Construir query de actualización
-        const updateFields = [];
-        const updateValues = [];
-
-        Object.entries(value).forEach(([key, val]) => {
-            if (key === 'metadata') {
-                updateFields.push('metadata = ?');
-                updateValues.push(JSON.stringify(val));
-            } else {
-                const dbField = key === 'executedAt' ? 'executed_at' : 
-                              key === 'transactionHash' ? 'transaction_hash' : key;
-                updateFields.push(`${dbField} = ?`);
-                updateValues.push(val);
+            contracts: contractsWithMetrics,
+            summary: {
+                total: contracts.length,
+                active: contracts.filter(c => c.status === 'active').length,
+                expired: contracts.filter(c => c.status === 'expired').length,
+                totalValue: contractsWithMetrics.reduce((sum, c) => sum + c.amount * c.strike_price, 0)
             }
         });
 
-        updateFields.push('updated_at = ?');
-        updateValues.push(new Date().toISOString());
-        updateValues.push(id);
+    } catch (error) {
+        console.error('Error obteniendo contratos:', error);
+        res.status(500).json({
+            success: false,
+            msg: 'Error interno del servidor al obtener contratos.',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
+});
 
-        await database.run(`
-            UPDATE contracts 
-            SET ${updateFields.join(', ')}
-            WHERE id = ?
-        `, updateValues);
+/**
+ * @route   GET /api/contracts/:id
+ * @desc    Obtener detalles de un contrato específico
+ * @access  Privado (requiere token y ownership)
+ */
+router.get('/:id', authMiddleware, async (req, res) => {
+    try {
+        const contractId = req.params.id;
+        const userId = req.user.id;
 
-        // Obtener contrato actualizado
-        const updatedContract = await database.get('SELECT * FROM contracts WHERE id = ?', [id]);
+        const contract = await db('contracts')
+            .where({ id: contractId, user_id: userId })
+            .first();
 
-        res.json({
-            success: true,
-            data: {
-                ...updatedContract,
-                metadata: updatedContract.metadata ? JSON.parse(updatedContract.metadata) : null
+        if (!contract) {
+            return res.status(404).json({
+                success: false,
+                msg: 'Contrato no encontrado o no tienes permisos para verlo.'
+            });
+        }
+
+        // Calcular métricas detalladas
+        const currentPrice = parseFloat(contract.current_price) || 0;
+        const strikePrice = parseFloat(contract.strike_price);
+        const amount = parseFloat(contract.amount);
+        
+        const unrealizedPnL = contract.status === 'active' 
+            ? (currentPrice - strikePrice) * amount 
+            : 0;
+        
+        const expirationDate = new Date(contract.expiration_date);
+        const createdDate = new Date(contract.created_at);
+        const today = new Date();
+        
+        const daysToExpiration = Math.ceil((expirationDate - today) / (1000 * 60 * 60 * 24));
+        const contractAge = Math.ceil((today - createdDate) / (1000 * 60 * 60 * 24));
+
+        // Obtener historial de transacciones relacionadas
+        const transactions = await db('transactions')
+            .where('reference_id', contractId)
+            .orderBy('created_at', 'desc');
+
+        const contractDetails = {
+            ...contract,
+            amount: parseFloat(contract.amount),
+            strike_price: parseFloat(contract.strike_price),
+            current_price: currentPrice,
+            collateral_amount: parseFloat(contract.collateral_amount) || 0,
+            metadata: contract.metadata ? JSON.parse(contract.metadata) : {},
+            metrics: {
+                unrealizedPnL,
+                unrealizedPnLPercentage: strikePrice > 0 ? ((currentPrice - strikePrice) / strikePrice) * 100 : 0,
+                daysToExpiration,
+                contractAge,
+                isExpiring: daysToExpiration <= 7 && daysToExpiration > 0,
+                isExpired: daysToExpiration <= 0,
+                totalValue: amount * strikePrice,
+                currentValue: amount * currentPrice
             },
-            message: 'Contrato actualizado exitosamente',
-            timestamp: new Date().toISOString()
-        });
+            transactions: transactions.map(t => ({
+                ...t,
+                amount: parseFloat(t.amount),
+                details: t.details ? JSON.parse(t.details) : {}
+            }))
+        };
 
-    } catch (error) {
-        next(error);
-    }
-});
-
-/**
- * POST /api/contracts/:id/join
- * Permite a un usuario unirse a un contrato como contraparte
- */
-router.post('/:id/join', async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const { participantAddress, signature } = req.body;
-
-        // Validar entrada
-        if (!participantAddress) {
-            return res.status(400).json({
-                success: false,
-                error: 'Dirección de participante requerida',
-                code: 'MISSING_PARTICIPANT_ADDRESS'
-            });
-        }
-
-        // Verificar contrato
-        const contract = await database.get('SELECT * FROM contracts WHERE id = ?', [id]);
-        if (!contract) {
-            return res.status(404).json({
-                success: false,
-                error: 'Contrato no encontrado',
-                code: 'CONTRACT_NOT_FOUND'
-            });
-        }
-
-        if (contract.status !== 'pending') {
-            return res.status(400).json({
-                success: false,
-                error: 'El contrato no está disponible para unirse',
-                code: 'CONTRACT_NOT_AVAILABLE'
-            });
-        }
-
-        await database.beginTransaction();
-
-        try {
-            // Agregar participante
-            await database.run(`
-                INSERT INTO contract_participants (id, contract_id, participant_address, role, signature)
-                VALUES (?, ?, ?, ?, ?)
-            `, [uuidv4(), id, participantAddress, 'counterparty', signature]);
-
-            // Actualizar estado del contrato
-            await database.run(`
-                UPDATE contracts 
-                SET status = 'active', updated_at = ?
-                WHERE id = ?
-            `, [new Date().toISOString(), id]);
-
-            await database.commit();
-
-            res.json({
-                success: true,
-                message: 'Te has unido al contrato exitosamente',
-                data: { contractId: id, status: 'active' },
-                timestamp: new Date().toISOString()
-            });
-
-        } catch (error) {
-            await database.rollback();
-            throw error;
-        }
-
-    } catch (error) {
-        next(error);
-    }
-});
-
-/**
- * DELETE /api/contracts/:id
- * Cancela un contrato (solo si está en estado pending)
- */
-router.delete('/:id', async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        const contract = await database.get('SELECT * FROM contracts WHERE id = ?', [id]);
-        if (!contract) {
-            return res.status(404).json({
-                success: false,
-                error: 'Contrato no encontrado',
-                code: 'CONTRACT_NOT_FOUND'
-            });
-        }
-
-        if (contract.status !== 'pending') {
-            return res.status(400).json({
-                success: false,
-                error: 'Solo se pueden cancelar contratos pendientes',
-                code: 'CONTRACT_NOT_CANCELLABLE'
-            });
-        }
-
-        await database.run(`
-            UPDATE contracts 
-            SET status = 'cancelled', updated_at = ?
-            WHERE id = ?
-        `, [new Date().toISOString(), id]);
+        console.log(`📄 Detalles del contrato ${contractId} consultados por usuario ${userId}`);
 
         res.json({
             success: true,
-            message: 'Contrato cancelado exitosamente',
-            timestamp: new Date().toISOString()
+            contract: contractDetails
         });
 
     } catch (error) {
-        next(error);
+        console.error('Error obteniendo detalles del contrato:', error);
+        res.status(500).json({
+            success: false,
+            msg: 'Error interno del servidor al obtener detalles del contrato.',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
+});
+
+/**
+ * @route   POST /api/contracts
+ * @desc    Crear un nuevo contrato forward
+ * @access  Privado (requiere token)
+ */
+router.post('/', authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const {
+            asset,
+            amount,
+            strikePrice,
+            expirationDate,
+            contractType = 'forward',
+            collateralAmount,
+            collateralAsset
+        } = req.body;
+
+        // Validaciones
+        if (!asset || !amount || !strikePrice || !expirationDate) {
+            return res.status(400).json({
+                success: false,
+                msg: 'Todos los campos requeridos deben ser proporcionados.',
+                required: ['asset', 'amount', 'strikePrice', 'expirationDate']
+            });
+        }
+
+        if (amount <= 0 || strikePrice <= 0) {
+            return res.status(400).json({
+                success: false,
+                msg: 'El monto y precio strike deben ser mayores a cero.'
+            });
+        }
+
+        const expDate = new Date(expirationDate);
+        const today = new Date();
+        if (expDate <= today) {
+            return res.status(400).json({
+                success: false,
+                msg: 'La fecha de vencimiento debe ser futura.'
+            });
+        }
+
+        // Generar ID único del contrato
+        const contractId = `BF_${asset}_${Date.now()}_${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+
+        // Crear el contrato en la base de datos
+        await db('contracts').insert({
+            id: contractId,
+            user_id: userId,
+            asset: asset.toUpperCase(),
+            amount: parseFloat(amount),
+            strike_price: parseFloat(strikePrice),
+            current_price: parseFloat(strikePrice), // Inicialmente igual al strike
+            expiration_date: expDate,
+            status: 'active',
+            contract_type: contractType,
+            collateral_amount: collateralAmount ? parseFloat(collateralAmount) : null,
+            collateral_asset: collateralAsset || null,
+            metadata: JSON.stringify({
+                createdBy: req.user.username,
+                platform: 'BitForward',
+                version: '2.0.0'
+            })
+        });
+
+        // Registrar la transacción
+        await db('transactions').insert({
+            id: `TXN_${Date.now()}_${Math.random().toString(36).substr(2, 8).toUpperCase()}`,
+            user_id: userId,
+            type: 'contract_creation',
+            reference_id: contractId,
+            amount: parseFloat(amount),
+            asset: asset.toUpperCase(),
+            status: 'confirmed',
+            details: JSON.stringify({
+                action: 'create_forward_contract',
+                strike_price: parseFloat(strikePrice),
+                expiration_date: expDate,
+                collateral: collateralAmount ? {
+                    amount: parseFloat(collateralAmount),
+                    asset: collateralAsset
+                } : null
+            })
+        });
+
+        console.log(`✅ Nuevo contrato creado: ${contractId} por usuario ${userId}`);
+        console.log(`📊 Detalles: ${amount} ${asset} @ $${strikePrice} (exp: ${expDate.toISOString().split('T')[0]})`);
+
+        res.status(201).json({
+            success: true,
+            msg: 'Contrato forward creado exitosamente.',
+            contract: {
+                id: contractId,
+                asset: asset.toUpperCase(),
+                amount: parseFloat(amount),
+                strikePrice: parseFloat(strikePrice),
+                expirationDate: expDate,
+                status: 'active',
+                contractType
+            }
+        });
+
+    } catch (error) {
+        console.error('Error creando contrato:', error);
+        res.status(500).json({
+            success: false,
+            msg: 'Error interno del servidor al crear el contrato.',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
+});
+
+/**
+ * @route   DELETE /api/contracts/:id
+ * @desc    Cancelar un contrato (solo si está activo)
+ * @access  Privado (requiere token y ownership)
+ */
+router.delete('/:id', authMiddleware, async (req, res) => {
+    try {
+        const contractId = req.params.id;
+        const userId = req.user.id;
+
+        // Verificar que el contrato existe y pertenece al usuario
+        const contract = await db('contracts')
+            .where({ id: contractId, user_id: userId })
+            .first();
+
+        if (!contract) {
+            return res.status(404).json({
+                success: false,
+                msg: 'Contrato no encontrado o no tienes permisos para cancelarlo.'
+            });
+        }
+
+        if (contract.status !== 'active') {
+            return res.status(400).json({
+                success: false,
+                msg: 'Solo se pueden cancelar contratos activos.'
+            });
+        }
+
+        // Actualizar estado del contrato
+        await db('contracts')
+            .where('id', contractId)
+            .update({ 
+                status: 'cancelled',
+                updated_at: new Date()
+            });
+
+        // Registrar la transacción de cancelación
+        await db('transactions').insert({
+            id: `TXN_${Date.now()}_${Math.random().toString(36).substr(2, 8).toUpperCase()}`,
+            user_id: userId,
+            type: 'contract_cancellation',
+            reference_id: contractId,
+            amount: parseFloat(contract.amount),
+            asset: contract.asset,
+            status: 'confirmed',
+            details: JSON.stringify({
+                action: 'cancel_forward_contract',
+                reason: 'user_requested',
+                original_strike: parseFloat(contract.strike_price),
+                cancellation_date: new Date()
+            })
+        });
+
+        console.log(`❌ Contrato cancelado: ${contractId} por usuario ${userId}`);
+
+        res.json({
+            success: true,
+            msg: 'Contrato cancelado exitosamente.',
+            contractId
+        });
+
+    } catch (error) {
+        console.error('Error cancelando contrato:', error);
+        res.status(500).json({
+            success: false,
+            msg: 'Error interno del servidor al cancelar el contrato.',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 });
 

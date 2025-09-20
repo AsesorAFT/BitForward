@@ -1,11 +1,13 @@
 /**
  * BitForward Enterprise Dashboard JavaScript
- * Funcionalidad para la interfaz empresarial
+ * Funcionalidad para la interfaz empresarial con integración de contratos y autenticación
  */
 
 class BitForwardEnterprise {
     constructor() {
         this.apiClient = null;
+        this.contractsData = [];
+        this.currentContract = null;
         this.realTimeData = new Map();
         this.websocket = null;
         this.init();
@@ -13,6 +15,13 @@ class BitForwardEnterprise {
 
     async init() {
         console.log('🚀 Inicializando BitForward Enterprise Dashboard...');
+        
+        // Verificar autenticación
+        if (window.BitForwardAuth && window.BitForwardAuth.isAuthenticated()) {
+            console.log('✅ Usuario autenticado, cargando dashboard completo');
+        } else {
+            console.log('ℹ️ Usuario no autenticado, funcionalidad limitada');
+        }
         
         // Inicializar conexiones
         await this.initializeAPI();
@@ -33,7 +42,7 @@ class BitForwardEnterprise {
     async initializeAPI() {
         // Conexión con el backend
         const apiUrl = window.location.hostname === 'localhost' 
-            ? 'http://localhost:3001/api' 
+            ? 'http://localhost:3000/api' 
             : '/api';
         
         this.apiClient = {
@@ -42,11 +51,22 @@ class BitForwardEnterprise {
             async request(endpoint, options = {}) {
                 try {
                     const url = `${this.baseURL}${endpoint}`;
+                    
+                    // Agregar token de autenticación si está disponible
+                    const headers = {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    };
+                    
+                    if (window.BitForwardAuth && window.BitForwardAuth.isAuthenticated()) {
+                        const token = localStorage.getItem('bitforward_token');
+                        if (token) {
+                            headers['x-auth-token'] = token;
+                        }
+                    }
+                    
                     const response = await fetch(url, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            ...options.headers
-                        },
+                        headers,
                         ...options
                     });
                     
@@ -96,8 +116,59 @@ class BitForwardEnterprise {
             card.addEventListener('click', this.handleAssetSelection.bind(this));
         });
 
+        // Event listeners para contratos
+        this.setupContractListeners();
+
         // Responsive menu toggle
         this.setupMobileMenu();
+    }
+
+    setupContractListeners() {
+        // Botón de actualizar contratos
+        const refreshButton = document.getElementById('refresh-contracts-btn');
+        if (refreshButton) {
+            refreshButton.addEventListener('click', () => {
+                this.loadUserContracts();
+                this.showNotification('Contratos actualizados', 'success');
+            });
+        }
+
+        // Botón de cerrar detalles
+        const closeDetailsBtn = document.getElementById('close-details-btn');
+        if (closeDetailsBtn) {
+            closeDetailsBtn.addEventListener('click', () => {
+                this.hideContractDetailsSection();
+            });
+        }
+
+        // Botones de acciones del contrato
+        const shareContractBtn = document.getElementById('share-contract-btn');
+        const modifyContractBtn = document.getElementById('modify-contract-btn');
+        const cancelContractBtn = document.getElementById('cancel-contract-btn');
+
+        if (shareContractBtn) {
+            shareContractBtn.addEventListener('click', () => {
+                if (this.currentContract) {
+                    this.shareContract(this.currentContract.id);
+                }
+            });
+        }
+
+        if (modifyContractBtn) {
+            modifyContractBtn.addEventListener('click', () => {
+                if (this.currentContract) {
+                    this.showNotification('Funcionalidad de modificación próximamente', 'info');
+                }
+            });
+        }
+
+        if (cancelContractBtn) {
+            cancelContractBtn.addEventListener('click', () => {
+                if (this.currentContract) {
+                    this.confirmCancelContract(this.currentContract.id);
+                }
+            });
+        }
     }
 
     setupMobileMenu() {
@@ -127,6 +198,11 @@ class BitForwardEnterprise {
             
             // Cargar precios de activos
             await this.loadAssetPrices();
+            
+            // Cargar contratos del usuario si está autenticado
+            if (window.BitForwardAuth && window.BitForwardAuth.isAuthenticated()) {
+                await this.loadUserContracts();
+            }
             
             // Cargar contratos recientes
             await this.loadRecentContracts();
@@ -301,6 +377,16 @@ class BitForwardEnterprise {
         
         console.log(`💼 Acción de producto: ${productTitle}`);
         
+        // Verificar autenticación
+        if (!this.isUserAuthenticated()) {
+            this.showNotification('Debes iniciar sesión para acceder a este producto', 'warning');
+            // Trigger login modal if auth system is available
+            if (window.BitForwardAuth) {
+                window.BitForwardAuth.openModal('login-modal');
+            }
+            return;
+        }
+        
         // Mostrar modal o redirigir según el producto
         if (btn.textContent.includes('Crear Forward')) {
             this.openForwardContractModal();
@@ -320,16 +406,28 @@ class BitForwardEnterprise {
     }
 
     openForwardContractModal() {
+        if (!this.isUserAuthenticated()) {
+            this.showNotification('Inicia sesión para crear contratos forward', 'warning');
+            return;
+        }
         this.showNotification('Abriendo creador de contratos forward...', 'info');
         // Aquí se abriría el modal para crear un contrato forward
     }
 
     openLoanModal() {
-        this.showNotification('Abriendo solicitud de préstamo...', 'info');
-        // Aquí se abriría el modal para solicitar un préstamo
+        if (!this.isUserAuthenticated()) {
+            this.showNotification('Inicia sesión para acceder a préstamos', 'warning');
+            return;
+        }
+        // Redirigir a la página de préstamos
+        window.location.href = '/lending.html';
     }
 
     openInsuranceModal() {
+        if (!this.isUserAuthenticated()) {
+            this.showNotification('Inicia sesión para contratar seguros', 'warning');
+            return;
+        }
         this.showNotification('Abriendo cobertura de seguros...', 'info');
         // Aquí se abriría el modal para contratar seguro
     }
@@ -448,6 +546,272 @@ class BitForwardEnterprise {
         };
         
         requestAnimationFrame(animate);
+    }
+
+    // Verificar si el usuario está autenticado
+    isUserAuthenticated() {
+        return window.BitForwardAuth && window.BitForwardAuth.isAuthenticated();
+    }
+
+    // Obtener datos del usuario actual
+    getCurrentUser() {
+        return window.BitForwardAuth ? window.BitForwardAuth.getCurrentUser() : null;
+    }
+
+    // --- MÉTODOS DE GESTIÓN DE CONTRATOS ---
+
+    async loadUserContracts() {
+        try {
+            if (!window.BitForwardAuth || !window.BitForwardAuth.isAuthenticated()) {
+                this.showNoContracts();
+                return;
+            }
+
+            const response = await this.apiClient.request('/contracts');
+            if (response.success) {
+                this.contractsData = response.contracts || [];
+                this.renderContractsTable();
+            } else {
+                console.error('Error cargando contratos:', response.msg);
+                this.showNoContracts();
+            }
+        } catch (error) {
+            console.error('Error cargando contratos del usuario:', error);
+            this.showNoContracts();
+        }
+    }
+
+    renderContractsTable() {
+        const tableBody = document.getElementById('contracts-table-body');
+        const noContractsMessage = document.getElementById('no-contracts-message');
+        const contractsTable = document.getElementById('contracts-table');
+
+        if (!tableBody) return;
+
+        if (this.contractsData.length === 0) {
+            this.showNoContracts();
+            return;
+        }
+
+        // Mostrar tabla y ocultar mensaje de "no contratos"
+        if (contractsTable) contractsTable.style.display = 'table';
+        if (noContractsMessage) noContractsMessage.style.display = 'none';
+
+        tableBody.innerHTML = this.contractsData.map(contract => `
+            <tr class="contract-row" data-contract-id="${contract.id}" onclick="window.bitForwardDashboard.showContractDetails('${contract.id}')">
+                <td>
+                    <span class="bf-contract-id">${contract.id.substring(0, 12)}...</span>
+                </td>
+                <td>
+                    <div class="bf-contract-asset">
+                        <strong>${contract.asset}</strong>
+                    </div>
+                </td>
+                <td>
+                    <span class="bf-contract-amount">${contract.amount} ${contract.asset}</span>
+                </td>
+                <td>
+                    <span class="bf-contract-price">$${contract.strikePrice.toLocaleString()}</span>
+                </td>
+                <td>
+                    ${new Date(contract.expirationDate).toLocaleDateString()}
+                </td>
+                <td>
+                    <span class="bf-contract-status ${contract.status.toLowerCase()}">
+                        <i class="fas fa-circle"></i>
+                        ${this.getStatusText(contract.status)}
+                    </span>
+                </td>
+                <td>
+                    <div class="bf-contract-actions">
+                        <button class="bf-btn bf-btn-table bf-btn-primary" onclick="event.stopPropagation(); window.bitForwardDashboard.showContractDetails('${contract.id}')">
+                            <i class="fas fa-eye"></i>
+                            Ver
+                        </button>
+                        <button class="bf-btn bf-btn-table bf-btn-secondary" onclick="event.stopPropagation(); window.bitForwardDashboard.shareContract('${contract.id}')">
+                            <i class="fas fa-share-alt"></i>
+                            Compartir
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    showNoContracts() {
+        const tableBody = document.getElementById('contracts-table-body');
+        const noContractsMessage = document.getElementById('no-contracts-message');
+        const contractsTable = document.getElementById('contracts-table');
+
+        if (tableBody) tableBody.innerHTML = '';
+        if (contractsTable) contractsTable.style.display = 'none';
+        if (noContractsMessage) noContractsMessage.style.display = 'block';
+    }
+
+    async showContractDetails(contractId) {
+        try {
+            const response = await this.apiClient.request(`/contracts/${contractId}`);
+            if (response.success) {
+                this.currentContract = response.contract;
+                this.renderContractDetails(response.contract);
+                this.showContractDetailsSection();
+            } else {
+                console.error('Error cargando detalles del contrato:', response.msg);
+                this.showNotification('Error al cargar los detalles del contrato', 'error');
+            }
+        } catch (error) {
+            console.error('Error obteniendo detalles del contrato:', error);
+            this.showNotification('Error de conexión al cargar el contrato', 'error');
+        }
+    }
+
+    renderContractDetails(contract) {
+        const detailsContent = document.getElementById('contract-details-content');
+        const contractIdElement = document.getElementById('detail-contract-id');
+
+        if (!detailsContent || !contractIdElement) return;
+
+        contractIdElement.textContent = contract.id;
+
+        const createdDate = new Date(contract.createdAt).toLocaleString();
+        const expirationDate = new Date(contract.expirationDate).toLocaleString();
+        const daysUntilExpiration = Math.ceil((new Date(contract.expirationDate) - new Date()) / (1000 * 60 * 60 * 24));
+
+        detailsContent.innerHTML = `
+            <div class="bf-detail-item large-value">
+                <h4>ID del Contrato</h4>
+                <p>${contract.id}</p>
+            </div>
+            <div class="bf-detail-item status">
+                <h4>Estado</h4>
+                <p class="${contract.status.toLowerCase()}">${this.getStatusText(contract.status)}</p>
+            </div>
+            <div class="bf-detail-item amount">
+                <h4>Monto del Contrato</h4>
+                <p>${contract.amount} ${contract.asset}</p>
+            </div>
+            <div class="bf-detail-item price">
+                <h4>Precio de Ejercicio</h4>
+                <p>$${contract.strikePrice.toLocaleString()}</p>
+            </div>
+            <div class="bf-detail-item">
+                <h4>Activo Base</h4>
+                <p>${contract.asset}</p>
+            </div>
+            <div class="bf-detail-item">
+                <h4>Tipo de Contrato</h4>
+                <p>${contract.type || 'Forward'}</p>
+            </div>
+            <div class="bf-detail-item">
+                <h4>Fecha de Creación</h4>
+                <p>${createdDate}</p>
+            </div>
+            <div class="bf-detail-item">
+                <h4>Fecha de Vencimiento</h4>
+                <p>${expirationDate}</p>
+            </div>
+            <div class="bf-detail-item">
+                <h4>Días hasta Vencimiento</h4>
+                <p>${daysUntilExpiration > 0 ? daysUntilExpiration : 'Expirado'}</p>
+            </div>
+            <div class="bf-detail-item">
+                <h4>Valor Actual del Activo</h4>
+                <p id="current-asset-price">Cargando...</p>
+            </div>
+            <div class="bf-detail-item">
+                <h4>P&L Estimado</h4>
+                <p id="estimated-pnl">Calculando...</p>
+            </div>
+            <div class="bf-detail-item">
+                <h4>Usuario Creador</h4>
+                <p>${contract.createdBy || 'Sistema'}</p>
+            </div>
+        `;
+
+        // Cargar precio actual del activo y calcular P&L
+        this.updateContractMetrics(contract);
+    }
+
+    async updateContractMetrics(contract) {
+        try {
+            // Simular obtención del precio actual (en producción, llamaría a una API de precios)
+            const currentPrices = {
+                'BTC': 67234.56,
+                'ETH': 3456.78,
+                'SOL': 156.78
+            };
+
+            const currentPrice = currentPrices[contract.asset] || contract.strikePrice;
+            const pnl = (currentPrice - contract.strikePrice) * contract.amount;
+            const pnlPercentage = ((currentPrice - contract.strikePrice) / contract.strikePrice * 100);
+
+            // Actualizar UI
+            const currentPriceElement = document.getElementById('current-asset-price');
+            const pnlElement = document.getElementById('estimated-pnl');
+
+            if (currentPriceElement) {
+                currentPriceElement.textContent = `$${currentPrice.toLocaleString()}`;
+            }
+
+            if (pnlElement) {
+                const pnlClass = pnl >= 0 ? 'positive' : 'negative';
+                const pnlSign = pnl >= 0 ? '+' : '';
+                pnlElement.innerHTML = `
+                    <span class="${pnlClass}">
+                        ${pnlSign}$${pnl.toLocaleString()} 
+                        (${pnlSign}${pnlPercentage.toFixed(2)}%)
+                    </span>
+                `;
+            }
+        } catch (error) {
+            console.error('Error actualizando métricas del contrato:', error);
+        }
+    }
+
+    showContractDetailsSection() {
+        const detailsSection = document.getElementById('contract-details-section');
+        if (detailsSection) {
+            detailsSection.style.display = 'block';
+            detailsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    hideContractDetailsSection() {
+        const detailsSection = document.getElementById('contract-details-section');
+        if (detailsSection) {
+            detailsSection.style.display = 'none';
+        }
+    }
+
+    getStatusText(status) {
+        const statusMap = {
+            'active': 'Activo',
+            'pending': 'Pendiente',
+            'expired': 'Expirado',
+            'completed': 'Completado',
+            'cancelled': 'Cancelado'
+        };
+        return statusMap[status] || status;
+    }
+
+    async shareContract(contractId) {
+        try {
+            if (navigator.share) {
+                await navigator.share({
+                    title: 'Contrato BitForward',
+                    text: `Ver detalles del contrato ${contractId}`,
+                    url: `${window.location.origin}/contract/${contractId}`
+                });
+            } else {
+                // Fallback: copiar al portapapeles
+                const url = `${window.location.origin}/contract/${contractId}`;
+                await navigator.clipboard.writeText(url);
+                this.showNotification('Enlace del contrato copiado al portapapeles', 'success');
+            }
+        } catch (error) {
+            console.error('Error compartiendo contrato:', error);
+            this.showNotification('Error al compartir el contrato', 'error');
+        }
     }
 }
 

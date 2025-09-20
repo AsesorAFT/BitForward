@@ -14,16 +14,17 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-const morgan = require('morgan');
 const path = require('path');
 
 // Importar rutas y middleware
 const contractRoutes = require('./routes/contracts');
 const statsRoutes = require('./routes/stats');
 const authRoutes = require('./routes/auth');
-const errorHandler = require('./middleware/errorHandler');
+const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 const rateLimiter = require('./middleware/rateLimiter');
-const validateApiKey = require('./middleware/validateApiKey');
+const { authenticateToken } = require('./middleware/auth');
+const validationService = require('./validators/validationService');
+const logger = require('./utils/logger');
 
 // Configuración
 const config = require('./config/config');
@@ -32,7 +33,7 @@ const database = require('./database/database');
 class BitForwardServer {
     constructor() {
         this.app = express();
-        this.port = config.PORT || 3001;
+        this.port = process.env.PORT || 3000;
         this.initializeMiddleware();
         this.initializeRoutes();
         this.initializeErrorHandling();
@@ -42,6 +43,12 @@ class BitForwardServer {
      * Configura middleware de seguridad y utilidad
      */
     initializeMiddleware() {
+        // Logging de requests HTTP
+        this.app.use(logger.createRequestLogger());
+
+        // Sanitización de datos de entrada
+        this.app.use(validationService.createSanitizationMiddleware());
+
         // Seguridad
         this.app.use(helmet({
             contentSecurityPolicy: {
@@ -66,9 +73,6 @@ class BitForwardServer {
         // Compresión de respuestas
         this.app.use(compression());
 
-        // Logging de requests
-        this.app.use(morgan(config.NODE_ENV === 'production' ? 'combined' : 'dev'));
-
         // Parsing de JSON con límite de tamaño
         this.app.use(express.json({ 
             limit: '10mb',
@@ -79,7 +83,7 @@ class BitForwardServer {
         
         this.app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-        // Rate limiting
+        // Rate limiting global
         this.app.use(rateLimiter);
 
         // Servir archivos estáticos del frontend
@@ -90,25 +94,55 @@ class BitForwardServer {
      * Define las rutas de la API
      */
     initializeRoutes() {
-        // Health check
-        this.app.get('/api/health', (req, res) => {
-            res.json({
-                status: 'OK',
-                timestamp: new Date().toISOString(),
-                version: '2.0.0',
-                service: 'BitForward API',
-                database: database.isConnected() ? 'Connected' : 'Disconnected'
-            });
+        // Health check con información de base de datos
+        this.app.get('/api/health', async (req, res) => {
+            try {
+                const dbConnected = await testConnection();
+                res.json({
+                    status: 'OK',
+                    timestamp: new Date().toISOString(),
+                    version: '2.0.0',
+                    service: 'BitForward API - Búnker de Datos Persistente',
+                    database: {
+                        type: 'SQLite',
+                        status: dbConnected ? 'Connected' : 'Disconnected',
+                        path: 'server/database/bitforward.sqlite3'
+                    }
+                });
+            } catch (error) {
+                res.status(500).json({
+                    status: 'ERROR',
+                    timestamp: new Date().toISOString(),
+                    error: 'Database connection failed'
+                });
+            }
         });
 
-        // API routes
-        this.app.use('/api/contracts', contractRoutes);
-        this.app.use('/api/stats', statsRoutes);
+        // API routes con persistencia SQLite
         this.app.use('/api/auth', authRoutes);
+        this.app.use('/api/contracts', contractRoutes);
+        this.app.use('/api/lending', lendingRoutes);
 
-        // Documentación de la API
-        this.app.get('/api/docs', (req, res) => {
-            res.sendFile(path.join(__dirname, 'docs/api-docs.html'));
+        // Información de la API
+        this.app.get('/api', (req, res) => {
+            res.json({
+                name: 'BitForward API',
+                version: '2.0.0',
+                description: 'API empresarial para contratos forward DeFi con persistencia SQLite',
+                endpoints: {
+                    auth: '/api/auth',
+                    contracts: '/api/contracts',
+                    lending: '/api/lending',
+                    health: '/api/health'
+                },
+                features: [
+                    'Autenticación JWT',
+                    'Persistencia SQLite',
+                    'Contratos Forward',
+                    'Plataforma de Préstamos',
+                    'Validación de Seguridad'
+                ]
+            });
         });
 
         // Ruta catch-all para SPA
@@ -117,10 +151,11 @@ class BitForwardServer {
                 return res.status(404).json({
                     error: 'API endpoint not found',
                     path: req.path,
+                    available_endpoints: ['/api/auth', '/api/contracts', '/api/lending', '/api/health'],
                     timestamp: new Date().toISOString()
                 });
             }
-            res.sendFile(path.join(__dirname, '../index.html'));
+            res.sendFile(path.join(__dirname, '../enterprise.html'));
         });
     }
 
@@ -128,42 +163,54 @@ class BitForwardServer {
      * Configura el manejo de errores
      */
     initializeErrorHandling() {
+        // Handler para rutas no encontradas
+        this.app.use(notFoundHandler);
+        
+        // Error handler principal
         this.app.use(errorHandler);
     }
 
     /**
-     * Inicia el servidor
+     * Inicia el servidor con verificación de base de datos
      */
     async start() {
         try {
-            // Inicializar base de datos
-            await database.initialize();
-            console.log('✅ Base de datos inicializada correctamente');
+            // Verificar conexión a la base de datos
+            console.log('🔍 Verificando conexión a la base de datos...');
+            const dbConnected = await testConnection();
+            
+            if (!dbConnected) {
+                console.log('⚠️  La base de datos no está inicializada.');
+                console.log('💡 Ejecuta: npm run db:setup para crear las tablas');
+                console.log('🚀 El servidor continuará, pero algunas funciones pueden fallar');
+            }
 
             // Iniciar servidor
             this.server = this.app.listen(this.port, () => {
                 console.log(`
-🚀 BitForward Server v2.0 iniciado exitosamente!
+🏛️  BÚNKER DE DATOS PERSISTENTE ACTIVADO
 
-📊 Información del Servidor:
+🚀 BitForward Server v2.0 - Persistencia SQLite
    Puerto: ${this.port}
-   Ambiente: ${config.NODE_ENV}
-   Base de datos: SQLite (${config.DATABASE_PATH})
+   Ambiente: ${process.env.NODE_ENV || 'development'}
    
 🌐 URLs disponibles:
    Frontend: http://localhost:${this.port}
    API Health: http://localhost:${this.port}/api/health
-   API Docs: http://localhost:${this.port}/api/docs
+   API Info: http://localhost:${this.port}/api
 
-🛡️ Características activas:
-   ✅ Rate limiting
-   ✅ CORS protection
-   ✅ Helmet security headers
-   ✅ Request compression
-   ✅ Error handling
-   ✅ API validation
+� Características del Búnker:
+   ✅ Base de datos SQLite persistente
+   ✅ Autenticación JWT robusta
+   ✅ Contratos forward con métricas
+   ✅ Plataforma de préstamos
+   ✅ Transacciones auditables
+   ✅ Configuración del sistema
 
-💡 Listo para recibir contratos forward!
+💾 Base de datos: server/database/bitforward.sqlite3
+� Todos los datos son permanentes y seguros
+
+${dbConnected ? '✅ Base de datos conectada y operativa' : '⚠️  Ejecuta "npm run db:setup" para inicializar la BD'}
                 `);
             });
 
@@ -181,15 +228,16 @@ class BitForwardServer {
      */
     setupGracefulShutdown() {
         const shutdown = async (signal) => {
-            console.log(`\n🔄 Recibido ${signal}, cerrando servidor gracefully...`);
+            console.log(`\n🔄 Recibido ${signal}, cerrando Búnker de Datos...`);
             
             if (this.server) {
                 this.server.close(async () => {
                     console.log('✅ Servidor HTTP cerrado');
                     
                     try {
-                        await database.close();
-                        console.log('✅ Base de datos cerrada');
+                        await closeConnection();
+                        console.log('✅ Conexión a base de datos cerrada');
+                        console.log('🏛️  Búnker de Datos desactivado de forma segura');
                         process.exit(0);
                     } catch (error) {
                         console.error('❌ Error al cerrar la base de datos:', error);
