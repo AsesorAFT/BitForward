@@ -547,15 +547,17 @@
             showDashboard() {
                 console.log('🎯 Mostrando dashboard...');
                 
-                // Ocultar login y mostrar dashboard
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-dashboard').style.display = 'block';
-                document.getElementById('fab-menu').style.display = 'block';
-                
-                // Renderizar dashboard si no existe contenido
-                const dashboard = document.getElementById('main-dashboard');
-                if (!dashboard.innerHTML.trim()) {
-                    const username = bitForward.currentUser?.username || 'Usuario';
+                try {
+                    // Ocultar login y mostrar dashboard
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('main-dashboard').style.display = 'block';
+                    document.getElementById('fab-menu').style.display = 'block';
+                    
+                    // Renderizar dashboard si no existe contenido
+                    const dashboard = document.getElementById('main-dashboard');
+                    if (!dashboard.innerHTML.trim()) {
+                        console.log('📝 Creando contenido del dashboard...');
+                        const username = 'Demo User';
                     dashboard.innerHTML = `
                         <div class="dashboard-container">
                             <header class="dashboard-header">
@@ -924,10 +926,15 @@
                             </main>
                         </div>
                     `;
+                    }
+                    
+                    this.currentScreen = 'dashboard';
+                    console.log('✅ Dashboard mostrado exitosamente');
+                } catch (error) {
+                    console.error('❌ Error mostrando dashboard:', error);
+                    // Fallback simple
+                    document.getElementById('main-dashboard').innerHTML = '<div style="padding: 2rem; text-align: center;"><h2>Dashboard de BitForward</h2><p>Cargando contenido...</p></div>';
                 }
-                
-                this.currentScreen = 'dashboard';
-                console.log('✅ Dashboard mostrado exitosamente');
             }
 
             toggleFABMenu() {
