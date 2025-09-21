@@ -286,391 +286,6 @@
                 loginBtn.disabled = false;
             }
         };
-                    
-                    // Crear dashboard básico si no existe
-                    const dashboard = document.getElementById('main-dashboard');
-                    if (!dashboard.innerHTML.trim()) {
-                        dashboard.innerHTML = `
-                            <div class="dashboard-container">
-                                <header class="dashboard-header">
-                                    <div class="dashboard-header-content">
-                                        <div class="dashboard-logo">
-                                            <img src="assets/logo.svg" alt="BitForward" class="logo-icon">
-                                            <h1 class="bitforward-brand animated">BitForward</h1>
-                                        </div>
-                                        <div class="dashboard-user">
-                                            <span>Bienvenido, ${username}</span>
-                                            <button onclick="logout()" class="logout-btn">Cerrar Sesión</button>
-                                        </div>
-                                    </div>
-                                </header>
-                                
-                                <main class="dashboard-main">
-                                    <!-- Portfolio Overview -->
-                                    <div class="dashboard-grid portfolio-overview">
-                                        <div class="dashboard-card total-value">
-                                            <div class="card-header">
-                                                <h3>💼 Total Portfolio</h3>
-                                                <span class="trend-indicator positive">+2.4%</span>
-                                            </div>
-                                            <div class="metric">
-                                                <span class="metric-value">$12,450.00</span>
-                                                <span class="metric-label">Total Value Locked</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="dashboard-card pnl-card">
-                                            <div class="card-header">
-                                                <h3>📈 P&L Today</h3>
-                                                <span class="trend-indicator positive">+5.2%</span>
-                                            </div>
-                                            <div class="metric">
-                                                <span class="metric-value positive">+$285.00</span>
-                                                <span class="metric-label">Daily Change</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="dashboard-card active-positions">
-                                            <div class="card-header">
-                                                <h3>⚡ Active Positions</h3>
-                                                <span class="status-indicator">Live</span>
-                                            </div>
-                                            <div class="metric">
-                                                <span class="metric-value">7</span>
-                                                <span class="metric-label">Open Contracts</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Productos Financieros -->
-                                    <div class="products-section">
-                                        <h2 class="section-title">🏦 Productos Financieros DeFi</h2>
-                                        
-                                        <div class="products-grid">
-                                            <!-- Forward Contracts -->
-                                            <div class="product-card forward-contracts">
-                                                <div class="product-header">
-                                                    <div class="product-icon">📈</div>
-                                                    <h3>Forward Contracts</h3>
-                                                    <span class="product-badge premium">Premium</span>
-                                                </div>
-                                                <div class="product-content">
-                                                    <p>Contratos a futuro descentralizados multi-blockchain</p>
-                                                    <div class="product-stats">
-                                                        <div class="stat">
-                                                            <span class="stat-value">3</span>
-                                                            <span class="stat-label">Activos</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">$4,200</span>
-                                                            <span class="stat-label">Valor</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">+12%</span>
-                                                            <span class="stat-label">ROI</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="supported-chains">
-                                                        <span class="chain-badge btc">₿ Bitcoin</span>
-                                                        <span class="chain-badge eth">Ξ Ethereum</span>
-                                                        <span class="chain-badge sol">◎ Solana</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="action-btn primary" onclick="openForwardContracts()">
-                                                        Crear Contrato
-                                                    </button>
-                                                    <button class="action-btn secondary" onclick="viewForwardPortfolio()">
-                                                        Ver Portfolio
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <!-- DeFi Lending -->
-                                            <div class="product-card defi-lending">
-                                                <div class="product-header">
-                                                    <div class="product-icon">🏛️</div>
-                                                    <h3>DeFi Lending</h3>
-                                                    <span class="product-badge popular">Popular</span>
-                                                </div>
-                                                <div class="product-content">
-                                                    <p>Préstamos colateralizados con liquidación automática</p>
-                                                    <div class="product-stats">
-                                                        <div class="stat">
-                                                            <span class="stat-value">2</span>
-                                                            <span class="stat-label">Préstamos</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">$8,250</span>
-                                                            <span class="stat-label">Prestado</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">5.2%</span>
-                                                            <span class="stat-label">APY</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="lending-details">
-                                                        <div class="detail-item">
-                                                            <span class="detail-label">LTV Ratio:</span>
-                                                            <span class="detail-value safe">75%</span>
-                                                        </div>
-                                                        <div class="detail-item">
-                                                            <span class="detail-label">Health Factor:</span>
-                                                            <span class="detail-value healthy">2.1</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="action-btn primary" onclick="openLendingPlatform()">
-                                                        Solicitar Préstamo
-                                                    </button>
-                                                    <button class="action-btn secondary" onclick="viewLendingDetails()">
-                                                        Ver Detalles
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <!-- Yield Farming -->
-                                            <div class="product-card yield-farming">
-                                                <div class="product-header">
-                                                    <div class="product-icon">🌾</div>
-                                                    <h3>Yield Farming</h3>
-                                                    <span class="product-badge new">Nuevo</span>
-                                                </div>
-                                                <div class="product-content">
-                                                    <p>Provisión de liquidez y farming de tokens de recompensa</p>
-                                                    <div class="product-stats">
-                                                        <div class="stat">
-                                                            <span class="stat-value">1</span>
-                                                            <span class="stat-label">Pools</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">$0</span>
-                                                            <span class="stat-label">Staked</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">24.5%</span>
-                                                            <span class="stat-label">APY</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="farming-pools">
-                                                        <div class="pool-item">
-                                                            <span class="pool-name">BTC-ETH LP</span>
-                                                            <span class="pool-apy">18.2% APY</span>
-                                                        </div>
-                                                        <div class="pool-item">
-                                                            <span class="pool-name">SOL-USDC LP</span>
-                                                            <span class="pool-apy">24.5% APY</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="action-btn primary" onclick="openYieldFarming()">
-                                                        Empezar Farming
-                                                    </button>
-                                                    <button class="action-btn secondary" onclick="viewPoolDetails()">
-                                                        Ver Pools
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <!-- Cross-Chain Bridge -->
-                                            <div class="product-card cross-chain">
-                                                <div class="product-header">
-                                                    <div class="product-icon">🌉</div>
-                                                    <h3>Cross-Chain Bridge</h3>
-                                                    <span class="product-badge beta">Beta</span>
-                                                </div>
-                                                <div class="product-content">
-                                                    <p>Transfer de assets entre Bitcoin, Ethereum y Solana</p>
-                                                    <div class="product-stats">
-                                                        <div class="stat">
-                                                            <span class="stat-value">5</span>
-                                                            <span class="stat-label">Transfers</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">$1,200</span>
-                                                            <span class="stat-label">Volume</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">0.3%</span>
-                                                            <span class="stat-label">Fee</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="bridge-routes">
-                                                        <div class="route-item">
-                                                            <span class="route">BTC → ETH</span>
-                                                            <span class="route-status available">Disponible</span>
-                                                        </div>
-                                                        <div class="route-item">
-                                                            <span class="route">ETH → SOL</span>
-                                                            <span class="route-status available">Disponible</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="action-btn primary" onclick="openBridge()">
-                                                        Transfer Assets
-                                                    </button>
-                                                    <button class="action-btn secondary" onclick="viewBridgeHistory()">
-                                                        Ver Historial
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <!-- Portfolio Analytics -->
-                                            <div class="product-card analytics">
-                                                <div class="product-header">
-                                                    <div class="product-icon">📊</div>
-                                                    <h3>Analytics Pro</h3>
-                                                    <span class="product-badge premium">Premium</span>
-                                                </div>
-                                                <div class="product-content">
-                                                    <p>Análisis avanzado de riesgo y performance en tiempo real</p>
-                                                    <div class="product-stats">
-                                                        <div class="stat">
-                                                            <span class="stat-value">15</span>
-                                                            <span class="stat-label">Métricas</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">Real-time</span>
-                                                            <span class="stat-label">Updates</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">High</span>
-                                                            <span class="stat-label">Risk Level</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="analytics-features">
-                                                        <div class="feature-item">
-                                                            <span class="feature-name">Risk Analytics</span>
-                                                            <span class="feature-status active">Activo</span>
-                                                        </div>
-                                                        <div class="feature-item">
-                                                            <span class="feature-name">Performance Tracking</span>
-                                                            <span class="feature-status active">Activo</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="action-btn primary" onclick="openAnalytics()">
-                                                        Ver Analytics
-                                                    </button>
-                                                    <button class="action-btn secondary" onclick="exportReports()">
-                                                        Exportar Reports
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <!-- Insurance Protocol -->
-                                            <div class="product-card insurance">
-                                                <div class="product-header">
-                                                    <div class="product-icon">🛡️</div>
-                                                    <h3>Insurance Protocol</h3>
-                                                    <span class="product-badge coming-soon">Próximamente</span>
-                                                </div>
-                                                <div class="product-content">
-                                                    <p>Seguros descentralizados para proteger tus posiciones DeFi</p>
-                                                    <div class="product-stats">
-                                                        <div class="stat">
-                                                            <span class="stat-value">0</span>
-                                                            <span class="stat-label">Pólizas</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">$0</span>
-                                                            <span class="stat-label">Cobertura</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span class="stat-value">2.5%</span>
-                                                            <span class="stat-label">Premium</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="insurance-types">
-                                                        <div class="insurance-item">
-                                                            <span class="insurance-name">Smart Contract Risk</span>
-                                                        </div>
-                                                        <div class="insurance-item">
-                                                            <span class="insurance-name">Liquidation Protection</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="action-btn primary disabled" onclick="comingSoon()">
-                                                        Próximamente
-                                                    </button>
-                                                    <button class="action-btn secondary" onclick="notifyWhenReady()">
-                                                        Notificarme
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Market Overview -->
-                                    <div class="market-section">
-                                        <h2 class="section-title">📈 Market Overview</h2>
-                                        <div class="market-grid">
-                                            <div class="market-card">
-                                                <h4>Bitcoin (BTC)</h4>
-                                                <div class="price-info">
-                                                    <span class="price">$43,250.00</span>
-                                                    <span class="change positive">+2.4%</span>
-                                                </div>
-                                            </div>
-                                            <div class="market-card">
-                                                <h4>Ethereum (ETH)</h4>
-                                                <div class="price-info">
-                                                    <span class="price">$2,680.00</span>
-                                                    <span class="change positive">+1.8%</span>
-                                                </div>
-                                            </div>
-                                            <div class="market-card">
-                                                <h4>Solana (SOL)</h4>
-                                                <div class="price-info">
-                                                    <span class="price">$98.50</span>
-                                                    <span class="change negative">-0.5%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Recent Activity -->
-                                    <div class="activity-section">
-                                        <h2 class="section-title">📋 Actividad Reciente</h2>
-                                        <div class="activity-feed">
-                                            <div class="activity-item">
-                                                <span class="activity-icon">🎉</span>
-                                                <span class="activity-text">Bienvenido a BitForward Enterprise! Tu cuenta está lista.</span>
-                                                <span class="activity-time">Hace un momento</span>
-                                            </div>
-                                            <div class="activity-item">
-                                                <span class="activity-icon">📈</span>
-                                                <span class="activity-text">Forward Contract BTC-45000 creado exitosamente</span>
-                                                <span class="activity-time">Hace 2 horas</span>
-                                            </div>
-                                            <div class="activity-item">
-                                                <span class="activity-icon">💰</span>
-                                                <span class="activity-text">Préstamo DeFi de $5,000 USDC aprobado</span>
-                                                <span class="activity-time">Hace 1 día</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </main>
-                            </div>
-                        `;
-                    }
-                } else {
-                    throw new Error(result ? result.error : 'Error desconocido en el login');
-                }
-            } catch (error) {
-                console.error('❌ Error en login:', error);
-                alert(`Error de login: ${error.message}`);
-            } finally {
-                btnText.style.display = 'inline';
-                btnSpinner.style.display = 'none';
-                loginBtn.disabled = false;
-            }
-        };
 
         // Funciones globales para el dashboard
         window.logout = function() {
@@ -1536,7 +1151,21 @@
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
-            window.bitForwardApp = new BitForwardApp();
+            console.log('🚀 Inicializando BitForward...');
+            
+            try {
+                window.bitForwardApp = new BitForwardApp();
+            } catch (error) {
+                console.log('⚡ Usando inicialización directa...');
+                // Fallback simple que sabemos que funciona
+                setTimeout(() => {
+                    const loading = document.getElementById('loading-screen');
+                    const login = document.getElementById('login-screen');
+                    
+                    if (loading) loading.style.display = 'none';
+                    if (login) login.style.display = 'flex';
+                }, 2000);
+            }
         });
     </script>
 
@@ -1640,6 +1269,47 @@
         .login-btn:hover:not(:disabled) {
             background: linear-gradient(135deg, #2a5298, #1e3c72);
             border-color: #FFA500;
+        }
+
+        /* Language Selector - Footer */
+        .language-selector-footer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+
+        .language-select-footer {
+            background: rgba(30, 60, 114, 0.9);
+            border: 2px solid #FFD700;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #FFD700;
+            font-weight: 500;
+            cursor: pointer;
+            min-width: 140px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .language-select-footer:hover {
+            border-color: #FFA500;
+            background: rgba(30, 60, 114, 0.95);
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .language-select-footer:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+
+        .language-select-footer option {
+            background: #1e3c72;
+            color: #FFD700;
         }
 
         .login-btn:disabled {
@@ -2496,5 +2166,14 @@
             }
         }
     </style>
+
+    <!-- Language Selector - Footer -->
+    <div class="language-selector-footer">
+        <select id="language-select-footer" class="language-select-footer">
+            <option value="es" selected>🇪🇸 Español</option>
+            <option value="en">🇺🇸 English</option>
+        </select>
+    </div>
+
 </body>
 </html>
