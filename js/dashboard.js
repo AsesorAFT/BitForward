@@ -823,12 +823,299 @@ class BitForwardEnterprise {
             this.showNotification('Error al compartir el contrato', 'error');
         }
     }
+
+    // --- FUNCIONES DE CREACIÓN DE FORWARD CONTRACTS ---
+
+    openForwardModal() {
+        const modal = this.createForwardModal();
+        document.body.appendChild(modal);
+        
+        // Inicializar Web3 si está disponible
+        if (window.web3Instance) {
+            console.log('🔗 Web3 disponible para transacciones');
+        } else {
+            console.log('⚠️ Web3 no disponible, usando simulación');
+        }
+    }
+
+    createForwardModal() {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        modal.innerHTML = `
+            <div class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary rounded-2xl p-8 max-w-2xl w-full mx-4 border border-white/20">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-white">Crear Forward Contract</h2>
+                    <button onclick="this.closest('.fixed').remove()" class="text-white hover:text-bf-secondary transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="forward-form" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="collateral" class="block text-sm font-medium text-blue-200 mb-2">
+                                Colateral (BTC)
+                            </label>
+                            <input 
+                                type="number" 
+                                id="collateral" 
+                                step="0.001" 
+                                min="0.001"
+                                class="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white placeholder-blue-300 focus:border-bf-secondary focus:outline-none"
+                                placeholder="0.1"
+                                required
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="notional" class="block text-sm font-medium text-blue-200 mb-2">
+                                Valor Nocional (USD)
+                            </label>
+                            <input 
+                                type="number" 
+                                id="notional" 
+                                step="100" 
+                                min="1000"
+                                class="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white placeholder-blue-300 focus:border-bf-secondary focus:outline-none"
+                                placeholder="10000"
+                                required
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="leverage" class="block text-sm font-medium text-blue-200 mb-2">
+                                Apalancamiento
+                            </label>
+                            <select 
+                                id="leverage" 
+                                class="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white focus:border-bf-secondary focus:outline-none"
+                            >
+                                <option value="1">1x - Sin apalancamiento</option>
+                                <option value="2">2x - Apalancamiento moderado</option>
+                                <option value="5">5x - Apalancamiento alto</option>
+                                <option value="10">10x - Apalancamiento extremo</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="direction" class="block text-sm font-medium text-blue-200 mb-2">
+                                Dirección
+                            </label>
+                            <select 
+                                id="direction" 
+                                class="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white focus:border-bf-secondary focus:outline-none"
+                            >
+                                <option value="true">Long (Compra a futuro)</option>
+                                <option value="false">Short (Venta a futuro)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label for="expiry" class="block text-sm font-medium text-blue-200 mb-2">
+                                Días hasta vencimiento
+                            </label>
+                            <select 
+                                id="expiry" 
+                                class="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white focus:border-bf-secondary focus:outline-none"
+                            >
+                                <option value="7">7 días</option>
+                                <option value="14">14 días</option>
+                                <option value="30" selected>30 días</option>
+                                <option value="60">60 días</option>
+                                <option value="90">90 días</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-900/20 rounded-lg p-4 border border-blue-500/30">
+                        <h3 class="text-lg font-semibold text-white mb-3">Resumen del Contrato</h3>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="text-blue-200">Precio actual BTC:</span>
+                                <span class="text-white font-medium ml-2">$67,234.56</span>
+                            </div>
+                            <div>
+                                <span class="text-blue-200">Margen requerido:</span>
+                                <span class="text-white font-medium ml-2" id="required-margin">Calculando...</span>
+                            </div>
+                            <div>
+                                <span class="text-blue-200">Liquidación estimada:</span>
+                                <span class="text-white font-medium ml-2" id="liquidation-price">Calculando...</span>
+                            </div>
+                            <div>
+                                <span class="text-blue-200">Comisión:</span>
+                                <span class="text-white font-medium ml-2">0.1%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button 
+                            type="button" 
+                            onclick="this.closest('.fixed').remove()"
+                            class="flex-1 px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                        >
+                            Cancelar
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="flex-1 px-6 py-3 bg-gradient-to-r from-bf-secondary to-yellow-400 text-black font-medium rounded-lg hover:shadow-crypto-glow transition-all duration-300"
+                        >
+                            Crear Forward Contract
+                        </button>
+                    </div>
+                </form>
+            </div>
+        `;
+        
+        // Agregar event listener al formulario
+        modal.querySelector('#forward-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.submitForward();
+        });
+        
+        // Agregar listeners para cálculos en tiempo real
+        this.setupForwardCalculations(modal);
+        
+        return modal;
+    }
+
+    setupForwardCalculations(modal) {
+        const inputs = modal.querySelectorAll('#collateral, #notional, #leverage');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this.updateForwardCalculations(modal);
+            });
+        });
+        
+        // Cálculo inicial
+        setTimeout(() => this.updateForwardCalculations(modal), 100);
+    }
+
+    updateForwardCalculations(modal) {
+        const collateral = parseFloat(modal.querySelector('#collateral').value) || 0;
+        const notional = parseFloat(modal.querySelector('#notional').value) || 0;
+        const leverage = parseFloat(modal.querySelector('#leverage').value) || 1;
+        
+        const btcPrice = 67234.56; // En producción vendría de un oráculo
+        const requiredMargin = (notional / leverage) / btcPrice;
+        const liquidationPrice = btcPrice * (1 - (1 / leverage) * 0.8); // 80% del margen
+        
+        const marginElement = modal.querySelector('#required-margin');
+        const liquidationElement = modal.querySelector('#liquidation-price');
+        
+        if (marginElement) {
+            marginElement.textContent = `${requiredMargin.toFixed(4)} BTC`;
+        }
+        
+        if (liquidationElement) {
+            liquidationElement.textContent = `$${liquidationPrice.toLocaleString()}`;
+        }
+    }
+
+    async submitForward() {
+        const collateral = document.getElementById('collateral').value;
+        const notional = document.getElementById('notional').value;
+        const leverage = document.getElementById('leverage').value;
+        const isLong = document.getElementById('direction').value === 'true';
+        const expiry = document.getElementById('expiry').value;
+        
+        if (!collateral || !notional || !expiry) {
+            this.showNotification('Por favor completa todos los campos', 'error');
+            return;
+        }
+        
+        try {
+            this.showNotification('Creando forward contract...', 'info');
+            
+            let result;
+            
+            // Intentar usar Web3 si está disponible
+            if (window.web3Instance && window.web3Instance.createForward) {
+                result = await window.web3Instance.createForward({
+                    collateral: parseFloat(collateral),
+                    notionalUSD: parseFloat(notional),
+                    expiryDays: parseInt(expiry),
+                    leverage: parseFloat(leverage),
+                    isLong: isLong
+                });
+            } else {
+                // Fallback: simulación para desarrollo
+                result = await this.simulateForwardCreation({
+                    collateral: parseFloat(collateral),
+                    notionalUSD: parseFloat(notional),
+                    expiryDays: parseInt(expiry),
+                    leverage: parseFloat(leverage),
+                    isLong: isLong
+                });
+            }
+            
+            if (result.success) {
+                this.showNotification(`Forward creado exitosamente! ID: ${result.forwardId}`, 'success');
+                document.querySelector('.fixed').remove();
+                this.loadUserContracts(); // Actualizar la lista de contratos
+            } else {
+                this.showNotification('Error creando forward: ' + result.error, 'error');
+            }
+        } catch (error) {
+            console.error('Error en submitForward:', error);
+            this.showNotification('Error: ' + error.message, 'error');
+        }
+    }
+
+    async simulateForwardCreation(params) {
+        // Simulación para desarrollo y testing
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const forwardId = 'FWD_' + Date.now().toString(36).toUpperCase();
+                resolve({
+                    success: true,
+                    forwardId: forwardId,
+                    txHash: '0x' + Math.random().toString(16).substr(2, 64)
+                });
+            }, 2000); // Simular delay de transacción
+        });
+    }
+
+    // Sobrescribir la función openForwardContractModal para usar el nuevo modal
+    openForwardContractModal() {
+        if (!this.isUserAuthenticated()) {
+            this.showNotification('Inicia sesión para crear contratos forward', 'warning');
+            return;
+        }
+        this.openForwardModal();
+    }
 }
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
+    window.bitForwardDashboard = new BitForwardEnterprise();
     window.BitForwardEnterprise = new BitForwardEnterprise();
 });
+
+// Funciones globales para el dashboard
+window.submitForward = async function() {
+    if (window.bitForwardDashboard) {
+        return await window.bitForwardDashboard.submitForward();
+    } else {
+        console.error('Dashboard no inicializado');
+    }
+};
+
+window.showForwardModal = function() {
+    if (window.bitForwardDashboard) {
+        window.bitForwardDashboard.openForwardModal();
+    }
+};
+
+window.loadRealTimeData = function() {
+    if (window.bitForwardDashboard) {
+        window.bitForwardDashboard.loadUserContracts();
+        window.bitForwardDashboard.loadAssetPrices();
+    }
+};
 
 // Exportar para uso en otros módulos
 if (typeof module !== 'undefined' && module.exports) {
