@@ -83,14 +83,20 @@
                 </div>
                 
                 <div class="form-actions">
-                    <button type="button" class="preview-btn" onclick="previewContract()">
+                    <button type="button" class="preview-btn" id="preview-contract-btn" aria-describedby="preview-help">
                         <span class="btn-icon">👁️</span>
                         Vista Previa
                     </button>
-                    <button type="submit" class="create-btn">
+                    <button type="submit" class="create-btn" id="create-contract-btn" aria-describedby="create-help">
                         <span class="btn-icon">✨</span>
                         Crear Contrato
                     </button>
+                </div>
+                <div class="form-help" id="preview-help" style="display: none;">
+                    Permite revisar todos los datos del contrato antes de crearlo
+                </div>
+                <div class="form-help" id="create-help" style="display: none;">
+                    Crea el contrato con los datos validados
                 </div>
             </form>
         </section>
@@ -131,6 +137,6 @@
     <script src="src/validation.js"></script>
     <script src="src/notifications.js"></script>
     <script src="src/prototype.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
