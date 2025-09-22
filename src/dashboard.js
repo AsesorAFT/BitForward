@@ -331,22 +331,37 @@ class PerformanceWidget {
         
         const perf = this.analytics.performance;
         
-        container.innerHTML = `
-            <div class="performance-metrics">
-                <div class="metric-card">
-                    <h4>Win Rate</h4>
-                    <span class="big-number">${perf.winRate.toFixed(1)}%</span>
-                </div>
-                <div class="metric-card">
-                    <h4>Avg Holding Period</h4>
-                    <span class="big-number">${perf.avgHoldingPeriod.toFixed(0)} days</span>
-                </div>
-                <div class="metric-card">
-                    <h4>Success Rate</h4>
-                    <span class="big-number">${this.analytics.marketData.successRate.toFixed(1)}%</span>
-                </div>
-            </div>
-        `;
+        // Clear container safely
+        container.textContent = '';
+        
+        // Create performance metrics container
+        const performanceMetrics = document.createElement('div');
+        performanceMetrics.className = 'performance-metrics';
+        
+        // Create metric cards
+        const metrics = [
+            { title: 'Win Rate', value: `${perf.winRate.toFixed(1)}%` },
+            { title: 'Avg Holding Period', value: `${perf.avgHoldingPeriod.toFixed(0)} days` },
+            { title: 'Success Rate', value: `${this.analytics.marketData.successRate.toFixed(1)}%` }
+        ];
+        
+        metrics.forEach(metric => {
+            const metricCard = document.createElement('div');
+            metricCard.className = 'metric-card';
+            
+            const title = document.createElement('h4');
+            title.textContent = metric.title;
+            
+            const value = document.createElement('span');
+            value.className = 'big-number';
+            value.textContent = metric.value;
+            
+            metricCard.appendChild(title);
+            metricCard.appendChild(value);
+            performanceMetrics.appendChild(metricCard);
+        });
+        
+        container.appendChild(performanceMetrics);
     }
 }
 
