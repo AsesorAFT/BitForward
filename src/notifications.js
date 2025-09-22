@@ -372,17 +372,47 @@ class NotificationSystem {
         const title = config.title || this.getDefaultTitle(type);
         const details = config.details || '';
 
-        notification.innerHTML = `
-            <div class="notification-header">
-                <div class="notification-title">${title}</div>
-                <button class="notification-close" onclick="notificationSystem.remove('${id}')">&times;</button>
-            </div>
-            <div class="notification-body">
-                <div class="notification-message">${message}</div>
-                ${details ? `<div class="notification-details">${details}</div>` : ''}
-            </div>
-            <div class="notification-progress"></div>
-        `;
+        // Create header
+        const header = document.createElement('div');
+        header.className = 'notification-header';
+        
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'notification-title';
+        titleDiv.textContent = title;
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'notification-close';
+        closeBtn.textContent = '×';
+        closeBtn.setAttribute('aria-label', 'Cerrar notificación');
+        closeBtn.addEventListener('click', () => this.remove(id));
+        
+        header.appendChild(titleDiv);
+        header.appendChild(closeBtn);
+
+        // Create body
+        const body = document.createElement('div');
+        body.className = 'notification-body';
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'notification-message';
+        messageDiv.textContent = message;
+        body.appendChild(messageDiv);
+        
+        if (details) {
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'notification-details';
+            detailsDiv.textContent = details;
+            body.appendChild(detailsDiv);
+        }
+
+        // Create progress bar
+        const progress = document.createElement('div');
+        progress.className = 'notification-progress';
+
+        // Assemble notification
+        notification.appendChild(header);
+        notification.appendChild(body);
+        notification.appendChild(progress);
 
         return notification;
     }
@@ -391,36 +421,67 @@ class NotificationSystem {
         const notification = document.createElement('div');
         notification.className = 'notification validation';
 
-        let errorsHtml = '';
+        // Create header
+        const header = document.createElement('div');
+        header.className = 'notification-header';
+        
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'notification-title';
+        titleDiv.textContent = '🔍 Errores de Validación';
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'notification-close';
+        closeBtn.textContent = '×';
+        closeBtn.setAttribute('aria-label', 'Cerrar notificación');
+        closeBtn.addEventListener('click', (e) => {
+            const notifId = e.target.closest('.notification').dataset.id;
+            this.remove(notifId);
+        });
+        
+        header.appendChild(titleDiv);
+        header.appendChild(closeBtn);
+
+        // Create body
+        const body = document.createElement('div');
+        body.className = 'notification-body';
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'notification-message';
+        messageDiv.textContent = message;
+        body.appendChild(messageDiv);
+
+        // Create errors list
         if (errors.length > 0) {
-            errorsHtml = `
-                <ul class="notification-errors">
-                    ${errors.map(error => `<li>${error}</li>`).join('')}
-                </ul>
-            `;
+            const errorsList = document.createElement('ul');
+            errorsList.className = 'notification-errors';
+            errors.forEach(error => {
+                const li = document.createElement('li');
+                li.textContent = error;
+                errorsList.appendChild(li);
+            });
+            body.appendChild(errorsList);
         }
 
-        let warningsHtml = '';
+        // Create warnings list
         if (warnings.length > 0) {
-            warningsHtml = `
-                <ul class="notification-warnings">
-                    ${warnings.map(warning => `<li>${warning}</li>`).join('')}
-                </ul>
-            `;
+            const warningsList = document.createElement('ul');
+            warningsList.className = 'notification-warnings';
+            warnings.forEach(warning => {
+                const li = document.createElement('li');
+                li.textContent = warning;
+                warningsList.appendChild(li);
+            });
+            body.appendChild(warningsList);
         }
 
-        notification.innerHTML = `
-            <div class="notification-header">
-                <div class="notification-title">🔍 Errores de Validación</div>
-                <button class="notification-close" onclick="notificationSystem.remove(this.closest('.notification').dataset.id)">&times;</button>
-            </div>
-            <div class="notification-body">
-                <div class="notification-message">${message}</div>
-                ${errorsHtml}
-                ${warningsHtml}
-            </div>
-            <div class="notification-progress"></div>
-        `;
+        // Create progress bar
+        const progress = document.createElement('div');
+        progress.className = 'notification-progress';
+
+        // Assemble notification
+        notification.appendChild(header);
+        notification.appendChild(body);
+        notification.appendChild(progress);
 
         return notification;
     }

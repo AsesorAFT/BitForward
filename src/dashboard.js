@@ -170,22 +170,51 @@ class BitForwardDashboard {
         // Crear modal dinámico
         const modal = document.createElement('div');
         modal.className = 'bitforward-modal';
-        modal.innerHTML = `
-            <div class="modal-backdrop"></div>
-            <div class="modal-content">
-                <header class="modal-header">
-                    <h3>${title}</h3>
-                    <button class="modal-close">&times;</button>
-                </header>
-                <div class="modal-body">${content}</div>
-            </div>
-        `;
+        
+        // Create modal backdrop
+        const backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop';
+        
+        // Create modal content
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+        
+        // Create header
+        const header = document.createElement('header');
+        header.className = 'modal-header';
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = title;
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'modal-close';
+        closeBtn.textContent = '×';
+        closeBtn.setAttribute('aria-label', 'Cerrar modal');
+        
+        header.appendChild(h3);
+        header.appendChild(closeBtn);
+        
+        // Create body
+        const body = document.createElement('div');
+        body.className = 'modal-body';
+        // Safely handle content - if it's a string, treat as text, if it's an element, append it
+        if (typeof content === 'string') {
+            body.textContent = content;
+        } else if (content instanceof HTMLElement) {
+            body.appendChild(content);
+        }
+        
+        // Assemble modal
+        modalContent.appendChild(header);
+        modalContent.appendChild(body);
+        modal.appendChild(backdrop);
+        modal.appendChild(modalContent);
         
         document.body.appendChild(modal);
         
-        // Event listeners para cerrar
-        modal.querySelector('.modal-close').onclick = () => modal.remove();
-        modal.querySelector('.modal-backdrop').onclick = () => modal.remove();
+        // Event listeners para cerrar using addEventListener
+        closeBtn.addEventListener('click', () => modal.remove());
+        backdrop.addEventListener('click', () => modal.remove());
     }
 
     destroy() {
@@ -212,35 +241,78 @@ class PortfolioWidget {
     render(container) {
         if (!this.data) this.update();
         
-        container.innerHTML = `
-            <div class="portfolio-summary">
-                <div class="metric">
-                    <span class="value">${this.data.contracts}</span>
-                    <span class="label">Total Contracts</span>
-                </div>
-                <div class="metric">
-                    <span class="value">${this.data.active}</span>
-                    <span class="label">Active</span>
-                </div>
-                <div class="metric">
-                    <span class="value ${this.data.totalPnL >= 0 ? 'positive' : 'negative'}">${BitForwardUtils.formatCurrency(this.data.totalPnL)}</span>
-                    <span class="label">Total P&L</span>
-                </div>
-                <div class="metric">
-                    <span class="value risk-${this.data.riskExposure.toLowerCase()}">${this.data.riskExposure}</span>
-                    <span class="label">Risk Level</span>
-                </div>
-            </div>
-            <div class="blockchain-breakdown">
-                ${Object.entries(this.data.byBlockchain).map(([chain, data]) => `
-                    <div class="chain-item">
-                        <span class="chain-name">${chain}</span>
-                        <span class="chain-count">${data.count} contracts</span>
-                        <span class="chain-amount">${data.totalAmount.toFixed(4)}</span>
-                    </div>
-                `).join('')}
-            </div>
-        `;
+        // Clear container safely
+        container.textContent = '';
+        
+        // Create portfolio summary
+        const portfolioSummary = document.createElement('div');
+        portfolioSummary.className = 'portfolio-summary';
+        
+        // Create metrics
+        const metrics = [
+            { value: this.data.contracts, label: 'Total Contracts' },
+            { value: this.data.active, label: 'Active' },
+            { 
+                value: BitForwardUtils.formatCurrency(this.data.totalPnL), 
+                label: 'Total P&L',
+                className: this.data.totalPnL >= 0 ? 'positive' : 'negative'
+            },
+            { 
+                value: this.data.riskExposure, 
+                label: 'Risk Level',
+                className: `risk-${this.data.riskExposure.toLowerCase()}`
+            }
+        ];
+        
+        metrics.forEach(metric => {
+            const metricDiv = document.createElement('div');
+            metricDiv.className = 'metric';
+            
+            const valueSpan = document.createElement('span');
+            valueSpan.className = 'value';
+            if (metric.className) {
+                valueSpan.classList.add(metric.className);
+            }
+            valueSpan.textContent = metric.value;
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'label';
+            labelSpan.textContent = metric.label;
+            
+            metricDiv.appendChild(valueSpan);
+            metricDiv.appendChild(labelSpan);
+            portfolioSummary.appendChild(metricDiv);
+        });
+        
+        // Create blockchain breakdown
+        const blockchainBreakdown = document.createElement('div');
+        blockchainBreakdown.className = 'blockchain-breakdown';
+        
+        Object.entries(this.data.byBlockchain).forEach(([chain, data]) => {
+            const chainItem = document.createElement('div');
+            chainItem.className = 'chain-item';
+            
+            const chainName = document.createElement('span');
+            chainName.className = 'chain-name';
+            chainName.textContent = chain;
+            
+            const chainCount = document.createElement('span');
+            chainCount.className = 'chain-count';
+            chainCount.textContent = `${data.count} contracts`;
+            
+            const chainAmount = document.createElement('span');
+            chainAmount.className = 'chain-amount';
+            chainAmount.textContent = data.totalAmount.toFixed(4);
+            
+            chainItem.appendChild(chainName);
+            chainItem.appendChild(chainCount);
+            chainItem.appendChild(chainAmount);
+            blockchainBreakdown.appendChild(chainItem);
+        });
+        
+        // Assemble and append
+        container.appendChild(portfolioSummary);
+        container.appendChild(blockchainBreakdown);
     }
 }
 
