@@ -1,0 +1,521 @@
+/* BitForward Dashboard Simple - Estilos principales */
+:root {
+    --bf-primary: #3B82F6;
+    --bf-secondary: #F59E0B;
+    --bf-dark: #0F172A;
+    --bf-light: #F8FAFC;
+    --bf-border: #E2E8F0;
+    --bf-text: #1E293B;
+    --bf-muted: #64748B;
+    --bf-success: #10B981;
+    --bf-error: #EF4444;
+    --bf-warning: #F59E0B;
+}
+
+/* Reset y base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    color: #fff;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Layout principal */
+.dashboard-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+    padding: 1rem 2rem;
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo section - AQUÍ ESTÁ EL ARREGLO */
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-container {
+    width: 40px;  /* Tamaño fijo para el logo */
+    height: 40px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;  /* Mantiene las proporciones */
+    display: block;
+}
+
+.brand-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.brand-subtitle {
+    font-size: 0.875rem;
+    color: var(--bf-muted);
+    margin: 0;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    color: #94A3B8;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+nav a:hover {
+    color: #fff;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.hidden-mobile {
+    display: flex;
+}
+
+/* Wallet button */
+.wallet-btn {
+    background: linear-gradient(135deg, var(--bf-primary), #2563EB);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.wallet-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Main content */
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Utility classes */
+.mb-8 { margin-bottom: 2rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+
+/* Grid system */
+.grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.grid-1 { grid-template-columns: 1fr; }
+
+@media (min-width: 768px) {
+    .grid-md-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-md-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .grid-lg-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-lg-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Section titles */
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #fff, #94A3B8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-title-md {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+/* Metric cards */
+.metric-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px);
+}
+
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.metric-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.metric-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.metric-icon.green { background: linear-gradient(135deg, #10B981, #059669); }
+.metric-icon.blue { background: linear-gradient(135deg, #3B82F6, #2563EB); }
+.metric-icon.yellow { background: linear-gradient(135deg, #F59E0B, #D97706); }
+.metric-icon.purple { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+
+.metric-change {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.metric-change.positive {
+    color: #10B981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.metric-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #94A3B8;
+    margin-bottom: 0.5rem;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0.25rem;
+}
+
+.metric-subtitle {
+    font-size: 0.875rem;
+    color: #64748B;
+}
+
+/* Action buttons */
+.action-btn {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 2rem;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.action-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.action-icon svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.action-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.action-description {
+    font-size: 0.875rem;
+    color: #94A3B8;
+    line-height: 1.5;
+}
+
+/* Glass cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+/* Table styles */
+.table-container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+    background: rgba(255, 255, 255, 0.02);
+    font-weight: 600;
+    color: #94A3B8;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+td {
+    color: #fff;
+    font-weight: 500;
+}
+
+tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Crypto icons */
+.crypto-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.crypto-icon.btc { background: #F7931A; }
+.crypto-icon.eth { background: #627EEA; }
+.crypto-icon.sol { background: #14F195; color: #000; }
+
+/* Status badges */
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-badge.active {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Utility classes */
+.flex { display: flex; }
+.flex-center { align-items: center; }
+.flex-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.font-medium { font-weight: 500; }
+.font-bold { font-weight: 700; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Loading spinner */
+.loading-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-spinner svg {
+    width: 3rem;
+    height: 3rem;
+    animation: spin 1s linear infinite;
+    color: var(--bf-primary);
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Footer */
+footer {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(226, 232, 240, 0.1);
+    padding: 1rem 2rem;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #10B981;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.status-text {
+    font-size: 0.875rem;
+    color: #10B981;
+    font-weight: 500;
+}
+
+.footer-info {
+    font-size: 0.875rem;
+    color: #64748B;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hidden-mobile {
+        display: none;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .metric-value {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .table-scroll {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .action-btn {
+        padding: 1.5rem;
+    }
+    
+    .action-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .action-title {
+        font-size: 1.125rem;
+    }
+    
+    th, td {
+        padding: 0.75rem;
+    }
+}
