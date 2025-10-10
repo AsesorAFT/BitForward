@@ -253,6 +253,34 @@
                 document.getElementById('contract-blockchain').addEventListener('change', () => {
                     this.updateContractForm();
                 });
+
+                // Wallet event listeners
+                window.addEventListener('walletDisconnected', (event) => {
+                    console.log('Wallet disconnected event:', event.detail);
+                    this.showNotification(
+                        `${event.detail.blockchain} wallet disconnected`, 
+                        'warning'
+                    );
+                    // Opcionalmente, redirigir al login
+                    // this.showLogin();
+                });
+
+                window.addEventListener('walletAccountChanged', (event) => {
+                    console.log('Account changed event:', event.detail);
+                    this.showNotification(
+                        `Account changed to ${event.detail.account.substring(0, 10)}...`, 
+                        'info'
+                    );
+                    // Actualizar el estado de la aplicación con la nueva cuenta
+                });
+
+                window.addEventListener('walletChainChanged', (event) => {
+                    console.log('Chain changed event:', event.detail);
+                    this.showNotification(
+                        `Network changed to ${event.detail.chainId}`, 
+                        'info'
+                    );
+                });
             }
 
             showLogin() {
@@ -299,18 +327,42 @@
 
             async handleWalletConnect(walletType) {
                 try {
+                    // Verificar si la wallet está instalada
+                    if (!this.blockchain.isWalletInstalled(walletType)) {
+                        const installUrl = this.blockchain.getWalletInstallUrl(walletType);
+                        this.showNotification(
+                            `${walletType} not detected. Please install it first.`, 
+                            'warning'
+                        );
+                        if (installUrl && confirm(`${walletType} is not installed. Would you like to install it?`)) {
+                            window.open(installUrl, '_blank');
+                        }
+                        return;
+                    }
+
                     this.showNotification(`Connecting to ${walletType}...`, 'info');
                     
                     const blockchain = this.getBlockchainFromWallet(walletType);
                     const connection = await this.blockchain.connectWallet(blockchain, walletType);
                     
                     if (connection.connected) {
+                        // Mostrar información de la conexión
+                        const connectionInfo = connection.simulated 
+                            ? '(simulated for development)' 
+                            : `Address: ${connection.address.substring(0, 10)}...`;
+                        
+                        console.log('Wallet connected:', connection);
+                        
                         // Auto-login with wallet
                         const loginResult = await bitForward.login(connection.address, 'wallet_auth');
                         
                         if (loginResult.success) {
                             await bitForward.connectWallet(blockchain, connection.address);
-                            this.showNotification(`${walletType} connected successfully!`, 'success');
+                            
+                            this.showNotification(
+                                `${walletType} connected successfully! ${connectionInfo}`, 
+                                'success'
+                            );
                             
                             setTimeout(() => {
                                 this.showDashboard();
@@ -318,7 +370,11 @@
                         }
                     }
                 } catch (error) {
-                    this.showNotification(`Failed to connect ${walletType}: ${error.message}`, 'error');
+                    console.error('Wallet connection error:', error);
+                    this.showNotification(
+                        `Failed to connect ${walletType}: ${error.message}`, 
+                        'error'
+                    );
                 }
             }
 

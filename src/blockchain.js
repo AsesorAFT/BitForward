@@ -407,6 +407,202 @@ class BlockchainIntegration {
         }
     }
 
+    async disconnectWallet(blockchain) {
+        switch (blockchain) {
+            case 'ethereum':
+                return await this.disconnectEthereumWallet();
+            case 'solana':
+                return await this.disconnectSolanaWallet();
+            case 'bitcoin':
+                // Bitcoin wallets generalmente no tienen desconexión explícita
+                return { disconnected: true };
+            default:
+                throw new Error(`Wallet disconnection not supported for ${blockchain}`);
+        }
+    }
+
+    async disconnectEthereumWallet() {
+        // MetaMask no tiene un método de desconexión oficial
+        // La desconexión se hace desde la extensión del navegador
+        if (typeof window !== 'undefined' && window.ethereum) {
+            // Limpiar el estado local
+            this.ethereumListenersSet = false;
+            console.log('Ethereum wallet disconnected locally');
+        }
+        return { disconnected: true };
+    }
+
+    async disconnectSolanaWallet() {
+        if (typeof window !== 'undefined' && window.solana) {
+            try {
+                await window.solana.disconnect();
+                this.solanaListenersSet = false;
+                console.log('Solana wallet disconnected');
+                return { disconnected: true };
+            } catch (error) {
+                console.error('Error disconnecting Solana wallet:', error);
+                throw new Error('Failed to disconnect wallet');
+            }
+        }
+        return { disconnected: true };
+    }
+
+    // Handlers para eventos de wallet
+    handleWalletDisconnect(blockchain) {
+        console.log(`Wallet disconnected: ${blockchain}`);
+        // Emitir evento personalizado para que la UI pueda reaccionar
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('walletDisconnected', {
+                detail: { blockchain }
+            }));
+        }
+    }
+
+    handleAccountChange(blockchain, newAccount) {
+        console.log(`Account changed on ${blockchain}: ${newAccount}`);
+        // Emitir evento personalizado
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('walletAccountChanged', {
+                detail: { blockchain, account: newAccount }
+            }));
+        }
+    }
+
+    handleChainChange(blockchain, chainId) {
+        console.log(`Chain changed on ${blockchain}: ${chainId}`);
+        // Emitir evento personalizado
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('walletChainChanged', {
+                detail: { blockchain, chainId }
+            }));
+        }
+    }
+
+    // Método para verificar si una wallet está instalada
+    isWalletInstalled(walletType) {
+        if (typeof window === 'undefined') return false;
+        
+        switch (walletType) {
+            case 'metamask':
+                return !!window.ethereum;
+            case 'phantom':
+                return !!window.solana;
+            default:
+                return false;
+        }
+    }
+
+    // Método para obtener el link de instalación de una wallet
+    getWalletInstallUrl(walletType) {
+        const urls = {
+            'metamask': 'https://metamask.io/download/',
+            'phantom': 'https://phantom.app/download'
+        };
+        return urls[walletType] || '';
+    }
+
+    // Método para cambiar de red en MetaMask
+    async switchEthereumNetwork(chainId) {
+        if (typeof window === 'undefined' || !window.ethereum) {
+            throw new Error('MetaMask not available');
+        }
+
+        try {
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId }]
+            });
+            return { switched: true, chainId };
+        } catch (error) {
+            // Error 4902 significa que la red no está agregada
+            if (error.code === 4902) {
+                // Intentar agregar la red
+                return await this.addEthereumNetwork(chainId);
+            }
+            throw new Error(`Failed to switch network: ${error.message}`);
+        }
+    }
+
+    // Método para agregar una red personalizada en MetaMask
+    async addEthereumNetwork(chainId) {
+        if (typeof window === 'undefined' || !window.ethereum) {
+            throw new Error('MetaMask not available');
+        }
+
+        // Configuración de redes comunes
+        const networkConfigs = {
+            '0x1': {
+                chainId: '0x1',
+                chainName: 'Ethereum Mainnet',
+                nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+                rpcUrls: ['https://mainnet.infura.io/v3/'],
+                blockExplorerUrls: ['https://etherscan.io']
+            },
+            '0x5': {
+                chainId: '0x5',
+                chainName: 'Goerli Testnet',
+                nativeCurrency: { name: 'Goerli ETH', symbol: 'ETH', decimals: 18 },
+                rpcUrls: ['https://goerli.infura.io/v3/'],
+                blockExplorerUrls: ['https://goerli.etherscan.io']
+            },
+            '0xaa36a7': {
+                chainId: '0xaa36a7',
+                chainName: 'Sepolia Testnet',
+                nativeCurrency: { name: 'Sepolia ETH', symbol: 'ETH', decimals: 18 },
+                rpcUrls: ['https://sepolia.infura.io/v3/'],
+                blockExplorerUrls: ['https://sepolia.etherscan.io']
+            },
+            '0x89': {
+                chainId: '0x89',
+                chainName: 'Polygon Mainnet',
+                nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+                rpcUrls: ['https://polygon-rpc.com/'],
+                blockExplorerUrls: ['https://polygonscan.com']
+            }
+        };
+
+        const config = networkConfigs[chainId];
+        if (!config) {
+            throw new Error(`Network configuration not found for chainId: ${chainId}`);
+        }
+
+        try {
+            await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [config]
+            });
+            return { added: true, chainId };
+        } catch (error) {
+            throw new Error(`Failed to add network: ${error.message}`);
+        }
+    }
+
+    // Obtener información de la red actual de Ethereum
+    async getEthereumNetworkInfo() {
+        if (typeof window === 'undefined' || !window.ethereum) {
+            throw new Error('MetaMask not available');
+        }
+
+        try {
+            const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+            const networkNames = {
+                '0x1': 'Ethereum Mainnet',
+                '0x5': 'Goerli Testnet',
+                '0xaa36a7': 'Sepolia Testnet',
+                '0x89': 'Polygon Mainnet',
+                '0xa4b1': 'Arbitrum One',
+                '0xa': 'Optimism'
+            };
+
+            return {
+                chainId,
+                name: networkNames[chainId] || 'Unknown Network'
+            };
+        } catch (error) {
+            throw new Error(`Failed to get network info: ${error.message}`);
+        }
+    }
+
     async connectBitcoinWallet(walletType) {
         // Simular conexión a wallet Bitcoin
         return {
@@ -421,51 +617,179 @@ class BlockchainIntegration {
         // Integración con MetaMask u otros wallets
         if (typeof window !== 'undefined' && window.ethereum) {
             try {
+                // Solicitar acceso a las cuentas
                 const accounts = await window.ethereum.request({
                     method: 'eth_requestAccounts'
                 });
                 
+                if (!accounts || accounts.length === 0) {
+                    throw new Error('No accounts found');
+                }
+                
+                // Obtener el chainId actual
+                const chainId = await window.ethereum.request({
+                    method: 'eth_chainId'
+                });
+                
+                // Obtener el balance
+                let balance = 0;
+                try {
+                    const balanceWei = await window.ethereum.request({
+                        method: 'eth_getBalance',
+                        params: [accounts[0], 'latest']
+                    });
+                    // Convertir de Wei a ETH
+                    balance = parseInt(balanceWei, 16) / 1e18;
+                } catch (balanceError) {
+                    console.warn('Could not fetch balance:', balanceError);
+                }
+                
+                // Configurar listeners para cambios
+                this.setupEthereumListeners();
+                
                 return {
                     connected: true,
                     address: accounts[0],
-                    walletType: 'metamask'
+                    chainId: chainId,
+                    balance: balance,
+                    walletType: 'metamask',
+                    provider: window.ethereum
                 };
             } catch (error) {
-                throw new Error('User rejected wallet connection');
+                if (error.code === 4001) {
+                    throw new Error('User rejected wallet connection');
+                } else if (error.code === -32002) {
+                    throw new Error('Connection request already pending. Please check MetaMask.');
+                } else {
+                    throw new Error(`Failed to connect: ${error.message}`);
+                }
             }
         }
         
-        // Fallback simulado
+        // Fallback simulado para desarrollo
+        console.warn('MetaMask not detected, using simulated wallet');
         return {
             connected: true,
             address: `0x${Math.random().toString(16).substring(2, 42)}`,
             balance: 1.5,
-            walletType
+            walletType,
+            simulated: true
         };
+    }
+
+    setupEthereumListeners() {
+        if (typeof window !== 'undefined' && window.ethereum && !this.ethereumListenersSet) {
+            // Detectar cambios de cuenta
+            window.ethereum.on('accountsChanged', (accounts) => {
+                console.log('Accounts changed:', accounts);
+                if (accounts.length === 0) {
+                    // Usuario desconectó la wallet
+                    this.handleWalletDisconnect('ethereum');
+                } else {
+                    // Usuario cambió de cuenta
+                    this.handleAccountChange('ethereum', accounts[0]);
+                }
+            });
+            
+            // Detectar cambios de red
+            window.ethereum.on('chainChanged', (chainId) => {
+                console.log('Chain changed:', chainId);
+                this.handleChainChange('ethereum', chainId);
+                // Recargar la página es recomendado por MetaMask
+                window.location.reload();
+            });
+            
+            // Detectar desconexión
+            window.ethereum.on('disconnect', (error) => {
+                console.log('Ethereum wallet disconnected:', error);
+                this.handleWalletDisconnect('ethereum');
+            });
+            
+            this.ethereumListenersSet = true;
+        }
     }
 
     async connectSolanaWallet(walletType) {
         // Integración con Phantom u otros wallets Solana
-        if (typeof window !== 'undefined' && window.solana?.isPhantom) {
+        if (typeof window !== 'undefined' && window.solana) {
             try {
+                // Verificar si es Phantom
+                if (window.solana.isPhantom) {
+                    console.log('Phantom wallet detected');
+                }
+                
+                // Conectar a la wallet
                 const response = await window.solana.connect();
+                
+                if (!response || !response.publicKey) {
+                    throw new Error('Failed to get wallet public key');
+                }
+                
+                // Obtener el balance
+                let balance = 0;
+                try {
+                    // En producción, usar @solana/web3.js para obtener balance real
+                    // const connection = new Connection(clusterApiUrl('mainnet-beta'));
+                    // const balanceLamports = await connection.getBalance(response.publicKey);
+                    // balance = balanceLamports / 1e9;
+                    balance = 25.5; // Simulado por ahora
+                } catch (balanceError) {
+                    console.warn('Could not fetch balance:', balanceError);
+                }
+                
+                // Configurar listeners para cambios
+                this.setupSolanaListeners();
+                
                 return {
                     connected: true,
                     address: response.publicKey.toString(),
-                    walletType: 'phantom'
+                    balance: balance,
+                    walletType: 'phantom',
+                    provider: window.solana
                 };
             } catch (error) {
-                throw new Error('User rejected wallet connection');
+                if (error.code === 4001 || error.message.includes('User rejected')) {
+                    throw new Error('User rejected wallet connection');
+                } else if (error.code === -32002) {
+                    throw new Error('Connection request already pending. Please check Phantom.');
+                } else {
+                    throw new Error(`Failed to connect: ${error.message}`);
+                }
             }
         }
 
-        // Fallback simulado
+        // Fallback simulado para desarrollo
+        console.warn('Phantom wallet not detected, using simulated wallet');
         return {
             connected: true,
             address: `${Math.random().toString(36).substring(2, 44)}`,
             balance: 25.5,
-            walletType
+            walletType,
+            simulated: true
         };
+    }
+
+    setupSolanaListeners() {
+        if (typeof window !== 'undefined' && window.solana && !this.solanaListenersSet) {
+            // Detectar cambios de cuenta
+            window.solana.on('accountChanged', (publicKey) => {
+                console.log('Solana account changed:', publicKey);
+                if (publicKey) {
+                    this.handleAccountChange('solana', publicKey.toString());
+                } else {
+                    // Usuario desconectó la wallet
+                    this.handleWalletDisconnect('solana');
+                }
+            });
+            
+            // Detectar desconexión
+            window.solana.on('disconnect', () => {
+                console.log('Solana wallet disconnected');
+                this.handleWalletDisconnect('solana');
+            });
+            
+            this.solanaListenersSet = true;
+        }
     }
 
     // --- Utilities ---
