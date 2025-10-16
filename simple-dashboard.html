@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitForward Dashboard v2.1 - Advanced DeFi Forward Contracts</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/wallet.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="loading-screen">
+            <div class="login-content">
+                <div class="loading-logo">
+                    <img src="assets/logo.svg" alt="BitForward" class="logo-icon">
+                    <span class="bitforward-brand animated size-md">BitForward</span>
+                </div>
+                <div class="loading-spinner"></div>
+                <div class="loading-text">
+                    <span class="bitforward-loading size-sm">Inicializando Plataforma de Contratos Forward DeFi...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Screen -->
+        <div id="login-screen" class="login-screen" style="display: none;">
+            <div class="login-container">
+                <div class="login-header">
+                    <div class="login-logo">
+                        <img src="assets/logo.svg" alt="BitForward" class="logo-icon">
+                        <h1 class="bitforward-brand animated size-lg">BitForward</h1>
+                    </div>
+                    <p>Plataforma Avanzada de Contratos Forward DeFi</p>
+                </div>
+                
+                <form id="login-form" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Usuario</label>
+                        <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">
+                        <span class="btn-text">Iniciar Sesión al Panel</span>
+                    </button>
+                </form>
+                
+                <div class="login-demo">
+                    <p>Credenciales de demostración: <strong>demo</strong> / <strong>password123</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🚀 BitForward Simple Version Loading...');
+        
+        // Función simple para cambiar pantallas
+        function showLogin() {
+            console.log('🔄 Switching to login screen...');
+            const loading = document.getElementById('loading-screen');
+            const login = document.getElementById('login-screen');
+            
+            if (loading) {
+                loading.style.display = 'none';
+                console.log('✅ Loading hidden');
+            }
+            
+            if (login) {
+                login.style.display = 'flex';
+                console.log('✅ Login shown');
+            }
+        }
+        
+        // Inicializar después de 2 segundos
+        setTimeout(() => {
+            console.log('⏰ Timeout triggered, showing login...');
+            showLogin();
+        }, 2000);
+        
+        // Manejar login
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📋 DOM Ready - Setting up login handler');
+            
+            const form = document.getElementById('login-form');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    console.log('🔐 Login attempted');
+                    alert('¡Login exitoso! Dashboard funcionando perfectamente.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

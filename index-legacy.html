@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitForward - Contratos Forward Descentralizados</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>BitForward</h1>
+        <nav>
+            <a href="#new-contract">Nuevo Contrato</a>
+            <a href="#my-contracts">Mis Contratos</a>
+            <a href="#about">Acerca de</a>
+        </nav>
+    </header>
+
+    <!-- Sistema de Notificaciones -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <main>
+        <section id="new-contract">
+            <h2>🔐 Guardián de Contratos - Nuevo Contrato</h2>
+            <p class="section-description">
+                Nuestro sistema de validación inteligente te guiará para crear contratos seguros y confiables.
+            </p>
+            
+            <form id="contract-form" class="contract-form">
+                <div class="form-group">
+                    <label for="blockchain-select">
+                        <span class="field-icon">⛓️</span>
+                        Selecciona la Blockchain:
+                        <span class="required-indicator">*</span>
+                    </label>
+                    <select id="blockchain-select" name="blockchain" required>
+                        <option value="">-- Selecciona una opción --</option>
+                        <option value="bitcoin">Bitcoin (BTC)</option>
+                        <option value="ethereum">Ethereum (ETH)</option>
+                        <option value="solana">Solana (SOL)</option>
+                    </select>
+                    <div class="field-help">
+                        Cada blockchain tiene diferentes características de velocidad y costos.
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contract-amount">
+                        <span class="field-icon">💰</span>
+                        Cantidad del Contrato:
+                        <span class="required-indicator">*</span>
+                    </label>
+                    <input type="number" id="contract-amount" name="amount" 
+                           placeholder="Ejemplo: 0.1" step="0.001" min="0" required>
+                    <div class="field-help">
+                        Cantidad mínima: 0.001. Para montos grandes, verifica los límites de tu blockchain.
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="counterparty">
+                        <span class="field-icon">👤</span>
+                        Dirección de la Contraparte:
+                        <span class="required-indicator">*</span>
+                    </label>
+                    <input type="text" id="counterparty" name="counterparty" 
+                           placeholder="Dirección válida de la blockchain seleccionada" required>
+                    <div class="field-help">
+                        Verifica cuidadosamente la dirección. Las transacciones no se pueden revertir.
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="execution-date">
+                        <span class="field-icon">📅</span>
+                        Fecha de Ejecución:
+                        <span class="required-indicator">*</span>
+                    </label>
+                    <input type="date" id="execution-date" name="executionDate" required>
+                    <div class="field-help">
+                        La fecha debe ser al menos 24 horas en el futuro.
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="preview-btn" onclick="previewContract()">
+                        <span class="btn-icon">👁️</span>
+                        Vista Previa
+                    </button>
+                    <button type="submit" class="create-btn">
+                        <span class="btn-icon">✨</span>
+                        Crear Contrato
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section id="my-contracts">
+            <h2>📊 Mis Contratos</h2>
+            <div class="contracts-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-contracts">0</div>
+                    <div class="stat-label">Total Contratos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="active-contracts">0</div>
+                    <div class="stat-label">Activos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="completed-contracts">0</div>
+                    <div class="stat-label">Completados</div>
+                </div>
+            </div>
+            
+            <div class="contracts-list" id="contracts-list">
+                <!-- Los contratos se cargarán aquí dinámicamente -->
+                <div class="loading-message">
+                    <div class="spinner"></div>
+                    <p>Cargando contratos...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BitForward. Todos los derechos reservados.</p>
+        <p class="version-info">v2.0.0 - Sistema de Validación Avanzado</p>
+    </footer>
+
+    <!-- Scripts en orden correcto -->
+    <script src="src/api.js"></script>
+    <script src="src/validation.js"></script>
+    <script src="src/notifications.js"></script>
+    <script src="src/prototype.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

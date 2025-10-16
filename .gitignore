@@ -1,10 +1,97 @@
 # Dependencies
-/node_modules
-
-# Env files
-.env
-
-# Log files
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+server/database/*.sqlite*
+
+# Logs
+logs/
+*.log
+server/logs/
+
+# Build outputs
+dist/
+build/
+.cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# iCloud files
+*.icloud
+
+# Hardhat artifacts
+artifacts/
+cache/
+coverage/
+coverage.json
+typechain/
+typechain-types/
+
+# Solidity compiler outputs
+contracts/**/*.json
+!contracts/**/*.sol
+
+# Testing
+coverage/
+.nyc_output
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Private keys and secrets
+*.pem
+*.key
+*.p12
+*.pfx
+private-keys/
+secrets/
+
+# Deployment artifacts
+deployments/*.json
+!deployments/README.md
+
+# Local development
+.local/
+local-*
+
+# Backup files
+*.bak
+*.backup
+*~.backup
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
