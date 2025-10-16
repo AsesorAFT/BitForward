@@ -1,0 +1,647 @@
+/**
+ * BitForward Lending Platform Styles
+ * Sistema de préstamos con colateral estilo Binance
+ */
+
+/* ===== LENDING HERO ===== */
+
+.bf-lending-hero {
+    background: linear-gradient(135deg, var(--bf-primary) 0%, var(--bf-secondary) 100%);
+    color: var(--bf-text-inverse);
+    padding: var(--bf-space-16) 0;
+    margin-bottom: var(--bf-space-16);
+    border-radius: var(--bf-radius-2xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.bf-lending-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+.bf-lending-hero .bf-hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.bf-lending-hero h1 {
+    font-size: var(--bf-text-5xl);
+    font-weight: var(--bf-font-bold);
+    margin-bottom: var(--bf-space-4);
+}
+
+.bf-lending-hero p {
+    font-size: var(--bf-text-xl);
+    margin-bottom: var(--bf-space-8);
+    opacity: 0.9;
+}
+
+.bf-lending-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--bf-space-6);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.bf-stat {
+    text-align: center;
+}
+
+.bf-stat-value {
+    font-size: var(--bf-text-3xl);
+    font-weight: var(--bf-font-bold);
+    margin-bottom: var(--bf-space-1);
+}
+
+.bf-stat-label {
+    font-size: var(--bf-text-sm);
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ===== CALCULADORA DE PRÉSTAMO ===== */
+
+.bf-loan-calculator {
+    margin-bottom: var(--bf-space-16);
+}
+
+.bf-calculator-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--bf-space-8);
+    align-items: start;
+}
+
+.bf-calculator-form {
+    background: var(--bf-bg-primary);
+    border-radius: var(--bf-radius-xl);
+    border: 1px solid var(--bf-gray-200);
+    overflow: hidden;
+}
+
+.bf-form-section {
+    padding: var(--bf-space-8);
+    border-bottom: 1px solid var(--bf-gray-200);
+}
+
+.bf-form-section:last-child {
+    border-bottom: none;
+}
+
+.bf-form-section h3 {
+    font-size: var(--bf-text-xl);
+    font-weight: var(--bf-font-semibold);
+    margin-bottom: var(--bf-space-6);
+    color: var(--bf-text-primary);
+}
+
+/* Opciones de Colateral */
+.bf-collateral-grid {
+    display: grid;
+    gap: var(--bf-space-4);
+}
+
+.bf-collateral-option {
+    display: flex;
+    align-items: center;
+    gap: var(--bf-space-4);
+    padding: var(--bf-space-4);
+    border: 2px solid var(--bf-gray-200);
+    border-radius: var(--bf-radius-lg);
+    cursor: pointer;
+    transition: all var(--bf-transition-fast);
+}
+
+.bf-collateral-option:hover {
+    border-color: var(--bf-primary);
+    background: var(--bf-gray-50);
+}
+
+.bf-collateral-option.selected {
+    border-color: var(--bf-primary);
+    background: rgba(0, 102, 255, 0.05);
+}
+
+.bf-collateral-option .bf-asset-info {
+    flex: 1;
+}
+
+.bf-asset-name {
+    font-weight: var(--bf-font-semibold);
+    margin-bottom: var(--bf-space-1);
+}
+
+.bf-asset-balance {
+    font-size: var(--bf-text-sm);
+    color: var(--bf-text-secondary);
+    margin-bottom: var(--bf-space-1);
+}
+
+.bf-asset-ltv {
+    font-size: var(--bf-text-xs);
+    color: var(--bf-success);
+    font-weight: var(--bf-font-medium);
+}
+
+.bf-asset-value {
+    font-weight: var(--bf-font-bold);
+    font-family: var(--bf-font-family-mono);
+    color: var(--bf-text-primary);
+}
+
+/* Input de Préstamo */
+.bf-loan-input-group {
+    display: grid;
+    gap: var(--bf-space-6);
+}
+
+.bf-input-field label {
+    display: block;
+    font-weight: var(--bf-font-medium);
+    margin-bottom: var(--bf-space-2);
+    color: var(--bf-text-primary);
+}
+
+.bf-input-with-currency {
+    display: flex;
+    border: 2px solid var(--bf-gray-200);
+    border-radius: var(--bf-radius-lg);
+    overflow: hidden;
+    transition: border-color var(--bf-transition-fast);
+}
+
+.bf-input-with-currency:focus-within {
+    border-color: var(--bf-primary);
+}
+
+.bf-input-with-currency input {
+    flex: 1;
+    padding: var(--bf-space-3) var(--bf-space-4);
+    border: none;
+    font-size: var(--bf-text-lg);
+    font-family: var(--bf-font-family-mono);
+    background: transparent;
+}
+
+.bf-input-with-currency input:focus {
+    outline: none;
+}
+
+.bf-input-with-currency select {
+    padding: var(--bf-space-3) var(--bf-space-4);
+    border: none;
+    border-left: 1px solid var(--bf-gray-200);
+    background: var(--bf-gray-50);
+    font-weight: var(--bf-font-medium);
+    color: var(--bf-text-primary);
+}
+
+/* Slider LTV */
+.bf-loan-slider {
+    padding: var(--bf-space-4) 0;
+}
+
+.bf-loan-slider label {
+    display: block;
+    font-weight: var(--bf-font-medium);
+    margin-bottom: var(--bf-space-3);
+}
+
+#ltvSlider {
+    width: 100%;
+    height: 8px;
+    border-radius: var(--bf-radius-md);
+    background: var(--bf-gray-200);
+    outline: none;
+    margin-bottom: var(--bf-space-2);
+    -webkit-appearance: none;
+}
+
+#ltvSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bf-primary);
+    cursor: pointer;
+    box-shadow: var(--bf-shadow-md);
+}
+
+#ltvSlider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bf-primary);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--bf-shadow-md);
+}
+
+.bf-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--bf-text-sm);
+    color: var(--bf-text-secondary);
+}
+
+#currentLTV {
+    font-weight: var(--bf-font-bold);
+    color: var(--bf-primary);
+}
+
+/* Términos del Préstamo */
+.bf-loan-terms {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--bf-space-4);
+}
+
+.bf-term-option {
+    padding: var(--bf-space-4);
+    border: 2px solid var(--bf-gray-200);
+    border-radius: var(--bf-radius-lg);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--bf-transition-fast);
+}
+
+.bf-term-option:hover {
+    border-color: var(--bf-primary);
+    background: var(--bf-gray-50);
+}
+
+.bf-term-option.selected {
+    border-color: var(--bf-primary);
+    background: rgba(0, 102, 255, 0.05);
+}
+
+.bf-term-duration {
+    font-weight: var(--bf-font-semibold);
+    margin-bottom: var(--bf-space-1);
+}
+
+.bf-term-apr {
+    font-size: var(--bf-text-sm);
+    color: var(--bf-success);
+    font-weight: var(--bf-font-medium);
+}
+
+/* ===== RESUMEN DEL PRÉSTAMO ===== */
+
+.bf-loan-summary {
+    position: sticky;
+    top: 100px;
+}
+
+.bf-summary-card {
+    background: var(--bf-bg-primary);
+    border-radius: var(--bf-radius-xl);
+    border: 1px solid var(--bf-gray-200);
+    padding: var(--bf-space-8);
+    box-shadow: var(--bf-shadow-lg);
+}
+
+.bf-summary-card h3 {
+    font-size: var(--bf-text-xl);
+    font-weight: var(--bf-font-semibold);
+    margin-bottom: var(--bf-space-6);
+    text-align: center;
+}
+
+.bf-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--bf-space-3) 0;
+    font-size: var(--bf-text-sm);
+}
+
+.bf-summary-row:not(.bf-summary-total) {
+    border-bottom: 1px solid var(--bf-gray-100);
+}
+
+.bf-summary-total {
+    font-size: var(--bf-text-lg);
+    font-weight: var(--bf-font-bold);
+    color: var(--bf-primary);
+}
+
+.bf-summary-divider {
+    height: 1px;
+    background: var(--bf-gray-200);
+    margin: var(--bf-space-4) 0;
+}
+
+/* Health Bar */
+.bf-loan-health {
+    margin: var(--bf-space-6) 0;
+}
+
+.bf-health-bar {
+    height: 8px;
+    background: var(--bf-gray-200);
+    border-radius: var(--bf-radius-md);
+    overflow: hidden;
+    margin-bottom: var(--bf-space-2);
+}
+
+.bf-health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--bf-success) 0%, var(--bf-warning) 70%, var(--bf-error) 100%);
+    width: 100%;
+    transition: width var(--bf-transition-normal);
+}
+
+.bf-health-label {
+    font-size: var(--bf-text-sm);
+    text-align: center;
+    color: var(--bf-text-secondary);
+}
+
+#healthStatus {
+    font-weight: var(--bf-font-medium);
+    color: var(--bf-success);
+}
+
+/* Acciones del Resumen */
+.bf-summary-actions {
+    margin-top: var(--bf-space-6);
+}
+
+.bf-btn-block {
+    width: 100%;
+    margin-bottom: var(--bf-space-4);
+}
+
+.bf-loan-terms-agreement {
+    text-align: center;
+}
+
+.bf-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--bf-space-2);
+    font-size: var(--bf-text-sm);
+    cursor: pointer;
+}
+
+.bf-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--bf-gray-300);
+    border-radius: var(--bf-radius-sm);
+    position: relative;
+}
+
+.bf-checkbox-label input:checked + .bf-checkbox {
+    background: var(--bf-primary);
+    border-color: var(--bf-primary);
+}
+
+.bf-checkbox-label input:checked + .bf-checkbox::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.bf-checkbox-label input {
+    display: none;
+}
+
+.bf-link {
+    color: var(--bf-primary);
+    text-decoration: none;
+}
+
+.bf-link:hover {
+    text-decoration: underline;
+}
+
+/* ===== TASAS DE MERCADO ===== */
+
+.bf-market-rates {
+    margin-bottom: var(--bf-space-16);
+}
+
+.bf-rates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--bf-space-6);
+}
+
+.bf-rate-card {
+    background: var(--bf-bg-primary);
+    border-radius: var(--bf-radius-xl);
+    border: 1px solid var(--bf-gray-200);
+    overflow: hidden;
+    transition: all var(--bf-transition-normal);
+}
+
+.bf-rate-card:hover {
+    box-shadow: var(--bf-shadow-lg);
+    transform: translateY(-2px);
+}
+
+.bf-rate-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--bf-space-6);
+    border-bottom: 1px solid var(--bf-gray-200);
+}
+
+.bf-rate-header h4 {
+    margin: 0;
+    font-size: var(--bf-text-lg);
+    font-weight: var(--bf-font-semibold);
+}
+
+.bf-rate-body {
+    padding: var(--bf-space-6);
+    text-align: center;
+}
+
+.bf-rate-apr {
+    font-size: var(--bf-text-3xl);
+    font-weight: var(--bf-font-bold);
+    color: var(--bf-primary);
+    margin-bottom: var(--bf-space-1);
+}
+
+.bf-rate-label {
+    font-size: var(--bf-text-sm);
+    color: var(--bf-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--bf-space-4);
+}
+
+.bf-rate-features {
+    text-align: left;
+}
+
+.bf-feature {
+    font-size: var(--bf-text-sm);
+    color: var(--bf-text-secondary);
+    margin-bottom: var(--bf-space-2);
+}
+
+/* ===== TABLA DE COLATERALES ===== */
+
+.bf-supported-collaterals {
+    margin-bottom: var(--bf-space-16);
+}
+
+.bf-collaterals-table {
+    background: var(--bf-bg-primary);
+    border-radius: var(--bf-radius-xl);
+    border: 1px solid var(--bf-gray-200);
+    overflow: hidden;
+}
+
+.bf-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bf-table th {
+    background: var(--bf-gray-50);
+    padding: var(--bf-space-4) var(--bf-space-6);
+    text-align: left;
+    font-weight: var(--bf-font-semibold);
+    color: var(--bf-text-secondary);
+    font-size: var(--bf-text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--bf-gray-200);
+}
+
+.bf-table td {
+    padding: var(--bf-space-4) var(--bf-space-6);
+    border-bottom: 1px solid var(--bf-gray-100);
+    vertical-align: middle;
+}
+
+.bf-table tbody tr:hover {
+    background: var(--bf-gray-50);
+}
+
+.bf-asset-row {
+    display: flex;
+    align-items: center;
+    gap: var(--bf-space-3);
+}
+
+.bf-asset-row .bf-asset-name {
+    font-weight: var(--bf-font-semibold);
+    margin-bottom: 2px;
+}
+
+.bf-asset-row .bf-asset-symbol {
+    font-size: var(--bf-text-sm);
+    color: var(--bf-text-secondary);
+}
+
+.bf-ltv-high {
+    color: var(--bf-success);
+    font-weight: var(--bf-font-bold);
+}
+
+.bf-ltv-medium {
+    color: var(--bf-warning);
+    font-weight: var(--bf-font-bold);
+}
+
+.bf-ltv-low {
+    color: var(--bf-error);
+    font-weight: var(--bf-font-bold);
+}
+
+.bf-volatility {
+    font-weight: var(--bf-font-medium);
+}
+
+.bf-volatility.positive {
+    color: var(--bf-success);
+}
+
+.bf-volatility.negative {
+    color: var(--bf-error);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1024px) {
+    .bf-calculator-container {
+        grid-template-columns: 1fr;
+        gap: var(--bf-space-6);
+    }
+    
+    .bf-loan-summary {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .bf-lending-hero h1 {
+        font-size: var(--bf-text-3xl);
+    }
+    
+    .bf-lending-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .bf-collateral-option {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .bf-loan-terms {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .bf-rates-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .bf-table {
+        font-size: var(--bf-text-sm);
+    }
+    
+    .bf-table th,
+    .bf-table td {
+        padding: var(--bf-space-2) var(--bf-space-3);
+    }
+}
+
+@media (max-width: 480px) {
+    .bf-lending-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .bf-loan-terms {
+        grid-template-columns: 1fr;
+    }
+    
+    .bf-collaterals-table {
+        overflow-x: auto;
+    }
+}

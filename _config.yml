@@ -1,0 +1,33 @@
+# GitHub Pages Configuration for BitForward
+# This ensures proper deployment of the static site
+
+# Basic site information
+title: "BitForward - Enterprise DeFi Platform"
+description: "Plataforma DeFi empresarial con contratos forward, lending y análisis avanzado"
+
+# GitHub Pages settings
+theme: null
+plugins: []
+
+# File inclusion/exclusion
+include:
+  - "_*"
+exclude:
+  - "node_modules/"
+  - "*.log"
+  - ".env*"
+  - "*.md"
+  - "package*.json"
+  - "postcss.config.js"
+  - "tailwind.config.js"
+  - "vite.config.js"
+  - "server/"
+  - "scripts/"
+  - "tests/"
+
+# Markdown processing
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
