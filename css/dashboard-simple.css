@@ -34,6 +34,17 @@ body {
     flex-direction: column;
 }
 
+#dashboard-container {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+}
+
+#dashboard-container main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    flex: 1;
+}
+
 /* Header */
 header {
     background: rgba(15, 23, 42, 0.95);
