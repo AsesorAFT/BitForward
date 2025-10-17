@@ -20,13 +20,19 @@
     <link rel="stylesheet" href="../css/premium-components.css">
     
     <style>
+        body {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            min-height: 100vh;
+        }
+        
         .portfolio-hero {
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-            padding: 2.5rem 0;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            padding: 3rem 0;
             color: white;
             margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
         }
         
         .portfolio-hero::before {
@@ -34,17 +40,30 @@
             position: absolute;
             top: -50%;
             right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .portfolio-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -20%;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: float 6s ease-in-out infinite;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            animation: float 10s ease-in-out infinite reverse;
         }
         
         .portfolio-overview {
-            background: white;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
             border-radius: 24px;
             padding: 2.5rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.1), 0 0 40px rgba(59, 130, 246, 0.05);
             margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
@@ -57,7 +76,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.03) 0%, rgba(124, 58, 237, 0.03) 100%);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
             pointer-events: none;
         }
         
@@ -69,10 +88,12 @@
         }
         
         .chart-container {
-            background: white;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
             border-radius: 24px;
             padding: 2.5rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1);
             position: relative;
         }
         
@@ -86,10 +107,11 @@
         .chart-title {
             font-size: 1.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
         }
         
         .chart-wrapper {
@@ -102,16 +124,21 @@
         }
         
         .allocation-legend {
-            background: white;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
             border-radius: 24px;
             padding: 2rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1);
         }
         
         .legend-title {
             font-size: 1.25rem;
             font-weight: 800;
-            color: var(--bf-gray-900);
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1.5rem;
         }
         
@@ -121,15 +148,18 @@
             align-items: center;
             padding: 1rem;
             margin-bottom: 0.75rem;
-            background: var(--bf-gray-50);
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.1);
             border-radius: 12px;
             transition: all 0.3s ease;
             cursor: pointer;
         }
         
         .legend-item:hover {
-            background: var(--bf-gray-100);
-            transform: translateX(4px);
+            background: rgba(6, 182, 212, 0.1);
+            border-color: rgba(6, 182, 212, 0.3);
+            transform: translateX(8px);
+            box-shadow: 0 4px 16px rgba(6, 182, 212, 0.2);
         }
         
         .legend-left {
@@ -147,7 +177,7 @@
         
         .legend-name {
             font-weight: 600;
-            color: var(--bf-gray-800);
+            color: #E2E8F0;
         }
         
         .legend-right {
@@ -159,12 +189,13 @@
         .legend-amount {
             font-weight: 800;
             font-size: 1.125rem;
-            color: var(--bf-gray-900);
+            color: #FFFFFF;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
         }
         
         .legend-percentage {
             font-size: 0.875rem;
-            color: var(--bf-gray-600);
+            color: #94A3B8;
             font-weight: 600;
         }
         
@@ -180,10 +211,30 @@
             align-items: center;
             gap: 1.5rem;
             padding: 2rem;
-            background: white;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
             border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(6, 182, 212, 0.05);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .metric-card:hover::before {
+            opacity: 1;
         }
         
         .metric-icon {
@@ -200,20 +251,25 @@
         
         .metric-info {
             flex: 1;
+            position: relative;
+            z-index: 1;
         }
         
-        .metric-label {
+        .metric-card .metric-label {
             font-size: 0.875rem;
-            color: var(--bf-gray-600);
+            color: #94A3B8;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .metric-value {
+        .metric-card .metric-value {
             font-size: 2rem;
             font-weight: 900;
-            color: var(--bf-gray-900);
+            color: #FFFFFF;
             margin-bottom: 0.25rem;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
         }
         
         .metric-change {
@@ -235,49 +291,55 @@
         /* Period Buttons */
         .period-btn {
             padding: 0.5rem 1rem;
-            border: 2px solid var(--bf-gray-200);
-            background: white;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(6, 182, 212, 0.05);
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.875rem;
-            color: var(--bf-gray-700);
+            color: #94A3B8;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .period-btn:hover {
-            border-color: #a855f7;
-            color: #a855f7;
+            border-color: #06B6D4;
+            color: #06B6D4;
+            background: rgba(6, 182, 212, 0.1);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
         }
         
         .period-btn.active {
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
             color: white;
-            border-color: #a855f7;
+            border-color: #06B6D4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
         }
         
         /* Filter Buttons */
         .filter-btn {
             padding: 0.5rem 1rem;
-            border: 2px solid var(--bf-gray-200);
-            background: white;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(6, 182, 212, 0.05);
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.875rem;
-            color: var(--bf-gray-700);
+            color: #94A3B8;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .filter-btn:hover {
-            border-color: #a855f7;
-            color: #a855f7;
+            border-color: #06B6D4;
+            color: #06B6D4;
+            background: rgba(6, 182, 212, 0.1);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
         }
         
         .filter-btn.active {
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
             color: white;
-            border-color: #a855f7;
+            border-color: #06B6D4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
         }
         
         /* Transaction Types */
@@ -329,12 +391,56 @@
         
         /* Transaction Row Hover */
         .transaction-row {
-            border-bottom: 1px solid var(--bf-gray-100);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.1);
             transition: all 0.3s ease;
         }
         
         .transaction-row:hover {
-            background: linear-gradient(90deg, rgba(168, 85, 247, 0.03) 0%, transparent 100%);
+            background: linear-gradient(90deg, rgba(6, 182, 212, 0.08) 0%, transparent 100%);
+            border-bottom-color: rgba(6, 182, 212, 0.3);
+        }
+        
+        .transactions-container {
+            background: rgba(15, 23, 42, 0.7) !important;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1) !important;
+        }
+        
+        .transactions-container table th {
+            color: #94A3B8 !important;
+        }
+        
+        .transactions-container table td {
+            color: #E2E8F0 !important;
+        }
+        
+        .assets-table {
+            background: rgba(15, 23, 42, 0.7) !important;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1) !important;
+        }
+        
+        .assets-table h2 {
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .assets-table table th {
+            color: #94A3B8 !important;
+            border-bottom-color: rgba(6, 182, 212, 0.2) !important;
+        }
+        
+        .assets-table table td {
+            color: #E2E8F0 !important;
+            border-bottom-color: rgba(6, 182, 212, 0.1) !important;
+        }
+        
+        .assets-table tr:hover {
+            background: rgba(6, 182, 212, 0.05);
         }
         
         .overview-grid {
@@ -348,17 +454,35 @@
         .overview-card {
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
             border-radius: 20px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid transparent;
-            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .overview-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
         
         .overview-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 16px 32px rgba(168, 85, 247, 0.15);
-            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3), 0 0 60px rgba(59, 130, 246, 0.2);
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+        
+        .overview-card:hover::before {
+            opacity: 1;
         }
         
         .overview-icon {
@@ -389,18 +513,19 @@
         .overview-value {
             font-size: 2.5rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
         }
         
         .overview-label {
             font-size: 0.875rem;
-            color: var(--bf-gray-600);
+            color: #94A3B8;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             font-weight: 700;
         }
         
@@ -412,11 +537,12 @@
         }
         
         .subaccount-card {
-            background: white;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
             border-radius: 24px;
             padding: 2rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-            border: 2px solid transparent;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(6, 182, 212, 0.05);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
@@ -429,15 +555,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.02) 0%, rgba(124, 58, 237, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
         
         .subaccount-card:hover {
-            border-color: rgba(168, 85, 247, 0.4);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.15);
+            border-color: rgba(6, 182, 212, 0.5);
+            transform: translateY(-12px);
+            box-shadow: 0 24px 48px rgba(6, 182, 212, 0.2), 0 0 80px rgba(59, 130, 246, 0.15);
         }
         
         .subaccount-card:hover::before {
@@ -454,14 +580,18 @@
         .subaccount-info h3 {
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--bf-gray-900);
+            background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 0.25rem;
         }
         
         .subaccount-id {
             font-size: 0.875rem;
-            color: var(--bf-gray-600);
+            color: #06B6D4;
             font-weight: 600;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
         }
         
         .subaccount-badge {
@@ -482,7 +612,8 @@
             gap: 1.5rem;
             margin-bottom: 1.5rem;
             padding: 1.5rem;
-            background: var(--bf-gray-50);
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.1);
             border-radius: 12px;
         }
         
@@ -493,15 +624,17 @@
         
         .metric-label {
             font-size: 0.75rem;
-            color: var(--bf-gray-600);
+            color: #94A3B8;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .metric-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--bf-gray-900);
+            color: #FFFFFF;
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
         }
         
         .permissions-list {
@@ -736,7 +869,7 @@
 
         <!-- Performance Chart Section -->
         <div class="performance-section animate-fadeInUp delay-4" style="margin-bottom: 2rem;">
-            <div style="background: white; border-radius: 24px; padding: 2.5rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);">
+            <div style="background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 24px; padding: 2.5rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1);">
                 <div class="chart-header" style="margin-bottom: 2rem;">
                     <h2 class="chart-title">Performance Histórica</h2>
                     <div style="display: flex; gap: 0.5rem;">
@@ -754,7 +887,7 @@
         </div>
 
         <!-- Risk Metrics Grid -->
-        <h2 class="gradient-text" style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Métricas de Riesgo</h2>
+        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 40px rgba(6, 182, 212, 0.4);">Métricas de Riesgo</h2>
         <div class="risk-metrics-grid animate-fadeInUp delay-5" style="margin-bottom: 2rem;">
             <div class="metric-card premium-card hover-lift">
                 <div class="metric-icon" style="background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%); color: white;">
@@ -836,7 +969,7 @@
         </div>
 
         <!-- Recent Transactions -->
-        <h2 class="gradient-text" style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Transacciones Recientes</h2>
+        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 40px rgba(6, 182, 212, 0.4);">Transacciones Recientes</h2>
         <div class="transactions-container animate-fadeInUp delay-6" style="background: white; border-radius: 24px; padding: 2.5rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); margin-bottom: 2rem;">
             <div class="transactions-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <div style="display: flex; gap: 1rem;">
@@ -1101,7 +1234,7 @@
         </div>
 
         <!-- Subaccounts Grid -->
-        <h2 class="gradient-text" style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Subcuentas Segregadas</h2>
+        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 40px rgba(6, 182, 212, 0.4);">Subcuentas Segregadas</h2>
         
         <div class="subaccounts-grid">
             <!-- Subaccount 1: Trading Desk -->
