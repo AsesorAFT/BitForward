@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contratos Forward | BitForward Enterprise</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/corporate.css">
+    <link rel="stylesheet" href="../css/enterprise-dashboard.css">
+    
+    <style>
+        .contracts-hero {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 2.5rem 0;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .hero-header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .hero-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .new-contract-btn {
+            background: white;
+            color: #1e3c72;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .new-contract-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .filters-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) auto;
+            gap: 1rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .filter-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--bf-gray-700);
+        }
+        
+        .filter-select {
+            padding: 0.75rem;
+            border: 1px solid var(--bf-gray-300);
+            border-radius: 8px;
+            background: white;
+            color: var(--bf-gray-900);
+            font-size: 0.9375rem;
+            cursor: pointer;
+        }
+        
+        .apply-filters-btn {
+            align-self: flex-end;
+            padding: 0.75rem 1.5rem;
+            background: var(--bf-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .apply-filters-btn:hover {
+            background: var(--bf-primary-dark);
+        }
+        
+        .contracts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .contract-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .contract-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--bf-primary);
+        }
+        
+        .contract-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.25rem;
+        }
+        
+        .contract-id {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+            font-weight: 600;
+        }
+        
+        .contract-pair {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+            margin: 0.25rem 0;
+        }
+        
+        .contract-type {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(0, 102, 255, 0.1);
+            color: #0066ff;
+        }
+        
+        .contract-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .detail-label {
+            font-size: 0.75rem;
+            color: var(--bf-gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .detail-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--bf-gray-900);
+        }
+        
+        .contract-progress {
+            margin-bottom: 1.25rem;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--bf-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0066ff 0%, #00b894 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .contract-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--bf-gray-100);
+        }
+        
+        .performance {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .performance-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+        
+        .performance-value.positive {
+            color: #00b894;
+        }
+        
+        .performance-value.negative {
+            color: #e84393;
+        }
+        
+        .contract-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn.primary {
+            background: var(--bf-primary);
+            color: white;
+        }
+        
+        .action-btn.secondary {
+            background: var(--bf-gray-100);
+            color: var(--bf-gray-700);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--bf-gray-500);
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--bf-gray-700);
+        }
+        
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid var(--bf-gray-300);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--bf-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bf-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .submit-btn:hover {
+            background: var(--bf-primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bf-header">
+        <div class="bf-container">
+            <div class="bf-header-content">
+                <div class="bf-brand">
+                    <a href="../index.html" class="bf-logo">
+                        <div class="bf-logo-icon">
+                            <img src="../assets/logo.svg" alt="BitForward" class="logo-icon" style="width: 32px; height: 32px;">
+                        </div>
+                        <div class="bf-logo-text">
+                            <div class="bf-logo-primary">
+                                <span class="bitforward-brand animated size-md">BitForward</span>
+                            </div>
+                            <div class="bf-logo-tagline">Financial Technologies</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <nav class="bf-nav">
+                    <a href="dashboard.html" class="bf-nav-link">
+                        <i class="fas fa-chart-area"></i>
+                        Dashboard
+                    </a>
+                    <a href="contratos.html" class="bf-nav-link active">
+                        <i class="fas fa-file-contract"></i>
+                        Contratos
+                    </a>
+                    <a href="prestamos.html" class="bf-nav-link">
+                        <i class="fas fa-coins"></i>
+                        Préstamos
+                    </a>
+                    <a href="coberturas.html" class="bf-nav-link">
+                        <i class="fas fa-shield-alt"></i>
+                        Coberturas
+                    </a>
+                    <a href="analytics.html" class="bf-nav-link">
+                        <i class="fas fa-analytics"></i>
+                        Analytics
+                    </a>
+                    <a href="portafolio.html" class="bf-nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        Portafolio
+                    </a>
+                </nav>
+                
+                <div class="bf-user-menu" style="display: flex;">
+                    <div class="bf-user-balance">
+                        <span class="bf-balance-label">Portfolio</span>
+                        <span class="bf-balance-value">$2,458,920.00</span>
+                    </div>
+                    <div class="bf-user-info">
+                        <span class="bf-user-name">AFORTU Holdings</span>
+                        <button class="bf-btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Salir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contracts Hero -->
+    <section class="contracts-hero">
+        <div class="bf-container">
+            <div class="hero-header">
+                <div>
+                    <h1>Contratos Forward</h1>
+                    <p>Gestiona tus contratos de derivados DeFi con total transparencia</p>
+                </div>
+                <button class="new-contract-btn" onclick="openModal()">
+                    <i class="fas fa-plus-circle"></i>
+                    Nuevo Contrato
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Bar -->
+    <section class="bf-container">
+        <div class="filters-bar">
+            <div class="filter-group">
+                <label class="filter-label">Estado</label>
+                <select class="filter-select">
+                    <option value="all">Todos</option>
+                    <option value="active">Activos</option>
+                    <option value="pending">Pendientes</option>
+                    <option value="completed">Completados</option>
+                    <option value="expired">Expirados</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Par de Trading</label>
+                <select class="filter-select">
+                    <option value="all">Todos</option>
+                    <option value="btc">BTC/USDT</option>
+                    <option value="eth">ETH/USDT</option>
+                    <option value="sol">SOL/USDT</option>
+                    <option value="matic">MATIC/USDC</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Fecha</label>
+                <select class="filter-select">
+                    <option value="all">Todo el tiempo</option>
+                    <option value="week">Última semana</option>
+                    <option value="month">Último mes</option>
+                    <option value="quarter">Último trimestre</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Ordenar por</label>
+                <select class="filter-select">
+                    <option value="date">Fecha</option>
+                    <option value="amount">Monto</option>
+                    <option value="performance">Rendimiento</option>
+                </select>
+            </div>
+            
+            <button class="apply-filters-btn">
+                <i class="fas fa-filter"></i>
+                Aplicar
+            </button>
+        </div>
+
+        <!-- Contracts Grid -->
+        <div class="contracts-grid">
+            <!-- Contract Card 1 -->
+            <div class="contract-card">
+                <div class="contract-header">
+                    <div>
+                        <div class="contract-id">FWD-2847</div>
+                        <div class="contract-pair">BTC/USDT</div>
+                    </div>
+                    <span class="contract-type">Forward</span>
+                </div>
+                
+                <div class="contract-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Monto</span>
+                        <span class="detail-value">$125,000</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Precio Strike</span>
+                        <span class="detail-value">$68,500</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Fecha Inicio</span>
+                        <span class="detail-value">16 Oct 2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Vencimiento</span>
+                        <span class="detail-value">16 Ene 2026</span>
+                    </div>
+                </div>
+                
+                <div class="contract-progress">
+                    <div class="progress-header">
+                        <span>Progreso</span>
+                        <span style="font-weight: 600;">35%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 35%;"></div>
+                    </div>
+                </div>
+                
+                <div class="contract-footer">
+                    <div class="performance">
+                        <span style="color: var(--bf-gray-600); font-size: 0.875rem;">P&L:</span>
+                        <span class="performance-value positive">+8.2%</span>
+                    </div>
+                    <div class="contract-actions">
+                        <button class="action-btn secondary">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn primary">Gestionar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contract Card 2 -->
+            <div class="contract-card">
+                <div class="contract-header">
+                    <div>
+                        <div class="contract-id">FWD-2846</div>
+                        <div class="contract-pair">ETH/USDC</div>
+                    </div>
+                    <span class="contract-type">Forward</span>
+                </div>
+                
+                <div class="contract-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Monto</span>
+                        <span class="detail-value">$85,000</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Precio Strike</span>
+                        <span class="detail-value">$3,420</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Fecha Inicio</span>
+                        <span class="detail-value">14 Oct 2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Vencimiento</span>
+                        <span class="detail-value">14 Dic 2025</span>
+                    </div>
+                </div>
+                
+                <div class="contract-progress">
+                    <div class="progress-header">
+                        <span>Progreso</span>
+                        <span style="font-weight: 600;">58%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 58%;"></div>
+                    </div>
+                </div>
+                
+                <div class="contract-footer">
+                    <div class="performance">
+                        <span style="color: var(--bf-gray-600); font-size: 0.875rem;">P&L:</span>
+                        <span class="performance-value positive">+5.7%</span>
+                    </div>
+                    <div class="contract-actions">
+                        <button class="action-btn secondary">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn primary">Gestionar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contract Card 3 -->
+            <div class="contract-card">
+                <div class="contract-header">
+                    <div>
+                        <div class="contract-id">FWD-2845</div>
+                        <div class="contract-pair">SOL/USDT</div>
+                    </div>
+                    <span class="contract-type" style="background: rgba(0, 212, 170, 0.1); color: #00b894;">Completado</span>
+                </div>
+                
+                <div class="contract-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Monto</span>
+                        <span class="detail-value">$45,000</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Precio Strike</span>
+                        <span class="detail-value">$142.50</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Fecha Inicio</span>
+                        <span class="detail-value">10 Sep 2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Vencimiento</span>
+                        <span class="detail-value">10 Oct 2025</span>
+                    </div>
+                </div>
+                
+                <div class="contract-progress">
+                    <div class="progress-header">
+                        <span>Progreso</span>
+                        <span style="font-weight: 600;">100%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                
+                <div class="contract-footer">
+                    <div class="performance">
+                        <span style="color: var(--bf-gray-600); font-size: 0.875rem;">P&L:</span>
+                        <span class="performance-value positive">+12.3%</span>
+                    </div>
+                    <div class="contract-actions">
+                        <button class="action-btn secondary">
+                            <i class="fas fa-file-download"></i>
+                        </button>
+                        <button class="action-btn primary">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contract Card 4 -->
+            <div class="contract-card">
+                <div class="contract-header">
+                    <div>
+                        <div class="contract-id">FWD-2844</div>
+                        <div class="contract-pair">MATIC/USDC</div>
+                    </div>
+                    <span class="contract-type" style="background: rgba(253, 203, 110, 0.1); color: #d4940f;">Pendiente</span>
+                </div>
+                
+                <div class="contract-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Monto</span>
+                        <span class="detail-value">$30,000</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Precio Strike</span>
+                        <span class="detail-value">$0.85</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Fecha Inicio</span>
+                        <span class="detail-value">22 Oct 2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Vencimiento</span>
+                        <span class="detail-value">22 Nov 2025</span>
+                    </div>
+                </div>
+                
+                <div class="contract-progress">
+                    <div class="progress-header">
+                        <span>Progreso</span>
+                        <span style="font-weight: 600;">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <div class="contract-footer">
+                    <div class="performance">
+                        <span style="color: var(--bf-gray-600); font-size: 0.875rem;">P&L:</span>
+                        <span class="performance-value" style="color: var(--bf-gray-400);">--</span>
+                    </div>
+                    <div class="contract-actions">
+                        <button class="action-btn secondary">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="action-btn primary">Activar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Contract Modal -->
+    <div class="modal" id="newContractModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nuevo Contrato Forward</h2>
+                <button class="close-modal" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form>
+                <div class="form-group">
+                    <label class="form-label">Par de Trading</label>
+                    <select class="form-select">
+                        <option>Seleccionar par</option>
+                        <option>BTC/USDT</option>
+                        <option>ETH/USDT</option>
+                        <option>SOL/USDT</option>
+                        <option>MATIC/USDC</option>
+                        <option>BNB/USDT</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Monto (USD)</label>
+                        <input type="number" class="form-input" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Precio Strike</label>
+                        <input type="number" class="form-input" placeholder="0.00">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Fecha de Inicio</label>
+                        <input type="date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Fecha de Vencimiento</label>
+                        <input type="date" class="form-input">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Tipo de Liquidación</label>
+                    <select class="form-select">
+                        <option>Cash Settlement</option>
+                        <option>Physical Settlement</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Colateral</label>
+                    <select class="form-select">
+                        <option>USDT</option>
+                        <option>USDC</option>
+                        <option>DAI</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-check-circle"></i>
+                    Crear Contrato
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('newContractModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('newContractModal').classList.remove('active');
+        }
+        
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('newContractModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

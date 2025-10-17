@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Institucional | BitForward Enterprise</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/corporate.css">
+    <link rel="stylesheet" href="../css/enterprise-dashboard.css">
+    
+    <style>
+        .portfolio-hero {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            padding: 2.5rem 0;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .portfolio-overview {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+        
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .overview-card {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--bf-gray-50) 0%, white 100%);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .overview-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .overview-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .overview-value {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .overview-label {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .subaccounts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .subaccount-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .subaccount-card:hover {
+            border-color: var(--bf-primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subaccount-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .subaccount-info h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .subaccount-id {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+            font-weight: 600;
+        }
+        
+        .subaccount-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .subaccount-badge.active {
+            background: rgba(0, 212, 170, 0.15);
+            color: #00b894;
+        }
+        
+        .subaccount-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bf-gray-50);
+            border-radius: 12px;
+        }
+        
+        .metric {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--bf-gray-600);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+        }
+        
+        .permissions-list {
+            margin-bottom: 1.5rem;
+        }
+        
+        .permission-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--bf-gray-100);
+        }
+        
+        .permission-item:last-child {
+            border-bottom: none;
+        }
+        
+        .permission-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 102, 255, 0.1);
+            color: #0066ff;
+        }
+        
+        .permission-text {
+            flex: 1;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--bf-gray-700);
+        }
+        
+        .permission-status {
+            color: #00b894;
+            font-size: 1.125rem;
+        }
+        
+        .assets-table {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .table-header h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            text-align: left;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--bf-gray-200);
+            color: var(--bf-gray-600);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        td {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--bf-gray-100);
+        }
+        
+        .asset-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .asset-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0066ff 0%, #00b894 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+        }
+        
+        .allocation-bar {
+            height: 8px;
+            background: var(--bf-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .allocation-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0066ff 0%, #00b894 100%);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bf-header">
+        <div class="bf-container">
+            <div class="bf-header-content">
+                <div class="bf-brand">
+                    <a href="../index.html" class="bf-logo">
+                        <div class="bf-logo-icon">
+                            <img src="../assets/logo.svg" alt="BitForward" class="logo-icon" style="width: 32px; height: 32px;">
+                        </div>
+                        <div class="bf-logo-text">
+                            <div class="bf-logo-primary">
+                                <span class="bitforward-brand animated size-md">BitForward</span>
+                            </div>
+                            <div class="bf-logo-tagline">Financial Technologies</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <nav class="bf-nav">
+                    <a href="dashboard.html" class="bf-nav-link">
+                        <i class="fas fa-chart-area"></i>
+                        Dashboard
+                    </a>
+                    <a href="contratos.html" class="bf-nav-link">
+                        <i class="fas fa-file-contract"></i>
+                        Contratos
+                    </a>
+                    <a href="prestamos.html" class="bf-nav-link">
+                        <i class="fas fa-coins"></i>
+                        Préstamos
+                    </a>
+                    <a href="coberturas.html" class="bf-nav-link">
+                        <i class="fas fa-shield-alt"></i>
+                        Coberturas
+                    </a>
+                    <a href="analytics.html" class="bf-nav-link">
+                        <i class="fas fa-analytics"></i>
+                        Analytics
+                    </a>
+                    <a href="portafolio.html" class="bf-nav-link active">
+                        <i class="fas fa-briefcase"></i>
+                        Portafolio
+                    </a>
+                </nav>
+                
+                <div class="bf-user-menu" style="display: flex;">
+                    <div class="bf-user-balance">
+                        <span class="bf-balance-label">Portfolio</span>
+                        <span class="bf-balance-value">$2,458,920.00</span>
+                    </div>
+                    <div class="bf-user-info">
+                        <span class="bf-user-name">AFORTU Holdings</span>
+                        <button class="bf-btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Salir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Portfolio Hero -->
+    <section class="portfolio-hero">
+        <div class="bf-container">
+            <div class="hero-header">
+                <div>
+                    <h1>Portafolio Institucional</h1>
+                    <p>Gestiona tu tesorería corporativa con subcuentas segregadas de Binance Institutional</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Overview -->
+    <section class="bf-container">
+        <div class="portfolio-overview">
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <div class="overview-icon" style="background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%); color: white;">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="overview-value">$2.45M</div>
+                    <div class="overview-label">Balance Total</div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon" style="background: linear-gradient(135deg, #00d4aa 0%, #00b894 100%); color: white;">
+                        <i class="fas fa-building-columns"></i>
+                    </div>
+                    <div class="overview-value">5</div>
+                    <div class="overview-label">Subcuentas Activas</div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon" style="background: linear-gradient(135deg, #f5a623 0%, #d4940f 100%); color: white;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="overview-value">+18.4%</div>
+                    <div class="overview-label">Rendimiento Mensual</div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon" style="background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%); color: white;">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <div class="overview-value">$2.5M</div>
+                    <div class="overview-label">Límite Diario</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subaccounts Grid -->
+        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Subcuentas Segregadas</h2>
+        
+        <div class="subaccounts-grid">
+            <!-- Subaccount 1: Trading Desk -->
+            <div class="subaccount-card">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>Trading Desk</h3>
+                        <div class="subaccount-id">SUB-TD-001</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$850,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$127,500</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$500K</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">8</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <span class="permission-text">Trading Spot</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon">
+                            <i class="fas fa-chart-candlestick"></i>
+                        </div>
+                        <span class="permission-text">Futuros</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon">
+                            <i class="fas fa-arrow-right-arrow-left"></i>
+                        </div>
+                        <span class="permission-text">Transferencias</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subaccount 2: Treasury -->
+            <div class="subaccount-card">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>Treasury</h3>
+                        <div class="subaccount-id">SUB-TR-002</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$1,200,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$48,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$1M</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">3</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 212, 170, 0.1); color: #00b894;">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <span class="permission-text">Lending</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 212, 170, 0.1); color: #00b894;">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <span class="permission-text">Staking</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 212, 170, 0.1); color: #00b894;">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <span class="permission-text">Solo Lectura</span>
+                        <span class="permission-status" style="color: var(--bf-gray-400);">
+                            <i class="fas fa-times-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subaccount 3: Hedge Fund A -->
+            <div class="subaccount-card">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>Hedge Fund A</h3>
+                        <div class="subaccount-id">SUB-HF-003</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$280,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$42,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$200K</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">2</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <span class="permission-text">Trading Spot</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <span class="permission-text">Opciones</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-arrow-right-arrow-left"></i>
+                        </div>
+                        <span class="permission-text">Transferencias</span>
+                        <span class="permission-status" style="color: var(--bf-gray-400);">
+                            <i class="fas fa-times-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subaccount 4: Liquidity Pool -->
+            <div class="subaccount-card">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>Liquidity Pool</h3>
+                        <div class="subaccount-id">SUB-LP-004</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$95,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$11,400</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$100K</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">1</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <span class="permission-text">Liquidity Mining</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <span class="permission-text">Swaps</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <span class="permission-text">Farming</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subaccount 5: OTC Desk -->
+            <div class="subaccount-card">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>OTC Desk</h3>
+                        <div class="subaccount-id">SUB-OTC-005</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$33,920</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$5,088</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$50K</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">2</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <span class="permission-text">OTC Trading</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <span class="permission-text">Contratos Forward</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-arrow-right-arrow-left"></i>
+                        </div>
+                        <span class="permission-text">Transferencias</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Asset Allocation Table -->
+        <div class="assets-table">
+            <div class="table-header">
+                <h2>Distribución de Activos</h2>
+            </div>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Activo</th>
+                            <th>Balance</th>
+                            <th>Precio</th>
+                            <th>Valor USD</th>
+                            <th>Asignación</th>
+                            <th>24h Cambio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo" style="background: linear-gradient(135deg, #f7931a 0%, #e17055 100%);">₿</div>
+                                    <div>
+                                        <div style="font-weight: 700;">Bitcoin</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">BTC</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">12.45 BTC</td>
+                            <td>$68,420.00</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$851,829.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 34.7%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">34.7%</span>
+                                </div>
+                            </td>
+                            <td style="color: #00b894; font-weight: 700;">+2.4%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo" style="background: linear-gradient(135deg, #627eea 0%, #a855f7 100%);">Ξ</div>
+                                    <div>
+                                        <div style="font-weight: 700;">Ethereum</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">ETH</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">145.8 ETH</td>
+                            <td>$3,425.00</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$499,365.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 20.3%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">20.3%</span>
+                                </div>
+                            </td>
+                            <td style="color: #00b894; font-weight: 700;">+1.8%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo">₮</div>
+                                    <div>
+                                        <div style="font-weight: 700;">Tether USD</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">USDT</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">685,250 USDT</td>
+                            <td>$1.00</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$685,250.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 27.9%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">27.9%</span>
+                                </div>
+                            </td>
+                            <td style="color: var(--bf-gray-600); font-weight: 700;">0.0%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo" style="background: linear-gradient(135deg, #14f195 0%, #9945ff 100%);">◎</div>
+                                    <div>
+                                        <div style="font-weight: 700;">Solana</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">SOL</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">2,180 SOL</td>
+                            <td>$142.50</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$310,650.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 12.6%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">12.6%</span>
+                                </div>
+                            </td>
+                            <td style="color: #00b894; font-weight: 700;">+4.2%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo" style="background: linear-gradient(135deg, #2775ca 0%, #00b894 100%);">◎</div>
+                                    <div>
+                                        <div style="font-weight: 700;">USD Coin</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">USDC</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">111,826 USDC</td>
+                            <td>$1.00</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$111,826.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 4.5%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">4.5%</span>
+                                </div>
+                            </td>
+                            <td style="color: var(--bf-gray-600); font-weight: 700;">+0.0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
