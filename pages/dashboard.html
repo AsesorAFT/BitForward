@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="../css/typography.css">
     <link rel="stylesheet" href="../css/corporate.css">
     <link rel="stylesheet" href="../css/enterprise-dashboard.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/premium-components.css">
     
     <style>
         .dashboard-hero {
@@ -84,16 +86,34 @@
         }
         
         .stat-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+            border-radius: 20px;
+            padding: 1.75rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.03) 0%, rgba(0, 212, 170, 0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
         
         .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 0 40px rgba(0, 102, 255, 0.08);
+        }
+        
+        .stat-card:hover::before {
+            opacity: 1;
         }
         
         .stat-header {
@@ -104,18 +124,34 @@
         }
         
         .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stat-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
         }
         
         .stat-icon.blue {
             background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
             color: white;
+            box-shadow: 0 8px 16px rgba(0, 102, 255, 0.3);
         }
         
         .stat-icon.green {
@@ -434,7 +470,7 @@
     <!-- Stats Overview -->
     <section class="bf-container">
         <div class="stats-overview">
-            <div class="stat-card">
+            <div class="stat-card animate-fadeInUp delay-1">
                 <div class="stat-header">
                     <div class="stat-icon blue">
                         <i class="fas fa-wallet"></i>
@@ -444,11 +480,11 @@
                         <span>+12.5%</span>
                     </div>
                 </div>
-                <div class="stat-value">$2.45M</div>
+                <div class="stat-value gradient-text">$2.45M</div>
                 <div class="stat-label">Valor Total Portafolio</div>
             </div>
             
-            <div class="stat-card">
+            <div class="stat-card animate-fadeInUp delay-2">
                 <div class="stat-header">
                     <div class="stat-icon green">
                         <i class="fas fa-file-contract"></i>
@@ -458,11 +494,11 @@
                         <span>+8</span>
                     </div>
                 </div>
-                <div class="stat-value">47</div>
+                <div class="stat-value gradient-text">47</div>
                 <div class="stat-label">Contratos Activos</div>
             </div>
             
-            <div class="stat-card">
+            <div class="stat-card animate-fadeInUp delay-3">
                 <div class="stat-header">
                     <div class="stat-icon orange">
                         <i class="fas fa-coins"></i>
@@ -472,11 +508,11 @@
                         <span>+15.2%</span>
                     </div>
                 </div>
-                <div class="stat-value">$890K</div>
+                <div class="stat-value gradient-text-gold">$890K</div>
                 <div class="stat-label">Préstamos Activos</div>
             </div>
             
-            <div class="stat-card">
+            <div class="stat-card animate-fadeInUp delay-4">
                 <div class="stat-header">
                     <div class="stat-icon purple">
                         <i class="fas fa-percentage"></i>
@@ -486,7 +522,7 @@
                         <span>+2.8%</span>
                     </div>
                 </div>
-                <div class="stat-value">18.4%</div>
+                <div class="stat-value gradient-text">18.4%</div>
                 <div class="stat-label">APY Promedio</div>
             </div>
         </div>
