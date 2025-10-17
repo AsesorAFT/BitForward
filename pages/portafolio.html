@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <link rel="stylesheet" href="../css/typography.css">
     <link rel="stylesheet" href="../css/corporate.css">
@@ -24,50 +25,205 @@
             padding: 2.5rem 0;
             color: white;
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
         }
         
         .portfolio-overview {
             background: white;
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 2.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.03) 0%, rgba(124, 58, 237, 0.03) 100%);
+            pointer-events: none;
+        }
+        
+        .portfolio-main-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .allocation-legend {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        
+        .legend-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+            margin-bottom: 1.5rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--bf-gray-50);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .legend-item:hover {
+            background: var(--bf-gray-100);
+            transform: translateX(4px);
+        }
+        
+        .legend-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .legend-name {
+            font-weight: 600;
+            color: var(--bf-gray-800);
+        }
+        
+        .legend-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .legend-amount {
+            font-weight: 800;
+            font-size: 1.125rem;
+            color: var(--bf-gray-900);
+        }
+        
+        .legend-percentage {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+            font-weight: 600;
         }
         
         .overview-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
         
         .overview-card {
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(135deg, var(--bf-gray-50) 0%, white 100%);
-            border-radius: 16px;
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
         }
         
         .overview-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 32px rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.3);
         }
         
         .overview-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 1rem;
-            border-radius: 16px;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.25rem;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
+            position: relative;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .overview-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
         }
         
         .overview-value {
-            font-size: 2.25rem;
-            font-weight: 800;
-            color: var(--bf-gray-900);
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 0.5rem;
         }
         
@@ -75,7 +231,8 @@
             font-size: 0.875rem;
             color: var(--bf-gray-600);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            font-weight: 700;
         }
         
         .subaccounts-grid {
@@ -87,17 +244,35 @@
         
         .subaccount-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
             border: 2px solid transparent;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subaccount-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.02) 0%, rgba(124, 58, 237, 0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
         
         .subaccount-card:hover {
-            border-color: var(--bf-primary);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: rgba(168, 85, 247, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.15);
+        }
+        
+        .subaccount-card:hover::before {
+            opacity: 1;
         }
         
         .subaccount-header {
@@ -390,12 +565,90 @@
             </div>
         </div>
 
+        <!-- Portfolio Main Grid: Chart + Allocation -->
+        <div class="portfolio-main-grid">
+            <!-- Asset Allocation Chart -->
+            <div class="chart-container animate-fadeInUp delay-2">
+                <div class="chart-header">
+                    <h2 class="chart-title">Distribución de Activos</h2>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn-premium btn-primary-premium" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="portfolioChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Allocation Legend -->
+            <div class="allocation-legend animate-fadeInUp delay-3">
+                <h3 class="legend-title">Activos por Subcuenta</h3>
+                
+                <div class="legend-item hover-lift" data-index="0">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #0066ff;"></div>
+                        <span class="legend-name">Trading Desk</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$850K</span>
+                        <span class="legend-percentage">34.7%</span>
+                    </div>
+                </div>
+                
+                <div class="legend-item hover-lift" data-index="1">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #00b894;"></div>
+                        <span class="legend-name">Treasury</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$1.2M</span>
+                        <span class="legend-percentage">49.0%</span>
+                    </div>
+                </div>
+                
+                <div class="legend-item hover-lift" data-index="2">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #f5a623;"></div>
+                        <span class="legend-name">Hedge Fund A</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$280K</span>
+                        <span class="legend-percentage">11.4%</span>
+                    </div>
+                </div>
+                
+                <div class="legend-item hover-lift" data-index="3">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #a855f7;"></div>
+                        <span class="legend-name">Liquidity Pool</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$95K</span>
+                        <span class="legend-percentage">3.9%</span>
+                    </div>
+                </div>
+                
+                <div class="legend-item hover-lift" data-index="4">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #ef4444;"></div>
+                        <span class="legend-name">OTC Desk</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$25K</span>
+                        <span class="legend-percentage">1.0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Subaccounts Grid -->
-        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Subcuentas Segregadas</h2>
+        <h2 class="gradient-text" style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Subcuentas Segregadas</h2>
         
         <div class="subaccounts-grid">
             <!-- Subaccount 1: Trading Desk -->
-            <div class="subaccount-card">
+            <div class="subaccount-card animate-fadeInUp delay-4 hover-lift">
                 <div class="subaccount-header">
                     <div class="subaccount-info">
                         <h3>Trading Desk</h3>
@@ -457,7 +710,7 @@
             </div>
 
             <!-- Subaccount 2: Treasury -->
-            <div class="subaccount-card">
+            <div class="subaccount-card animate-fadeInUp delay-5 hover-lift">
                 <div class="subaccount-header">
                     <div class="subaccount-info">
                         <h3>Treasury</h3>
@@ -519,7 +772,7 @@
             </div>
 
             <!-- Subaccount 3: Hedge Fund A -->
-            <div class="subaccount-card">
+            <div class="subaccount-card animate-fadeInUp delay-6 hover-lift">
                 <div class="subaccount-header">
                     <div class="subaccount-info">
                         <h3>Hedge Fund A</h3>
@@ -844,5 +1097,106 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // Portfolio Pie Chart
+        const ctx = document.getElementById('portfolioChart').getContext('2d');
+        
+        const gradients = [
+            createGradient('#0066ff', '#0052cc'),
+            createGradient('#00b894', '#00d4aa'),
+            createGradient('#f5a623', '#d4940f'),
+            createGradient('#a855f7', '#7c3aed'),
+            createGradient('#ef4444', '#dc2626')
+        ];
+        
+        function createGradient(color1, color2) {
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, color1);
+            gradient.addColorStop(1, color2);
+            return gradient;
+        }
+        
+        const portfolioChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Trading Desk', 'Treasury', 'Hedge Fund A', 'Liquidity Pool', 'OTC Desk'],
+                datasets: [{
+                    data: [850000, 1200000, 280000, 95000, 25000],
+                    backgroundColor: [
+                        '#0066ff',
+                        '#00b894',
+                        '#f5a623',
+                        '#a855f7',
+                        '#ef4444'
+                    ],
+                    borderColor: 'white',
+                    borderWidth: 4,
+                    hoverOffset: 20,
+                    hoverBorderWidth: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                        padding: 16,
+                        titleColor: '#fff',
+                        titleFont: {
+                            size: 14,
+                            weight: '700'
+                        },
+                        bodyColor: '#fff',
+                        bodyFont: {
+                            size: 16,
+                            weight: '800'
+                        },
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.parsed;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return ` $${(value / 1000).toFixed(0)}K (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '65%',
+                animation: {
+                    animateRotate: true,
+                    animateScale: true,
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+        
+        // Legend item hover effect
+        document.querySelectorAll('.legend-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                const index = parseInt(this.dataset.index);
+                portfolioChart.setActiveElements([{datasetIndex: 0, index: index}]);
+                portfolioChart.update();
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                portfolioChart.setActiveElements([]);
+                portfolioChart.update();
+            });
+            
+            item.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                portfolioChart.toggleDataVisibility(index);
+                portfolioChart.update();
+            });
+        });
+    </script>
 </body>
 </html>
