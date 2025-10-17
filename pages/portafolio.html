@@ -168,6 +168,175 @@
             font-weight: 600;
         }
         
+        /* Risk Metrics Grid */
+        .risk-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .metric-card {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .metric-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            flex-shrink: 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .metric-info {
+            flex: 1;
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--bf-gray-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-change {
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .metric-change.positive {
+            color: #00b894;
+        }
+        
+        .metric-change.neutral {
+            color: var(--bf-gray-600);
+        }
+        
+        /* Period Buttons */
+        .period-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--bf-gray-200);
+            background: white;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--bf-gray-700);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .period-btn:hover {
+            border-color: #a855f7;
+            color: #a855f7;
+        }
+        
+        .period-btn.active {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            color: white;
+            border-color: #a855f7;
+        }
+        
+        /* Filter Buttons */
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--bf-gray-200);
+            background: white;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--bf-gray-700);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            border-color: #a855f7;
+            color: #a855f7;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            color: white;
+            border-color: #a855f7;
+        }
+        
+        /* Transaction Types */
+        .tx-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .tx-type.transfer {
+            background: rgba(0, 102, 255, 0.1);
+            color: #0066ff;
+        }
+        
+        .tx-type.trade {
+            background: rgba(0, 184, 148, 0.1);
+            color: #00b894;
+        }
+        
+        .tx-type.deposit {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+        
+        .status-badge.completed {
+            background: rgba(0, 212, 170, 0.15);
+            color: #00b894;
+        }
+        
+        .status-badge.pending {
+            background: rgba(253, 203, 110, 0.15);
+            color: #d4940f;
+        }
+        
+        /* Transaction Row Hover */
+        .transaction-row {
+            border-bottom: 1px solid var(--bf-gray-100);
+            transition: all 0.3s ease;
+        }
+        
+        .transaction-row:hover {
+            background: linear-gradient(90deg, rgba(168, 85, 247, 0.03) 0%, transparent 100%);
+        }
+        
         .overview-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -562,6 +731,294 @@
                     <div class="overview-value">$2.5M</div>
                     <div class="overview-label">Límite Diario</div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Performance Chart Section -->
+        <div class="performance-section animate-fadeInUp delay-4" style="margin-bottom: 2rem;">
+            <div style="background: white; border-radius: 24px; padding: 2.5rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);">
+                <div class="chart-header" style="margin-bottom: 2rem;">
+                    <h2 class="chart-title">Performance Histórica</h2>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="period-btn active" data-period="7D">7D</button>
+                        <button class="period-btn" data-period="1M">1M</button>
+                        <button class="period-btn" data-period="3M">3M</button>
+                        <button class="period-btn" data-period="1Y">1Y</button>
+                        <button class="period-btn" data-period="ALL">Todo</button>
+                    </div>
+                </div>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Metrics Grid -->
+        <h2 class="gradient-text" style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Métricas de Riesgo</h2>
+        <div class="risk-metrics-grid animate-fadeInUp delay-5" style="margin-bottom: 2rem;">
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%); color: white;">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Volatilidad 30D</div>
+                    <div class="metric-value">18.5%</div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-arrow-down"></i> -2.3%
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #00b894 0%, #00d4aa 100%); color: white;">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Sharpe Ratio</div>
+                    <div class="metric-value">2.14</div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-arrow-up"></i> +0.18
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #f5a623 0%, #d4940f 100%); color: white;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">VaR (95%)</div>
+                    <div class="metric-value">$127K</div>
+                    <div class="metric-change neutral">
+                        <i class="fas fa-minus"></i> 5.2%
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%); color: white;">
+                    <i class="fas fa-chart-area"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Max Drawdown</div>
+                    <div class="metric-value">-8.4%</div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-arrow-up"></i> Mejorado
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #e84393 0%, #d63031 100%); color: white;">
+                    <i class="fas fa-crosshairs"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Beta del Portfolio</div>
+                    <div class="metric-value">0.82</div>
+                    <div class="metric-change neutral">
+                        <i class="fas fa-circle"></i> vs BTC
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); color: white;">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Health Factor</div>
+                    <div class="metric-value">4.2</div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-check-circle"></i> Saludable
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <h2 class="gradient-text" style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Transacciones Recientes</h2>
+        <div class="transactions-container animate-fadeInUp delay-6" style="background: white; border-radius: 24px; padding: 2.5rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); margin-bottom: 2rem;">
+            <div class="transactions-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div style="display: flex; gap: 1rem;">
+                    <button class="filter-btn active">Todas</button>
+                    <button class="filter-btn">Transferencias</button>
+                    <button class="filter-btn">Trades</button>
+                    <button class="filter-btn">Depósitos</button>
+                </div>
+                <button class="btn-premium btn-primary-premium" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                    <i class="fas fa-download"></i> Exportar
+                </button>
+            </div>
+
+            <div class="transactions-table">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--bf-gray-200);">
+                            <th style="text-align: left; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Fecha</th>
+                            <th style="text-align: left; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Tipo</th>
+                            <th style="text-align: left; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Desde / Hacia</th>
+                            <th style="text-align: left; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Asset</th>
+                            <th style="text-align: right; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Monto</th>
+                            <th style="text-align: center; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">17 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">14:23 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <span class="tx-type transfer">
+                                    <i class="fas fa-arrow-right-arrow-left"></i> Transferencia
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">Trading Desk</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">→ Treasury</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #f7931a 0%, #d67400 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">₿</div>
+                                    <span style="font-weight: 600;">BTC</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right;">
+                                <div style="font-weight: 800; font-size: 1.125rem;">2.5 BTC</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">$171,050</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center;">
+                                <span class="status-badge completed">
+                                    <i class="fas fa-check-circle"></i> Completada
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">17 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">12:15 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <span class="tx-type trade">
+                                    <i class="fas fa-exchange-alt"></i> Trade
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">Hedge Fund A</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">BTC/USDT</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #26a69a 0%, #00796b 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">₮</div>
+                                    <span style="font-weight: 600;">USDT</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right;">
+                                <div style="font-weight: 800; font-size: 1.125rem; color: #00b894;">+$85,000</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">Compra</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center;">
+                                <span class="status-badge completed">
+                                    <i class="fas fa-check-circle"></i> Completada
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">16 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">18:47 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <span class="tx-type deposit">
+                                    <i class="fas fa-arrow-down"></i> Depósito
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">Binance</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">→ Liquidity Pool</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #627eea 0%, #5a67d8 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">Ξ</div>
+                                    <span style="font-weight: 600;">ETH</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right;">
+                                <div style="font-weight: 800; font-size: 1.125rem;">15.8 ETH</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">$54,115</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center;">
+                                <span class="status-badge completed">
+                                    <i class="fas fa-check-circle"></i> Completada
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">16 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">09:32 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <span class="tx-type transfer">
+                                    <i class="fas fa-arrow-right-arrow-left"></i> Transferencia
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">Treasury</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">→ OTC Desk</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #26a69a 0%, #00796b 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">$</div>
+                                    <span style="font-weight: 600;">USDC</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right;">
+                                <div style="font-weight: 800; font-size: 1.125rem;">$25,000</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">25,000 USDC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center;">
+                                <span class="status-badge pending">
+                                    <i class="fas fa-clock"></i> Pendiente
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0; border-bottom: none;">
+                                <div style="font-weight: 600;">15 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">22:18 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; border-bottom: none;">
+                                <span class="tx-type trade">
+                                    <i class="fas fa-exchange-alt"></i> Trade
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0; border-bottom: none;">
+                                <div style="font-weight: 600;">Trading Desk</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">SOL/USDT</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; border-bottom: none;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #9945ff 0%, #14f195 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">◎</div>
+                                    <span style="font-weight: 600;">SOL</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right; border-bottom: none;">
+                                <div style="font-weight: 800; font-size: 1.125rem; color: #e84393;">-$42,500</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">Venta</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center; border-bottom: none;">
+                                <span class="status-badge completed">
+                                    <i class="fas fa-check-circle"></i> Completada
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -1195,6 +1652,148 @@
                 const index = parseInt(this.dataset.index);
                 portfolioChart.toggleDataVisibility(index);
                 portfolioChart.update();
+            });
+        });
+        
+        // Performance Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        
+        // Generar datos de ejemplo para 30 días
+        const generatePerformanceData = () => {
+            const data = [];
+            const labels = [];
+            let value = 2000000; // $2M inicial
+            
+            for (let i = 30; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                labels.push(date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }));
+                
+                // Simular volatilidad con tendencia alcista
+                value += (Math.random() - 0.45) * 50000;
+                data.push(value);
+            }
+            
+            return { labels, data };
+        };
+        
+        const performanceData = generatePerformanceData();
+        
+        const gradientPerf = performanceCtx.createLinearGradient(0, 0, 0, 300);
+        gradientPerf.addColorStop(0, 'rgba(168, 85, 247, 0.3)');
+        gradientPerf.addColorStop(1, 'rgba(168, 85, 247, 0.0)');
+        
+        const performanceChart = new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: performanceData.labels,
+                datasets: [{
+                    label: 'Valor Total',
+                    data: performanceData.data,
+                    borderColor: '#a855f7',
+                    backgroundColor: gradientPerf,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#a855f7',
+                    pointHoverBorderColor: 'white',
+                    pointHoverBorderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                        padding: 12,
+                        titleColor: '#fff',
+                        titleFont: {
+                            size: 12,
+                            weight: '600'
+                        },
+                        bodyColor: '#fff',
+                        bodyFont: {
+                            size: 14,
+                            weight: '800'
+                        },
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                return ` $${(context.parsed.y / 1000000).toFixed(2)}M`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + (value / 1000000).toFixed(1) + 'M';
+                            },
+                            color: '#64748b',
+                            font: {
+                                size: 11,
+                                weight: '600'
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#64748b',
+                            font: {
+                                size: 11,
+                                weight: '600'
+                            },
+                            maxRotation: 0,
+                            autoSkip: true,
+                            maxTicksLimit: 8
+                        }
+                    }
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+        
+        // Period buttons functionality
+        document.querySelectorAll('.period-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Aquí se cargarían nuevos datos según el período
+                console.log('Período seleccionado:', this.dataset.period);
+            });
+        });
+        
+        // Filter buttons functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Aquí se filtrarían las transacciones
+                console.log('Filtro seleccionado:', this.textContent);
             });
         });
     </script>
