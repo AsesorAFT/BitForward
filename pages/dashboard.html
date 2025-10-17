@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | BitForward Enterprise</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/corporate.css">
+    <link rel="stylesheet" href="../css/enterprise-dashboard.css">
+    
+    <style>
+        .dashboard-hero {
+            background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+            padding: 3rem 0;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .hero-text h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .hero-text p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .quick-action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .quick-action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .quick-action-btn i {
+            font-size: 1.5rem;
+        }
+        
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .stat-icon.blue {
+            background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+            color: white;
+        }
+        
+        .stat-icon.green {
+            background: linear-gradient(135deg, #00d4aa 0%, #00b894 100%);
+            color: white;
+        }
+        
+        .stat-icon.orange {
+            background: linear-gradient(135deg, #f5a623 0%, #d4940f 100%);
+            color: white;
+        }
+        
+        .stat-icon.purple {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            color: white;
+        }
+        
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .stat-trend.up {
+            color: #00b894;
+        }
+        
+        .stat-trend.down {
+            color: #e84393;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .chart-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--bf-gray-900);
+        }
+        
+        .chart-filters {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--bf-gray-200);
+            background: white;
+            color: var(--bf-gray-700);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--bf-primary);
+            color: white;
+            border-color: var(--bf-primary);
+        }
+        
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bf-gray-400);
+            font-size: 0.875rem;
+        }
+        
+        .activity-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--bf-gray-100);
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .activity-icon.contract {
+            background: rgba(0, 102, 255, 0.1);
+            color: #0066ff;
+        }
+        
+        .activity-icon.lending {
+            background: rgba(245, 166, 35, 0.1);
+            color: #f5a623;
+        }
+        
+        .activity-icon.portfolio {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-weight: 600;
+            color: var(--bf-gray-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .activity-meta {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+        }
+        
+        .activity-amount {
+            font-weight: 700;
+            color: var(--bf-primary);
+        }
+        
+        .recent-contracts {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contracts-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .contracts-table th {
+            text-align: left;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--bf-gray-200);
+            color: var(--bf-gray-600);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .contracts-table td {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--bf-gray-100);
+        }
+        
+        .contract-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .contract-status.active {
+            background: rgba(0, 212, 170, 0.1);
+            color: #00b894;
+        }
+        
+        .contract-status.pending {
+            background: rgba(253, 203, 110, 0.1);
+            color: #d4940f;
+        }
+        
+        .contract-status.completed {
+            background: rgba(0, 102, 255, 0.1);
+            color: #0052cc;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bf-header">
+        <div class="bf-container">
+            <div class="bf-header-content">
+                <div class="bf-brand">
+                    <a href="../index.html" class="bf-logo">
+                        <div class="bf-logo-icon">
+                            <img src="../assets/logo.svg" alt="BitForward" class="logo-icon" style="width: 32px; height: 32px;">
+                        </div>
+                        <div class="bf-logo-text">
+                            <div class="bf-logo-primary">
+                                <span class="bitforward-brand animated size-md">BitForward</span>
+                            </div>
+                            <div class="bf-logo-tagline">Financial Technologies</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <nav class="bf-nav">
+                    <a href="dashboard.html" class="bf-nav-link active">
+                        <i class="fas fa-chart-area"></i>
+                        Dashboard
+                    </a>
+                    <a href="contratos.html" class="bf-nav-link">
+                        <i class="fas fa-file-contract"></i>
+                        Contratos
+                    </a>
+                    <a href="prestamos.html" class="bf-nav-link">
+                        <i class="fas fa-coins"></i>
+                        Préstamos
+                    </a>
+                    <a href="coberturas.html" class="bf-nav-link">
+                        <i class="fas fa-shield-alt"></i>
+                        Coberturas
+                    </a>
+                    <a href="analytics.html" class="bf-nav-link">
+                        <i class="fas fa-analytics"></i>
+                        Analytics
+                    </a>
+                    <a href="portafolio.html" class="bf-nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        Portafolio
+                    </a>
+                </nav>
+                
+                <div class="bf-user-menu" style="display: flex;">
+                    <div class="bf-user-balance">
+                        <span class="bf-balance-label">Portfolio</span>
+                        <span class="bf-balance-value">$2,458,920.00</span>
+                    </div>
+                    <div class="bf-user-info">
+                        <span class="bf-user-name">AFORTU Holdings</span>
+                        <button class="bf-btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Salir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Hero -->
+    <section class="dashboard-hero">
+        <div class="bf-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Bienvenido, AFORTU Holdings</h1>
+                    <p>Gestiona tu ecosistema DeFi empresarial desde un solo lugar. Controla contratos, préstamos y portafolios en tiempo real.</p>
+                    
+                    <div class="quick-actions">
+                        <a href="contratos.html" class="quick-action-btn">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Nuevo Contrato</span>
+                        </a>
+                        <a href="prestamos.html" class="quick-action-btn">
+                            <i class="fas fa-hand-holding-usd"></i>
+                            <span>Solicitar Préstamo</span>
+                        </a>
+                        <a href="portafolio.html" class="quick-action-btn">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Ver Portafolio</span>
+                        </a>
+                        <a href="analytics.html" class="quick-action-btn">
+                            <i class="fas fa-file-chart-line"></i>
+                            <span>Reportes</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-stats">
+                    <img src="https://via.placeholder.com/400x300/0066ff/ffffff?text=Dashboard+Analytics" alt="Analytics" style="border-radius: 16px; width: 100%;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Overview -->
+    <section class="bf-container">
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+12.5%</span>
+                    </div>
+                </div>
+                <div class="stat-value">$2.45M</div>
+                <div class="stat-label">Valor Total Portafolio</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+8</span>
+                    </div>
+                </div>
+                <div class="stat-value">47</div>
+                <div class="stat-label">Contratos Activos</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+15.2%</span>
+                    </div>
+                </div>
+                <div class="stat-value">$890K</div>
+                <div class="stat-label">Préstamos Activos</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+2.8%</span>
+                    </div>
+                </div>
+                <div class="stat-value">18.4%</div>
+                <div class="stat-label">APY Promedio</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Portfolio Performance Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Rendimiento del Portafolio</h3>
+                    <div class="chart-filters">
+                        <button class="filter-btn">1D</button>
+                        <button class="filter-btn">1S</button>
+                        <button class="filter-btn active">1M</button>
+                        <button class="filter-btn">3M</button>
+                        <button class="filter-btn">1A</button>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-line" style="font-size: 3rem; margin-right: 1rem;"></i>
+                    <span>Gráfico de rendimiento del portafolio</span>
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Actividad Reciente</h3>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon contract">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Contrato Forward Ejecutado</div>
+                            <div class="activity-meta">BTC/USDT • <span class="activity-amount">$125,000</span></div>
+                            <div class="activity-meta">Hace 2 horas</div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon lending">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Préstamo Aprobado</div>
+                            <div class="activity-meta">USDC • <span class="activity-amount">$50,000</span></div>
+                            <div class="activity-meta">Hace 5 horas</div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon portfolio">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Rebalanceo de Portafolio</div>
+                            <div class="activity-meta">Multi-Asset • <span class="activity-amount">$320,000</span></div>
+                            <div class="activity-meta">Hace 1 día</div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon contract">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Contrato Completado</div>
+                            <div class="activity-meta">ETH/USDT • <span class="activity-amount">$85,000</span></div>
+                            <div class="activity-meta">Hace 2 días</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Contracts -->
+        <div class="recent-contracts">
+            <div class="chart-header">
+                <h3>Contratos Recientes</h3>
+                <a href="contratos.html" class="bf-btn bf-btn-primary">
+                    Ver Todos
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <table class="contracts-table">
+                <thead>
+                    <tr>
+                        <th>ID Contrato</th>
+                        <th>Par</th>
+                        <th>Tipo</th>
+                        <th>Monto</th>
+                        <th>Fecha Ejecución</th>
+                        <th>Estado</th>
+                        <th>Rendimiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#FWD-2847</td>
+                        <td>BTC/USDT</td>
+                        <td>Forward</td>
+                        <td>$125,000</td>
+                        <td>18 Oct 2025</td>
+                        <td><span class="contract-status active">Activo</span></td>
+                        <td style="color: #00b894; font-weight: 600;">+8.2%</td>
+                    </tr>
+                    <tr>
+                        <td>#FWD-2846</td>
+                        <td>ETH/USDC</td>
+                        <td>Forward</td>
+                        <td>$85,000</td>
+                        <td>20 Oct 2025</td>
+                        <td><span class="contract-status active">Activo</span></td>
+                        <td style="color: #00b894; font-weight: 600;">+5.7%</td>
+                    </tr>
+                    <tr>
+                        <td>#FWD-2845</td>
+                        <td>SOL/USDT</td>
+                        <td>Forward</td>
+                        <td>$45,000</td>
+                        <td>15 Oct 2025</td>
+                        <td><span class="contract-status completed">Completado</span></td>
+                        <td style="color: #00b894; font-weight: 600;">+12.3%</td>
+                    </tr>
+                    <tr>
+                        <td>#FWD-2844</td>
+                        <td>MATIC/USDC</td>
+                        <td>Forward</td>
+                        <td>$30,000</td>
+                        <td>22 Oct 2025</td>
+                        <td><span class="contract-status pending">Pendiente</span></td>
+                        <td style="color: #94a3b8; font-weight: 600;">--</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        // Simulación de datos en tiempo real
+        function updateStats() {
+            // Aquí se conectaría con la API real
+            console.log('Actualizando estadísticas...');
+        }
+        
+        setInterval(updateStats, 30000); // Actualizar cada 30 segundos
+    </script>
+</body>
+</html>
