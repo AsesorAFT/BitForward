@@ -107,6 +107,35 @@
             text-align: center;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .crypto-float {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .crypto-icons-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
         
         .hero-title {
@@ -196,12 +225,31 @@
             border: 1px solid rgba(59, 130, 246, 0.2);
             border-radius: 1rem;
             padding: 2rem;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
         }
         
         .feature-card:hover {
             transform: translateY(-5px);
             border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
         }
         
         .feature-icon {
@@ -213,6 +261,14 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
         }
         
         .feature-icon svg {
@@ -325,14 +381,75 @@
         </header>
         <!-- Hero Section -->
         <section class="hero-section" id="inicio">
-            <h1 class="hero-title">El Futuro de DeFi Empresarial</h1>
-            <p class="hero-subtitle">
-                Plataforma descentralizada de contratos forward para empresas. 
-                Gestiona riesgos, optimiza liquidez y genera rendimientos de forma segura.
-            </p>
-            <div class="hero-cta">
-                <button class="btn-primary" onclick="showLogin()">Comenzar Ahora</button>
-                <button class="btn-secondary" onclick="scrollToSection('productos')">Explorar Productos</button>
+            <!-- Floating Crypto Icons Background -->
+            <div class="crypto-icons-bg">
+                <!-- Bitcoin -->
+                <svg class="crypto-float" style="top: 10%; left: 10%; width: 80px; height: 80px; animation-delay: 0s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="16" fill="#F7931A"/>
+                    <path d="M23.189 14.02c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.113-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.745-.17-1.104-.258l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z" fill="white"/>
+                </svg>
+                
+                <!-- Ethereum -->
+                <svg class="crypto-float" style="top: 20%; right: 15%; width: 70px; height: 70px; animation-delay: 1s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="16" fill="#627EEA"/>
+                    <path d="M16.498 4v8.87l7.497 3.35-7.497-12.22z" fill="white" fill-opacity=".602"/>
+                    <path d="M16.498 4L9 16.22l7.498-3.35V4z" fill="white"/>
+                    <path d="M16.498 21.968v6.027L24 17.616l-7.502 4.352z" fill="white" fill-opacity=".602"/>
+                    <path d="M16.498 27.995v-6.028L9 17.616l7.498 10.38z" fill="white"/>
+                    <path d="M16.498 20.573l7.497-4.353-7.497-3.348v7.701z" fill="white" fill-opacity=".2"/>
+                    <path d="M9 16.22l7.498 4.353v-7.701L9 16.22z" fill="white" fill-opacity=".602"/>
+                </svg>
+                
+                <!-- Solana -->
+                <svg class="crypto-float" style="bottom: 15%; left: 20%; width: 60px; height: 60px; animation-delay: 2s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="16" fill="url(#solana-gradient)"/>
+                    <defs>
+                        <linearGradient id="solana-gradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#00FFA3"/>
+                            <stop offset="100%" stop-color="#DC1FFF"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M8.41 19.54a.54.54 0 01.38-.16h17.17c.29 0 .44.35.24.56l-3.63 3.63a.54.54 0 01-.38.16H5.02c-.29 0-.44-.35-.24-.56l3.63-3.63zm0-11.08a.54.54 0 01.38-.16h17.17c.29 0 .44.35.24.56l-3.63 3.63a.54.54 0 01-.38.16H5.02c-.29 0-.44-.35-.24-.56l3.63-3.63zm14.57 5.54a.54.54 0 00-.38-.16H5.43c-.29 0-.44.35-.24.56l3.63 3.63a.54.54 0 00.38.16h17.17c.29 0 .44-.35.24-.56l-3.63-3.63z" fill="white"/>
+                </svg>
+                
+                <!-- Polygon -->
+                <svg class="crypto-float" style="top: 50%; right: 10%; width: 65px; height: 65px; animation-delay: 3s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="16" fill="#8247E5"/>
+                    <path d="M21.092 11.862a1.667 1.667 0 00-1.658 0l-3.31 1.91-2.216 1.278-3.31 1.91a1.667 1.667 0 01-1.658 0l-2.634-1.52a1.667 1.667 0 01-.83-1.434v-3.04a1.667 1.667 0 01.83-1.434l2.634-1.52a1.667 1.667 0 011.658 0l2.634 1.52a1.667 1.667 0 01.83 1.434v1.91l2.216-1.278v-1.91a1.667 1.667 0 00-.83-1.434l-4.85-2.798a1.667 1.667 0 00-1.658 0L5.09 8.254a1.667 1.667 0 00-.83 1.434v5.596a1.667 1.667 0 00.83 1.434l4.85 2.798a1.667 1.667 0 001.658 0l3.31-1.91 2.216-1.278 3.31-1.91a1.667 1.667 0 011.658 0l2.634 1.52a1.667 1.667 0 01.83 1.434v3.04a1.667 1.667 0 01-.83 1.434l-2.634 1.52a1.667 1.667 0 01-1.658 0l-2.634-1.52a1.667 1.667 0 01-.83-1.434v-1.91l-2.216 1.278v1.91a1.667 1.667 0 00.83 1.434l4.85 2.798a1.667 1.667 0 001.658 0l4.85-2.798a1.667 1.667 0 00.83-1.434v-5.596a1.667 1.667 0 00-.83-1.434l-4.85-2.798z" fill="white"/>
+                </svg>
+                
+                <!-- Binance Coin -->
+                <svg class="crypto-float" style="bottom: 20%; right: 25%; width: 75px; height: 75px; animation-delay: 4s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="16" fill="#F3BA2F"/>
+                    <path d="M12.116 14.404L16 10.52l3.886 3.886 2.26-2.26L16 6l-6.144 6.144 2.26 2.26zM6 16l2.26-2.26L10.52 16l-2.26 2.26L6 16zm6.116 1.596L16 21.48l3.886-3.886 2.26 2.26L16 26l-6.144-6.144-.003-.003 2.263-2.257zm9.764-1.596l2.26-2.26L26.4 16l-2.26 2.26L21.88 16z" fill="white"/>
+                    <path d="M18.668 16l-2.668 2.664L13.332 16 16 13.336 18.668 16z" fill="white"/>
+                </svg>
+                
+                <!-- Cardano -->
+                <svg class="crypto-float" style="top: 60%; left: 5%; width: 55px; height: 55px; animation-delay: 5s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="16" fill="#0033AD"/>
+                    <circle cx="16" cy="16" r="2" fill="white"/>
+                    <circle cx="16" cy="9" r="1.5" fill="white"/>
+                    <circle cx="16" cy="23" r="1.5" fill="white"/>
+                    <circle cx="9" cy="16" r="1.5" fill="white"/>
+                    <circle cx="23" cy="16" r="1.5" fill="white"/>
+                    <circle cx="11.5" cy="11.5" r="1" fill="white"/>
+                    <circle cx="20.5" cy="20.5" r="1" fill="white"/>
+                    <circle cx="20.5" cy="11.5" r="1" fill="white"/>
+                    <circle cx="11.5" cy="20.5" r="1" fill="white"/>
+                </svg>
+            </div>
+            
+            <div class="hero-content">
+                <h1 class="hero-title">El Futuro de DeFi Empresarial</h1>
+                <p class="hero-subtitle">
+                    Plataforma descentralizada de contratos forward para empresas. 
+                    Gestiona riesgos, optimiza liquidez y genera rendimientos de forma segura.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-primary" onclick="showLogin()">Comenzar Ahora</button>
+                    <button class="btn-secondary" onclick="scrollToSection('productos')">Explorar Productos</button>
+                </div>
             </div>
         </section>
 
@@ -429,6 +546,98 @@
                     <div class="stat-label">Soporte Disponible</div>
                 </div>
             </div>
+        </section>
+
+        <!-- Supported Cryptocurrencies Section -->
+        <section class="features-section" style="padding: 3rem 2rem; background: rgba(30, 41, 59, 0.3);">
+            <h2 class="section-title">Criptomonedas Soportadas</h2>
+            <p style="text-align: center; color: #94a3b8; font-size: 1.1rem; margin-bottom: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Opera con las principales criptomonedas del mercado en nuestra plataforma DeFi
+            </p>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap;">
+                <!-- Bitcoin -->
+                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#F7931A"/>
+                        <path d="M23.189 14.02c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.113-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.745-.17-1.104-.258l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z" fill="white"/>
+                    </svg>
+                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Bitcoin</p>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">BTC</p>
+                </div>
+                
+                <!-- Ethereum -->
+                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#627EEA"/>
+                        <path d="M16.498 4v8.87l7.497 3.35-7.497-12.22z" fill="white" fill-opacity=".602"/>
+                        <path d="M16.498 4L9 16.22l7.498-3.35V4z" fill="white"/>
+                        <path d="M16.498 21.968v6.027L24 17.616l-7.502 4.352z" fill="white" fill-opacity=".602"/>
+                        <path d="M16.498 27.995v-6.028L9 17.616l7.498 10.38z" fill="white"/>
+                        <path d="M16.498 20.573l7.497-4.353-7.497-3.348v7.701z" fill="white" fill-opacity=".2"/>
+                        <path d="M9 16.22l7.498 4.353v-7.701L9 16.22z" fill="white" fill-opacity=".602"/>
+                    </svg>
+                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Ethereum</p>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">ETH</p>
+                </div>
+                
+                <!-- Solana -->
+                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="url(#solana-gradient2)"/>
+                        <defs>
+                            <linearGradient id="solana-gradient2" x1="0" y1="0" x2="32" y2="32">
+                                <stop offset="0%" stop-color="#00FFA3"/>
+                                <stop offset="100%" stop-color="#DC1FFF"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M8.41 19.54a.54.54 0 01.38-.16h17.17c.29 0 .44.35.24.56l-3.63 3.63a.54.54 0 01-.38.16H5.02c-.29 0-.44-.35-.24-.56l3.63-3.63zm0-11.08a.54.54 0 01.38-.16h17.17c.29 0 .44.35.24.56l-3.63 3.63a.54.54 0 01-.38.16H5.02c-.29 0-.44-.35-.24-.56l3.63-3.63zm14.57 5.54a.54.54 0 00-.38-.16H5.43c-.29 0-.44.35-.24.56l3.63 3.63a.54.54 0 00.38.16h17.17c.29 0 .44-.35.24-.56l-3.63-3.63z" fill="white"/>
+                    </svg>
+                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Solana</p>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">SOL</p>
+                </div>
+                
+                <!-- Polygon -->
+                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#8247E5"/>
+                        <path d="M21.092 11.862a1.667 1.667 0 00-1.658 0l-3.31 1.91-2.216 1.278-3.31 1.91a1.667 1.667 0 01-1.658 0l-2.634-1.52a1.667 1.667 0 01-.83-1.434v-3.04a1.667 1.667 0 01.83-1.434l2.634-1.52a1.667 1.667 0 011.658 0l2.634 1.52a1.667 1.667 0 01.83 1.434v1.91l2.216-1.278v-1.91a1.667 1.667 0 00-.83-1.434l-4.85-2.798a1.667 1.667 0 00-1.658 0L5.09 8.254a1.667 1.667 0 00-.83 1.434v5.596a1.667 1.667 0 00.83 1.434l4.85 2.798a1.667 1.667 0 001.658 0l3.31-1.91 2.216-1.278 3.31-1.91a1.667 1.667 0 011.658 0l2.634 1.52a1.667 1.667 0 01.83 1.434v3.04a1.667 1.667 0 01-.83 1.434l-2.634 1.52a1.667 1.667 0 01-1.658 0l-2.634-1.52a1.667 1.667 0 01-.83-1.434v-1.91l-2.216 1.278v1.91a1.667 1.667 0 00.83 1.434l4.85 2.798a1.667 1.667 0 001.658 0l4.85-2.798a1.667 1.667 0 00.83-1.434v-5.596a1.667 1.667 0 00-.83-1.434l-4.85-2.798z" fill="white"/>
+                    </svg>
+                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Polygon</p>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">MATIC</p>
+                </div>
+                
+                <!-- Binance Coin -->
+                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#F3BA2F"/>
+                        <path d="M12.116 14.404L16 10.52l3.886 3.886 2.26-2.26L16 6l-6.144 6.144 2.26 2.26zM6 16l2.26-2.26L10.52 16l-2.26 2.26L6 16zm6.116 1.596L16 21.48l3.886-3.886 2.26 2.26L16 26l-6.144-6.144-.003-.003 2.263-2.257zm9.764-1.596l2.26-2.26L26.4 16l-2.26 2.26L21.88 16z" fill="white"/>
+                        <path d="M18.668 16l-2.668 2.664L13.332 16 16 13.336 18.668 16z" fill="white"/>
+                    </svg>
+                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">BNB</p>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">Binance Coin</p>
+                </div>
+                
+                <!-- Cardano -->
+                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#0033AD"/>
+                        <circle cx="16" cy="16" r="2" fill="white"/>
+                        <circle cx="16" cy="9" r="1.5" fill="white"/>
+                        <circle cx="16" cy="23" r="1.5" fill="white"/>
+                        <circle cx="9" cy="16" r="1.5" fill="white"/>
+                        <circle cx="23" cy="16" r="1.5" fill="white"/>
+                        <circle cx="11.5" cy="11.5" r="1" fill="white"/>
+                        <circle cx="20.5" cy="20.5" r="1" fill="white"/>
+                        <circle cx="20.5" cy="11.5" r="1" fill="white"/>
+                        <circle cx="11.5" cy="20.5" r="1" fill="white"/>
+                    </svg>
+                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Cardano</p>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">ADA</p>
+                </div>
+            </div>
+            <p style="text-align: center; color: #64748B; font-size: 0.9rem; margin-top: 2rem;">
+                Y muchas más... Soporte multi-chain en constante expansión
+            </p>
         </section>
 
         <!-- About Section -->
