@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coberturas de Riesgo | BitForward Enterprise</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/corporate.css">
+    <link rel="stylesheet" href="../css/enterprise-dashboard.css">
+    
+    <style>
+        .insurance-hero {
+            background: linear-gradient(135deg, #00b894 0%, #00d4aa 100%);
+            padding: 2.5rem 0;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .coverage-overview {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+        
+        .coverage-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .coverage-stat {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--bf-gray-50) 0%, white 100%);
+            border-radius: 16px;
+        }
+        
+        .stat-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #00b894 0%, #00d4aa 100%);
+            color: white;
+        }
+        
+        .stat-value {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            border-color: #00b894;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(0, 212, 170, 0.15);
+            color: #00b894;
+            margin-bottom: 1rem;
+        }
+        
+        .product-header h3 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-description {
+            color: var(--bf-gray-600);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--bf-gray-100);
+        }
+        
+        .product-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 212, 170, 0.1);
+            color: #00b894;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .product-pricing {
+            background: var(--bf-gray-50);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .pricing-label {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+        }
+        
+        .pricing-value {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--bf-gray-900);
+        }
+        
+        .coverage-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #00b894 0%, #00d4aa 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .coverage-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 184, 148, 0.3);
+        }
+        
+        .active-policies {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+        
+        .policies-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .policies-header h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+        }
+        
+        .policies-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .policies-table th {
+            text-align: left;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--bf-gray-200);
+            color: var(--bf-gray-600);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .policies-table td {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--bf-gray-100);
+        }
+        
+        .policy-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .policy-status.active {
+            background: rgba(0, 212, 170, 0.15);
+            color: #00b894;
+        }
+        
+        .policy-status.expiring {
+            background: rgba(253, 203, 110, 0.15);
+            color: #d4940f;
+        }
+        
+        .action-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bf-gray-100);
+            color: var(--bf-gray-700);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:hover {
+            background: var(--bf-gray-200);
+        }
+        
+        .claims-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        
+        .claims-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .claims-header h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+        }
+        
+        .new-claim-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .new-claim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 102, 255, 0.3);
+        }
+        
+        .claims-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .claim-card {
+            background: var(--bf-gray-50);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .claim-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .claim-icon.approved {
+            background: rgba(0, 212, 170, 0.15);
+            color: #00b894;
+        }
+        
+        .claim-icon.pending {
+            background: rgba(253, 203, 110, 0.15);
+            color: #f5a623;
+        }
+        
+        .claim-icon.processing {
+            background: rgba(0, 102, 255, 0.15);
+            color: #0066ff;
+        }
+        
+        .claim-info h4 {
+            font-weight: 800;
+            color: var(--bf-gray-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .claim-meta {
+            font-size: 0.875rem;
+            color: var(--bf-gray-600);
+        }
+        
+        .claim-amount {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bf-header">
+        <div class="bf-container">
+            <div class="bf-header-content">
+                <div class="bf-brand">
+                    <a href="../index.html" class="bf-logo">
+                        <div class="bf-logo-icon">
+                            <img src="../assets/logo.svg" alt="BitForward" class="logo-icon" style="width: 32px; height: 32px;">
+                        </div>
+                        <div class="bf-logo-text">
+                            <div class="bf-logo-primary">
+                                <span class="bitforward-brand animated size-md">BitForward</span>
+                            </div>
+                            <div class="bf-logo-tagline">Financial Technologies</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <nav class="bf-nav">
+                    <a href="dashboard.html" class="bf-nav-link">
+                        <i class="fas fa-chart-area"></i>
+                        Dashboard
+                    </a>
+                    <a href="contratos.html" class="bf-nav-link">
+                        <i class="fas fa-file-contract"></i>
+                        Contratos
+                    </a>
+                    <a href="prestamos.html" class="bf-nav-link">
+                        <i class="fas fa-coins"></i>
+                        Préstamos
+                    </a>
+                    <a href="coberturas.html" class="bf-nav-link active">
+                        <i class="fas fa-shield-alt"></i>
+                        Coberturas
+                    </a>
+                    <a href="analytics.html" class="bf-nav-link">
+                        <i class="fas fa-analytics"></i>
+                        Analytics
+                    </a>
+                    <a href="portafolio.html" class="bf-nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        Portafolio
+                    </a>
+                </nav>
+                
+                <div class="bf-user-menu" style="display: flex;">
+                    <div class="bf-user-balance">
+                        <span class="bf-balance-label">Portfolio</span>
+                        <span class="bf-balance-value">$2,458,920.00</span>
+                    </div>
+                    <div class="bf-user-info">
+                        <span class="bf-user-name">AFORTU Holdings</span>
+                        <button class="bf-btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Salir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Insurance Hero -->
+    <section class="insurance-hero">
+        <div class="bf-container">
+            <div class="hero-header">
+                <div>
+                    <h1>Coberturas de Riesgo DeFi</h1>
+                    <p>Protege tus activos digitales contra smart contract risks, hacks y eventos adversos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coverage Overview -->
+    <section class="bf-container">
+        <div class="coverage-overview">
+            <div class="coverage-stats">
+                <div class="coverage-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <div class="stat-value">$1.2M</div>
+                    <div class="stat-label">Cobertura Total</div>
+                </div>
+                
+                <div class="coverage-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-shield"></i>
+                    </div>
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Pólizas Activas</div>
+                </div>
+                
+                <div class="coverage-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-hand-holding-dollar"></i>
+                    </div>
+                    <div class="stat-value">$4,500</div>
+                    <div class="stat-label">Prima Mensual</div>
+                </div>
+                
+                <div class="coverage-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-value">98.5%</div>
+                    <div class="stat-label">Ratio de Pago</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insurance Products -->
+        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Productos de Cobertura</h2>
+        
+        <div class="products-grid">
+            <!-- Smart Contract Insurance -->
+            <div class="product-card">
+                <span class="product-badge">Más Popular</span>
+                <div class="product-header">
+                    <h3>Smart Contract Protection</h3>
+                </div>
+                <p class="product-description">
+                    Cobertura integral contra bugs, exploits y vulnerabilidades en smart contracts auditados y no auditados.
+                </p>
+                
+                <ul class="product-features">
+                    <li>
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Cobertura hasta $500K por contrato</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Procesamiento de claims en 48h</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Auditoría gratuita incluida</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Sin período de espera</span>
+                    </li>
+                </ul>
+                
+                <div class="product-pricing">
+                    <div class="pricing-row">
+                        <span class="pricing-label">Prima Mensual</span>
+                        <span class="pricing-value">0.3% TVL</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span class="pricing-label">Deducible</span>
+                        <span class="pricing-value">5%</span>
+                    </div>
+                </div>
+                
+                <button class="coverage-btn">Contratar Cobertura</button>
+            </div>
+
+            <!-- Custody Insurance -->
+            <div class="product-card">
+                <span class="product-badge" style="background: rgba(0, 102, 255, 0.15); color: #0066ff;">Institucional</span>
+                <div class="product-header">
+                    <h3>Custody & Exchange</h3>
+                </div>
+                <p class="product-description">
+                    Protección contra pérdidas en exchanges centralizados, hacks de custodios y fallos en infraestructura.
+                </p>
+                
+                <ul class="product-features">
+                    <li>
+                        <div class="feature-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Cobertura hasta $2M por exchange</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Múltiples exchanges cubiertos</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Proof of reserves integrado</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Alertas en tiempo real</span>
+                    </li>
+                </ul>
+                
+                <div class="product-pricing">
+                    <div class="pricing-row">
+                        <span class="pricing-label">Prima Mensual</span>
+                        <span class="pricing-value">0.4% AUM</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span class="pricing-label">Deducible</span>
+                        <span class="pricing-value">3%</span>
+                    </div>
+                </div>
+                
+                <button class="coverage-btn" style="background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);">Contratar Cobertura</button>
+            </div>
+
+            <!-- Liquidation Protection -->
+            <div class="product-card">
+                <span class="product-badge" style="background: rgba(245, 166, 35, 0.15); color: #f5a623;">Premium</span>
+                <div class="product-header">
+                    <h3>Liquidation Shield</h3>
+                </div>
+                <p class="product-description">
+                    Protege tus posiciones apalancadas contra liquidaciones forzosas durante eventos de mercado extremos.
+                </p>
+                
+                <ul class="product-features">
+                    <li>
+                        <div class="feature-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Reembolso hasta 80% de pérdidas</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Circuit breakers automáticos</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Alertas de health factor</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Auto-rebalanceo opcional</span>
+                    </li>
+                </ul>
+                
+                <div class="product-pricing">
+                    <div class="pricing-row">
+                        <span class="pricing-label">Prima Mensual</span>
+                        <span class="pricing-value">0.6% Deuda</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span class="pricing-label">Deducible</span>
+                        <span class="pricing-value">10%</span>
+                    </div>
+                </div>
+                
+                <button class="coverage-btn" style="background: linear-gradient(135deg, #f5a623 0%, #d4940f 100%);">Contratar Cobertura</button>
+            </div>
+
+            <!-- Oracle Failure -->
+            <div class="product-card">
+                <span class="product-badge" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">Especializada</span>
+                <div class="product-header">
+                    <h3>Oracle Failure Coverage</h3>
+                </div>
+                <p class="product-description">
+                    Cobertura contra fallos en price feeds, manipulación de oráculos y discrepancias de precio.
+                </p>
+                
+                <ul class="product-features">
+                    <li>
+                        <div class="feature-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Monitoreo 24/7 de oráculos</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Múltiples proveedores Chainlink</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Compensación automática</span>
+                    </li>
+                    <li>
+                        <div class="feature-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span>Backup oracle fallback</span>
+                    </li>
+                </ul>
+                
+                <div class="product-pricing">
+                    <div class="pricing-row">
+                        <span class="pricing-label">Prima Mensual</span>
+                        <span class="pricing-value">0.2% TVL</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span class="pricing-label">Deducible</span>
+                        <span class="pricing-value">2%</span>
+                    </div>
+                </div>
+                
+                <button class="coverage-btn" style="background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);">Contratar Cobertura</button>
+            </div>
+        </div>
+
+        <!-- Active Policies -->
+        <div class="active-policies">
+            <div class="policies-header">
+                <h2>Pólizas Activas</h2>
+            </div>
+            
+            <table class="policies-table">
+                <thead>
+                    <tr>
+                        <th>ID Póliza</th>
+                        <th>Tipo de Cobertura</th>
+                        <th>Monto Cubierto</th>
+                        <th>Prima Mensual</th>
+                        <th>Fecha Inicio</th>
+                        <th>Vencimiento</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 700;">#INS-2847</td>
+                        <td>Smart Contract</td>
+                        <td style="font-weight: 700;">$250,000</td>
+                        <td>$750</td>
+                        <td>01 Oct 2025</td>
+                        <td>01 Oct 2026</td>
+                        <td><span class="policy-status active">Activa</span></td>
+                        <td><button class="action-btn">Ver Detalles</button></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700;">#INS-2846</td>
+                        <td>Custody & Exchange</td>
+                        <td style="font-weight: 700;">$500,000</td>
+                        <td>$2,000</td>
+                        <td>15 Sep 2025</td>
+                        <td>15 Sep 2026</td>
+                        <td><span class="policy-status active">Activa</span></td>
+                        <td><button class="action-btn">Ver Detalles</button></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700;">#INS-2845</td>
+                        <td>Liquidation Shield</td>
+                        <td style="font-weight: 700;">$180,000</td>
+                        <td>$1,080</td>
+                        <td>22 Aug 2025</td>
+                        <td>22 Nov 2025</td>
+                        <td><span class="policy-status expiring">Por Vencer</span></td>
+                        <td><button class="action-btn">Renovar</button></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700;">#INS-2844</td>
+                        <td>Oracle Failure</td>
+                        <td style="font-weight: 700;">$120,000</td>
+                        <td>$240</td>
+                        <td>10 Jul 2025</td>
+                        <td>10 Jul 2026</td>
+                        <td><span class="policy-status active">Activa</span></td>
+                        <td><button class="action-btn">Ver Detalles</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Claims History -->
+        <div class="claims-section">
+            <div class="claims-header">
+                <h2>Historial de Claims</h2>
+                <button class="new-claim-btn">
+                    <i class="fas fa-file-medical"></i>
+                    Nuevo Claim
+                </button>
+            </div>
+            
+            <div class="claims-list">
+                <div class="claim-card">
+                    <div class="claim-icon approved">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="claim-info">
+                        <h4>Smart Contract Exploit - Compound</h4>
+                        <div class="claim-meta">Claim #CLM-1024 • Aprobado el 25 Sep 2025</div>
+                    </div>
+                    <div class="claim-amount">$12,500</div>
+                    <button class="action-btn">Ver Detalles</button>
+                </div>
+                
+                <div class="claim-card">
+                    <div class="claim-icon processing">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="claim-info">
+                        <h4>Exchange Downtime - Binance</h4>
+                        <div class="claim-meta">Claim #CLM-1025 • En proceso desde 10 Oct 2025</div>
+                    </div>
+                    <div class="claim-amount">$8,200</div>
+                    <button class="action-btn">Ver Detalles</button>
+                </div>
+                
+                <div class="claim-card">
+                    <div class="claim-icon pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="claim-info">
+                        <h4>Oracle Price Manipulation</h4>
+                        <div class="claim-meta">Claim #CLM-1026 • Pendiente de revisión desde 14 Oct 2025</div>
+                    </div>
+                    <div class="claim-amount">$3,750</div>
+                    <button class="action-btn">Ver Detalles</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
