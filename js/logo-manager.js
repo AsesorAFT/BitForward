@@ -5,8 +5,10 @@
 
 class BitForwardLogoManager {
     constructor() {
-        this.logoPath = 'assets/logo.svg';
-        this.faviconPath = 'assets/favicon.svg';
+        this.logoPath = 'assets/logo-rocket-official.svg';
+        this.faviconPath = 'assets/logo-rocket-official.svg';
+        this.animatedLogoPath = 'assets/logo-rocket-official.svg';
+        this.originalLogoPath = 'assets/logo-rocket-official.svg';
         this.init();
     }
 
@@ -92,6 +94,24 @@ class BitForwardLogoManager {
         img.alt = 'BitForward';
         img.className = className;
         img.style.transition = 'transform 0.3s ease, filter 0.3s ease';
+        
+        // Asegurar que el logo sea visible
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+        img.style.display = 'block';
+        
+        // Si el logo no se carga, intentar con el logo alternativo
+        img.onerror = () => {
+            console.log('Error al cargar el logo principal, intentando con alternativo');
+            img.src = 'assets/logo-rocket-official.svg';
+            
+            // Si aún falla, cargar el logo original
+            img.onerror = () => {
+                console.log('Error al cargar el logo alternativo, intentando con el logo original');
+                img.src = 'assets/logo.svg';
+            };
+        };
+        
         return img;
     }
 

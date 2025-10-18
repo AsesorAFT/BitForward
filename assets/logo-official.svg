@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <linearGradient id="rocketGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7B68EE;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="windowGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#E6F3FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4A90E2;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Fondo negro (transparente) -->
+  <rect x="0" y="0" width="800" height="800" fill="transparent"/>
+  
+  <!-- Texto BitForward -->
+  <text x="100" y="400" font-family="Arial, sans-serif" font-weight="bold" font-size="120" fill="#FFFFFF">BitForward</text>
+  
+  <!-- Texto v2.0 -->
+  <text x="100" y="480" font-family="Arial, sans-serif" font-weight="bold" font-size="80" fill="#FFFFFF">v2.0</text>
+  
+  <!-- Texto By AFORTU Holdings -->
+  <text x="100" y="540" font-family="Arial, sans-serif" font-weight="normal" font-size="40" fill="#FFFFFF">By AFORTU Holdings</text>
+  
+  <!-- Cohete -->
+  <g transform="translate(620, 280) scale(0.7) rotate(-15)">
+    <!-- Cuerpo del cohete -->
+    <path d="M0,0 L30,60 L60,0 Z" fill="url(#rocketGradient)" filter="url(#glow)"/>
+    
+    <!-- Ventana del cohete -->
+    <circle cx="30" cy="25" r="10" fill="url(#windowGradient)"/>
+    
+    <!-- Aletas -->
+    <path d="M0,0 L-15,20 L0,30 Z" fill="url(#rocketGradient)" filter="url(#glow)"/>
+    <path d="M60,0 L75,20 L60,30 Z" fill="url(#rocketGradient)" filter="url(#glow)"/>
+  </g>
+  
+  <!-- Flecha curva -->
+  <path d="M500,480 Q550,500 500,550 L520,545 L500,570 L480,545 L500,550" fill="url(#arrowGradient)" filter="url(#glow)"/>
+  
+  <!-- Estrella en la esquina -->
+  <g transform="translate(730, 730)">
+    <path d="M0,0 L5,-15 L10,0 L25,5 L10,10 L5,25 L0,10 L-15,5 Z" fill="#FFFFFF" opacity="0.7" filter="url(#glow)"/>
+  </g>
+</svg>

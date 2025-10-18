@@ -373,7 +373,7 @@
             <nav class="landing-nav">
                 <div class="landing-logo">
                     <div class="logo-wrapper">
-                        <img src="assets/logo-rocket-animated.svg" alt="BitForward" class="logo-icon animated-logo">
+                        <img src="assets/logo-embedded.svg" alt="BitForward" class="logo-icon official-logo" style="width: 100px; height: auto; display: block;">
                     </div>
                     <div class="landing-brand">
                         <h1>BitForward</h1>
@@ -747,8 +747,11 @@
                 </div>
                 <!-- Navigation -->
                 <nav class="hidden-mobile">
-                    <a href="index.html">Inicio</a>
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="trading.html">Trading</a>
                     <a href="lending.html">Préstamos</a>
+                    <a href="analytics.html">Análisis</a>
+                    <a href="community.html">Comunidad</a>
                     <a href="enterprise.html">Empresas</a>
                 </nav>
                 <!-- Wallet Connection -->
@@ -1058,6 +1061,11 @@
     <!-- Scripts -->
     <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    
+    <!-- Core System -->
+    <script src="js/component-loader.js"></script>
+    
+    <!-- Frontend Components -->
     <script src="js/logo-manager.js"></script>
     <script src="js/wallet-manager.js"></script>
     <script src="js/dashboard.js"></script>
@@ -1070,6 +1078,7 @@
     <script src="js/rocket-theme.js"></script>
     <script src="js/rocket-mobile.js"></script>
     <script src="js/transitions.js"></script>
+    <script src="js/init.js"></script>
     <script src="js/app.js" type="module"></script>
     
     <!-- Espacio para que carguen correctamente los scripts del tema espacial -->
