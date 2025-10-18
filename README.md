@@ -50,18 +50,27 @@ BitForward v2.0 Architecture
 │   └── Componentes Temáticos Espaciales
 ├── Core Engine
 │   ├── Gestión de Contratos (prototype.js)
-│   ├── Sistema de Eventos
-│   ├── Portfolio Management
-│   ├── Risk Analytics
+│   ├── Sistema de Eventos (event-system.js) ✅
+│   ├── Portfolio Management (portfolio-management.js) ✅
+│   ├── Risk Analytics (risk-analytics.js) ✅
+│   ├── Core Integration (core-integration.js) ✅
 │   └── Lending Platform (lending.js)
 ├── Blockchain Layer
 │   ├── Integración con Wallets (MetaMask, Phantom)
 │   ├── Smart Contracts (Solidity, Rust)
-│   └── Cross-chain Bridge (Futuro)
+│   └── Cross-chain Bridge (cross-chain-bridge.js) ✅
 └── Database Layer
     ├── Esquema Relacional (Usuarios, Contratos, Préstamos)
     └── Índices Optimizados para Consultas Financieras
 ```
+
+### Sistema de Componentes
+La arquitectura incluye un sistema modular de componentes que facilita la carga, inicialización y comunicación entre diferentes partes de la aplicación:
+
+- **Component Loader**: Sistema central para la detección y gestión de componentes
+- **Dependency Management**: Control de dependencias entre componentes
+- **Event-Based Communication**: Comunicación entre módulos usando el sistema de eventos
+- **Dynamic Loading**: Carga bajo demanda de componentes según necesidad
 
 ## 🚀 Quick Start
 
@@ -124,8 +133,11 @@ Para implementar el tema espacial en cualquier página:
 
 ### Q4 2025 - Foundation: "Preparación para el Despegue" 🚀
 - [x] Core engine v2.0
-- [x] Tema espacial unificado (70% completo)
+- [x] Sistema de Eventos, Portfolio Management, Risk Analytics
+- [x] Cross-Chain Bridge (experimental)
+- [x] Tema espacial unificado (85% completo)
 - [x] Sistema de autenticación JWT
+- [x] Component Loader para carga optimizada
 - [ ] Despliegue de contratos en testnet
 
 ### Q1 2026 - MVP Launch: "Ignición de Motores" 🔥
@@ -159,12 +171,21 @@ BitForward/
 │   ├── rocket-theme.css        # Componentes temáticos de cohete
 │   ├── corporate.css           # Estilos para sección corporativa
 │   └── ...
-├── js/                         # JavaScript
+├── js/                         # JavaScript Frontend
+│   ├── component-loader.js     # Sistema de carga de componentes
+│   ├── init.js                 # Inicialización de la aplicación
+│   ├── logo-manager.js         # Gestión de logos en la UI
 │   ├── space-animations.js     # Animaciones espaciales
 │   ├── rocket-animations.js    # Animaciones de cohetes
-│   ├── rocket-space-theme.js   # Integración de tema espacial
-│   ├── space-theme-config.js   # Configuración del tema
 │   └── ...
+├── src/                        # JavaScript Core
+│   ├── prototype.js            # Core BitForward
+│   ├── blockchain.js           # Motor blockchain
+│   ├── event-system.js         # Sistema de eventos
+│   ├── portfolio-management.js # Gestión de portfolio
+│   ├── risk-analytics.js       # Análisis de riesgo
+│   ├── cross-chain-bridge.js   # Bridge entre blockchains
+│   └── core-integration.js     # Integración de componentes core
 ├── contracts/                  # Smart Contracts
 │   ├── BitForwardContract.sol  # Contrato principal
 │   ├── ForwardEngine.sol       # Motor de contratos forward
@@ -177,7 +198,7 @@ BitForward/
 │   └── ...
 ├── dashboard-app/              # Aplicación React para dashboard
 │   └── ...
-└── template-espacial.html      # Plantilla con tema espacial
+└── version.json               # Información de versiones de componentes
 ```
 
 ## 🤝 Contribuir al Proyecto

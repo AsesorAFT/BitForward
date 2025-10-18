@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+    <style>
+        .bitforward-text {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-weight: bold;
+            font-size: 110px;
+            fill: #FFFFFF;
+        }
+        .version-text {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-weight: bold;
+            font-size: 80px;
+            fill: #FFFFFF;
+        }
+        .holding-text {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-size: 40px;
+            fill: #E0E0E0;
+        }
+    </style>
+
+    <defs>
+        <linearGradient id="rocket-body-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF5722"/>
+            <stop offset="50%" stop-color="#DD2C00"/>
+            <stop offset="100%" stop-color="#BF360C"/>
+        </linearGradient>
+        <linearGradient id="rocket-top-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#42A5F5"/>
+            <stop offset="100%" stop-color="#1565C0"/>
+        </linearGradient>
+        <radialGradient id="rocket-window-gradient">
+            <stop offset="0%" stop-color="#E3F2FD"/>
+            <stop offset="100%" stop-color="#90CAF9"/>
+        </radialGradient>
+        <linearGradient id="arrow-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFC107"/>
+            <stop offset="100%" stop-color="#FF8F00"/>
+        </linearGradient>
+        <filter id="text-glow" x="-0.1" y="-0.1" width="1.2" height="1.2">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+
+    <!-- Text Elements -->
+    <g transform="translate(50, 250)">
+        <text y="0" class="bitforward-text" filter="url(#text-glow)">BitForward</text>
+        <text y="80" class="version-text">v2.0</text>
+        <text y="130" class="holding-text">By AFORTU Holdings</text>
+    </g>
+
+    <!-- Rocket -->
+    <g transform="translate(550, 150) rotate(15)">
+        <!-- Body -->
+        <path d="M 0 50 C 0 50, 50 50, 50 0 C 50 0, 100 50, 100 50 L 80 120 L 20 120 Z" fill="url(#rocket-body-gradient)"/>
+        <!-- Top -->
+        <path d="M 50 0 C 40 20, 60 20, 50 0 Z" fill="url(#rocket-top-gradient)"/>
+        <path d="M 50 0 C 50 -20, 50 -20, 50 -30 C 50 -30, 50 -20, 50 0" stroke="#B0BEC5" stroke-width="3" fill="none"/>
+        <circle cx="50" cy="-30" r="5" fill="#B0BEC5"/>
+        <!-- Window -->
+        <circle cx="50" cy="60" r="15" fill="url(#rocket-window-gradient)" stroke="#455A64" stroke-width="2"/>
+        <!-- Fins -->
+        <path d="M 20 120 L 0 150 L 20 110 Z" fill="#455A64"/>
+        <path d="M 80 120 L 100 150 L 80 110 Z" fill="#455A64"/>
+    </g>
+
+    <!-- Arrow -->
+    <g transform="translate(450, 380)">
+        <path d="M 0 0 C 50 20, 30 80, 80 70" stroke="url(#arrow-gradient)" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <path d="M 65 55 L 80 70 L 95 55 Z" fill="url(#arrow-gradient)"/>
+    </g>
+
+    <!-- Star -->
+    <g transform="translate(750, 550) rotate(15)">
+        <polygon points="0,-15 5,-5 15,0 5,5 0,15 -5,5 -15,0 -5,-5" fill="#FFFFFF" opacity="0.8"/>
+    </g>
+</svg>

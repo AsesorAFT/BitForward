@@ -44,10 +44,13 @@
                     </div>
                     
                     <!-- Navigation -->
-                    <nav class="hidden md:flex items-center space-x-6">
-                        <a href="index.html" class="text-blue-200 hover:text-white transition-colors">Inicio</a>
-                        <a href="lending.html" class="text-blue-200 hover:text-white transition-colors">Lending</a>
-                        <a href="enterprise.html" class="text-blue-200 hover:text-white transition-colors">Enterprise</a>
+                    <nav class="hidden-mobile">
+                        <a href="dashboard.html" class="active">Dashboard</a>
+                        <a href="trading.html">Trading</a>
+                        <a href="lending.html">Lending</a>
+                        <a href="analytics.html">Analytics</a>
+                        <a href="community.html">Community</a>
+                        <a href="enterprise.html">Enterprise</a>
                     </nav>
                     
                     <!-- Wallet Connection -->
@@ -79,7 +82,7 @@
                             <span class="text-green-400 text-sm font-medium">+12.5%</span>
                         </div>
                         <h3 class="text-lg font-semibold text-white">Balance Total</h3>
-                        <p class="text-2xl font-bold text-white">$125,847.32</p>
+                        <p class="text-2xl font-bold text-white" data-metric="portfolio-balance">$125,847.32</p>
                         <p class="text-sm text-blue-200 mt-1">≈ 42.5 ETH</p>
                     </div>
                     
@@ -109,7 +112,7 @@
                             <span class="text-green-400 text-sm font-medium">+$2,847</span>
                         </div>
                         <h3 class="text-lg font-semibold text-white">P&L Hoy</h3>
-                        <p class="text-2xl font-bold text-green-400">+$2,847.52</p>
+                        <p class="text-2xl font-bold text-green-400" data-metric="portfolio-pnl">+$2,847.52</p>
                         <p class="text-sm text-blue-200 mt-1">+2.31%</p>
                     </div>
                     
@@ -126,6 +129,30 @@
                         <h3 class="text-lg font-semibold text-white">Lending Pool</h3>
                         <p class="text-2xl font-bold text-white">$45,230.18</p>
                         <p class="text-sm text-blue-200 mt-1">Depositado</p>
+                    </div>
+                </div>
+
+                <!-- Fees estimadas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div class="glass-effect rounded-xl p-6 border border-white/20">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-white">Fee de Administración (1% anual)</h3>
+                            <span class="text-blue-200 text-sm">Prorrateo estimado</span>
+                        </div>
+                        <p class="text-sm text-blue-200">Anual estimado</p>
+                        <p class="text-xl font-bold text-white" data-metric="mgmt-fee-annual">--</p>
+                        <p class="text-sm text-blue-200 mt-2">Diario estimado</p>
+                        <p class="text-lg font-semibold text-white" data-metric="mgmt-fee-daily">--</p>
+                    </div>
+                    <div class="glass-effect rounded-xl p-6 border border-white/20">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-white">Performance Fee (10% sobre ganancias > 10%)</h3>
+                            <span class="text-blue-200 text-sm">Estimación</span>
+                        </div>
+                        <p class="text-sm text-blue-200">Umbral de rendimiento</p>
+                        <p class="text-sm font-medium text-white">10% sobre nocional</p>
+                        <p class="text-sm text-blue-200 mt-2">Fee estimada actual</p>
+                        <p class="text-lg font-semibold text-white" data-metric="perf-fee">--</p>
                     </div>
                 </div>
             </section>

@@ -416,8 +416,7 @@ class BitForwardEnterprise {
             this.showNotification('Inicia sesión para crear contratos forward', 'warning');
             return;
         }
-        this.showNotification('Abriendo creador de contratos forward...', 'info');
-        // Aquí se abriría el modal para crear un contrato forward
+        this.openForwardModal();
     }
 
     openLoanModal() {
@@ -983,141 +982,122 @@ class BitForwardEnterprise {
     }
 
     setupForwardCalculations(modal) {
-        const inputs = modal.querySelectorAll('#collateral, #notional, #leverage');
-        inputs.forEach(input => {
-            input.addEventListener('input', () => {
-                this.updateForwardCalculations(modal);
-            });
-        });
-        
-        // Cálculo inicial
-        setTimeout(() => this.updateForwardCalculations(modal), 100);
+        const inputs = modal.querySelectorAll('#collateral, #notional, #leverage, #direction');
+        const recalc = () => this.updateForwardSummary(modal);
+        inputs.forEach(input => input.addEventListener('input', recalc));
+        this.updateForwardSummary(modal);
     }
 
-    updateForwardCalculations(modal) {
-        const collateral = parseFloat(modal.querySelector('#collateral').value) || 0;
-        const notional = parseFloat(modal.querySelector('#notional').value) || 0;
-        const leverage = parseFloat(modal.querySelector('#leverage').value) || 1;
-        
-        const btcPrice = 67234.56; // En producción vendría de un oráculo
-        const requiredMargin = (notional / leverage) / btcPrice;
-        const liquidationPrice = btcPrice * (1 - (1 / leverage) * 0.8); // 80% del margen
-        
-        const marginElement = modal.querySelector('#required-margin');
-        const liquidationElement = modal.querySelector('#liquidation-price');
-        
-        if (marginElement) {
-            marginElement.textContent = `${requiredMargin.toFixed(4)} BTC`;
-        }
-        
-        if (liquidationElement) {
-            liquidationElement.textContent = `$${liquidationPrice.toLocaleString()}`;
-        }
+    updateForwardSummary(modal) {
+        const notional = parseFloat(modal.querySelector('#notional')?.value || '0');
+        const leverage = Math.max(1, parseFloat(modal.querySelector('#leverage')?.value || '1'));
+        const direction = modal.querySelector('#direction')?.value === 'true' ? 'long' : 'short';
+        const currentPrice = 67234.56; // TODO: reemplazar por precio en vivo
+
+        // Margen requerido (estimación simple): notional / leverage
+        const requiredMargin = notional / leverage;
+        const marginEl = modal.querySelector('#required-margin');
+        if (marginEl) marginEl.textContent = `$${(requiredMargin || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+
+        // Precio de liquidación estimado (simplificado):
+        // movimiento de precio equivalente a perder 1/leverage del nocional
+        const movePct = 1 / leverage;
+        const liqPrice = direction === 'long'
+            ? currentPrice * (1 - movePct)
+            : currentPrice * (1 + movePct);
+        const liqEl = modal.querySelector('#liquidation-price');
+        if (liqEl) liqEl.textContent = `$${liqPrice.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
     }
 
     async submitForward() {
-        const collateral = document.getElementById('collateral').value;
-        const notional = document.getElementById('notional').value;
-        const leverage = document.getElementById('leverage').value;
-        const isLong = document.getElementById('direction').value === 'true';
-        const expiry = document.getElementById('expiry').value;
-        
-        if (!collateral || !notional || !expiry) {
-            this.showNotification('Por favor completa todos los campos', 'error');
-            return;
-        }
-        
         try {
+            const form = document.getElementById('forward-form');
+            const collateral = parseFloat(form.querySelector('#collateral').value);
+            const notional = parseFloat(form.querySelector('#notional').value);
+            const leverage = parseFloat(form.querySelector('#leverage').value);
+            const isLong = form.querySelector('#direction').value === 'true';
+            const expiry = parseInt(form.querySelector('#expiry').value, 10);
+
+            // Validación rápida
+            if (!collateral || !notional || !expiry) {
+                this.showNotification('Completa todos los campos requeridos', 'warning');
+                return;
+            }
+
             this.showNotification('Creando forward contract...', 'info');
-            
-            let result;
-            
-            // Intentar usar Web3 si está disponible
-            if (window.web3Instance && window.web3Instance.createForward) {
-                result = await window.web3Instance.createForward({
-                    collateral: parseFloat(collateral),
-                    notionalUSD: parseFloat(notional),
-                    expiryDays: parseInt(expiry),
-                    leverage: parseFloat(leverage),
-                    isLong: isLong
-                });
-            } else {
-                // Fallback: simulación para desarrollo
-                result = await this.simulateForwardCreation({
-                    collateral: parseFloat(collateral),
-                    notionalUSD: parseFloat(notional),
-                    expiryDays: parseInt(expiry),
-                    leverage: parseFloat(leverage),
-                    isLong: isLong
-                });
-            }
-            
-            if (result.success) {
-                this.showNotification(`Forward creado exitosamente! ID: ${result.forwardId}`, 'success');
-                document.querySelector('.fixed').remove();
-                this.loadUserContracts(); // Actualizar la lista de contratos
-            } else {
-                this.showNotification('Error creando forward: ' + result.error, 'error');
-            }
-        } catch (error) {
-            console.error('Error en submitForward:', error);
-            this.showNotification('Error: ' + error.message, 'error');
-        }
-    }
 
-    async simulateForwardCreation(params) {
-        // Simulación para desarrollo y testing
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const forwardId = 'FWD_' + Date.now().toString(36).toUpperCase();
-                resolve({
-                    success: true,
-                    forwardId: forwardId,
-                    txHash: '0x' + Math.random().toString(16).substr(2, 64)
+            // Integración real con web3 cuando esté disponible
+            if (window.web3Instance && typeof window.web3Instance.createForward === 'function') {
+                const result = await window.web3Instance.createForward({
+                    collateral, notionalUSD: notional, leverage, isLong, expiryDays: expiry
                 });
-            }, 2000); // Simular delay de transacción
-        });
-    }
+                if (result?.success) {
+                    this.showNotification(`Forward creado: ${result.forwardId}`, 'success');
+                } else {
+                    this.showNotification(`Error: ${result?.error || 'Transacción fallida'}`, 'error');
+                }
+            } else {
+                // Simulación
+                await new Promise(r => setTimeout(r, 1000));
+                this.showNotification('Forward simulado creado (demo)', 'success');
+            }
 
-    // Sobrescribir la función openForwardContractModal para usar el nuevo modal
-    openForwardContractModal() {
-        if (!this.isUserAuthenticated()) {
-            this.showNotification('Inicia sesión para crear contratos forward', 'warning');
-            return;
+            // Cerrar modal si existe
+            const modal = document.querySelector('.fixed.inset-0');
+            if (modal) modal.remove();
+        } catch (e) {
+            console.error(e);
+            this.showNotification('Error al crear el forward', 'error');
         }
-        this.openForwardModal();
     }
 }
 
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
+// Inicializar clase si aún no existe
+if (!window.bitForwardDashboard) {
     window.bitForwardDashboard = new BitForwardEnterprise();
-    window.BitForwardEnterprise = new BitForwardEnterprise();
+}
+
+// ===== Utilidades para fees estimadas en Dashboard =====
+function parseUSD(valueText) {
+    if (!valueText) return 0;
+    return Number(String(valueText).replace(/[^0-9.-]+/g, '')) || 0;
+}
+
+function formatUSD(n) {
+    const sign = n < 0 ? '-' : '';
+    const abs = Math.abs(n);
+    return `${sign}$${abs.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+}
+
+function updateEstimatedFees() {
+    const balanceEl = document.querySelector('[data-metric="portfolio-balance"]');
+    const pnlEl = document.querySelector('[data-metric="portfolio-pnl"]');
+    const mgmtAnnualEl = document.querySelector('[data-metric="mgmt-fee-annual"]');
+    const mgmtDailyEl = document.querySelector('[data-metric="mgmt-fee-daily"]');
+    const perfEl = document.querySelector('[data-metric="perf-fee"]');
+
+    if (!balanceEl || !mgmtAnnualEl || !mgmtDailyEl || !perfEl) return;
+
+    const balance = parseUSD(balanceEl.textContent);
+    const pnl = pnlEl ? parseUSD(pnlEl.textContent) : 0;
+
+    // Management fee 1% anual
+    const mgmtAnnual = balance * 0.01;
+    const mgmtDaily = mgmtAnnual / 365;
+
+    mgmtAnnualEl.textContent = formatUSD(mgmtAnnual);
+    mgmtDailyEl.textContent = formatUSD(mgmtDaily);
+
+    // Performance fee 10% sobre ganancias que superen 10% de umbral (estimación basada en P&L mostrado)
+    const hurdle = balance * 0.10;
+    const perfBase = Math.max(0, pnl - hurdle);
+    const perfFee = perfBase > 0 ? perfBase * 0.10 : 0;
+    perfEl.textContent = formatUSD(perfFee);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    updateEstimatedFees();
 });
 
-// Funciones globales para el dashboard
-window.submitForward = async function() {
-    if (window.bitForwardDashboard) {
-        return await window.bitForwardDashboard.submitForward();
-    } else {
-        console.error('Dashboard no inicializado');
-    }
-};
-
-window.showForwardModal = function() {
-    if (window.bitForwardDashboard) {
-        window.bitForwardDashboard.openForwardModal();
-    }
-};
-
-window.loadRealTimeData = function() {
-    if (window.bitForwardDashboard) {
-        window.bitForwardDashboard.loadUserContracts();
-        window.bitForwardDashboard.loadAssetPrices();
-    }
-};
-
-// Exportar para uso en otros módulos
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = BitForwardEnterprise;
-}
+const __feesObserver = new MutationObserver(() => updateEstimatedFees());
+__feesObserver.observe(document.body, { subtree: true, childList: true, characterData: true });

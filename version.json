@@ -1,0 +1,155 @@
+{
+  "version": "2.0.0",
+  "name": "BitForward",
+  "description": "Plataforma descentralizada de contratos forward para empresas",
+  "modules": [
+    {
+      "name": "Core Engine",
+      "version": "2.0.0",
+      "components": [
+        {
+          "name": "BitForward Core",
+          "file": "src/prototype.js",
+          "version": "2.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Blockchain Engine",
+          "file": "src/blockchain.js",
+          "version": "2.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Event System",
+          "file": "src/event-system.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Portfolio Management",
+          "file": "src/portfolio-management.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Risk Analytics",
+          "file": "src/risk-analytics.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Cross-Chain Bridge",
+          "file": "src/cross-chain-bridge.js",
+          "version": "0.1.0",
+          "status": "experimental"
+        },
+        {
+          "name": "Core Integration",
+          "file": "src/core-integration.js",
+          "version": "2.0.0",
+          "status": "stable"
+        }
+      ]
+    },
+    {
+      "name": "Frontend",
+      "version": "2.0.0",
+      "components": [
+        {
+          "name": "Logo Manager",
+          "file": "js/logo-manager.js",
+          "version": "2.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Wallet Manager",
+          "file": "js/wallet-manager.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Dashboard",
+          "file": "js/dashboard.js",
+          "version": "2.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "BitForward Web3",
+          "file": "js/bitforward-web3.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Component Loader",
+          "file": "js/component-loader.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Initialization",
+          "file": "js/init.js",
+          "version": "2.0.0",
+          "status": "stable"
+        }
+      ]
+    },
+    {
+      "name": "UI/UX",
+      "version": "1.0.0",
+      "components": [
+        {
+          "name": "Enhancements",
+          "file": "js/enhancements.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "News Feed",
+          "file": "js/news-feed.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "SVG Animations",
+          "file": "js/svg-animations.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Rocket Theme",
+          "file": "js/rocket-theme.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Rocket Mobile",
+          "file": "js/rocket-mobile.js",
+          "version": "1.0.0",
+          "status": "stable"
+        },
+        {
+          "name": "Transitions",
+          "file": "js/transitions.js",
+          "version": "1.0.0",
+          "status": "stable"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "ethers.js": "5.7.2",
+    "sortablejs": "1.15.0"
+  },
+  "lastUpdated": "2025-05-30",
+  "environment": {
+    "node": ">=14.0.0",
+    "browsers": ["Chrome", "Firefox", "Safari", "Edge"]
+  },
+  "authors": [
+    {
+      "name": "AFORTU Team",
+      "email": "contacto@afortu.com.mx"
+    }
+  ],
+  "license": "MIT"
+}

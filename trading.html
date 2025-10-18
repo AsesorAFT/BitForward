@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading - BitForward | Forwards & Futuros con Apalancamiento</title>
+    
+    <!-- Space Theme Loader -->
+    <script src="js/space-theme-loader.js"></script>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/wallet.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen text-white">
+    
+    <!-- Trading Container -->
+    <div class="dashboard-container relative overflow-hidden">
+        <!-- Background decorations -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        
+        <!-- Header -->
+        <header class="relative z-10 border-b border-white/20 bg-black/20 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="flex items-center justify-between">
+                    <!-- Logo and Title -->
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-gradient-to-r from-bf-secondary to-yellow-400 p-2 rounded-xl shadow-crypto-glow">
+                            <img src="assets/logo.svg" alt="BitForward" class="w-8 h-8 text-white" style="filter: brightness(0) invert(1);">
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold bg-gradient-to-r from-white via-bf-secondary to-white bg-clip-text text-transparent">
+                                <span class="bitforward-brand animated size-lg">BitForward</span>
+                            </h1>
+                            <p class="text-sm text-blue-200">Trading Avanzado</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <nav class="hidden md:flex space-x-1">
+                        <a href="dashboard.html" class="px-4 py-2 rounded-lg text-blue-200 hover:text-white hover:bg-white/10 transition-all">Dashboard</a>
+                        <a href="trading.html" class="px-4 py-2 rounded-lg bg-bf-secondary/20 text-bf-secondary font-medium">Trading</a>
+                        <a href="lending.html" class="px-4 py-2 rounded-lg text-blue-200 hover:text-white hover:bg-white/10 transition-all">Lending</a>
+                        <a href="analytics.html" class="px-4 py-2 rounded-lg text-blue-200 hover:text-white hover:bg-white/10 transition-all">Analytics</a>
+                        <a href="community.html" class="px-4 py-2 rounded-lg text-blue-200 hover:text-white hover:bg-white/10 transition-all">Community</a>
+                        <a href="enterprise.html" class="px-4 py-2 rounded-lg text-blue-200 hover:text-white hover:bg-white/10 transition-all">Enterprise</a>
+                    </nav>
+                    
+                    <!-- Wallet Connection -->
+                    <div class="flex items-center space-x-3">
+                        <button id="wallet-connect" class="bg-gradient-to-r from-bf-secondary to-yellow-400 px-4 py-2 rounded-lg font-medium text-black hover:shadow-crypto-glow transition-all duration-300">
+                            Conectar Wallet
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Trading Content -->
+        <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-2">Trading de Forwards y Futuros</h2>
+                <p class="text-blue-200">Crea posiciones apalancadas con contratos inteligentes descentralizados</p>
+            </div>
+
+            <!-- Trading Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                
+                <!-- Left Column: Create Position -->
+                <div class="lg:col-span-1">
+                    <div class="glass-effect rounded-xl p-6 border border-white/20">
+                        <h3 class="text-xl font-bold text-white mb-6">Crear Posición</h3>
+                        
+                        <form id="create-position-form" class="space-y-4">
+                            <!-- Asset Selection -->
+                            <div>
+                                <label class="block text-sm font-medium text-blue-200 mb-2">Activo</label>
+                                <select id="asset-select" class="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white focus:border-bf-secondary focus:outline-none">
+                                    <option value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                    <option value="SOL">Solana (SOL)</option>
+                                    <option value="AVAX">Avalanche (AVAX)</option>
+                                </select>
+                            </div>
+
+                            <!-- Position Type -->
+                            <div>
+                                <label class="block text-sm font-medium text-blue-200 mb-2">Tipo de Posición</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button type="button" id="btn-long" class="position-type-btn active px-4 py-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 font-medium hover:bg-green-500/30 transition-all">
+                                        Long 📈
+                                    </button>
+                                    <button type="button" id="btn-short" class="position-type-btn px-4 py-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 font-medium hover:bg-red-500/30 transition-all">
+                                        Short 📉
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Collateral -->
+                            <div>
+                                <label class="block text-sm font-medium text-blue-200 mb-2">Colateral</label>
+                                <div class="relative">
+                                    <input type="number" id="collateral-input" step="0.001" min="0.001" placeholder="0.1" class="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white focus:border-bf-secondary focus:outline-none">
+                                    <span class="absolute right-4 top-3 text-blue-300" id="collateral-asset">BTC</span>
+                                </div>
+                                <p class="text-xs text-blue-300 mt-1">Mínimo: 0.001 BTC</p>
+                            </div>
+
+                            <!-- Leverage -->
+                            <div>
+                                <label class="block text-sm font-medium text-blue-200 mb-2">Apalancamiento: <span id="leverage-display">5x</span></label>
+                                <input type="range" id="leverage-slider" min="1" max="20" value="5" step="1" class="w-full h-2 bg-blue-900 rounded-lg appearance-none cursor-pointer">
+                                <div class="flex justify-between text-xs text-blue-300 mt-1">
+                                    <span>1x</span>
+                                    <span>5x</span>
+                                    <span>10x</span>
+                                    <span>20x</span>
+                                </div>
+                            </div>
+
+                            <!-- Notional Value -->
+                            <div>
+                                <label class="block text-sm font-medium text-blue-200 mb-2">Valor Nocional (USD)</label>
+                                <input type="number" id="notional-input" step="100" min="100" placeholder="10000" class="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white focus:border-bf-secondary focus:outline-none">
+                            </div>
+
+                            <!-- Expiry -->
+                            <div>
+                                <label class="block text-sm font-medium text-blue-200 mb-2">Vencimiento</label>
+                                <select id="expiry-select" class="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-white focus:border-bf-secondary focus:outline-none">
+                                    <option value="7">7 días</option>
+                                    <option value="14">14 días</option>
+                                    <option value="30" selected>30 días</option>
+                                    <option value="60">60 días</option>
+                                    <option value="90">90 días</option>
+                                    <option value="180">180 días</option>
+                                </select>
+                            </div>
+
+                            <!-- Position Summary -->
+                            <div class="bg-blue-900/20 rounded-lg p-4 border border-blue-500/30 space-y-2">
+                                <h4 class="font-semibold text-white text-sm mb-2">Resumen</h4>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-blue-200">Precio Entrada:</span>
+                                    <span class="text-white font-medium" id="entry-price">$67,234.56</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-blue-200">Precio Liquidación:</span>
+                                    <span class="text-red-400 font-medium" id="liquidation-price">$60,511.10</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-blue-200">Margen Requerido:</span>
+                                    <span class="text-white font-medium" id="required-margin">$2,000</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-blue-200">Fee Apertura:</span>
+                                    <span class="text-white font-medium">0.1%</span>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-bf-secondary to-yellow-400 text-black font-bold rounded-lg hover:shadow-crypto-glow transition-all duration-300 text-lg">
+                                Crear Forward Contract
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Center & Right Column: Positions & Market -->
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    <!-- Active Positions -->
+                    <div class="glass-effect rounded-xl p-6 border border-white/20">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-white">Posiciones Activas</h3>
+                            <button class="text-blue-200 hover:text-white text-sm flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                                Actualizar
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="text-left border-b border-white/10">
+                                    <tr>
+                                        <th class="pb-3 text-xs font-medium text-blue-200">ID</th>
+                                        <th class="pb-3 text-xs font-medium text-blue-200">Activo</th>
+                                        <th class="pb-3 text-xs font-medium text-blue-200">Tipo</th>
+                                        <th class="pb-3 text-xs font-medium text-blue-200">Tamaño</th>
+                                        <th class="pb-3 text-xs font-medium text-blue-200">Entrada</th>
+                                        <th class="pb-3 text-xs font-medium text-blue-200">Actual</th>
+                                        <th class="pb-3 text-xs font-medium text-blue-200">P&L</th>
+                                        <th class="pb-3 text-xs font-medium text-blue-200">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="positions-table-body" class="divide-y divide-white/10">
+                                    <!-- Demo positions -->
+                                    <tr class="hover:bg-white/5 transition-colors">
+                                        <td class="py-3 text-sm text-blue-300">#12453</td>
+                                        <td class="py-3">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center text-xs">₿</div>
+                                                <span class="text-white font-medium">BTC</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3">
+                                            <span class="inline-flex px-2 py-1 text-xs font-medium bg-green-500/20 text-green-400 rounded-full">
+                                                Long 5x
+                                            </span>
+                                        </td>
+                                        <td class="py-3 text-white">0.5 BTC</td>
+                                        <td class="py-3 text-white">$65,000</td>
+                                        <td class="py-3 text-white">$67,234</td>
+                                        <td class="py-3 text-green-400 font-bold">+$5,585 (+17.2%)</td>
+                                        <td class="py-3">
+                                            <button class="text-blue-400 hover:text-blue-300 text-sm">Cerrar</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-white/5 transition-colors">
+                                        <td class="py-3 text-sm text-blue-300">#12452</td>
+                                        <td class="py-3">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-xs">Ξ</div>
+                                                <span class="text-white font-medium">ETH</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3">
+                                            <span class="inline-flex px-2 py-1 text-xs font-medium bg-red-500/20 text-red-400 rounded-full">
+                                                Short 3x
+                                            </span>
+                                        </td>
+                                        <td class="py-3 text-white">10 ETH</td>
+                                        <td class="py-3 text-white">$3,500</td>
+                                        <td class="py-3 text-white">$3,456</td>
+                                        <td class="py-3 text-green-400 font-bold">+$1,320 (+12.6%)</td>
+                                        <td class="py-3">
+                                            <button class="text-blue-400 hover:text-blue-300 text-sm">Cerrar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Market Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="glass-effect rounded-xl p-4 border border-white/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-blue-200 text-sm">Volume 24h</span>
+                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                </svg>
+                            </div>
+                            <p class="text-2xl font-bold text-white">$2.4M</p>
+                            <p class="text-sm text-green-400">+18.2%</p>
+                        </div>
+                        
+                        <div class="glass-effect rounded-xl p-4 border border-white/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-blue-200 text-sm">Open Interest</span>
+                                <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <p class="text-2xl font-bold text-white">$8.7M</p>
+                            <p class="text-sm text-blue-400">1,247 contratos</p>
+                        </div>
+                        
+                        <div class="glass-effect rounded-xl p-4 border border-white/20">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-blue-200 text-sm">Funding Rate</span>
+                                <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                                </svg>
+                            </div>
+                            <p class="text-2xl font-bold text-white">0.01%</p>
+                            <p class="text-sm text-yellow-400">8h restantes</p>
+                        </div>
+                    </div>
+
+                    <!-- Risk Management -->
+                    <div class="glass-effect rounded-xl p-6 border border-white/20">
+                        <h3 class="text-xl font-bold text-white mb-4">Gestión de Riesgo</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-black/20 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-blue-200 text-sm">Margen Total</span>
+                                    <span class="text-white font-bold">$12,450</span>
+                                </div>
+                                <div class="w-full bg-blue-900/30 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                                <p class="text-xs text-blue-300 mt-1">65% utilizado</p>
+                            </div>
+                            
+                            <div class="bg-black/20 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-blue-200 text-sm">Ratio de Margen</span>
+                                    <span class="text-green-400 font-bold">245%</span>
+                                </div>
+                                <div class="w-full bg-blue-900/30 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-green-500 to-emerald-400 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <p class="text-xs text-green-300 mt-1">Saludable</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Educational Banner -->
+            <div class="glass-effect rounded-xl p-6 border border-bf-secondary/30 bg-gradient-to-r from-bf-secondary/5 to-purple-500/5">
+                <div class="flex items-start gap-4">
+                    <div class="bg-bf-secondary/20 p-3 rounded-lg">
+                        <svg class="w-6 h-6 text-bf-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-lg font-bold text-white mb-2">📚 Aprende sobre Forward Contracts</h4>
+                        <p class="text-blue-200 mb-3">Los contratos forward te permiten bloquear un precio futuro para comprar o vender un activo. Con apalancamiento, puedes multiplicar tus ganancias (y pérdidas).</p>
+                        <a href="#" class="text-bf-secondary hover:text-yellow-400 font-medium inline-flex items-center gap-2">
+                            Ver tutoriales
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="relative z-10 border-t border-white/20 bg-black/20 backdrop-blur-md mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-green-400 text-sm font-medium">Sistema Operativo</span>
+                    </div>
+                    <div class="text-blue-200 text-sm">
+                        BitForward Trading v1.0 | Proyecto Fénix
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <script src="js/logo-manager.js"></script>
+    <script src="js/wallet-manager.js"></script>
+    <script src="js/bitforward-web3.js"></script>
+    
+    <script>
+        // Trading page initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 BitForward Trading inicializado');
+            
+            // Position type toggle
+            const btnLong = document.getElementById('btn-long');
+            const btnShort = document.getElementById('btn-short');
+            let positionType = 'long';
+            
+            btnLong.addEventListener('click', () => {
+                btnLong.classList.add('active');
+                btnShort.classList.remove('active');
+                positionType = 'long';
+                updatePositionSummary();
+            });
+            
+            btnShort.addEventListener('click', () => {
+                btnShort.classList.add('active');
+                btnLong.classList.remove('active');
+                positionType = 'short';
+                updatePositionSummary();
+            });
+            
+            // Leverage slider
+            const leverageSlider = document.getElementById('leverage-slider');
+            const leverageDisplay = document.getElementById('leverage-display');
+            
+            leverageSlider.addEventListener('input', (e) => {
+                leverageDisplay.textContent = `${e.target.value}x`;
+                updatePositionSummary();
+            });
+            
+            // Real-time calculations
+            const collateralInput = document.getElementById('collateral-input');
+            const notionalInput = document.getElementById('notional-input');
+            
+            [collateralInput, notionalInput, leverageSlider].forEach(el => {
+                el.addEventListener('input', updatePositionSummary);
+            });
+            
+            function updatePositionSummary() {
+                const leverage = parseInt(leverageSlider.value);
+                const notional = parseFloat(notionalInput.value) || 10000;
+                const btcPrice = 67234.56;
+                
+                // Entry price
+                document.getElementById('entry-price').textContent = `$${btcPrice.toLocaleString()}`;
+                
+                // Liquidation price
+                const movePercent = (1 / leverage) * 100;
+                const liqPrice = positionType === 'long' 
+                    ? btcPrice * (1 - movePercent / 100)
+                    : btcPrice * (1 + movePercent / 100);
+                document.getElementById('liquidation-price').textContent = `$${liqPrice.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
+                
+                // Required margin
+                const margin = notional / leverage;
+                document.getElementById('required-margin').textContent = `$${margin.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
+            }
+            
+            // Form submission
+            document.getElementById('create-position-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = {
+                    asset: document.getElementById('asset-select').value,
+                    type: positionType,
+                    collateral: parseFloat(collateralInput.value),
+                    leverage: parseInt(leverageSlider.value),
+                    notional: parseFloat(notionalInput.value),
+                    expiry: parseInt(document.getElementById('expiry-select').value)
+                };
+                
+                console.log('Creating position:', formData);
+                
+                // Show notification
+                showNotification('Creando posición...', 'info');
+                
+                // Simulate transaction
+                setTimeout(() => {
+                    showNotification('¡Posición creada exitosamente!', 'success');
+                    // Reset form
+                    e.target.reset();
+                    leverageDisplay.textContent = '5x';
+                    updatePositionSummary();
+                }, 2000);
+            });
+            
+            function showNotification(message, type) {
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
+                    type === 'success' ? 'bg-green-500' : 
+                    type === 'error' ? 'bg-red-500' : 
+                    'bg-blue-500'
+                } text-white`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+            
+            // Initialize summary
+            updatePositionSummary();
+        });
+    </script>
+</body>
+</html>
