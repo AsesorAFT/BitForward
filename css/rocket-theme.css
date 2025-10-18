@@ -1,0 +1,739 @@
+/* 
+ * BitForward Rocket Theme
+ * Un diseño futurista con animaciones de cohete para representar
+ * el despegue de BitForward en el mundo DeFi
+ */
+
+:root {
+  /* Colores principales */
+  --rocket-primary: #06b6d4;
+  --rocket-secondary: #3b82f6;
+  --rocket-tertiary: #8b5cf6;
+  --rocket-accent: #f59e0b;
+  --rocket-success: #10b981;
+  --rocket-error: #ef4444;
+  --rocket-warning: #f97316;
+  
+  /* Gradientes */
+  --rocket-gradient: linear-gradient(135deg, var(--rocket-primary), var(--rocket-secondary));
+  --rocket-gradient-glow: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(59, 130, 246, 0.6));
+  
+  /* Fondos */
+  --rocket-bg-dark: #0f172a;
+  --rocket-bg-darker: #080e1d;
+  --rocket-bg-card: rgba(30, 41, 59, 0.7);
+  
+  /* Bordes y sombras */
+  --rocket-border: rgba(59, 130, 246, 0.2);
+  --rocket-glow: 0 0 20px rgba(6, 182, 212, 0.5);
+  --rocket-glow-hover: 0 0 25px rgba(6, 182, 212, 0.8);
+}
+
+/* Efecto de resplandor para elementos importantes */
+.rocket-glow {
+  box-shadow: var(--rocket-glow);
+  transition: box-shadow 0.3s ease;
+}
+
+.rocket-glow:hover {
+  box-shadow: var(--rocket-glow-hover);
+}
+
+/* Animación del cohete principal - eliminada */
+
+/* Contenedor para el logo del cohete */
+.logo-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px; /* Espacio para las llamas */
+}
+
+/* Animación para el logo del cohete (estilo GIF) */
+.animated-logo {
+  animation: rocketThruster 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6));
+  transition: all 0.3s ease;
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+}
+
+.animated-logo:hover {
+  filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.9)) brightness(1.2);
+  animation: rocketBlastOff 0.8s ease-in-out forwards;
+}
+
+/* Asegúrate de que las animaciones internas del SVG se ejecuten */
+.animated-logo svg * {
+  transition: all 0.3s ease;
+}
+
+.animated-logo:hover .flames path {
+  animation-duration: 0.3s !important; /* Acelera la animación de las llamas al pasar el mouse */
+}
+
+@keyframes rocketThruster {
+  0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6)); }
+  25% { transform: translateY(-2px) scale(1.02); filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.7)); }
+  50% { transform: translateY(-5px) scale(1.05); filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.8)); }
+  75% { transform: translateY(-2px) scale(1.02); filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.7)); }
+  100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6)); }
+}
+
+@keyframes rocketBlastOff {
+  0% { transform: translateY(0) scale(1); }
+  10% { transform: translateY(-5px) scale(1.05); }
+  30% { transform: translateY(-15px) scale(1.1) rotate(2deg); }
+  50% { transform: translateY(-25px) scale(1.15) rotate(-2deg); }
+  100% { transform: translateY(-35px) scale(1.2) rotate(0deg); }
+}
+
+/* Efectos de llama para el cohete */
+.logo-wrapper {
+  position: relative;
+  overflow: visible;
+}
+
+/* Particulas de fuego */
+.flame-particles {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 25px;
+  pointer-events: none;
+}
+
+.flame-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(239, 68, 68, 0.7);
+  animation: particleFall 0.6s ease-out forwards;
+}
+
+@keyframes particleFall {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(
+      calc(var(--offset-x) * 10px),
+      calc(var(--offset-y) * 20px)
+    ) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Efecto de llama para el cohete */
+.animated-logo::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 20px;
+  background: linear-gradient(to bottom, rgba(255,69,0,0.9), rgba(255,165,0,0.7) 50%, rgba(255,255,0,0.5) 80%, transparent);
+  border-radius: 50% 50% 20% 20%;
+  z-index: -1;
+  filter: blur(3px);
+  opacity: 0.8;
+  animation: flameFlicker 0.15s ease-in-out infinite alternate;
+}
+
+@keyframes flameFlicker {
+  0% { height: 18px; opacity: 0.7; }
+  100% { height: 22px; opacity: 0.9; }
+}
+
+.rocket {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.rocket-body {
+  width: 24px;
+  height: 40px;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  border-radius: 50% 50% 20% 20%;
+  position: absolute;
+  left: 8px;
+  top: 0;
+}
+
+.rocket-window {
+  width: 10px;
+  height: 10px;
+  background: #06b6d4;
+  border-radius: 50%;
+  position: absolute;
+  left: 7px;
+  top: 10px;
+  box-shadow: inset 0 0 3px rgba(255, 255, 255, 0.8);
+}
+
+.rocket-engine {
+  width: 16px;
+  height: 8px;
+  background: #94a3b8;
+  border-radius: 0 0 5px 5px;
+  position: absolute;
+  left: 12px;
+  bottom: 0;
+}
+
+.rocket-fin {
+  width: 8px;
+  height: 14px;
+  background: #3b82f6;
+  position: absolute;
+  bottom: 10px;
+}
+
+.rocket-fin.left {
+  left: 0;
+  border-radius: 10px 0 0 0;
+  transform: skew(-20deg);
+}
+
+.rocket-fin.right {
+  right: 0;
+  border-radius: 0 10px 0 0;
+  transform: skew(20deg);
+}
+
+.rocket-flames {
+  position: absolute;
+  bottom: -15px;
+  left: 14px;
+  width: 12px;
+  height: 20px;
+  transform-origin: center bottom;
+}
+
+.flame {
+  position: absolute;
+  bottom: 0;
+  width: 12px;
+  height: 25px;
+  border-radius: 50% 50% 20% 20%;
+  animation: flameAnimation 0.2s infinite alternate;
+}
+
+.flame-inner {
+  background: #f59e0b;
+}
+
+.flame-outer {
+  background: #ef4444;
+  opacity: 0.7;
+  height: 20px;
+}
+
+@keyframes flameAnimation {
+  0% { height: 15px; opacity: 0.8; }
+  100% { height: 25px; opacity: 1; }
+}
+
+.rocket-container:hover .rocket {
+  transform: translateY(-10px);
+}
+
+/* Animación de lanzamiento */
+.rocket-launch {
+  animation: rocketLaunch 1.5s ease-in forwards;
+}
+
+@keyframes rocketLaunch {
+  0% { 
+    transform: translateY(0) scale(1); 
+    opacity: 1;
+  }
+  20% { 
+    transform: translateY(-20px) scale(1.1); 
+  }
+  100% { 
+    transform: translateY(-1000px) scale(0.2); 
+    opacity: 0;
+  }
+}
+
+.rocket-launch .flame {
+  animation: launchFlame 0.1s infinite alternate;
+}
+
+@keyframes launchFlame {
+  0% { height: 25px; opacity: 0.9; }
+  100% { height: 40px; opacity: 1; }
+}
+
+/* Efecto de estrellas para el tema espacial */
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: twinkle var(--duration) ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.2; }
+  100% { opacity: 0.8; }
+}
+
+/* Tarjetas futuristas */
+.rocket-card {
+  background: var(--rocket-bg-card);
+  border: 1px solid var(--rocket-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.rocket-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.rocket-card:hover::before {
+  opacity: 1;
+}
+
+.rocket-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--rocket-primary);
+  box-shadow: var(--rocket-glow);
+}
+
+/* Botones futuristas */
+.rocket-button {
+  background: var(--rocket-gradient);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.rocket-button::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  transition: transform 0.5s ease;
+  transform: translateX(-100%) translateY(-100%) rotate(45deg);
+}
+
+.rocket-button:hover::before {
+  transform: translateX(0) translateY(0) rotate(45deg);
+}
+
+.rocket-button:hover {
+  box-shadow: var(--rocket-glow);
+  transform: translateY(-2px);
+}
+
+.rocket-button:active {
+  transform: translateY(1px);
+}
+
+/* Botón secundario */
+.rocket-button-secondary {
+  background: transparent;
+  border: 2px solid var(--rocket-primary);
+  color: var(--rocket-primary);
+}
+
+.rocket-button-secondary:hover {
+  background: rgba(6, 182, 212, 0.1);
+}
+
+/* Iconos animados */
+.rocket-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.rocket-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--rocket-primary);
+  transition: all 0.3s ease;
+}
+
+.rocket-icon:hover {
+  transform: rotate(5deg) scale(1.05);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3));
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+}
+
+.rocket-icon:hover svg {
+  transform: scale(1.1);
+  color: white;
+}
+
+/* Tablas futuristas */
+.rocket-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.rocket-table thead th {
+  background: transparent;
+  color: #94a3b8;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.rocket-table tbody tr {
+  background: var(--rocket-bg-card);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.rocket-table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--rocket-glow);
+}
+
+.rocket-table tbody td {
+  padding: 1rem;
+  border-top: 1px solid rgba(59, 130, 246, 0.1);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.rocket-table tbody td:first-child {
+  border-left: 1px solid rgba(59, 130, 246, 0.1);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.rocket-table tbody td:last-child {
+  border-right: 1px solid rgba(59, 130, 246, 0.1);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Insignias y etiquetas */
+.rocket-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rocket-badge-primary {
+  background: rgba(6, 182, 212, 0.2);
+  color: var(--rocket-primary);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.rocket-badge-success {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--rocket-success);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.rocket-badge-warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--rocket-warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.rocket-badge-error {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--rocket-error);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Efectos de partículas */
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.particle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleAnimation var(--duration) ease-out forwards;
+}
+
+@keyframes particleAnimation {
+  0% { 
+    transform: translate(0, 0) scale(1); 
+    opacity: 0.8;
+  }
+  100% { 
+    transform: translate(
+      calc(var(--x) * 100px), 
+      calc(var(--y) * 100px)
+    ) scale(0); 
+    opacity: 0;
+  }
+}
+
+/* Menú de navegación futurista */
+.rocket-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.rocket-nav-item {
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.rocket-nav-item::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--rocket-gradient);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.rocket-nav-item:hover {
+  color: white;
+}
+
+.rocket-nav-item:hover::before {
+  width: 80%;
+}
+
+.rocket-nav-item.active {
+  color: white;
+}
+
+.rocket-nav-item.active::before {
+  width: 80%;
+}
+
+/* Animación de carga */
+.rocket-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.rocket-loader-animation {
+  position: relative;
+  width: 60px;
+  height: 80px;
+}
+
+.rocket-loader-rocket {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  animation: rocketShake 1s ease-in-out infinite;
+}
+
+@keyframes rocketShake {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  25% { transform: translateX(-55%) translateY(2px); }
+  75% { transform: translateX(-45%) translateY(-2px); }
+}
+
+.rocket-loader-trail {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to top, transparent, var(--rocket-primary));
+  border-radius: 50%;
+  filter: blur(1px);
+  animation: trailPulse 1s ease-in-out infinite;
+}
+
+@keyframes trailPulse {
+  0%, 100% { height: 30px; opacity: 0.5; }
+  50% { height: 40px; opacity: 1; }
+}
+
+/* Elementos 3D para efecto futurista */
+.rocket-3d-element {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.3s ease;
+}
+
+.rocket-3d-card {
+  background: var(--rocket-bg-card);
+  border: 1px solid var(--rocket-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  transform: translateZ(0);
+}
+
+.rocket-3d-card:hover {
+  transform: translateZ(10px) rotateX(2deg) rotateY(2deg);
+  box-shadow: var(--rocket-glow);
+}
+
+/* Aplicar el tema automáticamente a elementos existentes */
+.metric-card {
+  background: var(--rocket-bg-card);
+  border: 1px solid var(--rocket-border);
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  border-color: var(--rocket-primary);
+  box-shadow: var(--rocket-glow);
+  transform: translateY(-5px);
+}
+
+.action-btn {
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+  transition: transform 0.5s ease;
+  transform: translateX(-100%) translateY(-100%) rotate(45deg);
+}
+
+.action-btn:hover::before {
+  transform: translateX(0) translateY(0) rotate(45deg);
+}
+
+.action-btn:hover {
+  box-shadow: var(--rocket-glow);
+  transform: translateY(-5px);
+}
+
+.wallet-btn {
+  background: var(--rocket-gradient);
+  box-shadow: 0 0 0 rgba(6, 182, 212, 0);
+  transition: all 0.3s ease;
+}
+
+.wallet-btn:hover {
+  box-shadow: var(--rocket-glow);
+  transform: translateY(-2px);
+}
+
+/* Crear estrellas automáticamente con JavaScript */
+@keyframes shootingStar {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--end-x)) translateY(var(--end-y)) rotate(var(--rotation));
+    opacity: 0;
+  }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 1px white;
+  animation: shootingStar var(--duration) linear forwards;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.shooting-star::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 1px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.8), transparent);
+  transform-origin: left center;
+  transform: rotate(var(--rotation));
+}

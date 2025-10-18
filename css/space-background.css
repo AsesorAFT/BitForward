@@ -1,0 +1,203 @@
+/**
+ * BitForward Space Background
+ * Fondo espacial con estrellas y efectos para todas las páginas de BitForward
+ */
+
+:root {
+  /* Colores del espacio */
+  --space-bg-dark: #0f172a;
+  --space-bg-darker: #080e1d;
+  --space-star-color: rgba(255, 255, 255, 0.8);
+  --space-star-glow: rgba(255, 255, 255, 0.3);
+  --space-nebula-1: rgba(59, 130, 246, 0.1);
+  --space-nebula-2: rgba(139, 92, 246, 0.1);
+  --space-card-bg: rgba(30, 41, 59, 0.7);
+}
+
+/* Fondo espacial base para el cuerpo */
+body {
+  background: linear-gradient(135deg, var(--space-bg-darker), var(--space-bg-dark), var(--space-bg-darker));
+  color: #e2e8f0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  background-attachment: fixed;
+}
+
+/* Contenedor para las estrellas */
+.space-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Overlay con gradiente para dar profundidad */
+.space-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, 
+                             transparent 0%, 
+                             rgba(8, 14, 29, 0.2) 70%, 
+                             rgba(8, 14, 29, 0.5) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Nebulosas distantes */
+.space-nebula {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.5;
+  filter: blur(60px);
+}
+
+.nebula-1 {
+  top: 10%;
+  left: 15%;
+  width: 600px;
+  height: 600px;
+  background: var(--space-nebula-1);
+  animation: nebulaFloat 120s ease-in-out infinite;
+}
+
+.nebula-2 {
+  bottom: 10%;
+  right: 10%;
+  width: 500px;
+  height: 500px;
+  background: var(--space-nebula-2);
+  animation: nebulaFloat 100s ease-in-out infinite reverse;
+}
+
+/* Estrellas estáticas en varias capas */
+.stars-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Polvo estelar */
+.stardust {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 50px 160px, #ffffff40 100%, transparent),
+    radial-gradient(1px 1px at 90px 40px, #ffffff30 100%, transparent),
+    radial-gradient(1px 1px at 130px 80px, #ffffff40 100%, transparent),
+    radial-gradient(1px 1px at 160px 120px, #ffffff20 100%, transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.3;
+}
+
+/* Animación para el efecto de paralaje al desplazarse */
+@keyframes parallaxScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-200px); }
+}
+
+/* Animación para las nebulosas */
+@keyframes nebulaFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
+  25% { transform: translate(5%, 2%) rotate(5deg); opacity: 0.6; }
+  50% { transform: translate(2%, 5%) rotate(10deg); opacity: 0.5; }
+  75% { transform: translate(-3%, 3%) rotate(5deg); opacity: 0.6; }
+}
+
+/* Estilos de contenedor para aplicar sobre contenido */
+.space-container {
+  background: var(--space-card-bg);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  transition: all 0.3s ease;
+}
+
+.space-container:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(6, 182, 212, 0.2);
+}
+
+/* Estilos para tarjetas en el espacio */
+.space-card {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 10px;
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+.space-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
+}
+
+/* Efecto de brillo en hover */
+.space-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.space-card:hover::after {
+  opacity: 1;
+}
+
+/* Scrollbar personalizado estilo espacial */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.7);
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .nebula-1, .nebula-2 {
+    opacity: 0.3;
+    filter: blur(80px);
+  }
+  
+  .space-container, .space-card {
+    padding: 1rem;
+  }
+}

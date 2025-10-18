@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitForward | Template con Tema Espacial</title>
+    <meta name="description" content="Plantilla con tema espacial para BitForward">
+    <meta name="theme-color" content="#0F172A">
+    <link rel="icon" type="image/svg+xml" href="assets/logo-rocket.svg">
+    
+    <!-- Space Theme Loader - Carga automáticamente los recursos necesarios -->
+    <script src="js/space-theme-loader.js"></script>
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Estilos base (opcionales, space-theme-loader.js ya carga los estilos necesarios) -->
+    <link rel="stylesheet" href="css/typography.css">
+    
+    <!-- Estilos específicos de la página -->
+    <link rel="stylesheet" href="css/page-specific.css">
+</head>
+<body>
+    <!-- El fondo espacial se crea automáticamente por el tema -->
+    
+    <!-- Header -->
+    <header class="space-nav">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="brand">
+                    <a href="index.html" class="logo-wrapper">
+                        <img src="assets/logo-rocket-animated.svg" alt="BitForward" class="logo-rocket">
+                        <div>
+                            <h1 class="brand-name">BitForward</h1>
+                            <p class="brand-tagline">Despegando en DeFi</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Navegación principal -->
+                <nav class="main-nav">
+                    <a href="index.html" class="space-nav-link">Inicio</a>
+                    <a href="enterprise.html" class="space-nav-link">Dashboard</a>
+                    <a href="lending.html" class="space-nav-link">Préstamos</a>
+                    <a href="#" class="space-nav-link">Sobre Nosotros</a>
+                </nav>
+                
+                <!-- Acciones de usuario -->
+                <div class="user-actions">
+                    <button class="rocket-button" id="connect-wallet">
+                        <i class="fas fa-wallet"></i>
+                        Conectar Wallet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Título Principal con Estilo Espacial</h1>
+                <p class="hero-subtitle">
+                    Subtítulo o descripción que explica el propósito de esta página.
+                    Con un tema espacial que representa el crecimiento y despegue.
+                </p>
+                <div class="hero-actions">
+                    <button class="rocket-button" id="primary-action">
+                        <i class="fas fa-rocket"></i>
+                        Acción Principal
+                    </button>
+                    <button class="secondary-button">
+                        Acción Secundaria
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Sección de Características -->
+            <section class="features-section">
+                <h2 class="section-title">Características</h2>
+                
+                <div class="features-grid">
+                    <!-- Tarjeta de característica 1 -->
+                    <div class="space-card feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Característica 1</h3>
+                        <p class="feature-description">
+                            Descripción de la primera característica con detalles relevantes para el usuario.
+                        </p>
+                    </div>
+                    
+                    <!-- Tarjeta de característica 2 -->
+                    <div class="space-card feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Característica 2</h3>
+                        <p class="feature-description">
+                            Descripción de la segunda característica con detalles relevantes para el usuario.
+                        </p>
+                    </div>
+                    
+                    <!-- Tarjeta de característica 3 -->
+                    <div class="space-card feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="feature-title">Característica 3</h3>
+                        <p class="feature-description">
+                            Descripción de la tercera característica con detalles relevantes para el usuario.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección de Datos -->
+            <section class="data-section">
+                <h2 class="section-title">Datos y Estadísticas</h2>
+                
+                <div class="stats-grid">
+                    <!-- Estadística 1 -->
+                    <div class="space-card stat-card">
+                        <div class="stat-value">2.4M+</div>
+                        <div class="stat-label">Total Valor Bloqueado</div>
+                    </div>
+                    
+                    <!-- Estadística 2 -->
+                    <div class="space-card stat-card">
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-label">Contratos Activos</div>
+                    </div>
+                    
+                    <!-- Estadística 3 -->
+                    <div class="space-card stat-card">
+                        <div class="stat-value">12.5%</div>
+                        <div class="stat-label">APY Promedio</div>
+                    </div>
+                    
+                    <!-- Estadística 4 -->
+                    <div class="space-card stat-card">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">Soporte Disponible</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección de Tabla -->
+            <section class="table-section">
+                <h2 class="section-title">Tabla de Datos</h2>
+                
+                <div class="table-container">
+                    <table class="space-table">
+                        <thead>
+                            <tr>
+                                <th>Activo</th>
+                                <th>Precio</th>
+                                <th>Cambio 24h</th>
+                                <th>TVL</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="asset-row">
+                                        <div class="asset-icon btc">₿</div>
+                                        <div>Bitcoin (BTC)</div>
+                                    </div>
+                                </td>
+                                <td>$65,432.10</td>
+                                <td><span class="positive">+2.34%</span></td>
+                                <td>$1.2M</td>
+                                <td><button class="small-button">Operar</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="asset-row">
+                                        <div class="asset-icon eth">Ξ</div>
+                                        <div>Ethereum (ETH)</div>
+                                    </div>
+                                </td>
+                                <td>$3,456.78</td>
+                                <td><span class="negative">-1.23%</span></td>
+                                <td>$850K</td>
+                                <td><button class="small-button">Operar</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="asset-row">
+                                        <div class="asset-icon sol">◎</div>
+                                        <div>Solana (SOL)</div>
+                                    </div>
+                                </td>
+                                <td>$156.78</td>
+                                <td><span class="positive">+5.67%</span></td>
+                                <td>$350K</td>
+                                <td><button class="small-button">Operar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Sección de Formulario -->
+            <section class="form-section">
+                <h2 class="section-title">Formulario</h2>
+                
+                <div class="space-container form-container">
+                    <form class="space-form">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" class="space-input" placeholder="Tu nombre">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="space-input" placeholder="correo@ejemplo.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" class="space-input" rows="4" placeholder="Tu mensaje"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="rocket-button">
+                            <i class="fas fa-paper-plane"></i>
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="space-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/logo-rocket.svg" alt="BitForward" class="footer-logo">
+                    <p>BitForward - Plataforma DeFi Empresarial</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Plataforma</h4>
+                        <ul>
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Préstamos</a></li>
+                            <li><a href="#">Contratos Forward</a></li>
+                            <li><a href="#">Análisis</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Empresa</h4>
+                        <ul>
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#">Equipo</a></li>
+                            <li><a href="#">Contacto</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Términos de Servicio</a></li>
+                            <li><a href="#">Política de Privacidad</a></li>
+                            <li><a href="#">Cookies</a></li>
+                            <li><a href="#">Seguridad</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 BitForward by AFORTU. Todos los derechos reservados.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts base -->
+    <script src="js/main.js"></script>
+    
+    <!-- Script específico de la página -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Código específico de la página
+            console.log('Página cargada con tema espacial');
+        });
+        
+        // Cuando el tema espacial esté listo
+        document.addEventListener('spaceThemeLoaded', function() {
+            console.log('Tema espacial cargado correctamente');
+            
+            // Ejemplos de uso de la API del tema espacial
+            
+            // 1. Lanzar un cohete al hacer clic en botón primario
+            document.getElementById('primary-action').addEventListener('click', function() {
+                if (window.BitForwardSpace) {
+                    window.BitForwardSpace.addFlyingRocket({
+                        size: 40,
+                        duration: 4,
+                        startPosition: { x: 50, y: 100 },
+                        endPosition: { x: Math.random() * 60 + 20, y: -10 }
+                    });
+                }
+            });
+            
+            // 2. Meteoro aleatorio cada 30 segundos
+            setInterval(() => {
+                if (window.BitForwardSpace) {
+                    // Crear un meteoro que cruza la pantalla
+                    const meteor = document.createElement('div');
+                    meteor.className = 'meteor';
+                    
+                    // Posición y rotación aleatoria
+                    const startX = Math.random() * 30;
+                    const startY = Math.random() * 30;
+                    const rotation = Math.random() * 45;
+                    
+                    meteor.style.top = `${startY}%`;
+                    meteor.style.left = `${startX}%`;
+                    meteor.style.transform = `rotate(${rotation}deg)`;
+                    
+                    document.body.appendChild(meteor);
+                    
+                    // Eliminar después de la animación
+                    meteor.addEventListener('animationend', () => {
+                        meteor.remove();
+                    });
+                }
+            }, 30000);
+            
+            // 3. Ejemplos de personalización del tema (opcional)
+            if (window.SPACE_THEME_CONFIG) {
+                // Modificar configuración si es necesario
+                // window.SPACE_THEME_CONFIG.effects.stars.count = 200;
+                // window.SPACE_THEME_CONFIG.effects.meteors.frequency = 10000;
+            }
+        });
+    </script>
+</body>
+</html>
