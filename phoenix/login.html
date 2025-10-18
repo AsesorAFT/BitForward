@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Acceso | BitForward Phoenix</title>
+    <!-- Space Theme Loader -->
+    <script src="../js/space-theme-loader.js"></script>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="icon" type="image/svg+xml" href="/icons/bitforward.svg">
 </head>
@@ -264,6 +266,45 @@
             
             input.addEventListener('blur', () => {
                 input.parentElement.classList.remove('ring-2', 'ring-bf-secondary');
+            });
+        });
+        
+        // Integración con tema espacial
+        document.addEventListener('spaceThemeLoaded', function() {
+            console.log('🚀 BitForward Login: Tema espacial cargado');
+            
+            // Añadir clase de tema espacial al contenedor principal
+            const loginCard = document.querySelector('.glass-effect');
+            if (loginCard) {
+                loginCard.classList.add('space-container');
+            }
+            
+            // Añadir efectos de cohete al botón de login
+            const loginButton = document.getElementById('login-button');
+            if (loginButton) {
+                loginButton.classList.add('rocket-button');
+                
+                // Efecto de lanzamiento al hacer clic en login
+                loginButton.addEventListener('click', function() {
+                    // El efecto de lanzamiento se manejará por el rocket-theme
+                    if (window.BitForwardSpace) {
+                        // Añadir animación de cohete durante el login
+                        setTimeout(() => {
+                            window.BitForwardSpace.addFlyingRocket({
+                                size: 40,
+                                duration: 3,
+                                startPosition: { x: 50, y: 50 },
+                                endPosition: { x: 50, y: -10 }
+                            });
+                        }, 500);
+                    }
+                });
+            }
+            
+            // Mejorar inputs
+            const inputs = document.querySelectorAll('input[type="email"], input[type="password"]');
+            inputs.forEach(input => {
+                input.classList.add('space-input');
             });
         });
     </script>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cohete pequeño para animaciones de fondo -->
+  <path d="M12 2L8 7H16L12 2Z" fill="#3B82F6"/>
+  <path d="M8 7V18C8 19.1046 8.89543 20 10 20H14C15.1046 20 16 19.1046 16 18V7H8Z" fill="#E2E8F0"/>
+  <path d="M9 11H15V14H9V11Z" fill="#06B6D4"/>
+  <path d="M8 18L6 22H10L8 18Z" fill="#EF4444"/>
+  <path d="M16 18L18 22H14L16 18Z" fill="#EF4444"/>
+  
+  <!-- Llamas animadas -->
+  <g class="flames">
+    <path d="M10 20H14L12 24L10 20Z" fill="#F59E0B">
+      <animate attributeName="d" dur="0.3s" repeatCount="indefinite" values="M10 20H14L12 24L10 20Z;M10 20H14L12 26L10 20Z;M10 20H14L12 24L10 20Z" />
+      <animate attributeName="opacity" dur="0.3s" repeatCount="indefinite" values="0.8;1;0.8" />
+    </path>
+  </g>
+</svg>

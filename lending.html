@@ -14,6 +14,9 @@
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     
+    <!-- Space Theme Loader -->
+    <script src="js/space-theme-loader.js"></script>
+    
     <!-- Styles -->
     <link rel="stylesheet" href="css/typography.css">
     <link rel="stylesheet" href="css/corporate.css">
@@ -427,5 +430,47 @@
     <script src="js/dashboard.js"></script>
     <script src="js/lending.js"></script>
     <script src="js/auth.js"></script>
+    
+    <!-- Script para activar cohetes en la sección de préstamos -->
+    <script>
+        document.addEventListener('spaceThemeLoaded', function() {
+            console.log('🚀 BitForward Lending: Tema espacial cargado');
+            
+            // Añadir efectos especiales para secciones de préstamos
+            if (window.BitForwardTheme) {
+                // Aplicar tema a elementos específicos de préstamos
+                document.querySelectorAll('.bf-lending-card').forEach(card => {
+                    card.classList.add('space-dashboard-card');
+                });
+                
+                document.querySelectorAll('.bf-lending-stats .bf-stat').forEach(stat => {
+                    stat.classList.add('space-indicator');
+                    
+                    // Determinar si es positivo o negativo
+                    if (stat.classList.contains('positive')) {
+                        stat.classList.add('space-indicator-up');
+                    } else if (stat.classList.contains('negative')) {
+                        stat.classList.add('space-indicator-down');
+                    } else {
+                        stat.classList.add('space-indicator-neutral');
+                    }
+                });
+            }
+            
+            // Lanzar un cohete cuando se aprueba un préstamo
+            document.querySelectorAll('.bf-btn-primary').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (window.BitForwardSpace) {
+                        window.BitForwardSpace.addFlyingRocket({
+                            size: 35,
+                            duration: 4,
+                            startPosition: { x: 50, y: 100 },
+                            endPosition: { x: Math.random() * 50 + 25, y: -10 }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

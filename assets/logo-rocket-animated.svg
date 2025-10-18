@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Definiciones y gradientes -->
+  <defs>
+    <linearGradient id="rocketGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <linearGradient id="flameGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316" />
+      <stop offset="100%" stop-color="#EF4444" />
+      <animate attributeName="y1" values="0%;30%;0%" dur="0.8s" repeatCount="indefinite" />
+    </linearGradient>
+    <linearGradient id="flameGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#F97316" />
+      <animate attributeName="y1" values="20%;50%;20%" dur="1s" repeatCount="indefinite" />
+    </linearGradient>
+    <linearGradient id="rocketBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0" />
+      <stop offset="100%" stop-color="#CBD5E1" />
+    </linearGradient>
+    <linearGradient id="windowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#06B6D4" />
+      <animate attributeName="x1" values="0%;100%;0%" dur="3s" repeatCount="indefinite" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feFlood flood-color="#06B6D4" flood-opacity="0.6" result="glowColor" />
+      <feComposite in="glowColor" in2="blur" operator="in" result="softGlow" />
+      <feMerge>
+        <feMergeNode in="softGlow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="flameBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+    </filter>
+  </defs>
+  
+  <!-- Círculo de fondo -->
+  <circle cx="50" cy="50" r="48" fill="url(#rocketGradient)">
+    <animate attributeName="opacity" values="0.95;1;0.95" dur="3s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="50" cy="50" r="47" fill="none" stroke="#3B82F6" stroke-width="0.8" stroke-opacity="0.3">
+    <animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="2s" repeatCount="indefinite" />
+    <animate attributeName="r" values="47;48;47" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Estrellas decorativas con animación de parpadeo -->
+  <g class="stars">
+    <circle cx="25" cy="20" r="0.8" fill="white" opacity="0.7">
+      <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="80" cy="30" r="1" fill="white" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="15" cy="60" r="0.6" fill="white" opacity="0.6">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="65" cy="75" r="1.2" fill="white" opacity="0.9">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="3.2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="85" cy="65" r="0.7" fill="white" opacity="0.7">
+      <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3.8s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="35" cy="80" r="0.9" fill="white" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.7s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="70" cy="15" r="0.8" fill="white" opacity="0.7">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3.3s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Grupo del cohete con filtro de brillo -->
+  <g filter="url(#glow)" transform="translate(50, 50) rotate(-15) translate(-25, -35)">
+    <!-- Llamas del cohete con animación -->
+    <g class="flames">
+      <!-- Llama principal -->
+      <path d="M20,60 Q25,75 30,60 Q25,65 20,60 Z" fill="url(#flameGradient)" opacity="0.9" filter="url(#flameBlur)">
+        <animate attributeName="d" values="
+          M20,60 Q25,75 30,60 Q25,65 20,60 Z;
+          M20,60 Q25,72 30,60 Q25,63 20,60 Z;
+          M20,60 Q25,78 30,60 Q25,67 20,60 Z;
+          M20,60 Q25,75 30,60 Q25,65 20,60 Z" 
+          dur="0.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.8;1;0.8" dur="0.3s" repeatCount="indefinite" />
+      </path>
+      
+      <!-- Llama secundaria -->
+      <path d="M22,60 Q25,68 28,60 Q25,63 22,60 Z" fill="url(#flameGradient2)" opacity="0.7" filter="url(#flameBlur)">
+        <animate attributeName="d" values="
+          M22,60 Q25,68 28,60 Q25,63 22,60 Z;
+          M22,60 Q25,65 28,60 Q25,62 22,60 Z;
+          M22,60 Q25,70 28,60 Q25,64 22,60 Z;
+          M22,60 Q25,68 28,60 Q25,63 22,60 Z" 
+          dur="0.5s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="0.4s" repeatCount="indefinite" />
+      </path>
+      
+      <!-- Partículas de fuego -->
+      <circle cx="25" cy="65" r="1" fill="#F97316">
+        <animate attributeName="cy" values="65;75;85" dur="0.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.9;0.5;0" dur="0.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="23" cy="66" r="0.8" fill="#F59E0B">
+        <animate attributeName="cy" values="66;74;82" dur="0.7s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.9;0.5;0" dur="0.7s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="27" cy="65" r="0.7" fill="#F97316">
+        <animate attributeName="cy" values="65;72;80" dur="0.9s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.9;0.5;0" dur="0.9s" repeatCount="indefinite" />
+      </circle>
+    </g>
+    
+    <!-- Cuerpo del cohete -->
+    <path d="M15,20 Q25,-5 35,20 L35,50 Q25,60 15,50 Z" fill="url(#rocketBodyGradient)">
+      <animate attributeName="fill-opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Aletas laterales -->
+    <path d="M10,40 L15,50 L15,40 Z" fill="#3B82F6">
+      <animate attributeName="fill" values="#3B82F6;#60A5FA;#3B82F6" dur="3s" repeatCount="indefinite" />
+    </path>
+    <path d="M40,40 L35,50 L35,40 Z" fill="#3B82F6">
+      <animate attributeName="fill" values="#3B82F6;#60A5FA;#3B82F6" dur="3s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Ventana circular con brillo animado -->
+    <circle cx="25" cy="25" r="7" fill="url(#windowGradient)">
+      <animate attributeName="r" values="7;7.2;7" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="25" cy="25" r="5" fill="white" opacity="0.2">
+      <animate attributeName="opacity" values="0.1;0.3;0.1" dur="2s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Detalles del cohete -->
+    <rect x="20" y="40" width="10" height="3" fill="#94A3B8" rx="1" />
+    <rect x="22" y="45" width="6" height="2" fill="#94A3B8" rx="1" />
+  </g>
+  
+  <!-- Estela de movimiento -->
+  <g class="motion-trail" opacity="0.4">
+    <path d="M40,60 C45,65 55,65 60,60" stroke="#3B82F6" stroke-width="0.5" fill="none">
+      <animate attributeName="opacity" values="0;0.4;0" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="stroke-width" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" />
+    </path>
+    <path d="M38,65 C45,72 55,72 62,65" stroke="#3B82F6" stroke-width="0.3" fill="none">
+      <animate attributeName="opacity" values="0;0.3;0" dur="2.5s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Texto "BitForward" con animación sutil -->
+  <text x="50" y="85" fill="white" font-family="Arial, sans-serif" font-weight="bold" font-size="10" text-anchor="middle">
+    BITFORWARD
+    <animate attributeName="fill" values="white;#E2E8F0;white" dur="4s" repeatCount="indefinite" />
+  </text>
+</svg>
