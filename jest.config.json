@@ -1,0 +1,25 @@
+{
+  "testEnvironment": "node",
+  "collect Coverage": false,
+  "coverageDirectory": "coverage",
+  "coveragePathIgnorePatterns": [
+    "/node_modules/",
+    "/dist/",
+    "/contracts/"
+  ],
+  "testMatch": [
+    "**/__tests__/**/*.test.js"
+  ],
+  "transform": {},
+  "moduleFileExtensions": ["js", "json", "node"],
+  "verbose": true,
+  "testTimeout": 10000,
+  "collectCoverageFrom": [
+    "server/**/*.js",
+    "js/**/*.js",
+    "!server/server.js",
+    "!**/node_modules/**",
+    "!**/dist/**",
+    "!js/main.js"
+  ]
+}
