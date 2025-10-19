@@ -4,15 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BitForward | Despegando en el Mundo DeFi 🚀</title>
-    <meta name="theme-color" content="#0F172A">
+    <meta name="description" content="Plataforma DeFi con contratos forward, lending y Web3 integration">
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="canonical" href="index.html" />
+    
+    <!-- DNS Prefetch & Preconnect -->
+    <link rel="dns-prefetch" href="https://api.coingecko.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    
+    <!-- Preload Critical CSS -->
+    <link rel="preload" href="css/dashboard-simple.css" as="style">
+    
+    <!-- Critical inline CSS -->
+    <style>
+        body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+        .landing-page{min-height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
+    </style>
+    
+    <!-- Load CSS -->
     <link rel="stylesheet" href="css/dashboard-simple.css">
     <link rel="icon" type="image/svg+xml" href="assets/logo-rocket.svg">
-    <!-- Preload critical resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="canonical" href="index.html" />
-    <!-- Space Theme Resources (Cargados por space-theme-loader.js) -->
+    
+    <!-- Preload scripts -->
+    <link rel="preload" href="js/sw-register.js" as="script">
+    <link rel="preload" href="js/space-theme-loader.js" as="script">
+    
+    <!-- Space Theme Resources -->
     <script src="js/space-theme-loader.js"></script>
+    
     <!-- Enhanced UI/UX Stylesheets -->
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/crypto-theme.css">
@@ -20,8 +43,8 @@
     <link rel="stylesheet" href="css/rocket-theme.css">
     <link rel="stylesheet" href="css/rocket-mobile.css">
     
-    <!-- Ethers.js Library para Web3 -->
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <!-- Lazy load Ethers.js -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" as="script">
     
     <style>
         /* Landing Page Styles */
@@ -1242,7 +1265,26 @@
         });
     </script>
     
-    <!-- Real Wallet Manager -->
-    <script src="js/wallet-manager-real.js"></script>
+    <!-- Service Worker Registration -->
+    <script src="js/sw-register.js" defer></script>
+    
+    <!-- Lazy Load Scripts -->
+    <script>
+        // Lazy load Ethers.js
+        window.addEventListener('DOMContentLoaded', () => {
+            const ethersScript = document.createElement('script');
+            ethersScript.src = 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js';
+            ethersScript.async = true;
+            document.head.appendChild(ethersScript);
+        });
+        
+        // Lazy load wallet manager
+        window.addEventListener('load', () => {
+            const walletScript = document.createElement('script');
+            walletScript.src = 'js/wallet-manager-real.js';
+            walletScript.defer = true;
+            document.body.appendChild(walletScript);
+        });
+    </script>
 </body>
 </html>
