@@ -53,8 +53,42 @@ const authLimit = rateLimit({
     keyGenerator: (req) => req.body.username || req.ip
 });
 
+// Rate limiter estricto para wallet authentication
+const authRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 20, // máximo 20 intentos
+    message: {
+        success: false,
+        error: 'Wallet Auth Limit Exceeded',
+        message: 'Demasiados intentos de autenticación de wallet.',
+        code: 'WALLET_AUTH_LIMIT_EXCEEDED'
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+    keyGenerator: (req) => {
+        const address = req.body?.address || req.query?.address;
+        return address ? `${req.ip}-${address}` : req.ip;
+    }
+});
+
+// Rate limiter permisivo para endpoints públicos
+const publicLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 200, // 200 requests
+    message: {
+        success: false,
+        error: 'Public API Limit Exceeded',
+        message: 'Demasiadas peticiones al API público.',
+        code: 'PUBLIC_LIMIT_EXCEEDED'
+    },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
 module.exports = {
     rateLimitMiddleware,
     contractCreationLimit,
-    authLimit
+    authLimit,
+    authRateLimiter,
+    publicLimiter
 };
