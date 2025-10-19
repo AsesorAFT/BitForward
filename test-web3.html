@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitForward - Test Web3 Integration</title>
+    
+    <!-- Ethers.js -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card h2 {
+            color: #06b6d4;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: #fff;
+            font-weight: 600;
+            font-family: monospace;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+        
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .status-connected {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .status-disconnected {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .token-list {
+            margin-top: 1rem;
+        }
+        
+        .token-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .token-symbol {
+            font-weight: 700;
+            color: #06b6d4;
+        }
+        
+        .token-balance {
+            font-family: monospace;
+        }
+        
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #06b6d4;
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 BitForward Web3 Test</h1>
+            <p style="color: #94a3b8;">Prueba la integración real con blockchain</p>
+        </div>
+        
+        <!-- Connection Status -->
+        <div class="card">
+            <h2>Estado de Conexión</h2>
+            <div class="info-row">
+                <span class="info-label">Estado:</span>
+                <span id="connection-status" class="status status-disconnected">Desconectado</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">MetaMask:</span>
+                <span id="metamask-status" class="info-value">Detectando...</span>
+            </div>
+            <button id="connect-btn" class="btn">Conectar MetaMask</button>
+        </div>
+        
+        <!-- Wallet Info -->
+        <div id="wallet-info" class="card" style="display: none;">
+            <h2>Información del Wallet</h2>
+            <div class="info-row">
+                <span class="info-label">Dirección:</span>
+                <span id="wallet-address" class="info-value" style="cursor: pointer;" title="Click para copiar">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Red:</span>
+                <span id="wallet-network" class="info-value">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Chain ID:</span>
+                <span id="wallet-chainid" class="info-value">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Balance:</span>
+                <span id="wallet-balance" class="info-value">-</span>
+            </div>
+            
+            <div class="actions">
+                <button id="refresh-btn" class="btn btn-secondary">🔄 Actualizar</button>
+                <button id="sign-btn" class="btn btn-secondary">✍️ Firmar Mensaje</button>
+                <button id="disconnect-btn" class="btn btn-danger">🚪 Desconectar</button>
+            </div>
+        </div>
+        
+        <!-- Token Balances -->
+        <div id="token-balances" class="card" style="display: none;">
+            <h2>Balances de Tokens (ERC20)</h2>
+            <div class="token-list" id="token-list">
+                <!-- Se llenará dinámicamente -->
+            </div>
+            <button id="load-tokens-btn" class="btn btn-secondary">Cargar Tokens</button>
+        </div>
+        
+        <!-- Network Info -->
+        <div id="network-info" class="card" style="display: none;">
+            <h2>Información de la Red</h2>
+            <div class="info-row">
+                <span class="info-label">Block Number:</span>
+                <span id="block-number" class="info-value">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Gas Price:</span>
+                <span id="gas-price" class="info-value">-</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Explorer:</span>
+                <span id="explorer-link" class="info-value">-</span>
+            </div>
+        </div>
+        
+        <!-- Test Actions -->
+        <div id="test-actions" class="card" style="display: none;">
+            <h2>Acciones de Prueba</h2>
+            <div class="actions">
+                <button id="test-switch-polygon" class="btn btn-secondary">🔄 Cambiar a Polygon</button>
+                <button id="test-switch-bsc" class="btn btn-secondary">🔄 Cambiar a BSC</button>
+                <button id="test-get-nft" class="btn btn-secondary">🖼️ Verificar NFTs</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Wallet Manager -->
+    <script src="js/wallet-manager-real.js"></script>
+    
+    <!-- Test Script -->
+    <script>
+        // Elementos del DOM
+        const connectBtn = document.getElementById('connect-btn');
+        const disconnectBtn = document.getElementById('disconnect-btn');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const signBtn = document.getElementById('sign-btn');
+        const loadTokensBtn = document.getElementById('load-tokens-btn');
+        
+        const connectionStatus = document.getElementById('connection-status');
+        const metamaskStatus = document.getElementById('metamask-status');
+        const walletInfo = document.getElementById('wallet-info');
+        const tokenBalances = document.getElementById('token-balances');
+        const networkInfo = document.getElementById('network-info');
+        const testActions = document.getElementById('test-actions');
+        
+        // Verificar MetaMask
+        function checkMetaMask() {
+            const hasMetaMask = walletManager.isMetaMaskInstalled();
+            metamaskStatus.textContent = hasMetaMask ? '✅ Instalado' : '❌ No instalado';
+            metamaskStatus.style.color = hasMetaMask ? '#10b981' : '#ef4444';
+            
+            if (!hasMetaMask) {
+                connectBtn.textContent = 'Instalar MetaMask';
+                connectBtn.onclick = () => window.open('https://metamask.io/download/', '_blank');
+            }
+        }
+        
+        // Actualizar UI con datos del wallet
+        function updateWalletUI() {
+            const status = walletManager.getStatus();
+            
+            if (status.isConnected) {
+                connectionStatus.textContent = 'Conectado';
+                connectionStatus.className = 'status status-connected';
+                
+                document.getElementById('wallet-address').textContent = status.formattedAddress;
+                document.getElementById('wallet-network').textContent = status.network;
+                document.getElementById('wallet-chainid').textContent = status.chainId;
+                document.getElementById('wallet-balance').textContent = `${status.formattedBalance} ${status.networkSymbol}`;
+                
+                walletInfo.style.display = 'block';
+                tokenBalances.style.display = 'block';
+                networkInfo.style.display = 'block';
+                testActions.style.display = 'block';
+                
+                connectBtn.style.display = 'none';
+                
+                // Actualizar info de red
+                updateNetworkInfo();
+            } else {
+                connectionStatus.textContent = 'Desconectado';
+                connectionStatus.className = 'status status-disconnected';
+                
+                walletInfo.style.display = 'none';
+                tokenBalances.style.display = 'none';
+                networkInfo.style.display = 'none';
+                testActions.style.display = 'none';
+                
+                connectBtn.style.display = 'block';
+            }
+        }
+        
+        // Actualizar info de red
+        async function updateNetworkInfo() {
+            if (!walletManager.isConnected) return;
+            
+            try {
+                const provider = walletManager.provider;
+                const blockNumber = await provider.getBlockNumber();
+                const gasPrice = await provider.getGasPrice();
+                const status = walletManager.getStatus();
+                
+                document.getElementById('block-number').textContent = blockNumber.toLocaleString();
+                document.getElementById('gas-price').textContent = `${ethers.utils.formatUnits(gasPrice, 'gwei')} Gwei`;
+                document.getElementById('explorer-link').innerHTML = `<a href="${status.explorer}" target="_blank" style="color: #06b6d4;">${status.explorer}</a>`;
+            } catch (error) {
+                console.error('Error al obtener info de red:', error);
+            }
+        }
+        
+        // Cargar balances de tokens comunes
+        async function loadTokenBalances() {
+            if (!walletManager.isConnected) return;
+            
+            loadTokensBtn.textContent = 'Cargando...';
+            loadTokensBtn.disabled = true;
+            
+            // Tokens comunes en diferentes redes
+            const tokens = {
+                1: [ // Ethereum Mainnet
+                    { address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', name: 'USDT' },
+                    { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', name: 'USDC' },
+                    { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', name: 'DAI' }
+                ],
+                137: [ // Polygon
+                    { address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F', name: 'USDT' },
+                    { address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', name: 'USDC' }
+                ]
+            };
+            
+            const chainId = walletManager.chainId;
+            const tokenList = tokens[chainId] || [];
+            const tokenListEl = document.getElementById('token-list');
+            tokenListEl.innerHTML = '';
+            
+            for (const token of tokenList) {
+                try {
+                    const balance = await walletManager.getTokenBalance(token.address);
+                    
+                    const tokenItem = document.createElement('div');
+                    tokenItem.className = 'token-item';
+                    tokenItem.innerHTML = `
+                        <span class="token-symbol">${balance.symbol}</span>
+                        <span class="token-balance">${parseFloat(balance.formatted).toFixed(4)}</span>
+                    `;
+                    tokenListEl.appendChild(tokenItem);
+                } catch (error) {
+                    console.error(`Error cargando ${token.name}:`, error);
+                }
+            }
+            
+            if (tokenList.length === 0) {
+                tokenListEl.innerHTML = '<p style="color: #94a3b8; text-align: center;">No hay tokens configurados para esta red</p>';
+            }
+            
+            loadTokensBtn.textContent = 'Cargar Tokens';
+            loadTokensBtn.disabled = false;
+        }
+        
+        // Event Listeners
+        connectBtn.onclick = async () => {
+            try {
+                connectBtn.textContent = 'Conectando...';
+                connectBtn.disabled = true;
+                await walletManager.connectMetaMask();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al conectar: ' + error.message);
+            } finally {
+                connectBtn.disabled = false;
+                connectBtn.textContent = 'Conectar MetaMask';
+            }
+        };
+        
+        disconnectBtn.onclick = () => {
+            walletManager.disconnect();
+        };
+        
+        refreshBtn.onclick = async () => {
+            await walletManager.updateBalance();
+            updateWalletUI();
+        };
+        
+        signBtn.onclick = async () => {
+            try {
+                const message = `BitForward Authentication\nTimestamp: ${Date.now()}`;
+                const signature = await walletManager.signMessage(message);
+                alert('✅ Mensaje firmado exitosamente!\n\nSignature:\n' + signature.slice(0, 20) + '...');
+            } catch (error) {
+                alert('❌ Error al firmar: ' + error.message);
+            }
+        };
+        
+        loadTokensBtn.onclick = loadTokenBalances;
+        
+        document.getElementById('wallet-address').onclick = async () => {
+            await navigator.clipboard.writeText(walletManager.address);
+            alert('✅ Dirección copiada al portapapeles');
+        };
+        
+        // Test actions
+        document.getElementById('test-switch-polygon').onclick = async () => {
+            try {
+                await walletManager.switchNetwork(137);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        };
+        
+        document.getElementById('test-switch-bsc').onclick = async () => {
+            try {
+                await walletManager.switchNetwork(56);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        };
+        
+        // Wallet Manager Events
+        walletManager.on('connected', (data) => {
+            console.log('✅ Wallet conectado:', data);
+            updateWalletUI();
+        });
+        
+        walletManager.on('disconnected', () => {
+            console.log('👋 Wallet desconectado');
+            updateWalletUI();
+        });
+        
+        walletManager.on('accountChanged', (address) => {
+            console.log('🔄 Cuenta cambiada:', address);
+            updateWalletUI();
+        });
+        
+        // Inicialización
+        checkMetaMask();
+        updateWalletUI();
+    </script>
+</body>
+</html>
