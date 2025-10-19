@@ -1,0 +1,302 @@
+/**
+ * 🎨 Hero Modern - BitForward
+ * Estilos modernos para el hero section
+ */
+
+/* Variables de color premium */
+:root {
+    /* Colores principales */
+    --cyan-500: #06B6D4;
+    --purple-500: #8B5CF6;
+    --pink-500: #EC4899;
+    --blue-500: #3B82F6;
+    
+    /* Gradientes */
+    --gradient-main: linear-gradient(135deg, #06B6D4 0%, #8B5CF6 50%, #EC4899 100%);
+    --gradient-glow: radial-gradient(circle at center, rgba(6, 182, 212, 0.3) 0%, transparent 70%);
+    --gradient-mesh: 
+        linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+        linear-gradient(45deg, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-bg-hover: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.25);
+    --shadow-glow-cyan: 0 0 24px rgba(6, 182, 212, 0.6);
+    --shadow-glow-purple: 0 0 24px rgba(139, 92, 246, 0.6);
+    --shadow-glow-pink: 0 0 24px rgba(236, 72, 153, 0.6);
+}
+
+/* Hero Section Modernizado */
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 20px 80px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+}
+
+/* Fondo con gradiente animado */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-mesh);
+    opacity: 0.8;
+    z-index: 0;
+}
+
+/* Glow effect de fondo */
+.hero-section::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: var(--gradient-glow);
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.5;
+    z-index: 0;
+    animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* Contenido del hero */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Título principal */
+.hero-title {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+    background-size: 200% 200%;
+}
+
+.hero-title-dynamic {
+    display: inline-block;
+    min-width: 300px;
+    text-align: left;
+}
+
+.hero-title-dynamic::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Subtítulo */
+.hero-subtitle {
+    font-size: clamp(1.125rem, 3vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 3rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Contenedor de botones CTA */
+.hero-cta-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+/* Botón primario premium */
+.cta-button-primary {
+    position: relative;
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: white;
+    background: var(--gradient-main);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-glow-cyan);
+    animation: gradientShift 8s ease infinite;
+}
+
+.cta-button-primary:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+        var(--shadow-glow-cyan),
+        0 10px 40px rgba(6, 182, 212, 0.4);
+}
+
+.cta-button-primary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botón secundario glass */
+.cta-button-secondary {
+    position: relative;
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: white;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--glass-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cta-button-secondary:hover {
+    background: var(--glass-bg-hover);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Trust badges */
+.hero-trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    opacity: 0.7;
+}
+
+.trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.trust-badge-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* Stats badges flotantes */
+.floating-stat {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.floating-stat:hover {
+    transform: scale(1.1) translateY(-5px) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 100px 20px 60px;
+        min-height: auto;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.125rem;
+    }
+
+    .hero-cta-container {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .cta-button-primary,
+    .cta-button-secondary {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .floating-stat {
+        display: none; /* Ocultar en móvil para mejor performance */
+    }
+}
+
+/* Animación de entrada */
+.hero-content > * {
+    animation: fadeInUp 0.8s ease backwards;
+}
+
+.hero-title {
+    animation-delay: 0.1s;
+}
+
+.hero-subtitle {
+    animation-delay: 0.2s;
+}
+
+.hero-cta-container {
+    animation-delay: 0.3s;
+}
+
+.hero-trust-badges {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Partículas de fondo */
+#hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.6;
+}
