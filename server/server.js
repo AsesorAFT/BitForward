@@ -151,6 +151,7 @@ class BitForwardServer {
 
         // API routes con persistencia SQLite
         this.app.use('/api/auth', authRoutes);
+        this.app.use('/api/auth/wallet', require('./routes/walletAuth')); // Wallet authentication
         this.app.use('/api/contracts', contractRoutes);
         this.app.use('/api/lending', lendingRoutes);
 
