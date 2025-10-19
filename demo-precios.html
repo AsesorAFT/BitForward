@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitForward - Demo Visual de Precios en Tiempo Real</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/price-display.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    
+    <style>
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+        
+        .neon-border {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+            border: 2px solid rgba(6, 182, 212, 0.8);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .scale-in {
+            animation: scale-in 0.5s ease-out;
+        }
+        
+        @keyframes scale-in {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white overflow-x-hidden">
+    
+    <!-- Hero Section -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-12 scale-in">
+            <div class="flex items-center justify-center gap-4 mb-4">
+                <img src="assets/logo.svg" alt="BitForward" class="w-16 h-16 floating">
+                <h1 class="text-6xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+                    BitForward
+                </h1>
+            </div>
+            <p class="text-2xl text-cyan-400 mb-2">Sistema de Precios en Tiempo Real</p>
+            <p class="text-gray-400">Datos actualizados cada segundo desde CoinGecko + Binance WebSocket</p>
+            
+            <!-- Status Badge -->
+            <div class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-green-500/20 border border-green-500 rounded-full">
+                <span class="price-status connected"></span>
+                <span class="text-green-400 font-medium" id="mainStatus">Sistema Activo</span>
+            </div>
+        </div>
+        
+        <!-- Live Price Ticker -->
+        <div class="mb-12">
+            <div class="neon-border rounded-2xl p-6 bg-black/30 backdrop-blur-xl">
+                <h2 class="text-2xl font-bold mb-4 text-center">
+                    📊 Ticker en Vivo
+                </h2>
+                <div id="heroTicker"></div>
+            </div>
+        </div>
+        
+        <!-- Price Cards Grid -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">
+                💎 Top Criptomonedas
+            </h2>
+            <div id="priceCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards will be injected here -->
+            </div>
+        </div>
+        
+        <!-- Big Price Display -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Bitcoin -->
+            <div class="neon-border rounded-2xl p-8 bg-gradient-to-br from-orange-500/10 to-yellow-500/10 backdrop-blur-xl scale-in">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-full flex items-center justify-center text-3xl">
+                            ₿
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Bitcoin</h3>
+                            <p class="text-gray-400">BTC</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-5xl font-bold mb-2" data-price-symbol="BTC" data-price-type="price">
+                        Cargando...
+                    </p>
+                    <p class="text-2xl" data-price-symbol="BTC" data-price-type="change">
+                        --
+                    </p>
+                    <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
+                        <div class="bg-black/30 rounded p-2">
+                            <p class="text-gray-400">Vol 24h</p>
+                            <p class="font-bold" data-price-symbol="BTC" data-price-type="volume">--</p>
+                        </div>
+                        <div class="bg-black/30 rounded p-2">
+                            <p class="text-gray-400">Market Cap</p>
+                            <p class="font-bold" data-price-symbol="BTC" data-price-type="marketcap">--</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ethereum -->
+            <div class="neon-border rounded-2xl p-8 bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl scale-in" style="animation-delay: 0.1s">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-3xl">
+                            Ξ
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Ethereum</h3>
+                            <p class="text-gray-400">ETH</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-5xl font-bold mb-2" data-price-symbol="ETH" data-price-type="price">
+                        Cargando...
+                    </p>
+                    <p class="text-2xl" data-price-symbol="ETH" data-price-type="change">
+                        --
+                    </p>
+                    <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
+                        <div class="bg-black/30 rounded p-2">
+                            <p class="text-gray-400">Vol 24h</p>
+                            <p class="font-bold" data-price-symbol="ETH" data-price-type="volume">--</p>
+                        </div>
+                        <div class="bg-black/30 rounded p-2">
+                            <p class="text-gray-400">Market Cap</p>
+                            <p class="font-bold" data-price-symbol="ETH" data-price-type="marketcap">--</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Solana -->
+            <div class="neon-border rounded-2xl p-8 bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl scale-in" style="animation-delay: 0.2s">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-3xl">
+                            ◎
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Solana</h3>
+                            <p class="text-gray-400">SOL</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-5xl font-bold mb-2" data-price-symbol="SOL" data-price-type="price">
+                        Cargando...
+                    </p>
+                    <p class="text-2xl" data-price-symbol="SOL" data-price-type="change">
+                        --
+                    </p>
+                    <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
+                        <div class="bg-black/30 rounded p-2">
+                            <p class="text-gray-400">Vol 24h</p>
+                            <p class="font-bold" data-price-symbol="SOL" data-price-type="volume">--</p>
+                        </div>
+                        <div class="bg-black/30 rounded p-2">
+                            <p class="text-gray-400">Market Cap</p>
+                            <p class="font-bold" data-price-symbol="SOL" data-price-type="marketcap">--</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Live Update Log -->
+        <div class="neon-border rounded-2xl p-6 bg-black/30 backdrop-blur-xl mb-12">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold">
+                    ⚡ Actualizaciones en Vivo
+                </h2>
+                <button id="clearUpdates" class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg text-sm transition">
+                    Limpiar
+                </button>
+            </div>
+            <div id="liveUpdates" class="h-64 overflow-y-auto font-mono text-sm space-y-1">
+                <!-- Updates will appear here -->
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="neon-border rounded-xl p-4 bg-black/30 backdrop-blur-xl text-center">
+                <p class="text-gray-400 text-sm mb-1">Criptomonedas</p>
+                <p class="text-3xl font-bold text-cyan-400" id="totalCoins">10</p>
+            </div>
+            <div class="neon-border rounded-xl p-4 bg-black/30 backdrop-blur-xl text-center">
+                <p class="text-gray-400 text-sm mb-1">WebSocket</p>
+                <p class="text-3xl font-bold text-green-400" id="wsStatus">✓</p>
+            </div>
+            <div class="neon-border rounded-xl p-4 bg-black/30 backdrop-blur-xl text-center">
+                <p class="text-gray-400 text-sm mb-1">Updates</p>
+                <p class="text-3xl font-bold text-purple-400" id="updateCount">0</p>
+            </div>
+            <div class="neon-border rounded-xl p-4 bg-black/30 backdrop-blur-xl text-center">
+                <p class="text-gray-400 text-sm mb-1">Latencia</p>
+                <p class="text-3xl font-bold text-yellow-400" id="latency"><1s</p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center py-8 text-gray-400">
+            <p class="mb-2">BitForward - Proyecto Fénix 🚀</p>
+            <p class="text-sm">Sistema de Precios v1.0.0 | CoinGecko + Binance WebSocket</p>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/price-feeds.js"></script>
+    <script src="js/price-display.js"></script>
+    
+    <script>
+        let updateCounter = 0;
+        
+        // Referencias DOM
+        const heroTicker = document.getElementById('heroTicker');
+        const priceCardsGrid = document.getElementById('priceCardsGrid');
+        const liveUpdates = document.getElementById('liveUpdates');
+        const updateCountEl = document.getElementById('updateCount');
+        const clearUpdatesBtn = document.getElementById('clearUpdates');
+        
+        // Agregar log de actualización
+        function addUpdateLog(symbol, price, change, trend) {
+            updateCounter++;
+            updateCountEl.textContent = updateCounter;
+            
+            const trendIcon = trend === 'up' ? '📈' : trend === 'down' ? '📉' : '➡️';
+            const timestamp = new Date().toLocaleTimeString();
+            
+            const log = document.createElement('div');
+            log.className = 'flex items-center justify-between py-1 px-2 bg-black/20 rounded';
+            log.innerHTML = `
+                <span class="text-gray-400">[${timestamp}]</span>
+                <span class="font-bold">${symbol}</span>
+                <span>${trendIcon} ${window.priceFeedManager.formatPrice(price)}</span>
+                <span class="${change >= 0 ? 'text-green-400' : 'text-red-400'}">${window.priceFeedManager.formatPercentage(change)}</span>
+            `;
+            
+            liveUpdates.insertBefore(log, liveUpdates.firstChild);
+            
+            // Mantener solo últimas 20
+            while (liveUpdates.children.length > 20) {
+                liveUpdates.removeChild(liveUpdates.lastChild);
+            }
+        }
+        
+        // Inicializar cuando el sistema esté listo
+        window.priceFeedManager.on('initialized', () => {
+            console.log('✅ Sistema de precios inicializado');
+            
+            // Crear ticker
+            window.priceDisplayManager.createMiniTicker(
+                ['BTC', 'ETH', 'SOL', 'MATIC', 'BNB', 'ADA', 'AVAX'],
+                heroTicker
+            );
+            
+            // Crear cards
+            const coins = ['BTC', 'ETH', 'SOL', 'MATIC', 'BNB', 'ADA'];
+            coins.forEach(symbol => {
+                window.priceDisplayManager.createPriceWidget(symbol, priceCardsGrid);
+            });
+            
+            // Log inicial
+            const allPrices = window.priceFeedManager.getAllPrices();
+            for (const [symbol, data] of Object.entries(allPrices)) {
+                addUpdateLog(symbol, data.price, data.change24h, data.trend);
+            }
+        });
+        
+        // Listener de actualizaciones
+        window.priceFeedManager.on('price:update', ({ symbol, data }) => {
+            addUpdateLog(symbol, data.price, data.change24h, data.trend);
+        });
+        
+        // Limpiar updates
+        clearUpdatesBtn.addEventListener('click', () => {
+            liveUpdates.innerHTML = '';
+            updateCounter = 0;
+            updateCountEl.textContent = '0';
+        });
+        
+        // Log inicial
+        const initialLog = document.createElement('div');
+        initialLog.className = 'text-center text-cyan-400 py-2';
+        initialLog.textContent = '🚀 Sistema iniciado - Esperando datos...';
+        liveUpdates.appendChild(initialLog);
+    </script>
+</body>
+</html>
