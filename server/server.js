@@ -27,6 +27,9 @@ const { authenticateToken } = require('./middleware/auth');
 const validationService = require('./validators/validationService');
 const logger = require('./utils/logger');
 
+// Importar middleware de seguridad mejorada
+const { setupSecurity, verifyOrigin, blockMaliciousBots } = require('./middleware/security');
+
 // Configuración
 const config = require('./config/config');
 const database = require('./database/database');
@@ -69,21 +72,17 @@ class BitForwardServer {
         // Logging de requests HTTP
         this.app.use(logger.createRequestLogger());
 
+        // Bloquear bots maliciosos
+        this.app.use(blockMaliciousBots);
+
         // Sanitización de datos de entrada
         this.app.use(validationService.createSanitizationMiddleware());
 
-        // Seguridad
-        this.app.use(helmet({
-            contentSecurityPolicy: {
-                directives: {
-                    defaultSrc: ["'self'"],
-                    styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
-                    scriptSrc: ["'self'", "'unsafe-inline'"],
-                    imgSrc: ["'self'", "data:", "https:"],
-                    connectSrc: ["'self'"]
-                }
-            }
-        }));
+        // Sistema de seguridad mejorada (Helmet + Rate Limiting + XSS + CSRF)
+        setupSecurity(this.app);
+        
+        // Verificar origen de requests (Anti-CSRF)
+        this.app.use('/api/', verifyOrigin);
 
         // CORS configurado para el frontend
         this.app.use(cors({
