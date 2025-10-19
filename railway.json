@@ -1,0 +1,21 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "npm install && npm run build"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10,
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 100
+  },
+  "services": [
+    {
+      "name": "bitforward-api",
+      "type": "web",
+      "port": 5000
+    }
+  ]
+}
