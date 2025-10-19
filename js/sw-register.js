@@ -21,11 +21,13 @@ class ServiceWorkerManager {
         }
 
         try {
-            this.registration = await navigator.serviceWorker.register('/sw.js', {
-                scope: '/'
+            // Usar Service Worker avanzado con estrategias de cache
+            this.registration = await navigator.serviceWorker.register('/js/sw-advanced.js', {
+                scope: '/',
+                updateViaCache: 'none' // Siempre buscar actualizaciones
             });
 
-            console.log('[SW Manager] Service Worker registrado:', this.registration.scope);
+            console.log('[SW Manager] Advanced Service Worker registrado:', this.registration.scope);
 
             // Escuchar actualizaciones
             this.registration.addEventListener('updatefound', () => {
