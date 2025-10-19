@@ -43,8 +43,8 @@
     <link rel="stylesheet" href="css/rocket-theme.css">
     <link rel="stylesheet" href="css/rocket-mobile.css">
     
-    <!-- Lazy load Ethers.js -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" as="script">
+    <!-- Lazy Loader (carga crítica) -->
+    <script src="js/lazy-loader.js"></script>
     
     <style>
         /* Landing Page Styles */
@@ -1107,8 +1107,14 @@
         </svg>
     </div>
     
-    <!-- Scripts -->
-    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <!-- ⚡ Quick Win #2: Analytics -->
+    <script src="js/analytics.js" defer></script>
+    
+    <!-- 🎨 Quick Win #4: Toast Notifications -->
+    <script src="js/toast.js" defer></script>
+    
+    <!-- Scripts (lazy loaded via lazy-loader.js) -->
+    <!-- <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     
     <!-- Core System -->
