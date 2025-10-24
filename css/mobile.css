@@ -207,12 +207,17 @@ textarea {
   }
 
   .landing-menu {
-    display: flex !important;
+    display: flex;
     flex-direction: row;
     gap: 2rem;
     position: static;
     background: transparent;
     padding: 0;
+  }
+  
+  /* Override mobile hidden state on larger screens */
+  .landing-menu[aria-hidden="true"] {
+    display: flex;
   }
 }
 
