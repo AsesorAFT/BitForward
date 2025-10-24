@@ -28,7 +28,8 @@
     "docker:run": "docker run -p 3001:3001 bitforward-enterprise",
     "deploy:prod": "npm run build:full && npm run deploy",
     "deploy": "echo 'Production deployment - configure your hosting service'",
-    "lighthouse": "lighthouse http://localhost:4173 --view --output-path=./lighthouse-report.html"
+    "lighthouse": "lighthouse http://localhost:4173 --view --output-path=./lighthouse-report.html",
+    "test:mobile": "lighthouse http://localhost:4173 --output=json --output=html --output-path=./reports/lighthouse --preset=desktop --emulated-form-factor=mobile --throttling-method=simulate --screenEmulation.mobile=true"
   },
   "keywords": [
     "defi",

@@ -4,9 +4,9 @@
  */
 
 @media (max-width: 768px) {
-  /* Ajustes generales */
+  /* Ajustes generales - font-size 16px para evitar zoom en iOS */
   body {
-    font-size: 14px;
+    font-size: 16px;
   }
   
   /* Header móvil */
@@ -170,12 +170,14 @@
     display: none;
   }
   
-  /* Botón de menú más visible */
+  /* Botón de menú más visible - 44x44px para mejor accesibilidad táctil */
   .mobile-menu-toggle {
     background: rgba(59, 130, 246, 0.2);
     border-radius: 4px;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
