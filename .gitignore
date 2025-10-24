@@ -95,3 +95,4 @@ pids
 *.pid
 *.seed
 *.pid.lock
+reports/

@@ -29,12 +29,18 @@
     <link rel="stylesheet" href="css/dashboard-simple.css">
     <link rel="icon" type="image/svg+xml" href="assets/logo-rocket.svg">
     
-    <!-- Preload scripts -->
+    <!-- Preload critical assets -->
+    <link rel="preload" href="assets/logo-rocket-animated.svg" as="image">
+    <link rel="preload" href="css/mobile.css" as="style">
+    <link rel="preload" href="css/dashboard-simple.css" as="style">
     <link rel="preload" href="js/sw-register.js" as="script">
     <link rel="preload" href="js/space-theme-loader.js" as="script">
     
     <!-- Space Theme Resources -->
     <script src="js/space-theme-loader.js"></script>
+    
+    <!-- Mobile-First Base Styles -->
+    <link rel="stylesheet" href="css/mobile.css">
     
     <!-- Enhanced UI/UX Stylesheets -->
     <link rel="stylesheet" href="css/themes.css">
@@ -438,14 +444,18 @@
                         <p>by AFORTU</p>
                     </div>
                 </div>
-                <div class="landing-menu">
+                <div class="landing-menu" id="mobile-nav-menu" aria-hidden="true">
                     <a href="#inicio">Inicio</a>
                     <a href="#productos">Productos</a>
                     <a href="#nosotros">Nosotros</a>
                     <a href="#contacto">Contacto</a>
                     <button class="btn-login" onclick="showLogin()">Iniciar Sesión</button>
                 </div>
-                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+                <button class="mobile-menu-toggle" 
+                        onclick="toggleMobileMenu()" 
+                        aria-label="Toggle navigation menu"
+                        aria-expanded="false"
+                        aria-controls="mobile-nav-menu">☰</button>
             </nav>
         </header>
         <!-- Hero Section -->
@@ -1159,7 +1169,7 @@
     
     <!-- Scripts (lazy loaded via lazy-loader.js) -->
     <!-- <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js" defer></script>
     
     <!-- Core System -->
     <script src="js/component-loader.js"></script>
@@ -1282,20 +1292,59 @@
         }
         
         function toggleMobileMenu() {
-            const menu = document.querySelector('.landing-menu');
-            if (menu) {
-                const isVisible = menu.style.display === 'flex';
-                menu.style.display = isVisible ? 'none' : 'flex';
-                menu.style.flexDirection = 'column';
-                menu.style.position = 'absolute';
-                menu.style.top = '100%';
-                menu.style.left = '0';
-                menu.style.right = '0';
-                menu.style.background = 'rgba(15, 23, 42, 0.98)';
-                menu.style.padding = '1rem';
-                menu.style.gap = '1rem';
+            const menu = document.getElementById('mobile-nav-menu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (menu && toggle) {
+                const isHidden = menu.getAttribute('aria-hidden') === 'true';
+                
+                // Toggle ARIA attributes
+                menu.setAttribute('aria-hidden', isHidden ? 'false' : 'true');
+                toggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+                
+                // Toggle display
+                if (isHidden) {
+                    menu.style.display = 'flex';
+                    menu.style.flexDirection = 'column';
+                    menu.style.position = 'absolute';
+                    menu.style.top = '100%';
+                    menu.style.left = '0';
+                    menu.style.right = '0';
+                    menu.style.background = 'rgba(15, 23, 42, 0.98)';
+                    menu.style.padding = '1rem';
+                    menu.style.gap = '1rem';
+                } else {
+                    menu.style.display = 'none';
+                }
             }
         }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('mobile-nav-menu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (menu && toggle && !menu.contains(e.target) && !toggle.contains(e.target)) {
+                menu.setAttribute('aria-hidden', 'true');
+                toggle.setAttribute('aria-expanded', 'false');
+                menu.style.display = 'none';
+            }
+        });
+        
+        // Close menu on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('mobile-nav-menu');
+                const toggle = document.querySelector('.mobile-menu-toggle');
+                
+                if (menu && toggle && menu.getAttribute('aria-hidden') === 'false') {
+                    menu.setAttribute('aria-hidden', 'true');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    menu.style.display = 'none';
+                    toggle.focus();
+                }
+            }
+        });
         
         // Check if user is already logged in
         window.addEventListener('DOMContentLoaded', () => {
