@@ -94,4 +94,4 @@ local-*
 pids
 *.pid
 *.seed
-*.pid.lock
+*.pid.lockreports/
