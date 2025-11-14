@@ -65,7 +65,7 @@ class BitForwardDashboard {
             <div class="bitforward-dashboard">
                 <header class="dashboard-header">
                     <div class="dashboard-logo">
-                        <img src="assets/logo.svg" alt="BitForward" class="logo-icon">
+                        <img src="assets/logo-astronaut-rocket.svg" alt="BitForward" class="logo-icon">
                         <h1 data-i18n="dashboard.title" class="bitforward-brand animated size-lg">${i18n ? i18n.t('dashboard.title') : 'BitForward Dashboard'}</h1>
                     </div>
                     <div class="user-info">

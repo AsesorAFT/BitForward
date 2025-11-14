@@ -14,13 +14,13 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/assets/logo.svg",
+      "src": "/assets/logo-astronaut-rocket.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/favicon.svg",
+      "src": "/assets/logo-astronaut-rocket.svg",
       "sizes": "32x32",
       "type": "image/svg+xml"
     }
@@ -47,7 +47,7 @@
       "url": "/dashboard.html",
       "icons": [
         {
-          "src": "/assets/logo.svg",
+          "src": "/assets/logo-astronaut-rocket.svg",
           "sizes": "96x96"
         }
       ]
@@ -59,7 +59,7 @@
       "url": "/lending.html",
       "icons": [
         {
-          "src": "/assets/logo.svg",
+          "src": "/assets/logo-astronaut-rocket.svg",
           "sizes": "96x96"
         }
       ]

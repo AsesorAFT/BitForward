@@ -1,0 +1,529 @@
+/**
+ * 🎨 Dashboard Meta Style - BitForward
+ * Estilo corporativo tipo Meta (Facebook)
+ */
+
+/* ===================================
+   META COLOR PALETTE
+   =================================== */
+:root {
+    --meta-blue: #0866FF;
+    --meta-blue-hover: #0952CC;
+    --meta-blue-light: #E7F3FF;
+    --meta-gray-50: #F0F2F5;
+    --meta-gray-100: #E4E6EB;
+    --meta-gray-200: #CED0D4;
+    --meta-gray-700: #65676B;
+    --meta-gray-900: #1C1E21;
+    --meta-white: #FFFFFF;
+    --meta-success: #00A400;
+    --meta-danger: #E41E3F;
+    --meta-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ===================================
+   GLOBAL OVERRIDES - META STYLE
+   =================================== */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--meta-gray-50) !important;
+    color: var(--meta-gray-900);
+}
+
+.dashboard-wrapper {
+    background: var(--meta-gray-50) !important;
+    padding-top: 70px !important;
+}
+
+.dashboard-wrapper::before {
+    display: none !important;
+}
+
+/* ===================================
+   HEADER - META STYLE
+   =================================== */
+
+.site-header {
+    background: var(--meta-white) !important;
+    border-bottom: 1px solid var(--meta-gray-100) !important;
+    box-shadow: 0 2px 4px var(--meta-shadow) !important;
+    backdrop-filter: none !important;
+    padding: 0.75rem 0 !important;
+}
+
+.nav-main .logo img {
+    height: 36px;
+}
+
+.nav-links a {
+    color: var(--meta-gray-700) !important;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+    background: var(--meta-gray-50) !important;
+    color: var(--meta-gray-900) !important;
+}
+
+.nav-links a.active {
+    color: var(--meta-blue) !important;
+    background: var(--meta-blue-light) !important;
+    box-shadow: none !important;
+}
+
+.btn-icon {
+    background: var(--meta-gray-50) !important;
+    border-radius: 50%;
+    padding: 0.625rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    background: var(--meta-gray-100) !important;
+}
+
+.btn-icon svg {
+    stroke: var(--meta-gray-700);
+}
+
+.btn-premium.btn-gradient {
+    background: var(--meta-blue) !important;
+    color: var(--meta-white) !important;
+    border: none !important;
+    border-radius: 8px;
+    padding: 0.625rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+}
+
+.btn-premium.btn-gradient:hover {
+    background: var(--meta-blue-hover) !important;
+    transform: none !important;
+}
+
+/* ===================================
+   HERO SECTION - META STYLE
+   =================================== */
+
+.dashboard-hero {
+    padding: 2rem 0 1.5rem !important;
+    text-align: left;
+}
+
+.dashboard-hero h1 {
+    color: var(--meta-gray-900) !important;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    color: var(--meta-gray-700) !important;
+    font-size: 0.9375rem;
+    font-weight: 400;
+}
+
+/* ===================================
+   STATS CARDS - META STYLE
+   =================================== */
+
+.stats-grid {
+    gap: 1rem !important;
+}
+
+.stat-card {
+    background: var(--meta-white) !important;
+    border: 1px solid var(--meta-gray-100) !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    box-shadow: 0 1px 2px var(--meta-shadow) !important;
+    backdrop-filter: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.stat-card::before {
+    display: none !important;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px var(--meta-shadow) !important;
+    background: var(--meta-white) !important;
+    border-color: var(--meta-gray-200) !important;
+}
+
+.stat-card-icon {
+    background: var(--meta-blue-light) !important;
+    border-radius: 10px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+}
+
+.stat-card-icon svg {
+    stroke: var(--meta-blue) !important;
+}
+
+.stat-card-content label {
+    color: var(--meta-gray-700) !important;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.stat-card-content value {
+    color: var(--meta-gray-900) !important;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.stat-card-change {
+    background: none !important;
+    padding: 0 !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.stat-card-change.positive {
+    color: var(--meta-success) !important;
+}
+
+.stat-card-change.negative {
+    color: var(--meta-danger) !important;
+}
+
+/* ===================================
+   QUICK ACTIONS - META STYLE
+   =================================== */
+
+.quick-actions {
+    gap: 0.75rem !important;
+}
+
+.quick-action-btn {
+    background: var(--meta-white) !important;
+    border: 1px solid var(--meta-gray-200) !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 1.5rem !important;
+    color: var(--meta-gray-900) !important;
+    font-weight: 600 !important;
+    font-size: 0.9375rem;
+    box-shadow: 0 1px 2px var(--meta-shadow) !important;
+    transition: all 0.2s ease !important;
+    backdrop-filter: none !important;
+}
+
+.quick-action-btn:hover {
+    background: var(--meta-gray-50) !important;
+    border-color: var(--meta-gray-200) !important;
+    transform: none !important;
+}
+
+.quick-action-btn.primary {
+    background: var(--meta-blue) !important;
+    border: none !important;
+    color: var(--meta-white) !important;
+}
+
+.quick-action-btn.primary:hover {
+    background: var(--meta-blue-hover) !important;
+}
+
+.quick-action-btn svg {
+    stroke: currentColor;
+}
+
+/* ===================================
+   SECTIONS - META STYLE
+   =================================== */
+
+.section-header h2 {
+    color: var(--meta-gray-900) !important;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.link-view-all {
+    color: var(--meta-blue) !important;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.link-view-all:hover {
+    color: var(--meta-blue-hover) !important;
+}
+
+/* ===================================
+   PORTFOLIO/ASSETS - META STYLE
+   =================================== */
+
+.assets-grid {
+    gap: 1rem !important;
+}
+
+.asset-card {
+    background: var(--meta-white) !important;
+    border: 1px solid var(--meta-gray-100) !important;
+    border-radius: 12px !important;
+    padding: 1.25rem !important;
+    box-shadow: 0 1px 2px var(--meta-shadow) !important;
+    backdrop-filter: none !important;
+}
+
+.asset-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px var(--meta-shadow) !important;
+    background: var(--meta-white) !important;
+    border-color: var(--meta-gray-200) !important;
+}
+
+.asset-card-placeholder {
+    background: var(--meta-white) !important;
+    border: 1px dashed var(--meta-gray-200) !important;
+    padding: 3rem 2rem !important;
+}
+
+.asset-card-placeholder p {
+    color: var(--meta-gray-700) !important;
+}
+
+.asset-icon {
+    background: var(--meta-blue-light) !important;
+    color: var(--meta-blue) !important;
+}
+
+.asset-info h3 {
+    color: var(--meta-gray-900) !important;
+    font-weight: 700;
+}
+
+.asset-info p {
+    color: var(--meta-gray-700) !important;
+}
+
+.asset-stat label {
+    color: var(--meta-gray-700) !important;
+    font-weight: 600;
+    text-transform: none;
+}
+
+.asset-stat value {
+    color: var(--meta-gray-900) !important;
+    font-weight: 700;
+}
+
+/* ===================================
+   TRANSACTIONS TABLE - META STYLE
+   =================================== */
+
+.transactions-table-wrapper {
+    background: var(--meta-white) !important;
+    border: 1px solid var(--meta-gray-100) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 2px var(--meta-shadow) !important;
+    backdrop-filter: none !important;
+}
+
+.transactions-table th {
+    color: var(--meta-gray-700) !important;
+    font-weight: 600;
+    text-transform: none;
+    font-size: 0.8125rem;
+}
+
+.transactions-table td {
+    color: var(--meta-gray-900) !important;
+    border-bottom-color: var(--meta-gray-100) !important;
+}
+
+.transactions-table tbody tr:hover {
+    background: var(--meta-gray-50) !important;
+}
+
+.transaction-type {
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.transaction-type.buy {
+    background: rgba(0, 164, 0, 0.1) !important;
+    color: var(--meta-success) !important;
+}
+
+.transaction-type.sell {
+    background: rgba(228, 30, 63, 0.1) !important;
+    color: var(--meta-danger) !important;
+}
+
+.transaction-type.transfer {
+    background: var(--meta-blue-light) !important;
+    color: var(--meta-blue) !important;
+}
+
+.status-dot.completed {
+    background: var(--meta-success) !important;
+}
+
+.status-dot.pending {
+    background: #F7B500 !important;
+}
+
+.status-dot.failed {
+    background: var(--meta-danger) !important;
+}
+
+.no-data {
+    color: var(--meta-gray-700) !important;
+}
+
+/* ===================================
+   MARKET OVERVIEW - META STYLE
+   =================================== */
+
+.market-card {
+    background: var(--meta-white) !important;
+    border: 1px solid var(--meta-gray-100) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 2px var(--meta-shadow) !important;
+    backdrop-filter: none !important;
+}
+
+.market-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px var(--meta-shadow) !important;
+    border-color: var(--meta-gray-200) !important;
+}
+
+.market-card-name {
+    color: var(--meta-gray-700) !important;
+    font-weight: 600;
+}
+
+.market-card-price {
+    color: var(--meta-gray-900) !important;
+    font-weight: 700;
+}
+
+.market-card-change.positive {
+    background: rgba(0, 164, 0, 0.1) !important;
+    color: var(--meta-success) !important;
+}
+
+.market-card-change.negative {
+    background: rgba(228, 30, 63, 0.1) !important;
+    color: var(--meta-danger) !important;
+}
+
+/* ===================================
+   FOOTER - META STYLE
+   =================================== */
+
+.site-footer {
+    background: var(--meta-white) !important;
+    border-top: 1px solid var(--meta-gray-100) !important;
+    backdrop-filter: none !important;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    color: var(--meta-gray-900) !important;
+}
+
+.footer-section p {
+    color: var(--meta-gray-700) !important;
+}
+
+.footer-section ul li a {
+    color: var(--meta-gray-700) !important;
+}
+
+.footer-section ul li a:hover {
+    color: var(--meta-blue) !important;
+}
+
+.footer-bottom {
+    border-top-color: var(--meta-gray-100) !important;
+}
+
+.footer-bottom p {
+    color: var(--meta-gray-700) !important;
+}
+
+.footer-social a {
+    color: var(--meta-gray-700);
+    transition: all 0.2s ease;
+}
+
+.footer-social a:hover {
+    color: var(--meta-blue);
+    transform: scale(1.1);
+}
+
+/* ===================================
+   SCROLL ELEMENTS
+   =================================== */
+
+.btn-scroll-top {
+    background: var(--meta-white) !important;
+    border: 1px solid var(--meta-gray-200);
+    color: var(--meta-gray-900) !important;
+    box-shadow: 0 2px 8px var(--meta-shadow);
+}
+
+.btn-scroll-top:hover {
+    background: var(--meta-gray-50) !important;
+}
+
+.scroll-progress {
+    background: var(--meta-blue) !important;
+}
+
+/* ===================================
+   SCROLLBAR - META STYLE
+   =================================== */
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--meta-gray-50);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--meta-gray-200);
+    border-radius: 6px;
+    border: 3px solid var(--meta-gray-50);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--meta-gray-700);
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 768px) {
+    .dashboard-hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .stat-card-content value {
+        font-size: 1.5rem;
+    }
+}

@@ -57,7 +57,7 @@
                 logo.addEventListener('error', (e) => {
                     log('❌ Error cargando logo:', e);
                     // Intentar con logo alternativo
-                    logo.src = 'assets/logo-rocket-official.svg';
+                    logo.src = 'assets/logo-astronaut-rocket.svg';
                 });
             }
 

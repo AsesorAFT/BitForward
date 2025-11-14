@@ -74,42 +74,92 @@
   
   <!-- Grupo del cohete con filtro de brillo -->
   <g filter="url(#glow)" transform="translate(50, 50) rotate(-15) translate(-25, -35)">
-    <!-- Llamas del cohete con animación -->
+    <!-- Llamas del cohete con animación MEJORADA -->
     <g class="flames">
-      <!-- Llama principal -->
-      <path d="M20,60 Q25,75 30,60 Q25,65 20,60 Z" fill="url(#flameGradient)" opacity="0.9" filter="url(#flameBlur)">
+      <!-- Llama principal grande -->
+      <path d="M18,60 Q25,80 32,60 Q25,70 18,60 Z" fill="url(#flameGradient)" opacity="0.95" filter="url(#flameBlur)">
         <animate attributeName="d" values="
-          M20,60 Q25,75 30,60 Q25,65 20,60 Z;
-          M20,60 Q25,72 30,60 Q25,63 20,60 Z;
-          M20,60 Q25,78 30,60 Q25,67 20,60 Z;
-          M20,60 Q25,75 30,60 Q25,65 20,60 Z" 
-          dur="0.6s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.8;1;0.8" dur="0.3s" repeatCount="indefinite" />
+          M18,60 Q25,80 32,60 Q25,70 18,60 Z;
+          M17,60 Q25,75 33,60 Q25,67 17,60 Z;
+          M16,60 Q25,85 34,60 Q25,73 16,60 Z;
+          M18,60 Q25,78 32,60 Q25,68 18,60 Z;
+          M18,60 Q25,80 32,60 Q25,70 18,60 Z" 
+          dur="0.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.9;1;0.85;1;0.9" dur="0.3s" repeatCount="indefinite" />
       </path>
       
-      <!-- Llama secundaria -->
-      <path d="M22,60 Q25,68 28,60 Q25,63 22,60 Z" fill="url(#flameGradient2)" opacity="0.7" filter="url(#flameBlur)">
+      <!-- Llama secundaria interna -->
+      <path d="M20,60 Q25,72 30,60 Q25,65 20,60 Z" fill="url(#flameGradient2)" opacity="0.85" filter="url(#flameBlur)">
         <animate attributeName="d" values="
-          M22,60 Q25,68 28,60 Q25,63 22,60 Z;
-          M22,60 Q25,65 28,60 Q25,62 22,60 Z;
-          M22,60 Q25,70 28,60 Q25,64 22,60 Z;
-          M22,60 Q25,68 28,60 Q25,63 22,60 Z" 
-          dur="0.5s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="0.4s" repeatCount="indefinite" />
+          M20,60 Q25,72 30,60 Q25,65 20,60 Z;
+          M19,60 Q25,68 31,60 Q25,63 19,60 Z;
+          M21,60 Q25,75 29,60 Q25,67 21,60 Z;
+          M20,60 Q25,70 30,60 Q25,64 20,60 Z;
+          M20,60 Q25,72 30,60 Q25,65 20,60 Z" 
+          dur="0.35s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.7;0.95;0.75;0.9;0.7" dur="0.3s" repeatCount="indefinite" />
       </path>
       
-      <!-- Partículas de fuego -->
-      <circle cx="25" cy="65" r="1" fill="#F97316">
-        <animate attributeName="cy" values="65;75;85" dur="0.8s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.9;0.5;0" dur="0.8s" repeatCount="indefinite" />
+      <!-- Llama lateral izquierda -->
+      <path d="M18,58 Q20,70 22,58 Q20,63 18,58 Z" fill="#F97316" opacity="0.8" filter="url(#flameBlur)">
+        <animate attributeName="d" values="
+          M18,58 Q20,70 22,58 Q20,63 18,58 Z;
+          M17,58 Q20,66 23,58 Q20,61 17,58 Z;
+          M18,58 Q20,73 22,58 Q20,65 18,58 Z;
+          M18,58 Q20,70 22,58 Q20,63 18,58 Z" 
+          dur="0.45s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.7;0.9;0.65;0.85;0.7" dur="0.4s" repeatCount="indefinite" />
+      </path>
+      
+      <!-- Llama lateral derecha -->
+      <path d="M28,58 Q30,70 32,58 Q30,63 28,58 Z" fill="#F97316" opacity="0.8" filter="url(#flameBlur)">
+        <animate attributeName="d" values="
+          M28,58 Q30,70 32,58 Q30,63 28,58 Z;
+          M27,58 Q30,66 33,58 Q30,61 27,58 Z;
+          M28,58 Q30,73 32,58 Q30,65 28,58 Z;
+          M28,58 Q30,70 32,58 Q30,63 28,58 Z" 
+          dur="0.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.65;0.85;0.7;0.9;0.65" dur="0.35s" repeatCount="indefinite" />
+      </path>
+      
+      <!-- Chispas y partículas de fuego -->
+      <circle cx="25" cy="65" r="1.2" fill="#FFF">
+        <animate attributeName="cy" values="65;78;90" dur="0.7s" repeatCount="indefinite" />
+        <animate attributeName="r" values="1.2;0.8;0.3" dur="0.7s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="1;0.7;0" dur="0.7s" repeatCount="indefinite" />
       </circle>
-      <circle cx="23" cy="66" r="0.8" fill="#F59E0B">
-        <animate attributeName="cy" values="66;74;82" dur="0.7s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.9;0.5;0" dur="0.7s" repeatCount="indefinite" />
+      <circle cx="22" cy="67" r="1" fill="#F97316">
+        <animate attributeName="cy" values="67;77;87" dur="0.8s" repeatCount="indefinite" />
+        <animate attributeName="cx" values="22;21;20" dur="0.8s" repeatCount="indefinite" />
+        <animate attributeName="r" values="1;0.7;0.2" dur="0.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.95;0.6;0" dur="0.8s" repeatCount="indefinite" />
       </circle>
-      <circle cx="27" cy="65" r="0.7" fill="#F97316">
-        <animate attributeName="cy" values="65;72;80" dur="0.9s" repeatCount="indefinite" />
+      <circle cx="28" cy="67" r="1" fill="#F97316">
+        <animate attributeName="cy" values="67;77;87" dur="0.75s" repeatCount="indefinite" />
+        <animate attributeName="cx" values="28;29;30" dur="0.75s" repeatCount="indefinite" />
+        <animate attributeName="r" values="1;0.7;0.2" dur="0.75s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.95;0.6;0" dur="0.75s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="24" cy="68" r="0.9" fill="#F59E0B">
+        <animate attributeName="cy" values="68;76;85" dur="0.9s" repeatCount="indefinite" />
+        <animate attributeName="cx" values="24;23.5;23" dur="0.9s" repeatCount="indefinite" />
+        <animate attributeName="r" values="0.9;0.5;0.1" dur="0.9s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.9;0.5;0" dur="0.9s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="26" cy="68" r="0.9" fill="#F59E0B">
+        <animate attributeName="cy" values="68;76;85" dur="0.85s" repeatCount="indefinite" />
+        <animate attributeName="cx" values="26;26.5;27" dur="0.85s" repeatCount="indefinite" />
+        <animate attributeName="r" values="0.9;0.5;0.1" dur="0.85s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.9;0.5;0" dur="0.85s" repeatCount="indefinite" />
+      </circle>
+      <!-- Partículas adicionales pequeñas -->
+      <circle cx="23" cy="70" r="0.6" fill="#FFA500">
+        <animate attributeName="cy" values="70;82;95" dur="1s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.8;0.4;0" dur="1s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="27" cy="70" r="0.6" fill="#FFA500">
+        <animate attributeName="cy" values="70;82;95" dur="0.95s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.8;0.4;0" dur="0.95s" repeatCount="indefinite" />
       </circle>
     </g>
     

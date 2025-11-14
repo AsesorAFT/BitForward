@@ -1,0 +1,569 @@
+/**
+ * 🎨 Meta Style - BitForward
+ * Diseño inspirado en Meta (Facebook)
+ */
+
+/* ===================================
+   META COLOR PALETTE
+   =================================== */
+:root {
+    --meta-blue: #0866FF;
+    --meta-blue-hover: #0952CC;
+    --meta-bg: #F0F2F5;
+    --meta-bg-dark: #18191A;
+    --meta-card: #FFFFFF;
+    --meta-card-dark: #242526;
+    --meta-text: #050505;
+    --meta-text-secondary: #65676B;
+    --meta-text-dark: #E4E6EB;
+    --meta-text-secondary-dark: #B0B3B8;
+    --meta-border: #CED0D4;
+    --meta-border-dark: #3E4042;
+    --meta-success: #31A24C;
+    --meta-danger: #F02849;
+}
+
+/* ===================================
+   BASE STYLES - META
+   =================================== */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--meta-bg-dark);
+    color: var(--meta-text-dark);
+    line-height: 1.5;
+}
+
+/* ===================================
+   HEADER - META STYLE
+   =================================== */
+
+.site-header {
+    background: var(--meta-card-dark);
+    border-bottom: 1px solid var(--meta-border-dark);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    backdrop-filter: none;
+}
+
+.nav-links a {
+    color: var(--meta-text-secondary-dark);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    letter-spacing: 0;
+}
+
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--meta-text-dark);
+}
+
+.nav-links a.active {
+    color: var(--meta-blue);
+    background: rgba(8, 102, 255, 0.1);
+    box-shadow: none;
+}
+
+.btn-icon {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-icon svg {
+    color: var(--meta-text-dark);
+}
+
+/* ===================================
+   DASHBOARD WRAPPER - META
+   =================================== */
+
+.dashboard-wrapper {
+    background: var(--meta-bg-dark);
+    padding-top: 80px;
+}
+
+.dashboard-wrapper::before {
+    display: none; /* Remove stars */
+}
+
+.dashboard-container {
+    max-width: 1248px;
+    padding: 24px;
+}
+
+/* ===================================
+   HERO SECTION - META
+   =================================== */
+
+.dashboard-hero {
+    padding: 32px 0 24px;
+    text-align: left;
+}
+
+.dashboard-hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--meta-text-dark);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.hero-subtitle {
+    font-size: 15px;
+    color: var(--meta-text-secondary-dark);
+    font-weight: 400;
+}
+
+/* ===================================
+   STATS CARDS - META STYLE
+   =================================== */
+
+.stats-grid {
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--meta-card-dark);
+    border: 1px solid var(--meta-border-dark);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.stat-card::before {
+    display: none;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: var(--meta-card-dark);
+    border-color: var(--meta-border-dark);
+}
+
+.stat-card-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(8, 102, 255, 0.1);
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.stat-card-icon svg {
+    stroke: var(--meta-blue);
+}
+
+.stat-card-content label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--meta-text-secondary-dark);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-bottom: 8px;
+}
+
+.stat-card-content value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--meta-text-dark);
+    letter-spacing: -1px;
+}
+
+.stat-card-change {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.stat-card-change.positive {
+    color: var(--meta-success);
+    background: rgba(49, 162, 76, 0.15);
+}
+
+.stat-card-change.negative {
+    color: var(--meta-danger);
+    background: rgba(240, 40, 73, 0.15);
+}
+
+/* ===================================
+   QUICK ACTIONS - META STYLE
+   =================================== */
+
+.quick-actions {
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.quick-action-btn {
+    background: var(--meta-card-dark);
+    border: 1px solid var(--meta-border-dark);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--meta-text-dark);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.quick-action-btn.primary {
+    background: var(--meta-blue);
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 2px 4px rgba(8, 102, 255, 0.3);
+}
+
+.quick-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.quick-action-btn.primary:hover {
+    background: var(--meta-blue-hover);
+    box-shadow: 0 4px 12px rgba(8, 102, 255, 0.4);
+}
+
+.quick-action-btn .btn-icon {
+    background: none;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+.quick-action-btn.primary .btn-icon svg {
+    stroke: #FFFFFF;
+}
+
+/* ===================================
+   SECTION HEADERS - META
+   =================================== */
+
+.section-header {
+    margin-bottom: 16px;
+}
+
+.section-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--meta-text-dark);
+    letter-spacing: -0.3px;
+}
+
+.link-view-all {
+    color: var(--meta-blue);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.link-view-all:hover {
+    color: var(--meta-blue-hover);
+}
+
+/* ===================================
+   PORTFOLIO - META STYLE
+   =================================== */
+
+.portfolio-section {
+    margin-top: 32px;
+}
+
+.assets-grid {
+    gap: 16px;
+}
+
+.asset-card {
+    background: var(--meta-card-dark);
+    border: 1px solid var(--meta-border-dark);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.asset-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-color: var(--meta-border-dark);
+}
+
+.asset-card-placeholder {
+    background: var(--meta-card-dark);
+    border: 2px dashed var(--meta-border-dark);
+    padding: 48px 24px;
+}
+
+.asset-card-placeholder p {
+    color: var(--meta-text-secondary-dark);
+    font-size: 15px;
+}
+
+.asset-icon {
+    background: rgba(8, 102, 255, 0.1);
+    color: var(--meta-blue);
+    font-weight: 700;
+}
+
+.asset-info h3 {
+    color: var(--meta-text-dark);
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.asset-info p {
+    color: var(--meta-text-secondary-dark);
+    font-size: 13px;
+}
+
+.asset-stat label {
+    color: var(--meta-text-secondary-dark);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.asset-stat value {
+    color: var(--meta-text-dark);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* ===================================
+   TRANSACTIONS - META STYLE
+   =================================== */
+
+.transactions-section {
+    margin-top: 32px;
+}
+
+.transactions-table-wrapper {
+    background: var(--meta-card-dark);
+    border: 1px solid var(--meta-border-dark);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.transactions-table th {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--meta-text-secondary-dark);
+    padding: 12px 16px;
+}
+
+.transactions-table td {
+    font-size: 14px;
+    color: var(--meta-text-dark);
+    padding: 16px;
+    border-bottom: 1px solid var(--meta-border-dark);
+}
+
+.transactions-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.transaction-type {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.transaction-type.buy {
+    background: rgba(49, 162, 76, 0.15);
+    color: var(--meta-success);
+}
+
+.transaction-type.sell {
+    background: rgba(240, 40, 73, 0.15);
+    color: var(--meta-danger);
+}
+
+.transaction-type.transfer {
+    background: rgba(8, 102, 255, 0.15);
+    color: var(--meta-blue);
+}
+
+.status-dot.completed {
+    background: var(--meta-success);
+}
+
+.status-dot.pending {
+    background: #FFA500;
+}
+
+.status-dot.failed {
+    background: var(--meta-danger);
+}
+
+/* ===================================
+   MARKET OVERVIEW - META
+   =================================== */
+
+.market-section {
+    margin-top: 32px;
+}
+
+.market-overview {
+    gap: 16px;
+}
+
+.market-card {
+    background: var(--meta-card-dark);
+    border: 1px solid var(--meta-border-dark);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.market-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.market-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--meta-text-secondary-dark);
+}
+
+.market-card-price {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--meta-text-dark);
+}
+
+.market-card-change {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.market-card-change.positive {
+    background: rgba(49, 162, 76, 0.15);
+    color: var(--meta-success);
+}
+
+.market-card-change.negative {
+    background: rgba(240, 40, 73, 0.15);
+    color: var(--meta-danger);
+}
+
+/* ===================================
+   FOOTER - META STYLE
+   =================================== */
+
+.site-footer {
+    background: var(--meta-card-dark);
+    border-top: 1px solid var(--meta-border-dark);
+    margin-top: 48px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    color: var(--meta-text-dark);
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.footer-section p,
+.footer-section ul li a {
+    color: var(--meta-text-secondary-dark);
+    font-size: 14px;
+}
+
+.footer-section ul li a:hover {
+    color: var(--meta-blue);
+}
+
+.footer-bottom p {
+    color: var(--meta-text-secondary-dark);
+    font-size: 13px;
+}
+
+.footer-social a {
+    color: var(--meta-text-secondary-dark);
+    transition: color 0.2s ease;
+}
+
+.footer-social a:hover {
+    color: var(--meta-blue);
+}
+
+/* ===================================
+   SCROLLBAR - META
+   =================================== */
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--meta-bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--meta-border-dark);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5A5C5E;
+}
+
+/* ===================================
+   RESPONSIVE - META
+   =================================== */
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 16px;
+    }
+    
+    .dashboard-hero h1 {
+        font-size: 24px;
+    }
+    
+    .stat-card-content value {
+        font-size: 24px;
+    }
+    
+    .quick-actions {
+        flex-direction: column;
+    }
+    
+    .quick-action-btn {
+        width: 100%;
+    }
+}
+
+/* ===================================
+   CONNECT WALLET BUTTON - META
+   =================================== */
+
+#connect-wallet-btn {
+    background: var(--meta-blue);
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(8, 102, 255, 0.3);
+}
+
+#connect-wallet-btn:hover {
+    background: var(--meta-blue-hover);
+    box-shadow: 0 4px 12px rgba(8, 102, 255, 0.4);
+}
