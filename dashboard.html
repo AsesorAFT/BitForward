@@ -72,18 +72,18 @@
                     </div>
                     
                     <!-- Navigation -->
-                    <nav class="hidden-mobile">
-                        <a href="dashboard.html" class="active">Dashboard</a>
-                        <a href="trading.html">Trading</a>
-                        <a href="lending.html">Lending</a>
-                        <a href="analytics.html">Analytics</a>
-                        <a href="community.html">Community</a>
-                        <a href="enterprise.html">Enterprise</a>
+                    <nav class="hidden-mobile" aria-label="Navegación principal">
+                        <a href="dashboard.html" class="active" aria-current="page">Dashboard</a>
+                        <a href="trading.html" aria-label="Ir a la sección de trading">Trading</a>
+                        <a href="lending.html" aria-label="Ir a la sección de lending">Lending</a>
+                        <a href="analytics.html" aria-label="Ver análisis avanzados">Analytics</a>
+                        <a href="community.html" aria-label="Abrir la comunidad BitForward">Community</a>
+                        <a href="enterprise.html" aria-label="Explorar soluciones enterprise">Enterprise</a>
                     </nav>
                     
                     <!-- Wallet Connection -->
                     <div class="flex items-center space-x-3">
-                        <button id="wallet-connect" class="bg-gradient-to-r from-bf-secondary to-yellow-400 px-4 py-2 rounded-lg font-medium text-black hover:shadow-crypto-glow transition-all duration-300">
+                        <button id="wallet-connect" class="bg-gradient-to-r from-bf-secondary to-yellow-400 px-4 py-2 rounded-lg font-medium text-black hover:shadow-crypto-glow transition-all duration-300" aria-label="Conectar billetera Web3">
                             Conectar Wallet
                         </button>
                     </div>
@@ -198,7 +198,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     
                     <!-- Create Forward Contract -->
-                    <button onclick="window.showForwardModal()" class="glass-effect rounded-xl p-6 border border-white/20 hover:border-bf-secondary/50 transition-all duration-300 text-left group">
+                    <button onclick="window.showForwardModal()" class="glass-effect rounded-xl p-6 border border-white/20 hover:border-bf-secondary/50 transition-all duration-300 text-left group" aria-label="Crear un nuevo contrato forward">
                         <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-3 rounded-xl mb-4 w-fit group-hover:shadow-bf-glow transition-all duration-300">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -209,7 +209,7 @@
                     </button>
                     
                     <!-- Deposit to Lending -->
-                    <button onclick="window.location.href='lending.html'" class="glass-effect rounded-xl p-6 border border-white/20 hover:border-yellow-500/50 transition-all duration-300 text-left group">
+                    <button onclick="window.location.href='lending.html'" class="glass-effect rounded-xl p-6 border border-white/20 hover:border-yellow-500/50 transition-all duration-300 text-left group" aria-label="Depositar fondos en lending">
                         <div class="bg-gradient-to-r from-yellow-500 to-orange-600 p-3 rounded-xl mb-4 w-fit group-hover:shadow-bf-glow transition-all duration-300">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -220,7 +220,7 @@
                     </button>
                     
                     <!-- Portfolio Analytics -->
-                    <button onclick="alert('📊 Analytics Avanzado\n\nFuncionalidades:\n• Métricas de rendimiento\n• Análisis de riesgo\n• Reportes personalizados\n• Comparación de estrategias\n\n🚧 Próximamente...')" class="glass-effect rounded-xl p-6 border border-white/20 hover:border-purple-500/50 transition-all duration-300 text-left group">
+                    <button onclick="alert('📊 Analytics Avanzado\n\nFuncionalidades:\n• Métricas de rendimiento\n• Análisis de riesgo\n• Reportes personalizados\n• Comparación de estrategias\n\n🚧 Próximamente...')" class="glass-effect rounded-xl p-6 border border-white/20 hover:border-purple-500/50 transition-all duration-300 text-left group" aria-label="Abrir vista previa de analytics avanzados">
                         <div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-3 rounded-xl mb-4 w-fit group-hover:shadow-bf-glow transition-all duration-300">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
@@ -236,7 +236,7 @@
             <section class="mb-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-white">Posiciones Activas</h2>
-                    <button class="bg-bf-secondary text-black px-4 py-2 rounded-lg font-medium hover:shadow-crypto-glow transition-all duration-300">
+                    <button class="bg-bf-secondary text-black px-4 py-2 rounded-lg font-medium hover:shadow-crypto-glow transition-all duration-300" aria-label="Ver todas las posiciones activas">
                         Ver Todas
                     </button>
                 </div>
@@ -661,7 +661,7 @@
             notification.innerHTML = `
                 <div class="flex items-center">
                     <span>${message}</span>
-                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200" aria-label="Cerrar alerta de rendimiento">
                         ×
                     </button>
                 </div>
@@ -736,10 +736,10 @@
                     </div>
                     
                     <div class="flex space-x-4 mt-6">
-                        <button onclick="this.closest('.fixed').remove()" class="flex-1 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                        <button onclick="this.closest('.fixed').remove()" class="flex-1 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" aria-label="Cancelar creación de contrato forward">
                             Cancelar
                         </button>
-                        <button onclick="submitForward()" class="flex-1 py-3 bg-gradient-to-r from-bf-secondary to-yellow-400 text-black font-medium rounded-lg hover:shadow-crypto-glow transition-all">
+                        <button onclick="submitForward()" class="flex-1 py-3 bg-gradient-to-r from-bf-secondary to-yellow-400 text-black font-medium rounded-lg hover:shadow-crypto-glow transition-all" aria-label="Confirmar creación de contrato forward">
                             Crear Forward
                         </button>
                     </div>
