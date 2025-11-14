@@ -13,15 +13,16 @@
  * - Data Sanitization
  */
 
-import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
-import mongoSanitize from 'express-mongo-sanitize';
-import hpp from 'hpp';
+const crypto = require('crypto');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
+const hpp = require('hpp');
 
 /**
  * Configurar todos los middlewares de seguridad
  */
-export function setupSecurity(app) {
+function setupSecurity(app) {
   console.log('🔒 Setting up security middleware...');
   
   // 1. Helmet - Security Headers (Quick Win #3: CSP Mejorado)
@@ -225,7 +226,7 @@ function sanitizeObject(obj) {
   const sanitized = Array.isArray(obj) ? [] : {};
   
   for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const sanitizedKey = sanitizeString(key);
       sanitized[sanitizedKey] = sanitizeObject(obj[key]);
     }
@@ -256,16 +257,16 @@ function sanitizeString(value) {
 function isSuspiciousRequest(req) {
   const suspicious = [
     // SQL Injection patterns
-    /(\%27)|(\')|(\-\-)|(\%23)|(#)/i,
-    
+    /(%27)|(')|(--)|(%23)|(#)/i,
+
     // XSS patterns
     /(<script|<iframe|javascript:|onerror=|onload=)/i,
-    
+
     // Path traversal
     /(\.\.\/|\.\.\\)/,
-    
+
     // Command injection
-    /(\||;|\&|\$\(|\`)/,
+    /(\||;|&|\$\(|`)/,
   ];
   
   const testString = `${req.path} ${JSON.stringify(req.query)} ${JSON.stringify(req.body)}`;
@@ -276,7 +277,7 @@ function isSuspiciousRequest(req) {
 /**
  * Middleware para verificar origen de requests (Anti-CSRF básico)
  */
-export function verifyOrigin(req, res, next) {
+function verifyOrigin(req, res, next) {
   const origin = req.get('origin');
   const referer = req.get('referer');
   
@@ -318,7 +319,7 @@ export function verifyOrigin(req, res, next) {
 /**
  * Middleware para validar tokens JWT
  */
-export function validateJWT(req, res, next) {
+function validateJWT(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
   
   if (!token) {
@@ -344,7 +345,7 @@ export function validateJWT(req, res, next) {
 /**
  * Middleware para prevenir ataques de timing
  */
-export function constantTimeCompare(a, b) {
+function constantTimeCompare(a, b) {
   if (typeof a !== 'string' || typeof b !== 'string') {
     return false;
   }
@@ -364,14 +365,14 @@ export function constantTimeCompare(a, b) {
 /**
  * Generar nonce para CSP
  */
-export function generateNonce() {
+function generateNonce() {
   return Buffer.from(crypto.randomBytes(16)).toString('base64');
 }
 
 /**
  * Middleware para agregar nonce a CSP
  */
-export function addCSPNonce(req, res, next) {
+function addCSPNonce(req, res, next) {
   res.locals.cspNonce = generateNonce();
   next();
 }
@@ -379,7 +380,7 @@ export function addCSPNonce(req, res, next) {
 /**
  * Detectar bots maliciosos por User-Agent
  */
-export function blockMaliciousBots(req, res, next) {
+function blockMaliciousBots(req, res, next) {
   const userAgent = req.get('user-agent') || '';
   
   const blockedBots = [
@@ -401,12 +402,12 @@ export function blockMaliciousBots(req, res, next) {
   next();
 }
 
-export default {
+module.exports = {
   setupSecurity,
   verifyOrigin,
   validateJWT,
   constantTimeCompare,
   generateNonce,
   addCSPNonce,
-  blockMaliciousBots,
+  blockMaliciousBots
 };
