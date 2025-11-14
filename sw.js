@@ -19,7 +19,7 @@ const CRITICAL_RESOURCES = [
     '/css/dashboard.css',
     '/js/wallet-manager-real.js',
     '/js/price-feeds.js',
-    '/assets/logo.svg',
+    '/assets/logo-astronaut-rocket.svg',
     '/assets/favicon.svg'
 ];
 

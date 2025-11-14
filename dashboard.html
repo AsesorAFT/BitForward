@@ -1,947 +1,268 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitForward Dashboard | Proyecto Fénix - Enterprise DeFi Platform</title>
-    <meta name="description" content="Plataforma DeFi con contratos forward, lending y Web3 integration">
-    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="BitForward Dashboard - Professional crypto portfolio management">
+    <title>Dashboard | BitForward</title>
     
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    
-    <!-- DNS Prefetch & Preconnect para APIs externas -->
-    <link rel="dns-prefetch" href="https://api.coingecko.com">
-    <link rel="dns-prefetch" href="https://stream.binance.com">
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://api.coingecko.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    
-    <!-- Preload Critical CSS -->
-    <link rel="preload" href="css/style.css" as="style">
-    <link rel="preload" href="css/main.css" as="style">
-    <link rel="preload" href="css/dashboard.css" as="style">
-    
-    <!-- Critical CSS inline para First Contentful Paint -->
-    <style>
-        body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
-        .dashboard-container{min-height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
-    </style>
-    
-    <!-- Load CSS asynchronously -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/typography.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="css/wallet.css">
-    <link rel="stylesheet" href="css/price-display.css">
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    
-    <!-- Preload critical scripts -->
-    <link rel="preload" href="js/sw-register.js" as="script">
-    <link rel="preload" href="js/wallet-manager-real.js" as="script">
-    
-    <!-- Space Theme Loader - Critical, carga inmediata -->
-    <script src="js/space-theme-loader.js"></script>
-    
-    <!-- Ethers.js Library - Lazy load después del DOMContentLoaded -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" as="script">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/hero-modern.css">
+    <link rel="stylesheet" href="/css/glassmorphism.css">
+    <link rel="stylesheet" href="/css/buttons-premium.css">
+    <link rel="stylesheet" href="/css/animations-advanced.css">
+    <link rel="stylesheet" href="/css/dashboard-modern.css">
+    <link rel="stylesheet" href="/css/dashboard-professional.css">
+    <link rel="stylesheet" href="/css/dashboard-meta.css">
+    <link rel="stylesheet" href="/css/meta-style.css">
 </head>
-<body class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen text-white">
-    
-    <!-- Dashboard Container -->
-    <div class="dashboard-container relative overflow-hidden">
-        <!-- Background decorations -->
-        <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%239C92AC&quot; fill-opacity=&quot;0.1&quot;%3E%3Ccircle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;1&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-        
-        <!-- Header -->
-        <header class="relative z-10 border-b border-white/20 bg-black/20 backdrop-blur-md">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                <div class="flex items-center justify-between">
-                    <!-- Logo and Title -->
-                    <div class="flex items-center space-x-4">
-                        <div class="logo-wrapper" style="position: relative; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;">
-                            <img src="assets/logo-rocket-animated.svg" alt="BitForward" class="animated-logo" style="width: 40px; height: 40px; filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.5));">
-                        </div>
-                        <div>
-                            <h1 class="text-2xl font-bold bg-gradient-to-r from-white via-bf-secondary to-white bg-clip-text text-transparent">
-                                <span class="bitforward-brand animated size-lg">BitForward</span>
-                            </h1>
-                            <p class="text-sm text-blue-200">Dashboard Proyecto Fénix</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Navigation -->
-                    <nav class="hidden-mobile">
-                        <a href="dashboard.html" class="active">Dashboard</a>
-                        <a href="trading.html">Trading</a>
-                        <a href="lending.html">Lending</a>
-                        <a href="analytics.html">Analytics</a>
-                        <a href="community.html">Community</a>
-                        <a href="enterprise.html">Enterprise</a>
-                    </nav>
-                    
-                    <!-- Wallet Connection -->
-                    <div class="flex items-center space-x-3">
-                        <button id="wallet-connect" class="bg-gradient-to-r from-bf-secondary to-yellow-400 px-4 py-2 rounded-lg font-medium text-black hover:shadow-crypto-glow transition-all duration-300">
-                            Conectar Wallet
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Mini Price Ticker -->
-            <div class="border-t border-white/10 bg-black/10 backdrop-blur-sm">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div id="dashboardMiniTicker" class="py-2"></div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Dashboard Content -->
-        <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            
-            <!-- Portfolio Overview -->
-            <section class="mb-8">
-                <h2 class="text-3xl font-bold text-white mb-6">Portafolio Overview</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    
-                    <!-- Total Balance -->
-                    <div class="glass-effect rounded-xl p-6 border border-white/20">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="bg-green-500 p-2 rounded-lg">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                                </svg>
-                            </div>
-                            <span class="text-green-400 text-sm font-medium">+12.5%</span>
-                        </div>
-                        <h3 class="text-lg font-semibold text-white">Balance Total</h3>
-                        <p class="text-2xl font-bold text-white" data-metric="portfolio-balance">$125,847.32</p>
-                        <p class="text-sm text-blue-200 mt-1">≈ 42.5 ETH</p>
-                    </div>
-                    
-                    <!-- Active Positions -->
-                    <div class="glass-effect rounded-xl p-6 border border-white/20">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="bg-blue-500 p-2 rounded-lg">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                </svg>
-                            </div>
-                            <span class="text-blue-400 text-sm font-medium">8 activas</span>
-                        </div>
-                        <h3 class="text-lg font-semibold text-white">Posiciones Activas</h3>
-                        <p class="text-2xl font-bold text-white">8</p>
-                        <p class="text-sm text-blue-200 mt-1">Forward Contracts</p>
-                    </div>
-                    
-                    <!-- P&L Today -->
-                    <div class="glass-effect rounded-xl p-6 border border-white/20">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="bg-yellow-500 p-2 rounded-lg">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                                </svg>
-                            </div>
-                            <span class="text-green-400 text-sm font-medium">+$2,847</span>
-                        </div>
-                        <h3 class="text-lg font-semibold text-white">P&L Hoy</h3>
-                        <p class="text-2xl font-bold text-green-400" data-metric="portfolio-pnl">+$2,847.52</p>
-                        <p class="text-sm text-blue-200 mt-1">+2.31%</p>
-                    </div>
-                    
-                    <!-- Lending Pool -->
-                    <div class="glass-effect rounded-xl p-6 border border-white/20">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="bg-purple-500 p-2 rounded-lg">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                </svg>
-                            </div>
-                            <span class="text-purple-400 text-sm font-medium">APY: 12.5%</span>
-                        </div>
-                        <h3 class="text-lg font-semibold text-white">Lending Pool</h3>
-                        <p class="text-2xl font-bold text-white">$45,230.18</p>
-                        <p class="text-sm text-blue-200 mt-1">Depositado</p>
-                    </div>
-                </div>
-
-                <!-- Fees estimadas -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <div class="glass-effect rounded-xl p-6 border border-white/20">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-lg font-semibold text-white">Fee de Administración (1% anual)</h3>
-                            <span class="text-blue-200 text-sm">Prorrateo estimado</span>
-                        </div>
-                        <p class="text-sm text-blue-200">Anual estimado</p>
-                        <p class="text-xl font-bold text-white" data-metric="mgmt-fee-annual">--</p>
-                        <p class="text-sm text-blue-200 mt-2">Diario estimado</p>
-                        <p class="text-lg font-semibold text-white" data-metric="mgmt-fee-daily">--</p>
-                    </div>
-                    <div class="glass-effect rounded-xl p-6 border border-white/20">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-lg font-semibold text-white">Performance Fee (10% sobre ganancias > 10%)</h3>
-                            <span class="text-blue-200 text-sm">Estimación</span>
-                        </div>
-                        <p class="text-sm text-blue-200">Umbral de rendimiento</p>
-                        <p class="text-sm font-medium text-white">10% sobre nocional</p>
-                        <p class="text-sm text-blue-200 mt-2">Fee estimada actual</p>
-                        <p class="text-lg font-semibold text-white" data-metric="perf-fee">--</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Quick Actions -->
-            <section class="mb-8">
-                <h2 class="text-2xl font-bold text-white mb-6">Acciones Rápidas</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    
-                    <!-- Create Forward Contract -->
-                    <button onclick="window.showForwardModal()" class="glass-effect rounded-xl p-6 border border-white/20 hover:border-bf-secondary/50 transition-all duration-300 text-left group">
-                        <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-3 rounded-xl mb-4 w-fit group-hover:shadow-bf-glow transition-all duration-300">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">Crear Forward Contract</h3>
-                        <p class="text-sm text-blue-200">Nuevo contrato a futuro para BTC, ETH o SOL</p>
-                    </button>
-                    
-                    <!-- Deposit to Lending -->
-                    <button onclick="window.location.href='lending.html'" class="glass-effect rounded-xl p-6 border border-white/20 hover:border-yellow-500/50 transition-all duration-300 text-left group">
-                        <div class="bg-gradient-to-r from-yellow-500 to-orange-600 p-3 rounded-xl mb-4 w-fit group-hover:shadow-bf-glow transition-all duration-300">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">Depositar en Lending</h3>
-                        <p class="text-sm text-blue-200">Genera rendimientos del 8-15% APY</p>
-                    </button>
-                    
-                    <!-- Portfolio Analytics -->
-                    <button onclick="alert('📊 Analytics Avanzado\n\nFuncionalidades:\n• Métricas de rendimiento\n• Análisis de riesgo\n• Reportes personalizados\n• Comparación de estrategias\n\n🚧 Próximamente...')" class="glass-effect rounded-xl p-6 border border-white/20 hover:border-purple-500/50 transition-all duration-300 text-left group">
-                        <div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-3 rounded-xl mb-4 w-fit group-hover:shadow-bf-glow transition-all duration-300">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">Analytics Avanzado</h3>
-                        <p class="text-sm text-blue-200">Reportes detallados y métricas</p>
-                    </button>
-                </div>
-            </section>
-
-            <!-- Active Positions Table -->
-            <section class="mb-8">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-2xl font-bold text-white">Posiciones Activas</h2>
-                    <button class="bg-bf-secondary text-black px-4 py-2 rounded-lg font-medium hover:shadow-crypto-glow transition-all duration-300">
-                        Ver Todas
-                    </button>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <nav class="nav-main">
+                <a href="/" class="logo">
+                    <img src="/assets/logo.svg" alt="BitForward" width="140" height="32">
+                </a>
+                
+                <div class="nav-links">
+                    <a href="/dashboard.html" class="active">Dashboard</a>
+                    <a href="/lending.html">DeFi</a>
+                    <a href="/enterprise.html">Trade</a>
                 </div>
                 
-                <div class="glass-effect rounded-xl border border-white/20 overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-black/20">
-                                <tr class="text-left">
-                                    <th class="px-6 py-4 text-sm font-semibold text-blue-200">Contrato</th>
-                                    <th class="px-6 py-4 text-sm font-semibold text-blue-200">Tipo</th>
-                                    <th class="px-6 py-4 text-sm font-semibold text-blue-200">Precio Strike</th>
-                                    <th class="px-6 py-4 text-sm font-semibold text-blue-200">Vencimiento</th>
-                                    <th class="px-6 py-4 text-sm font-semibold text-blue-200">P&L</th>
-                                    <th class="px-6 py-4 text-sm font-semibold text-blue-200">Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-white/10">
-                                <tr class="hover:bg-white/5 transition-colors">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mr-3">
-                                                <span class="text-white text-sm font-bold">₿</span>
-                                            </div>
-                                            <div>
-                                                <p class="text-white font-medium">BTC-FORWARD-001</p>
-                                                <p class="text-sm text-blue-200">Bitcoin Forward</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-white">Long</td>
-                                    <td class="px-6 py-4 text-white">$65,000</td>
-                                    <td class="px-6 py-4 text-white">15 días</td>
-                                    <td class="px-6 py-4 text-green-400">+$2,450</td>
-                                    <td class="px-6 py-4">
-                                        <span class="inline-flex px-2 py-1 text-xs font-medium bg-green-500/20 text-green-400 rounded-full">
-                                            Activo
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-white/5 transition-colors">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
-                                                <span class="text-white text-sm font-bold">Ξ</span>
-                                            </div>
-                                            <div>
-                                                <p class="text-white font-medium">ETH-FORWARD-002</p>
-                                                <p class="text-sm text-blue-200">Ethereum Forward</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-white">Short</td>
-                                    <td class="px-6 py-4 text-white">$2,800</td>
-                                    <td class="px-6 py-4 text-white">8 días</td>
-                                    <td class="px-6 py-4 text-red-400">-$185</td>
-                                    <td class="px-6 py-4">
-                                        <span class="inline-flex px-2 py-1 text-xs font-medium bg-green-500/20 text-green-400 rounded-full">
-                                            Activo
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-white/5 transition-colors">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center mr-3">
-                                                <span class="text-white text-sm font-bold">◎</span>
-                                            </div>
-                                            <div>
-                                                <p class="text-white font-medium">SOL-FORWARD-003</p>
-                                                <p class="text-sm text-blue-200">Solana Forward</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-white">Long</td>
-                                    <td class="px-6 py-4 text-white">$145</td>
-                                    <td class="px-6 py-4 text-white">22 días</td>
-                                    <td class="px-6 py-4 text-green-400">+$582</td>
-                                    <td class="px-6 py-4">
-                                        <span class="inline-flex px-2 py-1 text-xs font-medium bg-green-500/20 text-green-400 rounded-full">
-                                            Activo
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="nav-actions">
+                    <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                    <button id="connect-wallet-btn" class="btn-premium btn-gradient">
+                        Connect Wallet
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dashboard-wrapper">
+        <div class="dashboard-container">
+            
+            <section class="dashboard-hero reveal">
+                <h1>Dashboard</h1>
+                <p class="hero-subtitle">Manage your crypto portfolio with professional tools</p>
+            </section>
+
+            <section class="stats-section reveal">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f0b90b" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <div class="stat-card-content">
+                            <label>Portfolio Value</label>
+                            <value id="portfolio-value">$0.00</value>
+                        </div>
+                        <div class="stat-card-change positive">↑ 12.5%</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f0b90b" stroke-width="2">
+                                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                                <line x1="2" y1="10" x2="22" y2="10"/>
+                            </svg>
+                        </div>
+                        <div class="stat-card-content">
+                            <label>Total Balance</label>
+                            <value id="portfolio-balance">$0.00</value>
+                        </div>
+                        <div class="stat-card-change positive">↑ 8.3%</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f0b90b" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </div>
+                        <div class="stat-card-content">
+                            <label>24h Profit/Loss</label>
+                            <value id="portfolio-profit">$0.00</value>
+                        </div>
+                        <div class="stat-card-change positive">↑ 5.7%</div>
                     </div>
                 </div>
             </section>
 
-            <!-- Market Overview -->
-            <section class="mb-8">
-                <h2 class="text-2xl font-bold text-white mb-6">Vista del Mercado</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    
-                    <!-- Price Chart Placeholder -->
-                    <div class="glass-effect rounded-xl p-6 border border-white/20">
-                        <h3 class="text-lg font-bold text-white mb-4">Gráfico de Precios</h3>
-                        <div class="h-64 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-lg flex items-center justify-center">
-                            <div class="text-center">
-                                <svg class="w-16 h-16 text-blue-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                </svg>
-                                <p class="text-blue-200">Gráfico TradingView próximamente</p>
-                            </div>
+            <section class="quick-actions-section reveal">
+                <div class="quick-actions">
+                    <button id="deposit-btn" class="quick-action-btn primary">
+                        <span class="btn-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <polyline points="19 12 12 19 5 12"/>
+                            </svg>
+                        </span>
+                        <span class="btn-text">Deposit</span>
+                    </button>
+                    <button id="withdraw-btn" class="quick-action-btn secondary">
+                        <span class="btn-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="19" x2="12" y2="5"/>
+                                <polyline points="5 12 12 5 19 12"/>
+                            </svg>
+                        </span>
+                        <span class="btn-text">Withdraw</span>
+                    </button>
+                    <button id="trade-btn" class="quick-action-btn secondary">
+                        <span class="btn-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </span>
+                        <span class="btn-text">Trade</span>
+                    </button>
+                    <button id="stake-btn" class="quick-action-btn secondary">
+                        <span class="btn-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </span>
+                        <span class="btn-text">Earn</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="portfolio-section reveal">
+                <div class="section-header">
+                    <h2>Your Assets</h2>
+                    <a href="#" class="link-view-all">View all →</a>
+                </div>
+
+                <div class="assets-grid" id="assets-container">
+                    <div class="asset-card-placeholder">
+                        <div class="placeholder-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5">
+                                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                                <line x1="2" y1="10" x2="22" y2="10"/>
+                            </svg>
                         </div>
-                    </div>
-                    
-                    <!-- Market Stats -->
-                    <div class="space-y-4">
-                        <div class="glass-effect rounded-xl p-4 border border-white/20">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center mr-3">
-                                        <span class="text-white font-bold">₿</span>
-                                    </div>
-                                    <div>
-                                        <p class="text-white font-medium">Bitcoin</p>
-                                        <p class="text-sm text-blue-200">BTC</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-white font-bold" data-price-symbol="BTC" data-price-type="price">Cargando...</p>
-                                    <p class="text-sm" data-price-symbol="BTC" data-price-type="change">--</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="glass-effect rounded-xl p-4 border border-white/20">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
-                                        <span class="text-white font-bold">Ξ</span>
-                                    </div>
-                                    <div>
-                                        <p class="text-white font-medium">Ethereum</p>
-                                        <p class="text-sm text-blue-200">ETH</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-white font-bold" data-price-symbol="ETH" data-price-type="price">Cargando...</p>
-                                    <p class="text-sm" data-price-symbol="ETH" data-price-type="change">--</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="glass-effect rounded-xl p-4 border border-white/20">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center mr-3">
-                                        <span class="text-white font-bold">◎</span>
-                                    </div>
-                                    <div>
-                                        <p class="text-white font-medium">Solana</p>
-                                        <p class="text-sm text-blue-200">SOL</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-white font-bold" data-price-symbol="SOL" data-price-type="price">Cargando...</p>
-                                    <p class="text-sm" data-price-symbol="SOL" data-price-type="change">--</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="glass-effect rounded-xl p-4 border border-white/20">
-                            <h4 class="text-white font-medium mb-3">Estadísticas del Pool</h4>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-blue-200 text-sm">TVL Total</span>
-                                    <span class="text-white text-sm font-medium">$2.4M</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-blue-200 text-sm">Contratos Activos</span>
-                                    <span class="text-white text-sm font-medium">1,247</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-blue-200 text-sm">Volumen 24h</span>
-                                    <span class="text-white text-sm font-medium">$425K</span>
-                                </div>
-                            </div>
-                        </div>
+                        <p>Connect your wallet to view your assets</p>
                     </div>
                 </div>
             </section>
-        </main>
 
-        <!-- Footer -->
-        <footer class="relative z-10 border-t border-white/20 bg-black/20 backdrop-blur-md mt-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <span class="text-green-400 text-sm font-medium">Sistema Operativo</span>
-                    </div>
-                    <div class="text-blue-200 text-sm">
-                        BitForward Dashboard v3.0 | Proyecto Fénix
-                    </div>
+            <section class="transactions-section reveal">
+                <div class="section-header">
+                    <h2>Recent Transactions</h2>
+                    <a href="#" class="link-view-all">View all →</a>
                 </div>
-            </div>
-        </footer>
-    </div>
 
-    <!-- Loading Animation -->
-    <div class="fixed bottom-6 right-6">
-        <div class="bg-bf-secondary p-3 rounded-full shadow-crypto-glow animate-pulse">
-            <svg class="w-6 h-6 text-white animate-spin" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
+                <div class="transactions-table-wrapper">
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Asset</th>
+                                <th>Amount</th>
+                                <th>Value</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-tbody">
+                            <tr>
+                                <td colspan="6" class="no-data">
+                                    <span>No recent transactions</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="market-section reveal">
+                <div class="section-header">
+                    <h2>Market Overview</h2>
+                    <a href="#" class="link-view-all">View more →</a>
+                </div>
+
+                <div class="market-overview" id="market-overview-container">
+                </div>
+            </section>
+
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
-    <script src="js/logo-manager.js"></script>
-    <script src="js/wallet-manager.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/bitforward-web3.js"></script>
-    
-    <script type="module">
-        // Inicialización del Dashboard Proyecto Fénix con Web3
-        console.log('🔥 BitForward Dashboard - Proyecto Fénix iniciado');
-        console.log('📊 Dashboard: Completamente funcional');
-        console.log('🎨 UI/UX: Clase mundial');
-        console.log('⛓️ Web3: Integración completa');
-        
-        // Variables globales
-        let web3Instance = null;
-        let isConnected = false;
-        let currentAccount = null;
-        
-        // Configuración del dashboard
-        const dashboardConfig = {
-            refreshInterval: 30000, // 30 segundos
-            enableRealTimeData: true,
-            enableWeb3: true,
-            theme: 'phoenix'
-        };
-        
-        // Inicialización Web3
-        async function initWeb3() {
-            try {
-                const web3Ready = await BitForwardWeb3.init();
-                if (web3Ready) {
-                    web3Instance = BitForwardWeb3;
-                    console.log('✅ Web3 inicializado correctamente');
-                    updateConnectionStatus(false);
-                } else {
-                    console.warn('⚠️ Web3 no disponible');
-                    updateConnectionStatus(false, 'Web3 no disponible');
-                }
-            } catch (error) {
-                console.error('❌ Error inicializando Web3:', error);
-                updateConnectionStatus(false, 'Error de conexión');
-            }
-        }
-        
-        // Actualizar estado de conexión
-        function updateConnectionStatus(connected, message = '') {
-            const walletBtn = document.getElementById('wallet-connect');
-            const statusIndicator = document.querySelector('.bg-green-400');
-            const statusText = statusIndicator?.parentElement?.querySelector('span');
-            
-            if (connected) {
-                walletBtn.textContent = `${currentAccount.slice(0, 6)}...${currentAccount.slice(-4)}`;
-                walletBtn.classList.remove('bg-gradient-to-r', 'from-bf-secondary', 'to-yellow-400');
-                walletBtn.classList.add('bg-green-500');
-                
-                if (statusText) {
-                    statusText.textContent = 'Web3 Conectado';
-                }
-                
-                // Cargar datos reales
-                loadRealTimeData();
-            } else {
-                walletBtn.textContent = message || 'Conectar Wallet';
-                walletBtn.classList.add('bg-gradient-to-r', 'from-bf-secondary', 'to-yellow-400');
-                walletBtn.classList.remove('bg-green-500');
-                
-                if (statusText && message) {
-                    statusText.textContent = message;
-                }
-            }
-            
-            isConnected = connected;
-        }
-        
-        // Conectar wallet
-        async function connectWallet() {
-            try {
-                if (!web3Instance) {
-                    alert('⚠️ Web3 no disponible. Por favor instala MetaMask.');
-                    return;
-                }
-                
-                const connection = await web3Instance.connectWallet();
-                
-                if (connection.success) {
-                    currentAccount = connection.address;
-                    updateConnectionStatus(true);
-                    console.log('🔗 Wallet conectado:', currentAccount);
-                    
-                    // Mostrar notificación de éxito
-                    showNotification('Wallet conectado exitosamente', 'success');
-                } else {
-                    console.error('❌ Error conectando wallet:', connection.error);
-                    showNotification('Error conectando wallet: ' + connection.error, 'error');
-                }
-            } catch (error) {
-                console.error('❌ Error en conexión:', error);
-                showNotification('Error de conexión', 'error');
-            }
-        }
-        
-        // Cargar datos en tiempo real
-        async function loadRealTimeData() {
-            if (!isConnected || !web3Instance) return;
-            
-            try {
-                // Obtener métricas del vault
-                const vaultMetrics = await web3Instance.getVaultMetrics();
-                if (vaultMetrics) {
-                    updateVaultMetrics(vaultMetrics);
-                }
-                
-                // Obtener precio actual
-                const currentPrice = await web3Instance.getCurrentPrice();
-                updateBTCPrice(currentPrice);
-                
-                // Obtener forwards del usuario
-                const userForwards = await web3Instance.getUserForwards();
-                updateUserForwards(userForwards);
-                
-                // Obtener estadísticas del protocolo
-                const protocolStats = await web3Instance.getProtocolStats();
-                updateProtocolStats(protocolStats);
-                
-                // Obtener balance WBTC
-                const wbtcBalance = await web3Instance.getWBTCBalance();
-                updateWBTCBalance(wbtcBalance);
-                
-                console.log('📊 Datos actualizados desde blockchain');
-            } catch (error) {
-                console.error('❌ Error cargando datos:', error);
-            }
-        }
-        
-        // Actualizar métricas del vault
-        function updateVaultMetrics(metrics) {
-            // Actualizar APY
-            const apyElement = document.querySelector('[data-metric="apy"]');
-            if (apyElement) {
-                apyElement.textContent = metrics.apy + '%';
-            }
-            
-            // Actualizar TVL
-            const tvlElement = document.querySelector('[data-metric="tvl"]');
-            if (tvlElement) {
-                tvlElement.textContent = '$' + parseFloat(metrics.totalDeposits).toLocaleString();
-            }
-            
-            // Actualizar utilización
-            const utilElement = document.querySelector('[data-metric="utilization"]');
-            if (utilElement) {
-                utilElement.textContent = metrics.utilization + '%';
-            }
-        }
-        
-        // Actualizar precio de BTC
-        function updateBTCPrice(price) {
-            const btcPriceElements = document.querySelectorAll('[data-crypto="btc"] .text-white.font-bold');
-            btcPriceElements.forEach(element => {
-                element.textContent = '$' + parseFloat(price).toLocaleString();
-            });
-        }
-        
-        // Actualizar forwards del usuario
-        function updateUserForwards(forwards) {
-            // Actualizar contador de posiciones activas
-            const activePositionsElement = document.querySelector('[data-metric="active-positions"]');
-            if (activePositionsElement) {
-                activePositionsElement.textContent = forwards.length;
-            }
-            
-            // Calcular P&L total
-            let totalPnL = 0;
-            forwards.forEach(forward => {
-                totalPnL += parseFloat(forward.currentPnL);
-            });
-            
-            const pnlElement = document.querySelector('[data-metric="pnl"]');
-            if (pnlElement) {
-                pnlElement.textContent = (totalPnL >= 0 ? '+' : '') + '$' + totalPnL.toLocaleString();
-                pnlElement.className = totalPnL >= 0 ? 'text-green-400' : 'text-red-400';
-            }
-        }
-        
-        // Actualizar estadísticas del protocolo
-        function updateProtocolStats(stats) {
-            // Implementar actualización de stats globales
-            console.log('📈 Protocol stats:', stats);
-        }
-        
-        // Actualizar balance WBTC
-        function updateWBTCBalance(balance) {
-            console.log('💰 WBTC Balance:', balance);
-        }
-        
-        // Mostrar notificaciones
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full`;
-            
-            if (type === 'success') {
-                notification.classList.add('bg-green-500', 'text-white');
-            } else if (type === 'error') {
-                notification.classList.add('bg-red-500', 'text-white');
-            } else {
-                notification.classList.add('bg-blue-500', 'text-white');
-            }
-            
-            notification.innerHTML = `
-                <div class="flex items-center">
-                    <span>${message}</span>
-                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
-                        ×
-                    </button>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BitForward</h3>
+                    <p>Next-generation DeFi platform</p>
                 </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Animar entrada
-            setTimeout(() => {
-                notification.classList.remove('translate-x-full');
-            }, 100);
-            
-            // Auto-remover después de 5 segundos
-            setTimeout(() => {
-                notification.classList.add('translate-x-full');
-                setTimeout(() => notification.remove(), 300);
-            }, 5000);
-        }
-        
-        // Funciones para acciones rápidas
-        async function createForwardContract() {
-            if (!isConnected) {
-                showNotification('Por favor conecta tu wallet primero', 'error');
-                return;
-            }
-            
-            // Abrir modal de creación de forward
-            const modal = createForwardModal();
-            document.body.appendChild(modal);
-        }
-        
-        function createForwardModal() {
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50';
-            modal.innerHTML = `
-                <div class="bg-gradient-to-br from-bf-dark to-blue-900 p-8 rounded-2xl border border-white/20 max-w-md w-full mx-4">
-                    <h3 class="text-2xl font-bold text-white mb-6">Crear Forward Contract</h3>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-blue-200 text-sm mb-2">Colateral (WBTC)</label>
-                            <input type="number" id="collateral" class="w-full p-3 bg-black/20 border border-white/20 rounded-lg text-white" placeholder="0.1" step="0.01">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-blue-200 text-sm mb-2">Valor Nocional (USD)</label>
-                            <input type="number" id="notional" class="w-full p-3 bg-black/20 border border-white/20 rounded-lg text-white" placeholder="6700" step="100">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-blue-200 text-sm mb-2">Apalancamiento</label>
-                            <select id="leverage" class="w-full p-3 bg-black/20 border border-white/20 rounded-lg text-white">
-                                <option value="1">1x</option>
-                                <option value="2">2x</option>
-                                <option value="3">3x</option>
-                                <option value="5">5x</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-blue-200 text-sm mb-2">Dirección</label>
-                            <select id="direction" class="w-full p-3 bg-black/20 border border-white/20 rounded-lg text-white">
-                                <option value="true">Long (Compra)</option>
-                                <option value="false">Short (Venta)</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-blue-200 text-sm mb-2">Vencimiento (días)</label>
-                            <input type="number" id="expiry" class="w-full p-3 bg-black/20 border border-white/20 rounded-lg text-white" placeholder="7" min="1" max="365">
-                        </div>
-                    </div>
-                    
-                    <div class="flex space-x-4 mt-6">
-                        <button onclick="this.closest('.fixed').remove()" class="flex-1 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                            Cancelar
-                        </button>
-                        <button onclick="submitForward()" class="flex-1 py-3 bg-gradient-to-r from-bf-secondary to-yellow-400 text-black font-medium rounded-lg hover:shadow-crypto-glow transition-all">
-                            Crear Forward
-                        </button>
-                    </div>
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="/dashboard.html">Dashboard</a></li>
+                        <li><a href="/lending.html">DeFi</a></li>
+                        <li><a href="/enterprise.html">Trade</a></li>
+                    </ul>
                 </div>
-            `;
-            
-            return modal;
-        }
-        
-        // Enviar forward
-        window.submitForward = async function() {
-            const collateral = document.getElementById('collateral').value;
-            const notional = document.getElementById('notional').value;
-            const leverage = document.getElementById('leverage').value;
-            const isLong = document.getElementById('direction').value === 'true';
-            const expiry = document.getElementById('expiry').value;
-            
-            if (!collateral || !notional || !expiry) {
-                showNotification('Por favor completa todos los campos', 'error');
-                return;
-            }
-            
-            try {
-                showNotification('Creando forward contract...', 'info');
-                
-                const result = await web3Instance.createForward({
-                    collateral: parseFloat(collateral),
-                    notionalUSD: parseFloat(notional),
-                    expiryDays: parseInt(expiry),
-                    leverage: parseFloat(leverage),
-                    isLong: isLong
-                });
-                
-                if (result.success) {
-                    showNotification(`Forward creado exitosamente! ID: ${result.forwardId}`, 'success');
-                    document.querySelector('.fixed').remove();
-                    loadRealTimeData(); // Actualizar datos
-                } else {
-                    showNotification('Error creando forward: ' + result.error, 'error');
-                }
-            } catch (error) {
-                showNotification('Error: ' + error.message, 'error');
-            }
-        };
-        
-        // Simulación de datos en tiempo real
-        function updateRealTimeData() {
-            if (isConnected) {
-                loadRealTimeData();
-            } else {
-                // Simular datos para demo
-                console.log('📈 Simulando actualizaciones de datos...');
-            }
-        }
-        
-        // Inicializar cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log('🚀 Dashboard inicializado correctamente');
-            
-            // Inicializar Web3
-            await initWeb3();
-            
-            // Configurar conexión de wallet
-            const walletBtn = document.getElementById('wallet-connect');
-            if (walletBtn) {
-                walletBtn.addEventListener('click', connectWallet);
-            }
-            
-            // Configurar botones de acciones rápidas
-            const actionButtons = document.querySelectorAll('button[class*="glass-effect"]');
-            actionButtons.forEach((btn, index) => {
-                btn.addEventListener('click', () => {
-                    const title = btn.querySelector('h3').textContent;
-                    
-                    if (title.includes('Forward Contract')) {
-                        createForwardContract();
-                    } else if (title.includes('Lending')) {
-                        if (!isConnected) {
-                            showNotification('Por favor conecta tu wallet primero', 'error');
-                            return;
-                        }
-                        showNotification('🚧 Función de Lending próximamente', 'info');
-                    } else if (title.includes('Analytics')) {
-                        showNotification('📊 Analytics avanzado próximamente', 'info');
-                    } else {
-                        showNotification(`🎯 ${title} en desarrollo...`, 'info');
-                    }
-                });
-            });
-            
-            // Animación de entrada
-            const cards = document.querySelectorAll('.glass-effect');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
-                card.classList.add('animate-fade-in');
-            });
-            
-            // Iniciar actualizaciones en tiempo real
-            if (dashboardConfig.enableRealTimeData) {
-                setInterval(updateRealTimeData, dashboardConfig.refreshInterval);
-            }
-        });
-        
-        // Funciones de utilidad para el dashboard
-        window.BitForwardDashboard = {
-            refreshData: updateRealTimeData,
-            connectWallet: connectWallet,
-            createForward: createForwardContract,
-            config: dashboardConfig,
-            version: '3.0-phoenix-web3'
-        };
-        
-        // Detectar cambios de cuenta
-        if (typeof window.ethereum !== 'undefined') {
-            window.ethereum.on('accountsChanged', function (accounts) {
-                if (accounts.length === 0) {
-                    updateConnectionStatus(false, 'Wallet desconectado');
-                    currentAccount = null;
-                } else if (accounts[0] !== currentAccount) {
-                    currentAccount = accounts[0];
-                    updateConnectionStatus(true);
-                    loadRealTimeData();
-                }
-            });
-            
-            window.ethereum.on('chainChanged', function (chainId) {
-                console.log('🔄 Network changed:', chainId);
-                window.location.reload();
-            });
-        }
-        
-        // Inicializar mini ticker cuando el price manager esté listo
-        if (window.priceFeedManager && window.priceDisplayManager) {
-            priceFeedManager.on('initialized', () => {
-                const tickerContainer = document.getElementById('dashboardMiniTicker');
-                if (tickerContainer) {
-                    priceDisplayManager.createMiniTicker(
-                        ['BTC', 'ETH', 'SOL', 'MATIC', 'BNB'], 
-                        tickerContainer
-                    );
-                    console.log('💰 Mini ticker inicializado');
-                }
-            });
-        }
-    </script>
-    
-    <!-- Service Worker Registration (carga primero) -->
-    <script src="js/sw-register.js" defer></script>
-    
-    <!-- Lazy Load Ethers.js -->
-    <script>
-        // Cargar Ethers.js de forma asíncrona después del DOMContentLoaded
-        window.addEventListener('DOMContentLoaded', () => {
-            const ethersScript = document.createElement('script');
-            ethersScript.src = 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js';
-            ethersScript.async = true;
-            ethersScript.onload = () => {
-                console.log('✅ Ethers.js cargado');
-                // Trigger custom event cuando ethers esté listo
-                window.dispatchEvent(new CustomEvent('ethers-loaded'));
-            };
-            document.head.appendChild(ethersScript);
-        });
-    </script>
-    
-    <!-- Lazy Load Scripts No-Críticos -->
-    <script>
-        // Cargar scripts de manera diferida para mejorar performance
-        function loadScript(src, defer = true) {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = src;
-                script.defer = defer;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.body.appendChild(script);
-            });
-        }
-        
-        // Esperar a que el contenido inicial esté cargado
-        window.addEventListener('load', async () => {
-            try {
-                // Cargar wallet manager primero
-                await loadScript('js/wallet-manager-real.js');
-                console.log('✅ Wallet manager cargado');
-                
-                // Cargar dashboard web3
-                await loadScript('js/dashboard-web3.js');
-                console.log('✅ Dashboard Web3 cargado');
-                
-                // Cargar price feed system
-                await loadScript('js/price-feeds.js');
-                console.log('✅ Price feeds cargado');
-                
-                await loadScript('js/price-display.js');
-                console.log('✅ Price display cargado');
-                
-                console.log('🚀 Todos los módulos cargados exitosamente');
-            } catch (error) {
-                console.error('❌ Error cargando módulos:', error);
-            }
-        });
-    </script>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BitForward. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Discord">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.840 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.430.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button id="scroll-to-top" class="btn-scroll-top" aria-label="Scroll to top">↑</button>
+    <div id="scroll-progress" class="scroll-progress"></div>
+
+    <script src="/js/hero-animations.js"></script>
+    <script src="/js/scroll-animations.js"></script>
+    <script src="/js/mobile-enhancements.js"></script>
+    <script src="/js/dark-mode.js"></script>
+    <script src="/js/special-effects.js"></script>
+    <script src="/js/dashboard-modern.js"></script>
 </body>
 </html>

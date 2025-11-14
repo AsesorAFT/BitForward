@@ -5,10 +5,10 @@
 
 class BitForwardLogoManager {
     constructor() {
-        this.logoPath = 'assets/logo-rocket-official.svg';
-        this.faviconPath = 'assets/logo-rocket-official.svg';
-        this.animatedLogoPath = 'assets/logo-rocket-official.svg';
-        this.originalLogoPath = 'assets/logo-rocket-official.svg';
+        this.logoPath = 'assets/logo-astronaut-rocket.svg';
+        this.faviconPath = 'assets/logo-astronaut-rocket.svg';
+        this.animatedLogoPath = 'assets/logo-astronaut-rocket.svg';
+        this.originalLogoPath = 'assets/logo-astronaut-rocket.svg';
         this.init();
     }
 
@@ -57,22 +57,22 @@ class BitForwardLogoManager {
             element.appendChild(logoImg);
         });
 
-        // Headers sin logo
-        const headers = document.querySelectorAll('header:not(:has(.logo-icon))');
-        headers.forEach(header => {
-            const logoContainer = document.createElement('div');
-            logoContainer.className = 'header-logo';
-            logoContainer.style.cssText = 'display: flex; align-items: center; gap: 10px;';
-            
-            const logoImg = this.createLogoElement('logo-icon header-logo-img');
-            logoImg.style.width = '32px';
-            logoImg.style.height = '32px';
-            
-            logoContainer.appendChild(logoImg);
-            
-            // Insertar al inicio del header
-            header.insertBefore(logoContainer, header.firstChild);
-        });
+        // Headers sin logo - DESHABILITADO para evitar duplicados
+        // const headers = document.querySelectorAll('header:not(:has(.logo-icon))');
+        // headers.forEach(header => {
+        //     const logoContainer = document.createElement('div');
+        //     logoContainer.className = 'header-logo';
+        //     logoContainer.style.cssText = 'display: flex; align-items: center; gap: 10px;';
+        //     
+        //     const logoImg = this.createLogoElement('logo-icon header-logo-img');
+        //     logoImg.style.width = '32px';
+        //     logoImg.style.height = '32px';
+        //     
+        //     logoContainer.appendChild(logoImg);
+        //     
+        //     // Insertar al inicio del header
+        //     header.insertBefore(logoContainer, header.firstChild);
+        // });
 
         // Modales y dialogs
         const modals = document.querySelectorAll('.modal-header:not(:has(.logo-icon)), .dialog-header:not(:has(.logo-icon))');
@@ -103,7 +103,7 @@ class BitForwardLogoManager {
         // Si el logo no se carga, intentar con el logo alternativo
         img.onerror = () => {
             console.log('Error al cargar el logo principal, intentando con alternativo');
-            img.src = 'assets/logo-rocket-official.svg';
+            img.src = 'assets/logo-astronaut-rocket.svg';
             
             // Si aún falla, cargar el logo original
             img.onerror = () => {
