@@ -12,7 +12,6 @@
 
 const express = require('express');
 const cors = require('cors');
-const helmet = require('helmet');
 const compression = require('compression');
 const path = require('path');
 
@@ -23,7 +22,6 @@ const authRoutes = require('./routes/auth');
 const lendingRoutes = require('./routes/lending');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 const { rateLimitMiddleware } = require('./middleware/rateLimiter');
-const { authenticateToken } = require('./middleware/auth');
 const validationService = require('./validators/validationService');
 const logger = require('./utils/logger');
 
@@ -33,6 +31,7 @@ const { setupSecurity, verifyOrigin, blockMaliciousBots } = require('./middlewar
 // Configuración
 const config = require('./config/config');
 const database = require('./database/database');
+const { closeConnection } = require('./database/config');
 
 // Servicios blockchain
 const BlockchainService = require('./services/BlockchainService');
@@ -152,6 +151,7 @@ class BitForwardServer {
         this.app.use('/api/auth', authRoutes);
         this.app.use('/api/auth/wallet', require('./routes/walletAuth')); // Wallet authentication
         this.app.use('/api/contracts', contractRoutes);
+        this.app.use('/api/stats', statsRoutes);
         this.app.use('/api/lending', lendingRoutes);
 
         // Información de la API
