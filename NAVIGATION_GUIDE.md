@@ -2,43 +2,50 @@
 
 ## 🌐 URLs de Acceso (localhost:8080)
 
+### 🚀 Punto de entrada
+
+1. **Landing & CTA principal** - `/index.html`
+   - Hero con mensaje claro y un único botón “Conectar billetera y abrir dashboard”.
+   - Explica el flujo completo y enlaza directamente al dashboard real (sin dashboards duplicados).
+   - Navegación ligera hacia secciones informativas (productos, ventajas, métricas).
+
 ### 📊 Páginas Principales
 
-1. **Dashboard** - `/dashboard.html`
+2. **Dashboard** - `/dashboard.html`
    - Vista general del portafolio
    - Balance total y P&L
    - **Fees transparentes** (1% AUM + 10% performance)
    - Posiciones activas
    - Métricas de rendimiento
 
-2. **Trading** - `/trading.html`
+3. **Trading** - `/trading.html`
    - Crear contratos forward
    - Apalancamiento 1x-20x
    - Cálculo de liquidación en tiempo real
    - Gestión de posiciones
    - Dashboard de riesgo
 
-3. **Lending** - `/lending.html`
+4. **Lending** - `/lending.html`
    - Préstamos con colateral
    - LTV y Health Factor
    - APR dinámico
    - Múltiples colaterales
 
-4. **Analytics** - `/analytics.html`
+5. **Analytics** - `/analytics.html`
    - **TradingView integrado** 📈
    - Noticias cripto en tiempo real
    - Indicadores técnicos (RSI, MACD, Bollinger)
    - Sentimiento del mercado
    - Métricas on-chain
 
-5. **Community** - `/community.html`
+6. **Community** - `/community.html`
    - Chat en vivo 💬
    - Canales públicos (#general, #señales, #bitcoin, etc.)
    - Mensajes directos (DMs)
    - Compartir señales de trading
    - Leaderboard de top traders
 
-6. **Enterprise** - `/enterprise.html`
+7. **Enterprise** - `/enterprise.html`
    - **AFORTU Holdings Ecosystem** 🏢
    - Launchpad & Crowdfunding
    - Seminarios y capacitación
@@ -50,53 +57,49 @@
 
 ### Para Nuevos Usuarios:
 ```
-1. enterprise.html → Conocer el ecosistema AFORTU
-2. dashboard.html → Conectar wallet
-3. analytics.html → Análisis del mercado
+1. index.html → Leer la propuesta de valor y usar el CTA principal
+2. dashboard.html → Conectar wallet y revisar portafolio inicial
+3. analytics.html → Analizar el mercado
 4. trading.html → Crear primera posición
 5. community.html → Unirse a la comunidad
 ```
 
 ### Para Traders Activos:
 ```
-1. dashboard.html → Ver portafolio
-2. analytics.html → Revisar gráficos TradingView
-3. trading.html → Operar forwards
-4. community.html → Compartir señales
+1. index.html → Acceso directo al dashboard (CTA)
+2. dashboard.html → Ver portafolio
+3. analytics.html → Revisar gráficos TradingView
+4. trading.html → Operar forwards
+5. community.html → Compartir señales
 ```
 
 ### Para Institucionales:
 ```
-1. enterprise.html → Explorar servicios
-2. dashboard.html → Gestionar portafolio
-3. lending.html → Préstamos corporativos
+1. index.html → Resumen ejecutivo + CTA al dashboard
+2. enterprise.html → Explorar servicios
+3. dashboard.html → Gestionar portafolio
+4. lending.html → Préstamos corporativos
 ```
 
 ---
 
 ## 🔗 Navegación Integrada
 
-Todas las páginas tienen un **header unificado** con navegación completa:
-
-```html
-Dashboard | Trading | Lending | Analytics | Community | Enterprise
-```
-
-Cada página mantiene el estado activo del enlace correspondiente.
+- La landing (`index.html`) ofrece navegación ligera entre secciones y el CTA directo al dashboard.
+- Las vistas internas mantienen sus headers originales mientras se completa la unificación global.
+- Recomendación actual: volver al dashboard mediante el botón global dentro de cada módulo o usando el CTA de la landing.
 
 ---
 
 ## 🎨 Elementos de Diseño Comunes
 
 ### Header
-- Logo animado BitForward
-- Navegación horizontal
-- Botón "Conectar Wallet"
+- Logo BitForward con navegación ligera en la landing (Inicio, Productos, Ventajas, Métricas).
+- Páginas internas mantienen sus headers específicos hasta la unificación completa.
 
 ### Footer
-- Indicador de estado en vivo (🟢)
-- Versión de la plataforma
-- Links de soporte
+- Landing con mensaje institucional compacto.
+- Páginas internas conservan el indicador de estado en vivo (🟢) y enlaces de soporte.
 
 ### Efectos Visuales
 - Glassmorphism en todas las tarjetas

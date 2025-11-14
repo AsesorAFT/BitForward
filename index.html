@@ -3,1338 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitForward | Despegando en el Mundo DeFi 🚀</title>
-    <meta name="description" content="Plataforma DeFi con contratos forward, lending y Web3 integration">
-    <meta name="theme-color" content="#667eea">
-    
-    <!-- PWA Manifest -->
+    <title>BitForward | Contratos Forward de Nueva Generación</title>
+    <meta name="description" content="BitForward simplifica los contratos forward de criptomonedas con un flujo guiado y seguro.">
+    <meta name="theme-color" content="#0f172a">
+
     <link rel="manifest" href="/manifest.json">
-    <link rel="canonical" href="index.html" />
-    
-    <!-- DNS Prefetch & Preconnect -->
-    <link rel="dns-prefetch" href="https://api.coingecko.com">
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    
-    <!-- Preload Critical CSS -->
-    <link rel="preload" href="css/dashboard-simple.css" as="style">
-    
-    <!-- Critical inline CSS -->
-    <style>
-        body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
-        .landing-page{min-height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
-    </style>
-    
-    <!-- Load CSS -->
-    <link rel="stylesheet" href="css/dashboard-simple.css">
     <link rel="icon" type="image/svg+xml" href="assets/logo-rocket.svg">
-    
-    <!-- Preload scripts -->
-    <link rel="preload" href="js/sw-register.js" as="script">
-    <link rel="preload" href="js/space-theme-loader.js" as="script">
-    
-    <!-- Space Theme Resources -->
-    <script src="js/space-theme-loader.js"></script>
-    
-    <!-- Enhanced UI/UX Stylesheets -->
-    <link rel="stylesheet" href="css/themes.css">
-    <link rel="stylesheet" href="css/crypto-theme.css">
-    <link rel="stylesheet" href="css/news-feed.css">
-    <link rel="stylesheet" href="css/rocket-theme.css">
-    <link rel="stylesheet" href="css/rocket-mobile.css">
-    
-    <!-- Modern Visual Enhancements -->
-    <link rel="stylesheet" href="css/hero-modern.css">
-    <link rel="stylesheet" href="css/glassmorphism.css">
-    <link rel="stylesheet" href="css/buttons-premium.css">
-    <link rel="stylesheet" href="css/animations-advanced.css">
-    
-    <!-- Landing Page Fix - DEBE CARGAR PRIMERO -->
-    <script src="js/landing-fix.js"></script>
-    
-    <!-- Lazy Loader (carga crítica) -->
-    <script src="js/lazy-loader.js"></script>
-    
+
+    <link rel="stylesheet" href="css/dashboard-simple.css">
     <style>
-        /* Landing Page Styles */
-        .landing-page {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        :root {
+            color-scheme: dark;
         }
-        
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #172554 0%, #0f172a 45%, #020617 100%);
+            color: #e2e8f0;
+        }
+
         .landing-header {
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-            padding: 1rem 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.85);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.25);
         }
-        
+
         .landing-nav {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 1rem 1.5rem;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-        }
-        
-        .landing-logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .landing-logo img {
-            width: 48px;
-            height: 48px;
-        }
-        
-        .logo-wrapper {
-            position: relative;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: visible;
-        }
-        
-        .animated-logo {
-            width: 48px !important;
-            height: 48px !important;
-            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.5));
-            transition: all 0.3s ease;
-        }
-        
-        .animated-logo:hover {
-            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.8));
-            transform: scale(1.1);
-        }
-        
-        .landing-brand {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .landing-brand h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
-            line-height: 1.2;
-        }
-        
-        .landing-brand p {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            margin: 0;
-        }
-        
-        .landing-menu {
-            display: flex;
             gap: 2rem;
-            align-items: center;
         }
-        
-        .landing-menu a {
-            color: #cbd5e1;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .landing-menu a:hover {
-            color: #3b82f6;
-        }
-        
-        .btn-login {
-            padding: 0.5rem 1.5rem;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
-        }
-        
-        .hero-section {
-            padding: 8rem 2rem 4rem;
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .crypto-float {
-            position: absolute;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        
-        .crypto-icons-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: #94a3b8;
-            margin-bottom: 3rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .hero-cta {
+
+        .brand {
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn-primary {
-            padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white;
-            border: none;
-            border-radius: 0.75rem;
-            font-size: 1.1rem;
+            align-items: center;
+            gap: 0.75rem;
             font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            letter-spacing: 0.02em;
         }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.5);
+
+        .brand img {
+            width: 40px;
+            height: 40px;
         }
-        
-        .btn-secondary {
-            padding: 1rem 2.5rem;
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-            border: 2px solid #3b82f6;
-            border-radius: 0.75rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
         }
-        
-        .btn-secondary:hover {
-            background: rgba(59, 130, 246, 0.2);
-            transform: translateY(-2px);
+
+        .nav-links a {
+            color: #cbd5f5;
+            text-decoration: none;
+            transition: color 0.2s ease;
         }
-        
-        .features-section {
-            padding: 4rem 2rem;
-            max-width: 1200px;
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        .landing-main {
+            padding: 0 1.5rem 4rem;
+        }
+
+        .hero {
+            max-width: 1100px;
             margin: 0 auto;
+            padding: 6rem 0 4rem;
+            display: grid;
+            gap: 2.5rem;
         }
-        
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            margin: 0;
+            max-width: 640px;
+            color: #94a3b8;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.95rem 2.75rem;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: #fff;
-            text-align: center;
-            margin-bottom: 3rem;
+            border: none;
+            border-radius: 999px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 20px 45px rgba(37, 99, 235, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: fit-content;
         }
-        
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 55px rgba(37, 99, 235, 0.45);
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3.5rem 0 0;
+            display: grid;
+            gap: 1.75rem;
+        }
+
+        .section h2 {
+            margin: 0;
+            font-size: clamp(1.75rem, 3vw, 2.4rem);
+            font-weight: 700;
+        }
+
+        .section > p {
+            margin: 0;
+            color: #94a3b8;
+            font-size: 1rem;
+            max-width: 640px;
+        }
+
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         }
-        
+
         .feature-card {
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(10px);
+            padding: 1.75rem;
+            border-radius: 1rem;
+            background: rgba(15, 23, 42, 0.65);
             border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
+            display: grid;
+            gap: 0.75rem;
+            transition: border-color 0.2s ease, transform 0.2s ease;
         }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-        
+
         .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+            border-color: rgba(96, 165, 250, 0.6);
+            transform: translateY(-3px);
         }
-        
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            z-index: 1;
+
+        .feature-card h3 {
+            margin: 0;
+            font-size: 1.2rem;
         }
-        
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-        }
-        
-        .feature-icon svg {
-            width: 30px;
-            height: 30px;
-            color: white;
-        }
-        
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 1rem;
-        }
-        
-        .feature-description {
+
+        .feature-card p {
+            margin: 0;
             color: #94a3b8;
+            font-size: 0.95rem;
             line-height: 1.6;
         }
-        
-        .stats-section {
-            padding: 4rem 2rem;
-            background: rgba(30, 41, 59, 0.3);
-        }
-        
+
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         }
-        
-        .stat-card {
+
+        .stat {
+            padding: 1.5rem;
+            border-radius: 1rem;
+            background: rgba(15, 23, 42, 0.55);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stat span {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .cta-panel {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(59, 130, 246, 0.15));
+            display: grid;
+            gap: 1.5rem;
+            justify-items: start;
+            margin-top: 4rem;
+        }
+
+        footer {
+            padding: 2.5rem 1.5rem;
+            color: #475569;
+            font-size: 0.9rem;
             text-align: center;
         }
-        
-        .stat-value {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            color: #94a3b8;
-            font-size: 1.1rem;
-        }
-        
-        .footer {
-            padding: 3rem 2rem;
-            text-align: center;
-            border-top: 1px solid rgba(59, 130, 246, 0.1);
-            color: #94a3b8;
-        }
-        
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
+
         @media (max-width: 768px) {
-            .landing-menu {
-                display: none;
+            .landing-nav {
+                flex-direction: column;
+                align-items: flex-start;
             }
-            
-            .mobile-menu-toggle {
-                display: block;
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
             }
-            
-            .hero-title {
-                font-size: 2rem;
+
+            .hero {
+                padding: 5rem 0 3rem;
             }
-            
-            .hero-subtitle {
-                font-size: 1.1rem;
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Landing Page -->
-    <div class="landing-page">
-        <!-- Header -->
-        <header class="landing-header">
-            <nav class="landing-nav">
-                <div class="landing-logo">
-                    <div class="logo-wrapper">
-                        <img src="assets/logo-rocket-animated.svg" alt="BitForward" class="animated-logo">
-                    </div>
-                    <div class="landing-brand">
-                        <h1>BitForward</h1>
-                        <p>by AFORTU</p>
-                    </div>
-                </div>
-                <div class="landing-menu">
-                    <a href="#inicio">Inicio</a>
-                    <a href="#productos">Productos</a>
-                    <a href="#nosotros">Nosotros</a>
-                    <a href="#contacto">Contacto</a>
-                    <button class="btn-login" onclick="showLogin()">Iniciar Sesión</button>
-                </div>
-                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
-            </nav>
-        </header>
-        <!-- Hero Section -->
-        <section class="hero-section" id="inicio">
-            <!-- Floating Crypto Icons Background -->
-            <div class="crypto-icons-bg">
-                <!-- Bitcoin -->
-                <svg class="crypto-float" style="top: 10%; left: 10%; width: 80px; height: 80px; animation-delay: 0s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="16" fill="#F7931A"/>
-                    <path d="M23.189 14.02c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.113-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.745-.17-1.104-.258l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z" fill="white"/>
-                </svg>
-                
-                <!-- Ethereum -->
-                <svg class="crypto-float" style="top: 20%; right: 15%; width: 70px; height: 70px; animation-delay: 1s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="16" fill="#627EEA"/>
-                    <path d="M16.498 4v8.87l7.497 3.35-7.497-12.22z" fill="white" fill-opacity=".602"/>
-                    <path d="M16.498 4L9 16.22l7.498-3.35V4z" fill="white"/>
-                    <path d="M16.498 21.968v6.027L24 17.616l-7.502 4.352z" fill="white" fill-opacity=".602"/>
-                    <path d="M16.498 27.995v-6.028L9 17.616l7.498 10.38z" fill="white"/>
-                    <path d="M16.498 20.573l7.497-4.353-7.497-3.348v7.701z" fill="white" fill-opacity=".2"/>
-                    <path d="M9 16.22l7.498 4.353v-7.701L9 16.22z" fill="white" fill-opacity=".602"/>
-                </svg>
-                
-                <!-- Solana -->
-                <svg class="crypto-float" style="bottom: 15%; left: 20%; width: 60px; height: 60px; animation-delay: 2s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="16" fill="url(#solana-gradient)"/>
-                    <defs>
-                        <linearGradient id="solana-gradient" x1="0" y1="0" x2="32" y2="32">
-                            <stop offset="0%" stop-color="#00FFA3"/>
-                            <stop offset="100%" stop-color="#DC1FFF"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M8.41 19.54a.54.54 0 01.38-.16h17.17c.29 0 .44.35.24.56l-3.63 3.63a.54.54 0 01-.38.16H5.02c-.29 0-.44-.35-.24-.56l3.63-3.63zm0-11.08a.54.54 0 01.38-.16h17.17c.29 0 .44.35.24.56l-3.63 3.63a.54.54 0 01-.38.16H5.02c-.29 0-.44-.35-.24-.56l3.63-3.63zm14.57 5.54a.54.54 0 00-.38-.16H5.43c-.29 0-.44.35-.24.56l3.63 3.63a.54.54 0 00.38.16h17.17c.29 0 .44-.35.24-.56l-3.63-3.63z" fill="white"/>
-                </svg>
-                
-                <!-- Polygon -->
-                <svg class="crypto-float" style="top: 50%; right: 10%; width: 65px; height: 65px; animation-delay: 3s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="16" fill="#8247E5"/>
-                    <path d="M21.092 11.862a1.667 1.667 0 00-1.658 0l-3.31 1.91-2.216 1.278-3.31 1.91a1.667 1.667 0 01-1.658 0l-2.634-1.52a1.667 1.667 0 01-.83-1.434v-3.04a1.667 1.667 0 01.83-1.434l2.634-1.52a1.667 1.667 0 011.658 0l2.634 1.52a1.667 1.667 0 01.83 1.434v1.91l2.216-1.278v-1.91a1.667 1.667 0 00-.83-1.434l-4.85-2.798a1.667 1.667 0 00-1.658 0L5.09 8.254a1.667 1.667 0 00-.83 1.434v5.596a1.667 1.667 0 00.83 1.434l4.85 2.798a1.667 1.667 0 001.658 0l3.31-1.91 2.216-1.278 3.31-1.91a1.667 1.667 0 011.658 0l2.634 1.52a1.667 1.667 0 01.83 1.434v3.04a1.667 1.667 0 01-.83 1.434l-2.634 1.52a1.667 1.667 0 01-1.658 0l-2.634-1.52a1.667 1.667 0 01-.83-1.434v-1.91l-2.216 1.278v1.91a1.667 1.667 0 00.83 1.434l4.85 2.798a1.667 1.667 0 001.658 0l4.85-2.798a1.667 1.667 0 00.83-1.434v-5.596a1.667 1.667 0 00-.83-1.434l-4.85-2.798z" fill="white"/>
-                </svg>
-                
-                <!-- Binance Coin -->
-                <svg class="crypto-float" style="bottom: 20%; right: 25%; width: 75px; height: 75px; animation-delay: 4s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="16" fill="#F3BA2F"/>
-                    <path d="M12.116 14.404L16 10.52l3.886 3.886 2.26-2.26L16 6l-6.144 6.144 2.26 2.26zM6 16l2.26-2.26L10.52 16l-2.26 2.26L6 16zm6.116 1.596L16 21.48l3.886-3.886 2.26 2.26L16 26l-6.144-6.144-.003-.003 2.263-2.257zm9.764-1.596l2.26-2.26L26.4 16l-2.26 2.26L21.88 16z" fill="white"/>
-                    <path d="M18.668 16l-2.668 2.664L13.332 16 16 13.336 18.668 16z" fill="white"/>
-                </svg>
-                
-                <!-- Cardano -->
-                <svg class="crypto-float" style="top: 60%; left: 5%; width: 55px; height: 55px; animation-delay: 5s;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="16" fill="#0033AD"/>
-                    <circle cx="16" cy="16" r="2" fill="white"/>
-                    <circle cx="16" cy="9" r="1.5" fill="white"/>
-                    <circle cx="16" cy="23" r="1.5" fill="white"/>
-                    <circle cx="9" cy="16" r="1.5" fill="white"/>
-                    <circle cx="23" cy="16" r="1.5" fill="white"/>
-                    <circle cx="11.5" cy="11.5" r="1" fill="white"/>
-                    <circle cx="20.5" cy="20.5" r="1" fill="white"/>
-                    <circle cx="20.5" cy="11.5" r="1" fill="white"/>
-                    <circle cx="11.5" cy="20.5" r="1" fill="white"/>
-                </svg>
+    <header class="landing-header">
+        <nav class="landing-nav">
+            <a class="brand" href="#inicio">
+                <img src="assets/logo-rocket.svg" alt="BitForward">
+                <span>BitForward</span>
+            </a>
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#productos">Productos</a>
+                <a href="#ventajas">Ventajas</a>
+                <a href="#metricas">Métricas</a>
             </div>
-            
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="hero-title-dynamic">Despegando en el Mundo DeFi 🚀</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Plataforma descentralizada de contratos forward para empresas. 
-                    Gestiona riesgos, optimiza liquidez y genera rendimientos de forma segura.
-                </p>
-                <div class="hero-cta-container">
-                    <button class="cta-button-primary" onclick="showLogin()">
-                        <span>Comenzar Ahora</span>
-                    </button>
-                    <button class="cta-button-secondary" onclick="scrollToSection('productos')">
-                        <span>Explorar Productos</span>
-                    </button>
-                </div>
-                
-                <!-- Trust Badges -->
-                <div class="hero-trust-badges">
-                    <div class="trust-badge">
-                        <svg class="trust-badge-icon" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span>Auditado & Seguro</span>
-                    </div>
-                    <div class="trust-badge">
-                        <svg class="trust-badge-icon" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
-                        </svg>
-                        <span>10,000+ Usuarios</span>
-                    </div>
-                    <div class="trust-badge">
-                        <svg class="trust-badge-icon" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
-                        </svg>
-                        <span>Lightning Fast</span>
-                    </div>
-                </div>
+        </nav>
+    </header>
+
+    <main class="landing-main">
+        <section class="hero" id="inicio">
+            <span class="hero-eyebrow">Contratos forward empresariales</span>
+            <h1>Tu mesa de derivados con un flujo guiado de principio a fin</h1>
+            <p>
+                BitForward reúne a tu equipo, tus coberturas y tus reportes en un solo dashboard.
+                Conecta tu billetera y sigue un recorrido claro para crear, monitorear y ejecutar contratos
+                sin perderte entre pestañas ni scripts experimentales.
+            </p>
+            <a class="hero-cta" href="dashboard.html">Conectar billetera y abrir dashboard</a>
+            <div class="hero-meta">
+                <span>✅ Onboarding en menos de 2 minutos</span>
+                <span>🔒 Custodia compatible con empresas</span>
+                <span>📊 Métricas de riesgo en tiempo real</span>
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section class="features-section reveal" id="productos">
-            <h2 class="section-title">Nuestros Productos</h2>
+        <section class="section" id="productos">
+            <h2>Productos principales</h2>
+            <p>Las tres áreas clave que consolidamos en BitForward para que tu operación avance sin fricción.</p>
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Contratos a Futuro</h3>
-                    <p class="feature-description">
-                        Crea contratos a futuro sobre BTC, ETH, SOL y más. Protege tu inversión contra la volatilidad del mercado.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Fondo de Préstamos</h3>
-                    <p class="feature-description">
-                        Deposita tus activos y genera rendimientos del 8-15% anual. Liquidez garantizada y seguridad empresarial.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Seguridad Empresarial</h3>
-                    <p class="feature-description">
-                        Auditorías de seguridad, contratos verificados y custodia institucional para proteger tus activos.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Análisis Avanzado</h3>
-                    <p class="feature-description">
-                        Panel de control en tiempo real con métricas de riesgo, ganancias y pérdidas, y análisis predictivo impulsado por IA.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Integración Multi-Chain</h3>
-                    <p class="feature-description">
-                        Soporte para Ethereum, Polygon, BSC, Solana y más. Una plataforma, múltiples blockchains.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Soporte Empresarial</h3>
-                    <p class="feature-description">
-                        Equipo dedicado 24/7, onboarding personalizado y soluciones a medida para tu empresa.
-                    </p>
-                </div>
+                <article class="feature-card">
+                    <h3>Contratos Forward</h3>
+                    <p>Define precios futuros sobre BTC, ETH o SOL con recordatorios automáticos de liquidación.</p>
+                </article>
+                <article class="feature-card">
+                    <h3>Gestión de Portafolio</h3>
+                    <p>Un panel que muestra exposición neta, P&amp;L y colateral disponible en un solo vistazo.</p>
+                </article>
+                <article class="feature-card">
+                    <h3>Gobernanza AFO</h3>
+                    <p>Participa en decisiones clave con un flujo de votación transparente para todo tu equipo.</p>
+                </article>
             </div>
         </section>
 
-        <!-- Stats Section -->
-        <section class="stats-section">
+        <section class="section" id="ventajas">
+            <h2>¿Por qué los equipos eligen BitForward?</h2>
+            <div class="features-grid">
+                <article class="feature-card">
+                    <h3>Una sola secuencia</h3>
+                    <p>Desde el onboarding hasta la ejecución, cada paso enlaza con el dashboard real para evitar duplicados.</p>
+                </article>
+                <article class="feature-card">
+                    <h3>Claridad operativa</h3>
+                    <p>Indicadores claros y mensajes en lenguaje natural te guían como en Binance o Solana, pero adaptados a forward contracts.</p>
+                </article>
+                <article class="feature-card">
+                    <h3>Seguridad con contexto</h3>
+                    <p>Estados visibles de conexión, auditorías y alertas en un diseño limpio que inspira confianza.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="metricas">
+            <h2>Métricas instantáneas</h2>
+            <p>Lo esencial del negocio a un clic en el dashboard.</p>
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">$2.4M+</div>
-                    <div class="stat-label">Valor Total Bloqueado</div>
+                <div class="stat">
+                    <strong>$2.4M</strong>
+                    <span>Valor bloqueado por clientes piloto</span>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">1,247</div>
-                    <div class="stat-label">Contratos Activos</div>
+                <div class="stat">
+                    <strong>1,247</strong>
+                    <span>Contratos forward gestionados</span>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">98.5%</div>
-                    <div class="stat-label">Uptime Garantizado</div>
+                <div class="stat">
+                    <strong>98.5%</strong>
+                    <span>Disponibilidad auditada</span>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">24/7</div>
-                    <div class="stat-label">Soporte Disponible</div>
-                </div>
+            </div>
+            <div class="cta-panel">
+                <h3>Listo para ver el recorrido completo</h3>
+                <p>El botón de acceso te lleva directo al dashboard vivo: conecta tu billetera, confirma tu perfil y continúa donde lo dejaste.</p>
+                <a class="hero-cta" href="dashboard.html">Ir al dashboard</a>
             </div>
         </section>
+    </main>
 
-        <!-- Supported Cryptocurrencies Section -->
-        <section class="features-section" style="padding: 3rem 2rem; background: rgba(30, 41, 59, 0.3);">
-            <h2 class="section-title">Criptomonedas Soportadas</h2>
-            <p style="text-align: center; color: #94a3b8; font-size: 1.1rem; margin-bottom: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
-                Opera con las principales criptomonedas del mercado en nuestra plataforma DeFi
-            </p>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap;">
-                <!-- Bitcoin -->
-                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16" cy="16" r="16" fill="#F7931A"/>
-                        <path d="M23.189 14.02c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.113-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.745-.17-1.104-.258l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z" fill="white"/>
-                    </svg>
-                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Bitcoin</p>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">BTC</p>
-                </div>
-                
-                <!-- Ethereum -->
-                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16" cy="16" r="16" fill="#627EEA"/>
-                        <path d="M16.498 4v8.87l7.497 3.35-7.497-12.22z" fill="white" fill-opacity=".602"/>
-                        <path d="M16.498 4L9 16.22l7.498-3.35V4z" fill="white"/>
-                        <path d="M16.498 21.968v6.027L24 17.616l-7.502 4.352z" fill="white" fill-opacity=".602"/>
-                        <path d="M16.498 27.995v-6.028L9 17.616l7.498 10.38z" fill="white"/>
-                        <path d="M16.498 20.573l7.497-4.353-7.497-3.348v7.701z" fill="white" fill-opacity=".2"/>
-                        <path d="M9 16.22l7.498 4.353v-7.701L9 16.22z" fill="white" fill-opacity=".602"/>
-                    </svg>
-                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Ethereum</p>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">ETH</p>
-                </div>
-                
-                <!-- Solana -->
-                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16" cy="16" r="16" fill="url(#solana-gradient2)"/>
-                        <defs>
-                            <linearGradient id="solana-gradient2" x1="0" y1="0" x2="32" y2="32">
-                                <stop offset="0%" stop-color="#00FFA3"/>
-                                <stop offset="100%" stop-color="#DC1FFF"/>
-                            </linearGradient>
-                        </defs>
-                        <path d="M8.41 19.54a.54.54 0 01.38-.16h17.17c.29 0 .44.35.24.56l-3.63 3.63a.54.54 0 01-.38.16H5.02c-.29 0-.44-.35-.24-.56l3.63-3.63zm0-11.08a.54.54 0 01.38-.16h17.17c.29 0 .44.35.24.56l-3.63 3.63a.54.54 0 01-.38.16H5.02c-.29 0-.44-.35-.24-.56l3.63-3.63zm14.57 5.54a.54.54 0 00-.38-.16H5.43c-.29 0-.44.35-.24.56l3.63 3.63a.54.54 0 00.38.16h17.17c.29 0 .44-.35.24-.56l-3.63-3.63z" fill="white"/>
-                    </svg>
-                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Solana</p>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">SOL</p>
-                </div>
-                
-                <!-- Polygon -->
-                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16" cy="16" r="16" fill="#8247E5"/>
-                        <path d="M21.092 11.862a1.667 1.667 0 00-1.658 0l-3.31 1.91-2.216 1.278-3.31 1.91a1.667 1.667 0 01-1.658 0l-2.634-1.52a1.667 1.667 0 01-.83-1.434v-3.04a1.667 1.667 0 01.83-1.434l2.634-1.52a1.667 1.667 0 011.658 0l2.634 1.52a1.667 1.667 0 01.83 1.434v1.91l2.216-1.278v-1.91a1.667 1.667 0 00-.83-1.434l-4.85-2.798a1.667 1.667 0 00-1.658 0L5.09 8.254a1.667 1.667 0 00-.83 1.434v5.596a1.667 1.667 0 00.83 1.434l4.85 2.798a1.667 1.667 0 001.658 0l3.31-1.91 2.216-1.278 3.31-1.91a1.667 1.667 0 011.658 0l2.634 1.52a1.667 1.667 0 01.83 1.434v3.04a1.667 1.667 0 01-.83 1.434l-2.634 1.52a1.667 1.667 0 01-1.658 0l-2.634-1.52a1.667 1.667 0 01-.83-1.434v-1.91l-2.216 1.278v1.91a1.667 1.667 0 00.83 1.434l4.85 2.798a1.667 1.667 0 001.658 0l4.85-2.798a1.667 1.667 0 00.83-1.434v-5.596a1.667 1.667 0 00-.83-1.434l-4.85-2.798z" fill="white"/>
-                    </svg>
-                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Polygon</p>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">MATIC</p>
-                </div>
-                
-                <!-- Binance Coin -->
-                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16" cy="16" r="16" fill="#F3BA2F"/>
-                        <path d="M12.116 14.404L16 10.52l3.886 3.886 2.26-2.26L16 6l-6.144 6.144 2.26 2.26zM6 16l2.26-2.26L10.52 16l-2.26 2.26L6 16zm6.116 1.596L16 21.48l3.886-3.886 2.26 2.26L16 26l-6.144-6.144-.003-.003 2.263-2.257zm9.764-1.596l2.26-2.26L26.4 16l-2.26 2.26L21.88 16z" fill="white"/>
-                        <path d="M18.668 16l-2.668 2.664L13.332 16 16 13.336 18.668 16z" fill="white"/>
-                    </svg>
-                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">BNB</p>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">Binance Coin</p>
-                </div>
-                
-                <!-- Cardano -->
-                <div style="text-align: center; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    <svg width="80" height="80" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16" cy="16" r="16" fill="#0033AD"/>
-                        <circle cx="16" cy="16" r="2" fill="white"/>
-                        <circle cx="16" cy="9" r="1.5" fill="white"/>
-                        <circle cx="16" cy="23" r="1.5" fill="white"/>
-                        <circle cx="9" cy="16" r="1.5" fill="white"/>
-                        <circle cx="23" cy="16" r="1.5" fill="white"/>
-                        <circle cx="11.5" cy="11.5" r="1" fill="white"/>
-                        <circle cx="20.5" cy="20.5" r="1" fill="white"/>
-                        <circle cx="20.5" cy="11.5" r="1" fill="white"/>
-                        <circle cx="11.5" cy="20.5" r="1" fill="white"/>
-                    </svg>
-                    <p style="color: #fff; font-weight: 600; margin-top: 0.5rem; font-size: 1.1rem;">Cardano</p>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">ADA</p>
-                </div>
-            </div>
-            <p style="text-align: center; color: #64748B; font-size: 0.9rem; margin-top: 2rem;">
-                Y muchas más... Soporte multi-chain en constante expansión
-            </p>
-        </section>
+    <footer>
+        BitForward · Proyecto Fénix · Plataforma DeFi empresarial
+    </footer>
 
-        <!-- About Section -->
-        <section class="features-section" id="nosotros">
-            <h2 class="section-title">Sobre AFORTU</h2>
-            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <p style="color: #94a3b8; font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
-                    AFORTU es una empresa líder en soluciones DeFi empresariales. 
-                    BitForward es nuestra plataforma insignia, diseñada para ofrecer instrumentos 
-                    financieros descentralizados con la seguridad y confiabilidad que las empresas necesitan.
-                </p>
-                <p style="color: #94a3b8; font-size: 1.2rem; line-height: 1.8;">
-                    Con años de experiencia en blockchain y finanzas tradicionales, nuestro equipo 
-                    construye puentes entre el mundo DeFi y las necesidades corporativas reales.
-                </p>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="features-section" id="contacto">
-            <h2 class="section-title">Contáctanos</h2>
-            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-                <p style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 2rem;">
-                    ¿Listo para llevar tu empresa al siguiente nivel con DeFi?
-                </p>
-                <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-                    <p style="color: #fff; font-size: 1.2rem; font-weight: 600;">
-                        📧 contacto@afortu.com.mx
-                    </p>
-                    <p style="color: #fff; font-size: 1.2rem; font-weight: 600;">
-                        🌐 www.AFORTU.com.mx
-                    </p>
-                    <button class="btn-primary" onclick="showLogin()" style="margin-top: 1rem;">
-                        Comenzar Ahora
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>© 2025 BitForward by AFORTU. Todos los derechos reservados.</p>
-            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
-                Plataforma DeFi Empresarial | Proyecto Fénix
-            </p>
-        </footer>
-    </div>
-
-    <!-- Login Modal -->
-    <div id="login-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center;">
-        <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 1rem; padding: 3rem; max-width: 450px; width: 90%; position: relative;">
-            <button onclick="hideLogin()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer;">&times;</button>
-            <h2 style="color: #fff; font-size: 2rem; margin-bottom: 1rem; text-align: center;">Iniciar Sesión</h2>
-            <p style="color: #94a3b8; text-align: center; margin-bottom: 2rem;">Accede a tu dashboard de BitForward</p>
-            
-            <form id="login-form" onsubmit="handleLogin(event)" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                <div>
-                    <label style="color: #cbd5e1; display: block; margin-bottom: 0.5rem; font-weight: 500;">Email o Usuario</label>
-                    <input type="text" id="login-username" required style="width: 100%; padding: 0.75rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 0.5rem; color: #fff; font-size: 1rem;">
-                </div>
-                <div>
-                    <label style="color: #cbd5e1; display: block; margin-bottom: 0.5rem; font-weight: 500;">Contraseña</label>
-                    <input type="password" id="login-password" required style="width: 100%; padding: 0.75rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 0.5rem; color: #fff; font-size: 1rem;">
-                </div>
-                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">
-                    Iniciar Sesión
-                </button>
-            </form>
-            
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <p style="color: #94a3b8; font-size: 0.9rem;">¿No tienes cuenta? <a href="#" style="color: #3b82f6;">Regístrate</a></p>
-            </div>
-            
-            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(59, 130, 246, 0.2);">
-                <button class="btn-secondary" onclick="connectWallet()" style="width: 100%;">
-                    Conectar con Billetera
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dashboard Container (Hidden by default) -->
-    <div id="dashboard-container" style="display: none;">
-        <!-- Header -->
-        <header>
-            <div class="header-content">
-                <!-- Logo and Title -->
-                <div class="logo-section">
-                    <div class="logo-container">
-                        <img src="assets/logo-rocket-animated.svg" alt="BitForward" class="animated-logo">
-                    </div>
-                    <div>
-                        <h1 class="brand-title">BitForward</h1>
-                        <p class="brand-subtitle">Dashboard Proyecto Fénix</p>
-                    </div>
-                </div>
-                <!-- Navigation -->
-                <nav class="hidden-mobile">
-                    <a href="dashboard.html">Dashboard</a>
-                    <a href="trading.html">Trading</a>
-                    <a href="lending.html">Préstamos</a>
-                    <a href="analytics.html">Análisis</a>
-                    <a href="community.html">Comunidad</a>
-                    <a href="enterprise.html">Empresas</a>
-                </nav>
-                <!-- Wallet Connection -->
-                <div style="display: flex; gap: 1rem; align-items: center;">
-                    <span id="user-name" style="color: #94a3b8; font-size: 0.9rem;"></span>
-                    <button id="wallet-connect" class="wallet-btn">
-                        Conectar Billetera
-                    </button>
-                    <button onclick="logout()" class="wallet-btn" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">
-                        Cerrar Sesión
-                    </button>
-                </div>
-            </div>
-        </header>
-        <!-- Main Dashboard Content -->
-        <main>
-            <!-- Portfolio Overview -->
-            <section class="mb-8">
-                <h2 class="section-title">Resumen de Portafolio</h2>
-                <div class="grid grid-1 grid-md-2 grid-lg-4">
-                    <!-- Total Balance -->
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <div class="metric-icon green">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                                </svg>
-                            </div>
-                            <span class="metric-change positive">+12.5%</span>
-                        </div>
-                        <h3 class="metric-title">Balance Total</h3>
-                        <p class="metric-value">$125,847.32</p>
-                        <p class="metric-subtitle">≈ 42.5 ETH</p>
-                    </div>
-                    <!-- Active Positions -->
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <div class="metric-icon blue">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                </svg>
-                            </div>
-                            <span class="metric-change">8 activas</span>
-                        </div>
-                        <h3 class="metric-title">Posiciones Activas</h3>
-                        <p class="metric-value">8</p>
-                        <p class="metric-subtitle">Contratos a Futuro</p>
-                    </div>
-                    <!-- P&L Today -->
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <div class="metric-icon yellow">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                                </svg>
-                            </div>
-                            <span class="metric-change positive">+$2,847</span>
-                        </div>
-                        <h3 class="metric-title">Ganancias y Pérdidas Hoy</h3>
-                        <p class="metric-value" style="color: #4ade80;">+$2,847.52</p>
-                        <p class="metric-subtitle">+2.31%</p>
-                    </div>
-                    <!-- Lending Pool -->
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <div class="metric-icon purple">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                </svg>
-                            </div>
-                            <span class="metric-change" style="color: #c084fc;">APY: 12.5%</span>
-                        </div>
-                        <h3 class="metric-title">Fondo de Préstamos</h3>
-                        <p class="metric-value">$45,230.18</p>
-                        <p class="metric-subtitle">Depositado</p>
-                    </div>
-                </div>
-            </section>
-            <!-- Quick Actions -->
-            <section class="mb-8">
-                <h2 class="section-title-md">Acciones Rápidas</h2>
-                <div class="grid grid-1 grid-md-3">
-                    <!-- Create Forward Contract -->
-                    <button id="create-forward-contract" class="action-btn">
-                        <div class="action-icon green">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                            </svg>
-                        </div>
-                        <h3 class="action-title">Crear Contrato a Futuro</h3>
-                        <p class="action-description">Nuevo contrato a futuro para BTC, ETH o SOL</p>
-                    </button>
-                    <!-- Deposit to Lending -->
-                    <button id="deposit-lending" class="action-btn">
-                        <div class="action-icon yellow">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                            </svg>
-                        </div>
-                        <h3 class="action-title">Depositar en Fondo</h3>
-                        <p class="action-description">Genera rendimientos del 8-15% anual</p>
-                    </button>
-                    <!-- Portfolio Analytics -->
-                    <button id="advanced-analytics" class="action-btn">
-                        <div class="action-icon purple">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                            </svg>
-                        </div>
-                        <h3 class="action-title">Análisis Avanzado</h3>
-                        <p class="action-description">Reportes detallados y métricas</p>
-                    </button>
-                </div>
-            </section>
-            <!-- Active Positions Table -->
-            <section class="mb-8">
-                <div class="flex flex-between flex-center mb-6">
-                    <h2 class="section-title-md" style="margin-bottom: 0;">Posiciones Activas</h2>
-                    <button class="wallet-btn">Ver Todas</button>
-                </div>
-                <div class="table-container">
-                    <div class="table-scroll">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Contrato</th>
-                                    <th>Tipo</th>
-                                    <th>Precio Strike</th>
-                                    <th>Vencimiento</th>
-                                    <th>Ganancia/Pérdida</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="flex flex-center gap-2">
-                                            <div class="crypto-icon btc">₿</div>
-                                            <div>
-                                                <div class="font-medium">BTC-FORWARD-001</div>
-                                                <div style="font-size: 0.875rem; color: #bfdbfe;">Contrato Futuro de Bitcoin</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Compra</td>
-                                    <td>$65,000</td>
-                                    <td>15 días</td>
-                                    <td style="color: #4ade80;">+$2,450</td>
-                                    <td>
-                                        <span class="status-badge active">Activo</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="flex flex-center gap-2">
-                                            <div class="crypto-icon eth">Ξ</div>
-                                            <div>
-                                                <div class="font-medium">ETH-FORWARD-002</div>
-                                                <div style="font-size: 0.875rem; color: #bfdbfe;">Contrato Futuro de Ethereum</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Venta</td>
-                                    <td>$2,800</td>
-                                    <td>8 días</td>
-                                    <td style="color: #f87171;">-$185</td>
-                                    <td>
-                                        <span class="status-badge active">Activo</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="flex flex-center gap-2">
-                                            <div class="crypto-icon sol">◎</div>
-                                            <div>
-                                                <div class="font-medium">SOL-FORWARD-003</div>
-                                                <div style="font-size: 0.875rem; color: #bfdbfe;">Contrato Futuro de Solana</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Compra</td>
-                                    <td>$145</td>
-                                    <td>22 días</td>
-                                    <td style="color: #4ade80;">+$582</td>
-                                    <td>
-                                        <span class="status-badge active">Activo</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            <!-- Market Overview -->
-            <section class="mb-8">
-                <h2 class="section-title-md">Vista del Mercado</h2>
-                <div class="grid grid-1 grid-lg-2">
-                    <!-- Price Chart Placeholder -->
-                    <div class="glass-card">
-                        <h3 class="action-title mb-4">Gráfico de Precios</h3>
-                        <div style="height: 16rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.1)); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
-                            <div class="text-center">
-                                <svg style="width: 4rem; height: 4rem; color: #3b82f6; margin: 0 auto 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                </svg>
-                                <p style="color: #bfdbfe;">Gráfico TradingView próximamente</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Market Stats -->
-                    <div style="display: flex; flex-direction: column; gap: 1rem;">
-                        <div class="glass-card">
-                            <div class="flex flex-between flex-center">
-                                <div class="flex flex-center gap-2">
-                                    <div class="crypto-icon btc">₿</div>
-                                    <div>
-                                        <div class="font-medium">Bitcoin</div>
-                                        <div style="font-size: 0.875rem; color: #bfdbfe;">BTC</div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-bold">$67,234.56</div>
-                                    <div style="color: #4ade80; font-size: 0.875rem;">+2.34%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="glass-card">
-                            <div class="flex flex-between flex-center">
-                                <div class="flex flex-center gap-2">
-                                    <div class="crypto-icon eth">Ξ</div>
-                                    <div>
-                                        <div class="font-medium">Ethereum</div>
-                                        <div style="font-size: 0.875rem; color: #bfdbfe;">ETH</div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-bold">$2,845.12</div>
-                                    <div style="color: #f87171; font-size: 0.875rem;">-1.23%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="glass-card">
-                            <div class="flex flex-between flex-center">
-                                <div class="flex flex-center gap-2">
-                                    <div class="crypto-icon sol">◎</div>
-                                    <div>
-                                        <div class="font-medium">Solana</div>
-                                        <div style="font-size: 0.875rem; color: #bfdbfe;">SOL</div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-bold">$147.89</div>
-                                    <div style="color: #4ade80; font-size: 0.875rem;">+5.67%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="glass-card">
-                            <h4 class="font-medium mb-4">Estadísticas del Pool</h4>
-                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                <div class="flex flex-between">
-                                    <span style="color: #bfdbfe; font-size: 0.875rem;">TVL Total</span>
-                                    <span style="font-weight: 500; font-size: 0.875rem;">$2.4M</span>
-                                </div>
-                                <div class="flex flex-between">
-                                    <span style="color: #bfdbfe; font-size: 0.875rem;">Contratos Activos</span>
-                                    <span style="font-weight: 500; font-size: 0.875rem;">1,247</span>
-                                </div>
-                                <div class="flex flex-between">
-                                    <span style="color: #bfdbfe; font-size: 0.875rem;">Volumen 24h</span>
-                                    <span style="font-weight: 500; font-size: 0.875rem;">$425K</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- News Feed Section -->
-            <section class="mb-8" id="news-feed-section">
-                <h2 class="section-title-md">Noticias de DeFi y Cripto</h2>
-                <div id="news-feed-container" class="news-feed-container" style="height: 500px;"></div>
-            </section>
-        </main>
-            <!-- Footer -->
-            <footer>
-                <div class="footer-content">
-                    <div class="status-indicator">
-                        <div class="status-dot"></div>
-                        <span class="status-text">Sistema Operativo</span>
-                    </div>
-                    <div class="footer-info">
-                        BitForward Dashboard v3.0 | Proyecto Fénix
-                    </div>
-                </div>
-            </footer>
-        </main>
-    </div>
-    
-    <!-- Loading Animation -->
-    <div id="loading-screen" class="loading-spinner" style="display: none;">
-        <svg fill="none" viewBox="0 0 24 24">
-            <circle style="opacity: 0.25;" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path style="opacity: 0.75;" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-    </div>
-    
-    <!-- ⚡ Quick Win #2: Analytics -->
-    <script src="js/analytics.js" defer></script>
-    
-    <!-- 🎨 Quick Win #4: Toast Notifications -->
-    <script src="js/toast.js" defer></script>
-    
-    <!-- 🚀 Modern Visual Enhancements -->
-    <script src="js/hero-animations.js" defer></script>
-    <script src="js/scroll-animations.js" defer></script>
-    <script src="js/mobile-enhancements.js" defer></script>
-    <script src="js/dark-mode.js" defer></script>
-    <script src="js/special-effects.js" defer></script>
-    
-    <!-- Scripts (lazy loaded via lazy-loader.js) -->
-    <!-- <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-    
-    <!-- Core System -->
-    <script src="js/component-loader.js"></script>
-    
-    <!-- Frontend Components -->
-    <script src="js/logo-manager.js"></script>
-    <script src="js/wallet-manager.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/bitforward-web3.js"></script>
-    
-    <!-- Enhanced UI/UX Scripts -->
-    <script src="js/enhancements.js"></script>
-    <script src="js/news-feed.js"></script>
-    <script src="js/svg-animations.js"></script>
-    <script src="js/rocket-theme.js"></script>
-    <script src="js/rocket-mobile.js"></script>
-    <script src="js/transitions.js"></script>
-    <script src="js/init.js"></script>
-    <script src="js/app.js" type="module"></script>
-    
-    <!-- Espacio para que carguen correctamente los scripts del tema espacial -->
-    <script>
-        // Al cargar el tema espacial
-        document.addEventListener('spaceThemeLoaded', function() {
-            console.log('🚀 BitForward: Tema espacial cargado correctamente');
-            // Añadir alguna funcionalidad específica del tema espacial
-            if (window.BitForwardSpace) {
-                // Lanzar un cohete aleatorio después de 3 segundos
-                setTimeout(() => {
-                    window.BitForwardSpace.addFlyingRocket({
-                        size: 40,
-                        duration: 5,
-                        startPosition: { x: -10, y: 40 },
-                        endPosition: { x: 110, y: 20 }
-                    });
-                }, 3000);
-            }
-        });
-    </script>
-    
-    <script>
-        // Authentication and Navigation Functions
-        function showLogin() {
-            const modal = document.getElementById('login-modal');
-            if (modal) {
-                modal.style.display = 'flex';
-            }
-        }
-        
-        function hideLogin() {
-            const modal = document.getElementById('login-modal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        }
-        
-        function handleLogin(event) {
-            event.preventDefault();
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            
-            // Simulate login (replace with actual authentication)
-            if (username && password) {
-                localStorage.setItem('bitforward_user', username);
-                localStorage.setItem('bitforward_logged_in', 'true');
-                showDashboard(username);
-                hideLogin();
-            }
-        }
-        
-        function connectWallet() {
-            hideLogin();
-            // Use existing wallet connection functionality
-            const walletBtn = document.getElementById('wallet-connect');
-            if (walletBtn) {
-                walletBtn.click();
-            }
-            setTimeout(() => {
-                const user = 'Usuario Wallet';
-                localStorage.setItem('bitforward_user', user);
-                localStorage.setItem('bitforward_logged_in', 'true');
-                showDashboard(user);
-            }, 500);
-        }
-        
-        function showDashboard(username) {
-            // Hide landing page
-            document.querySelector('.landing-page').style.display = 'none';
-            
-            // Show dashboard
-            const dashboard = document.getElementById('dashboard-container');
-            if (dashboard) {
-                dashboard.style.display = 'block';
-                const userNameEl = document.getElementById('user-name');
-                if (userNameEl) {
-                    userNameEl.textContent = username;
-                }
-            }
-        }
-        
-        function logout() {
-            localStorage.removeItem('bitforward_user');
-            localStorage.removeItem('bitforward_logged_in');
-            
-            // Show landing page
-            document.querySelector('.landing-page').style.display = 'block';
-            
-            // Hide dashboard
-            const dashboard = document.getElementById('dashboard-container');
-            if (dashboard) {
-                dashboard.style.display = 'none';
-            }
-        }
-        
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-        
-        function toggleMobileMenu() {
-            const menu = document.querySelector('.landing-menu');
-            if (menu) {
-                const isVisible = menu.style.display === 'flex';
-                menu.style.display = isVisible ? 'none' : 'flex';
-                menu.style.flexDirection = 'column';
-                menu.style.position = 'absolute';
-                menu.style.top = '100%';
-                menu.style.left = '0';
-                menu.style.right = '0';
-                menu.style.background = 'rgba(15, 23, 42, 0.98)';
-                menu.style.padding = '1rem';
-                menu.style.gap = '1rem';
-            }
-        }
-        
-        // Check if user is already logged in
-        window.addEventListener('DOMContentLoaded', () => {
-            const isLoggedIn = localStorage.getItem('bitforward_logged_in');
-            const username = localStorage.getItem('bitforward_user');
-            
-            if (isLoggedIn === 'true' && username) {
-                showDashboard(username);
-            }
-        });
-        
-        // Close login modal when clicking outside
-        document.getElementById('login-modal')?.addEventListener('click', (e) => {
-            if (e.target.id === 'login-modal') {
-                hideLogin();
-            }
-        });
-    </script>
-    
-    <!-- Service Worker Registration -->
     <script src="js/sw-register.js" defer></script>
-    
-    <!-- Lazy Load Scripts -->
-    <script>
-        // Lazy load Ethers.js
-        window.addEventListener('DOMContentLoaded', () => {
-            const ethersScript = document.createElement('script');
-            ethersScript.src = 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js';
-            ethersScript.async = true;
-            document.head.appendChild(ethersScript);
-        });
-        
-        // Lazy load wallet manager
-        window.addEventListener('load', () => {
-            const walletScript = document.createElement('script');
-            walletScript.src = 'js/wallet-manager-real.js';
-            walletScript.defer = true;
-            document.body.appendChild(walletScript);
-        });
-    </script>
 </body>
 </html>
