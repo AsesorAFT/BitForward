@@ -1,6 +1,6 @@
 {
   "testEnvironment": "node",
-  "collect Coverage": false,
+  "collectCoverage": false,
   "coverageDirectory": "coverage",
   "coveragePathIgnorePatterns": [
     "/node_modules/",
