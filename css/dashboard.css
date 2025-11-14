@@ -37,6 +37,15 @@
     transform: scale(1.1);
 }
 
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 4px;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.35);
+    transition: box-shadow 0.2s ease, outline-offset 0.2s ease;
+}
+
 /* Estilos específicos para logos en diferentes contextos */
 .loading-screen .logo-icon {
     width: 60px;
