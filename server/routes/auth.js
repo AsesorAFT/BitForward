@@ -6,10 +6,12 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
 
 // Importar servicios mejorados
 const authConfig = require('../config/auth');
 const database = require('../database/database');
+const { db } = require('../database/config');
 const validationService = require('../validators/validationService');
 const { ErrorFactory } = require('../errors/AppError');
 const { asyncHandler } = require('../middleware/errorHandler');
