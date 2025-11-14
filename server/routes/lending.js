@@ -1,8 +1,8 @@
 const express = require('express');
 const { authMiddleware } = require('../middleware/auth');
-const { db } = require('../database/config');
 
 const router = express.Router();
+const loansDB = [];
 
 /**
  * @route   GET /api/lending/health
