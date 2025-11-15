@@ -1,0 +1,133 @@
+/* === Sistema de Diseño de BitForward === */
+
+/* 1. Paleta de Colores (Variables CSS) */
+:root {
+    /* Paleta Principal (Tema Oscuro - "Space") */
+    --bf-bg-primary: #0F172A;       /* Azul noche profundo */
+    --bf-bg-secondary: #1E293B;     /* Azul pizarra */
+    --bf-bg-tertiary: #334155;      /* Gris azulado */
+    
+    --bf-text-primary: #F8FAFC;     /* Blanco casi puro */
+    --bf-text-secondary: #E2E8F0;   /* Gris claro */
+    --bf-text-tertiary: #94A3B8;    /* Gris medio */
+
+    --bf-accent-primary: #3B82F6;   /* Azul vibrante */
+    --bf-accent-secondary: #06B6D4; /* Cian brillante */
+    --bf-accent-tertiary: #8B5CF6;  /* Púrpura */
+    --bf-accent-glow: #f59e0b;      /* Amarillo/Naranja para acentos */
+
+    /* Colores Semánticos */
+    --bf-success: #10B981;         /* Verde */
+    --bf-error: #EF4444;           /* Rojo */
+    --bf-warning: #F59E0B;         /* Naranja */
+
+    /* Bordes y Sombras */
+    --bf-border-color: rgba(59, 130, 246, 0.2);
+    --bf-shadow-color: rgba(6, 182, 212, 0.15);
+    --bf-shadow-lg: 0 10px 30px -10px var(--bf-shadow-color);
+
+    /* Glassmorphism */
+    --bf-glass-bg: rgba(30, 41, 59, 0.7);
+    --bf-glass-border: rgba(59, 130, 246, 0.25);
+    --bf-glass-backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* 2. Estilos Base y Tipografía */
+body {
+    background-color: var(--bf-bg-primary);
+    color: var(--bf-text-secondary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--bf-text-primary);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+h1 { font-size: 2.5rem; } /* 40px */
+h2 { font-size: 2rem; }   /* 32px */
+h3 { font-size: 1.5rem; } /* 24px */
+p { margin-bottom: 1rem; }
+a {
+    color: var(--bf-accent-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--bf-accent-primary);
+}
+
+/* 3. Componentes Reutilizables */
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--bf-accent-primary), var(--bf-accent-secondary));
+    color: var(--bf-text-primary);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+}
+
+.btn-secondary {
+    background-color: var(--bf-bg-tertiary);
+    color: var(--bf-text-primary);
+    border-color: var(--bf-border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bf-bg-secondary);
+    border-color: var(--bf-accent-secondary);
+}
+
+/* Tarjetas (Cards) */
+.card {
+    background: var(--bf-glass-bg);
+    border: 1px solid var(--bf-glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: var(--bf-glass-backdrop-filter);
+    -webkit-backdrop-filter: var(--bf-glass-backdrop-filter);
+    box-shadow: var(--bf-shadow-lg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px -15px var(--bf-shadow-color);
+}
+
+/* Contenedor principal para páginas */
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Clases de utilidad */
+.text-primary { color: var(--bf-text-primary); }
+.text-secondary { color: var(--bf-text-secondary); }
+.text-tertiary { color: var(--bf-text-tertiary); }
+.text-accent { color: var(--bf-accent-secondary); }
+.text-success { color: var(--bf-success); }
+.text-error { color: var(--bf-error); }
+.text-warning { color: var(--bf-warning); }
