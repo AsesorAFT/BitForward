@@ -7,6 +7,12 @@
     <title>Dashboard | BitForward</title>
     
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    
+    <!-- Universal Navigation Styles -->
+    <link rel="stylesheet" href="/css/modern-navigation.css">
+    <link rel="stylesheet" href="/css/executive-icons.css">
+    
+    <!-- Page Styles -->
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/hero-modern.css">
@@ -19,34 +25,10 @@
     <link rel="stylesheet" href="/css/meta-style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <nav class="nav-main">
-                <a href="/" class="logo">
-                    <img src="/assets/logo.svg" alt="BitForward" width="140" height="32">
-                </a>
-                
-                <div class="nav-links">
-                    <a href="/dashboard.html" class="active">Dashboard</a>
-                    <a href="/lending.html">DeFi</a>
-                    <a href="/enterprise.html">Trade</a>
-                </div>
-                
-                <div class="nav-actions">
-                    <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                        </svg>
-                    </button>
-                    <button id="connect-wallet-btn" class="btn-premium btn-gradient">
-                        Connect Wallet
-                    </button>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <!-- Universal Navigation Container -->
+    <div id="bf-nav-container"></div>
 
-    <div class="dashboard-wrapper">
+    <div class="dashboard-wrapper" style="margin-top: 80px;">
         <div class="dashboard-container">
             
             <section class="dashboard-hero reveal">
@@ -258,6 +240,12 @@
     <button id="scroll-to-top" class="btn-scroll-top" aria-label="Scroll to top">↑</button>
     <div id="scroll-progress" class="scroll-progress"></div>
 
+    <!-- Universal Navigation Scripts -->
+    <script src="/js/executive-icons.js"></script>
+    <script src="/js/universal-nav.js"></script>
+    <script src="/js/modern-navigation.js"></script>
+    
+    <!-- Page Scripts -->
     <script src="/js/hero-animations.js"></script>
     <script src="/js/scroll-animations.js"></script>
     <script src="/js/mobile-enhancements.js"></script>
