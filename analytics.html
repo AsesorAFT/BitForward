@@ -18,6 +18,7 @@
     <!-- Universal Navigation Styles (al final para sobrescribir) -->
     <link rel="stylesheet" href="css/modern-navigation.css">
     <link rel="stylesheet" href="css/executive-icons.css">
+    <link rel="stylesheet" href="css/universal-footer.css">
     
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     
@@ -376,20 +377,8 @@
             </div>
         </main>
 
-        <!-- Footer -->
-        <footer class="relative z-10 border-t border-white/20 bg-black/20 backdrop-blur-md mt-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <span class="text-green-400 text-sm font-medium">Datos en vivo</span>
-                    </div>
-                    <div class="text-blue-200 text-sm">
-                        BitForward Analytics v1.0 | Proyecto Fénix
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <!-- Universal Footer Container -->
+        <div id="bf-universal-footer-container"></div>
     </div>
 
     <!-- Scripts -->
@@ -451,9 +440,8 @@
         });
     </script>
     
-    <!-- Universal Navigation Scripts -->
-    <script src="js/executive-icons.js"></script>
+    <!-- Universal Navigation & Footer Scripts -->
     <script src="js/universal-nav.js"></script>
-    <script src="js/modern-navigation.js"></script>
+    <script src="js/universal-footer.js"></script>
 </body>
 </html>
