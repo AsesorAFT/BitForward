@@ -1,0 +1,272 @@
+/* === exchange.css === */
+/* Estilos para la nueva interfaz de Spot Trading */
+
+:root {
+    --exchange-bg: #0F172A;
+    --grid-border: #1E293B;
+    --green: #10B981;
+    --red: #EF4444;
+    --green-transparent: rgba(16, 185, 129, 0.1);
+    --red-transparent: rgba(239, 68, 68, 0.1);
+}
+
+body {
+    background-color: var(--exchange-bg);
+    color: var(--bf-text-secondary);
+    padding-top: 60px; /* Altura de la navegación universal */
+}
+
+.exchange-container {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "header header header"
+        "orders chart history"
+        "positions positions positions";
+    height: calc(100vh - 60px);
+    gap: 8px;
+    padding: 8px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- Áreas del Grid --- */
+.exchange-header { grid-area: header; }
+.exchange-orders { grid-area: orders; }
+.exchange-chart { grid-area: chart; }
+.exchange-trade-history { grid-area: history; }
+.exchange-user-positions { grid-area: positions; }
+
+/* --- Componentes con Glassmorphism --- */
+.exchange-module {
+    background: var(--bf-glass-bg);
+    border: 1px solid var(--bf-glass-border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.exchange-module-header {
+    padding: 12px 16px;
+    font-weight: 600;
+    color: var(--bf-text-primary);
+    border-bottom: 1px solid var(--grid-border);
+    font-size: 0.875rem;
+}
+
+/* --- Header del Exchange --- */
+.market-info-bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 16px;
+}
+
+.market-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.market-selector .pair-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.market-selector .pair-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--bf-text-primary);
+}
+
+.market-stat {
+    font-size: 0.875rem;
+}
+
+.market-stat .label {
+    color: var(--bf-text-tertiary);
+    margin-right: 8px;
+}
+
+.market-stat .value {
+    color: var(--bf-text-secondary);
+    font-weight: 500;
+}
+
+.market-stat .value.positive { color: var(--green); }
+.market-stat .value.negative { color: var(--red); }
+
+/* --- Formularios (Órdenes) --- */
+.order-form-container {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.order-tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--grid-border);
+    padding: 0 16px;
+}
+
+.order-tab {
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    color: var(--bf-text-tertiary);
+    cursor: pointer;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+}
+
+.order-tab.active {
+    color: var(--bf-accent-primary);
+    border-bottom-color: var(--bf-accent-primary);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label {
+    font-size: 0.75rem;
+    color: var(--bf-text-tertiary);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    background: #0A101E;
+    border: 1px solid var(--grid-border);
+    border-radius: 4px;
+    color: var(--bf-text-primary);
+    font-size: 0.875rem;
+}
+
+.order-form-container .btn {
+    font-size: 0.875rem;
+    padding: 12px;
+}
+
+/* --- Order Book y Trade History --- */
+.data-table-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.75rem;
+}
+
+.data-table-header, .data-table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 4px 16px;
+}
+
+.data-table-header {
+    color: var(--bf-text-tertiary);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+}
+
+.data-table-row .price.positive { color: var(--green); }
+.data-table-row .price.negative { color: var(--red); }
+
+.order-book-row {
+    position: relative;
+}
+
+.order-book-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--depth, 0%);
+    z-index: -1;
+}
+
+.order-book-row.ask::before {
+    right: 0;
+    background-color: var(--red-transparent);
+}
+
+.order-book-row.bid::before {
+    left: 0;
+    background-color: var(--green-transparent);
+}
+
+.order-book-spread {
+    padding: 8px 16px;
+    border-top: 1px solid var(--grid-border);
+    border-bottom: 1px solid var(--grid-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* --- Chart --- */
+.exchange-chart {
+    padding: 0;
+}
+
+#chart-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Posiciones del Usuario --- */
+.user-positions-container {
+    height: 250px; /* Altura fija para esta sección */
+    padding: 16px;
+}
+
+.user-positions-table {
+    width: 100%;
+    font-size: 0.875rem;
+}
+
+.user-positions-table th, .user-positions-table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.user-positions-table th {
+    color: var(--bf-text-tertiary);
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+/* --- Responsividad --- */
+@media (max-width: 1200px) {
+    .exchange-container {
+        grid-template-columns: 1fr 300px;
+        grid-template-areas:
+            "header header"
+            "chart orders"
+            "chart history"
+            "positions positions";
+    }
+}
+
+@media (max-width: 768px) {
+    .exchange-container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "chart"
+            "orders"
+            "history"
+            "positions";
+        height: auto;
+    }
+    .exchange-user-positions {
+        min-height: 250px;
+    }
+}

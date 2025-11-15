@@ -1,0 +1,206 @@
+/* === Estilos para el Dashboard Renovado === */
+
+/* Layout Principal */
+.dashboard-main {
+    max-width: 1200px;
+    margin: 80px auto 2rem auto; /* 80px para la barra de navegación fija */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.dashboard-header {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.dashboard-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--bf-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+    font-size: 1.125rem;
+    color: var(--bf-text-tertiary);
+}
+
+/* Grid de Estadísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 1rem;
+}
+
+.stat-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: color-mix(in srgb, var(--icon-color) 20%, transparent);
+}
+
+.stat-icon svg {
+    width: 24px;
+    height: 24px;
+    color: var(--icon-color);
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--bf-text-tertiary);
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--bf-text-primary);
+}
+
+.stat-change {
+    margin-left: auto;
+    font-weight: 600;
+}
+
+.stat-change.positive {
+    color: var(--bf-success);
+}
+
+.stat-change.negative {
+    color: var(--bf-danger);
+}
+
+/* Tarjeta del Gráfico */
+.chart-card {
+    padding: 1.5rem;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.chart-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--bf-text-primary);
+}
+
+#market-overview-container {
+    min-height: 350px;
+}
+
+/* Layout de Columnas */
+.dashboard-columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 992px) {
+    .dashboard-columns {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.card-header-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--bf-text-primary);
+    margin-bottom: 1.5rem;
+}
+
+/* Tabla de Activos */
+.assets-table-card {
+    padding: 1.5rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.assets-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.assets-table th, .assets-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--bf-glass-border);
+}
+
+.assets-table th {
+    font-size: 0.875rem;
+    color: var(--bf-text-tertiary);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.assets-table td {
+    color: var(--bf-text-secondary);
+}
+
+.asset-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.asset-logo {
+    width: 32px;
+    height: 32px;
+}
+
+.asset-name {
+    display: block;
+    font-weight: 600;
+    color: var(--bf-text-primary);
+}
+
+.asset-symbol {
+    font-size: 0.875rem;
+    color: var(--bf-text-tertiary);
+}
+
+.assets-table .positive {
+    color: var(--bf-success);
+}
+
+.assets-table .negative {
+    color: var(--bf-danger);
+}
+
+/* Tarjeta de Acciones Rápidas */
+.quick-actions-card {
+    padding: 1.5rem;
+}
+
+.actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.full-width {
+    width: 100%;
+}
