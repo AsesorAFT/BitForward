@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Diseño - BitForward</title>
+    
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos Universales y del Sistema de Diseño -->
+    <link rel="stylesheet" href="css/modern-navigation.css">
+    <link rel="stylesheet" href="css/universal-footer.css">
+    <link rel="stylesheet" href="css/design-system.css">
+    
+    <link rel="icon" type="image/svg+xml" href="assets/logo-astronaut-rocket.svg">
+
+    <style>
+        /* Estilos específicos para la página del sistema de diseño */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+        .color-swatch {
+            border-radius: 8px;
+            height: 100px;
+            border: 1px solid var(--bf-border-color);
+        }
+        .component-preview {
+            padding: 2rem;
+            background: var(--bf-bg-secondary);
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="bf-nav-container"></div>
+
+    <main class="main-container">
+        <header class="text-center my-8 md:my-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">Sistema de Diseño de BitForward</h1>
+            <p class="text-lg text-tertiary max-w-3xl mx-auto">La guía de referencia para los elementos visuales y componentes que dan vida a la interfaz de BitForward.</p>
+        </header>
+
+        <!-- 1. Paleta de Colores -->
+        <section id="colors" class="card mb-12">
+            <h2 class="text-3xl font-bold mb-6">1. Paleta de Colores</h2>
+            <div class="color-grid">
+                <div>
+                    <div class="color-swatch" style="background-color: var(--bf-accent-primary);"></div>
+                    <p class="font-bold mt-2">Accent Primary</p><p class="text-sm text-tertiary">#3B82F6</p>
+                </div>
+                <div>
+                    <div class="color-swatch" style="background-color: var(--bf-accent-secondary);"></div>
+                    <p class="font-bold mt-2">Accent Secondary</p><p class="text-sm text-tertiary">#06B6D4</p>
+                </div>
+                <div>
+                    <div class="color-swatch" style="background-color: var(--bf-accent-tertiary);"></div>
+                    <p class="font-bold mt-2">Accent Tertiary</p><p class="text-sm text-tertiary">#8B5CF6</p>
+                </div>
+                <div>
+                    <div class="color-swatch" style="background-color: var(--bf-accent-glow);"></div>
+                    <p class="font-bold mt-2">Accent Glow</p><p class="text-sm text-tertiary">#F59E0B</p>
+                </div>
+            </div>
+            <div class="color-grid mt-6">
+                <div>
+                    <div class="color-swatch" style="background-color: var(--bf-bg-primary);"></div>
+                    <p class="font-bold mt-2">Background Primary</p><p class="text-sm text-tertiary">#0F172A</p>
+                </div>
+                <div>
+                    <div class="color-swatch" style="background-color: var(--bf-bg-secondary);"></div>
+                    <p class="font-bold mt-2">Background Secondary</p><p class="text-sm text-tertiary">#1E293B</p>
+                </div>
+                <div>
+                    <div class="color-swatch" style="background-color: var(--bf-bg-tertiary);"></div>
+                    <p class="font-bold mt-2">Background Tertiary</p><p class="text-sm text-tertiary">#334155</p>
+                </div>
+            </div>
+             <div class="color-grid mt-6">
+                <div>
+                    <div class="color-swatch flex items-center justify-center" style="background-color: var(--bf-text-primary);"><span class="text-black">Aa</span></div>
+                    <p class="font-bold mt-2">Text Primary</p><p class="text-sm text-tertiary">#F8FAFC</p>
+                </div>
+                <div>
+                    <div class="color-swatch flex items-center justify-center" style="background-color: var(--bf-text-secondary);"><span class="text-black">Aa</span></div>
+                    <p class="font-bold mt-2">Text Secondary</p><p class="text-sm text-tertiary">#E2E8F0</p>
+                </div>
+                <div>
+                    <div class="color-swatch flex items-center justify-center" style="background-color: var(--bf-text-tertiary);"><span class="text-black">Aa</span></div>
+                    <p class="font-bold mt-2">Text Tertiary</p><p class="text-sm text-tertiary">#94A3B8</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Tipografía -->
+        <section id="typography" class="card mb-12">
+            <h2 class="text-3xl font-bold mb-6">2. Tipografía</h2>
+            <div class="space-y-4">
+                <h1>H1: The quick brown fox jumps over the lazy dog</h1>
+                <h2>H2: The quick brown fox jumps over the lazy dog</h2>
+                <h3>H3: The quick brown fox jumps over the lazy dog</h3>
+                <p class="text-primary">P (Primary): The quick brown fox jumps over the lazy dog. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p class="text-secondary">P (Secondary): The quick brown fox jumps over the lazy dog. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p class="text-tertiary">P (Tertiary): The quick brown fox jumps over the lazy dog. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p><a>Link: The quick brown fox jumps over the lazy dog.</a></p>
+            </div>
+        </section>
+
+        <!-- 3. Componentes -->
+        <section id="components" class="card">
+            <h2 class="text-3xl font-bold mb-6">3. Componentes</h2>
+            
+            <!-- Botones -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold mb-4">Botones</h3>
+                <div class="component-preview">
+                    <div class="flex flex-wrap items-center gap-4">
+                        <button class="btn btn-primary">Botón Primario</button>
+                        <button class="btn btn-secondary">Botón Secundario</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjetas -->
+            <div>
+                <h3 class="text-2xl font-bold mb-4">Tarjetas (Cards)</h3>
+                <div class="component-preview">
+                    <div class="card max-w-md">
+                        <h4 class="text-xl font-bold mb-2">Título de la Tarjeta</h4>
+                        <p class="text-secondary">Este es un ejemplo de una tarjeta con efecto glassmorphism. Se utiliza para agrupar contenido relacionado de una manera visualmente atractiva y moderna.</p>
+                        <button class="btn btn-primary mt-4">Acción</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="bf-universal-footer-container"></div>
+
+    <script src="js/universal-nav.js"></script>
+    <script src="js/universal-footer.js"></script>
+</body>
+</html>
