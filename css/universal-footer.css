@@ -1,0 +1,168 @@
+/* === Universal Footer Styles for BitForward === */
+
+:root {
+    --footer-bg-color: #0D1117; /* Un fondo oscuro profundo, casi negro */
+    --footer-text-color: #C9D1D9; /* Texto gris claro, fácil de leer */
+    --footer-link-color: #58A6FF; /* Azul brillante para enlaces, similar a GitHub */
+    --footer-link-hover-color: #79C0FF; /* Un azul más claro para el hover */
+    --footer-border-color: #30363D; /* Un borde sutil para separar secciones */
+    --footer-icon-color: #8B949E; /* Color para los iconos de redes sociales */
+}
+
+.bf-universal-footer {
+    background-color: var(--footer-bg-color);
+    color: var(--footer-text-color);
+    padding: 60px 5%;
+    font-family: 'Inter', sans-serif; /* Usando la misma fuente que la navegación */
+    border-top: 1px solid var(--footer-border-color);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.bf-footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    justify-content: space-between;
+}
+
+.bf-footer-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.bf-footer-column h4 {
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.bf-footer-column h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    height: 2px;
+    background: var(--footer-link-color);
+}
+
+.bf-footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.bf-footer-column ul li {
+    margin-bottom: 12px;
+}
+
+.bf-footer-column ul li a {
+    color: var(--footer-text-color);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.bf-footer-column ul li a:hover {
+    color: var(--footer-link-hover-color);
+    transform: translateX(3px);
+}
+
+.bf-footer-logo-section {
+    grid-column: 1 / -1; /* Ocupa todo el ancho en la primera fila */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--footer-border-color);
+}
+
+.bf-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.bf-footer-logo img {
+    width: 40px;
+    height: 40px;
+}
+
+.bf-footer-logo span {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.bf-footer-tagline {
+    font-size: 14px;
+    max-width: 500px;
+}
+
+.bf-footer-bottom {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    margin-top: 30px;
+    border-top: 1px solid var(--footer-border-color);
+    font-size: 13px;
+}
+
+.bf-footer-socials {
+    display: flex;
+    gap: 20px;
+}
+
+.bf-footer-socials a {
+    color: var(--footer-icon-color);
+    font-size: 20px; /* Tamaño del icono */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.bf-footer-socials a:hover {
+    color: var(--footer-link-hover-color);
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .bf-footer-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 30px;
+    }
+
+    .bf-footer-bottom {
+        flex-direction: column-reverse;
+        gap: 20px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .bf-universal-footer {
+        padding: 40px 5%;
+    }
+    .bf-footer-container {
+        grid-template-columns: 1fr; /* Apila las columnas */
+        text-align: center;
+    }
+    .bf-footer-column h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .bf-footer-column ul li a:hover {
+        transform: none;
+    }
+}

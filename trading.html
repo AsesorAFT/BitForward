@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/wallet.css">
     <link rel="stylesheet" href="css/modern-navigation.css">
     <link rel="stylesheet" href="css/executive-icons.css">
+    <link rel="stylesheet" href="css/universal-footer.css">
     <link rel="icon" type="image/svg+xml" href="assets/logo-astronaut-rocket.svg">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -268,117 +269,8 @@
     </style>
 </head>
 <body>
-<body>
-    <!-- Modern Navigation -->
-    <nav class="bf-modern-nav">
-        <div class="bf-nav-container">
-            <!-- Logo -->
-            <a href="index.html" class="bf-nav-logo">
-                <img src="assets/logo-astronaut-rocket.svg" alt="BitForward Logo" class="bf-logo-img">
-                <div class="bf-logo-text">
-                    <span class="bf-brand-name">BitForward</span>
-                    <span class="bf-brand-tagline">by AFORTU</span>
-                </div>
-            </a>
-
-            <!-- Navigation Links -->
-            <ul class="bf-nav-links">
-                <li class="bf-nav-item">
-                    <a href="index.html" class="bf-nav-link">
-                        <span class="bf-nav-icon">🏠</span>
-                        <span>Inicio</span>
-                    </a>
-                </li>
-                
-                <li class="bf-nav-item">
-                    <a href="dashboard.html" class="bf-nav-link">
-                        <span class="bf-nav-icon">📊</span>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                
-                <li class="bf-nav-item bf-nav-dropdown-item">
-                    <a href="#" class="bf-nav-link active">
-                        <span class="bf-nav-icon">💼</span>
-                        <span>Productos</span>
-                        <span class="bf-dropdown-arrow">▼</span>
-                    </a>
-                    <div class="bf-nav-dropdown">
-                        <a href="trading.html" class="bf-dropdown-link active">
-                            <span class="bf-dropdown-icon">📈</span>
-                            <span>Trading</span>
-                        </a>
-                        <a href="lending.html" class="bf-dropdown-link">
-                            <span class="bf-dropdown-icon">💰</span>
-                            <span>Préstamos</span>
-                        </a>
-                        <a href="analytics.html" class="bf-dropdown-link">
-                            <span class="bf-dropdown-icon">📉</span>
-                            <span>Analytics</span>
-                        </a>
-                    </div>
-                </li>
-                
-                <li class="bf-nav-item">
-                    <a href="about.html" class="bf-nav-link">
-                        <span class="bf-nav-icon">ℹ️</span>
-                        <span>Nosotros</span>
-                    </a>
-                </li>
-                
-                <li class="bf-nav-item">
-                    <a href="community.html" class="bf-nav-link">
-                        <span class="bf-nav-icon">👥</span>
-                        <span>Comunidad</span>
-                    </a>
-                </li>
-                
-                <li class="bf-nav-item">
-                    <a href="enterprise.html" class="bf-nav-link">
-                        <span class="bf-nav-icon">🏢</span>
-                        <span>Enterprise</span>
-                    </a>
-                </li>
-            </ul>
-
-            <!-- Right Actions -->
-            <div class="bf-nav-actions">
-                <!-- Search Bar -->
-                <div class="bf-search-container">
-                    <input 
-                        type="text" 
-                        class="bf-search-input" 
-                        placeholder="Buscar..."
-                        aria-label="Buscar">
-                    <span class="bf-search-icon">🔍</span>
-                </div>
-
-                <!-- Notifications -->
-                <button class="bf-notification-btn" aria-label="Notificaciones">
-                    <span>🔔</span>
-                    <span class="bf-nav-badge">3</span>
-                </button>
-
-                <!-- Wallet Connect Button -->
-                <button class="bf-wallet-btn">
-                    <span>🔌</span>
-                    <span>Conectar Wallet</span>
-                </button>
-
-                <!-- User Avatar -->
-                <div class="bf-user-avatar">
-                    <img src="https://ui-avatars.com/api/?name=User&background=667eea&color=fff" alt="User">
-                </div>
-            </div>
-
-            <!-- Mobile Toggle -->
-            <button class="bf-mobile-toggle" aria-label="Toggle Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+    <!-- Universal Navigation Container -->
+    <div id="bf-nav-container"></div>
     
     <!-- Trading Container -->
     <div class="trading-container">
@@ -721,17 +613,18 @@
         </div>
     </div>
 
-    <!-- Modern Navigation Script -->
-    <script src="js/modern-navigation.js"></script>
+    <!-- Universal Footer Container -->
+    <div id="bf-universal-footer-container"></div>
+
+    <!-- Universal Navigation & Footer Scripts -->
+    <script src="js/universal-nav.js"></script>
+    <script src="js/universal-footer.js"></script>
     
     <!-- TradingView Widget Script -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     
     <!-- Real-time Trading Data Manager -->
     <script src="js/trading-realtime.js"></script>
-    
-    <!-- Executive Icons -->
-    <script src="js/executive-icons.js"></script>
     
     <script>
         // Funcionalidad adicional del formulario
@@ -923,138 +816,67 @@
                     </div>
                 </div>
             </div>
-        </main>
+    <!-- Universal Footer Container -->
+    <div id="bf-universal-footer-container"></div>
 
-        <!-- Footer -->
-        <footer class="relative z-10 border-t border-white/20 bg-black/20 backdrop-blur-md mt-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <span class="text-green-400 text-sm font-medium">Sistema Operativo</span>
-                    </div>
-                    <div class="text-blue-200 text-sm">
-                        BitForward Trading v1.0 | Proyecto Fénix
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
-    <script src="js/logo-manager.js"></script>
-    <script src="js/wallet-manager.js"></script>
-    <script src="js/bitforward-web3.js"></script>
+    <!-- Universal Navigation & Footer Scripts -->
+    <script src="js/universal-nav.js"></script>
+    <script src="js/universal-footer.js"></script>
+    
+    <!-- TradingView Widget Script -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    
+    <!-- Real-time Trading Data Manager -->
+    <script src="js/trading-realtime.js"></script>
     
     <script>
-        // Trading page initialization
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('🚀 BitForward Trading inicializado');
-            
-            // Position type toggle
-            const btnLong = document.getElementById('btn-long');
-            const btnShort = document.getElementById('btn-short');
-            let positionType = 'long';
-            
-            btnLong.addEventListener('click', () => {
-                btnLong.classList.add('active');
-                btnShort.classList.remove('active');
-                positionType = 'long';
-                updatePositionSummary();
-            });
-            
-            btnShort.addEventListener('click', () => {
-                btnShort.classList.add('active');
-                btnLong.classList.remove('active');
-                positionType = 'short';
-                updatePositionSummary();
-            });
-            
-            // Leverage slider
-            const leverageSlider = document.getElementById('leverage-slider');
-            const leverageDisplay = document.getElementById('leverage-display');
-            
+        // Funcionalidad adicional del formulario
+        
+        // Leverage slider display
+        const leverageSlider = document.getElementById('leverage-slider');
+        const leverageValue = document.getElementById('leverage-value');
+        
+        if (leverageSlider && leverageValue) {
             leverageSlider.addEventListener('input', (e) => {
-                leverageDisplay.textContent = `${e.target.value}x`;
-                updatePositionSummary();
+                leverageValue.textContent = e.target.value + 'x';
             });
-            
-            // Real-time calculations
-            const collateralInput = document.getElementById('collateral-input');
-            const notionalInput = document.getElementById('notional-input');
-            
-            [collateralInput, notionalInput, leverageSlider].forEach(el => {
-                el.addEventListener('input', updatePositionSummary);
+        }
+        
+        // Position type buttons toggle
+        const positionButtons = document.querySelectorAll('.btn-position');
+        positionButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                positionButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
             });
-            
-            function updatePositionSummary() {
-                const leverage = parseInt(leverageSlider.value);
-                const notional = parseFloat(notionalInput.value) || 10000;
-                const btcPrice = 67234.56;
-                
-                // Entry price
-                document.getElementById('entry-price').textContent = `$${btcPrice.toLocaleString()}`;
-                
-                // Liquidation price
-                const movePercent = (1 / leverage) * 100;
-                const liqPrice = positionType === 'long' 
-                    ? btcPrice * (1 - movePercent / 100)
-                    : btcPrice * (1 + movePercent / 100);
-                document.getElementById('liquidation-price').textContent = `$${liqPrice.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
-                
-                // Required margin
-                const margin = notional / leverage;
-                document.getElementById('required-margin').textContent = `$${margin.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
-            }
-            
-            // Form submission
-            document.getElementById('create-position-form').addEventListener('submit', async (e) => {
+        });
+        
+        // Form submission handler
+        const form = document.getElementById('create-position-form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 
-                const formData = {
-                    asset: document.getElementById('asset-select').value,
-                    type: positionType,
-                    collateral: parseFloat(collateralInput.value),
-                    leverage: parseInt(leverageSlider.value),
-                    notional: parseFloat(notionalInput.value),
-                    expiry: parseInt(document.getElementById('expiry-select').value)
-                };
+                const asset = document.getElementById('asset-select').value;
+                const positionType = document.querySelector('.btn-position.active').textContent.trim().split(' ')[0];
+                const leverage = leverageSlider.value;
+                const collateral = document.querySelector('input[placeholder="0.1"]').value;
                 
-                console.log('Creating position:', formData);
+                const priceData = window.TradingDataManager.getAssetData(asset);
+                const price = priceData ? priceData.price : 0;
                 
-                // Show notification
-                showNotification('Creando posición...', 'info');
+                if (!collateral || parseFloat(collateral) <= 0) {
+                    alert('⚠️ Por favor ingresa un valor de colateral válido');
+                    return;
+                }
                 
-                // Simulate transaction
-                setTimeout(() => {
-                    showNotification('¡Posición creada exitosamente!', 'success');
-                    // Reset form
-                    e.target.reset();
-                    leverageDisplay.textContent = '5x';
-                    updatePositionSummary();
-                }, 2000);
+                const notionalValue = (parseFloat(collateral) * price * parseFloat(leverage)).toFixed(2);
+                
+                alert(`🚀 Creando posición ${positionType}\n\nActivo: ${asset}\nApalancamiento: ${leverage}x\nColateral: ${collateral} ${asset}\nValor Nocional: $${notionalValue}\nPrecio Entrada: $${price.toFixed(2)}\n\n(Demo mode - Próximamente conectado a smart contracts)`);
             });
-            
-            function showNotification(message, type) {
-                const notification = document.createElement('div');
-                notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
-                    type === 'success' ? 'bg-green-500' : 
-                    type === 'error' ? 'bg-red-500' : 
-                    'bg-blue-500'
-                } text-white`;
-                notification.textContent = message;
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-            }
-            
-            // Initialize summary
-            updatePositionSummary();
-        });
+        }
+        
+        console.log('📈 BitForward Trading interface loaded');
     </script>
 </body>
 </html>
