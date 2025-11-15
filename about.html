@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/dashboard-simple.css">
     <link rel="stylesheet" href="css/crypto-theme.css">
     <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/modern-navigation.css">
+    <link rel="stylesheet" href="css/executive-icons.css">
     
     <style>
         :root {
@@ -366,22 +368,116 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-section">
-                <img src="assets/logo-astronaut-rocket.svg" alt="BitForward" class="logo-icon">
-                <h1 class="brand-title">BitForward</h1>
+    <!-- Modern Navigation -->
+    <nav class="bf-modern-nav">
+        <div class="bf-nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="bf-nav-logo">
+                <img src="assets/logo-astronaut-rocket.svg" alt="BitForward Logo" class="bf-logo-img">
+                <div class="bf-logo-text">
+                    <span class="bf-brand-name">BitForward</span>
+                    <span class="bf-brand-tagline">by AFORTU</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="bf-nav-links">
+                <li class="bf-nav-item">
+                    <a href="index.html" class="bf-nav-link">
+                        <span class="bf-nav-icon">🏠</span>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                
+                <li class="bf-nav-item">
+                    <a href="dashboard.html" class="bf-nav-link">
+                        <span class="bf-nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                
+                <li class="bf-nav-item bf-nav-dropdown-item">
+                    <a href="#" class="bf-nav-link">
+                        <span class="bf-nav-icon">💼</span>
+                        <span>Productos</span>
+                        <span class="bf-dropdown-arrow">▼</span>
+                    </a>
+                    <div class="bf-nav-dropdown">
+                        <a href="trading.html" class="bf-dropdown-link">
+                            <span class="bf-dropdown-icon">📈</span>
+                            <span>Trading</span>
+                        </a>
+                        <a href="lending.html" class="bf-dropdown-link">
+                            <span class="bf-dropdown-icon">💰</span>
+                            <span>Préstamos</span>
+                        </a>
+                        <a href="analytics.html" class="bf-dropdown-link">
+                            <span class="bf-dropdown-icon">📉</span>
+                            <span>Analytics</span>
+                        </a>
+                    </div>
+                </li>
+                
+                <li class="bf-nav-item">
+                    <a href="about.html" class="bf-nav-link active">
+                        <span class="bf-nav-icon">ℹ️</span>
+                        <span>Nosotros</span>
+                    </a>
+                </li>
+                
+                <li class="bf-nav-item">
+                    <a href="community.html" class="bf-nav-link">
+                        <span class="bf-nav-icon">👥</span>
+                        <span>Comunidad</span>
+                    </a>
+                </li>
+                
+                <li class="bf-nav-item">
+                    <a href="enterprise.html" class="bf-nav-link">
+                        <span class="bf-nav-icon">🏢</span>
+                        <span>Enterprise</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Right Actions -->
+            <div class="bf-nav-actions">
+                <!-- Search Bar -->
+                <div class="bf-search-container">
+                    <input 
+                        type="text" 
+                        class="bf-search-input" 
+                        placeholder="Buscar..."
+                        aria-label="Buscar">
+                    <span class="bf-search-icon">🔍</span>
+                </div>
+
+                <!-- Notifications -->
+                <button class="bf-notification-btn" aria-label="Notificaciones">
+                    <span>🔔</span>
+                    <span class="bf-nav-badge">3</span>
+                </button>
+
+                <!-- Wallet Connect Button -->
+                <button class="bf-wallet-btn">
+                    <span>🔌</span>
+                    <span>Conectar Wallet</span>
+                </button>
+
+                <!-- User Avatar -->
+                <div class="bf-user-avatar">
+                    <img src="https://ui-avatars.com/api/?name=User&background=667eea&color=fff" alt="User">
+                </div>
             </div>
-            <nav class="nav-links">
-                <a href="index.html">Inicio</a>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="trading.html">Trading</a>
-                <a href="about.html" style="color: var(--secondary);">Sobre Nosotros</a>
-                <a href="#contacto">Contacto</a>
-            </nav>
+
+            <!-- Mobile Toggle -->
+            <button class="bf-mobile-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-    </header>
+    </nav>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -679,5 +775,9 @@
             observer.observe(el);
         });
     </script>
+    
+    <!-- Modern Navigation Script -->
+    <script src="js/modern-navigation.js"></script>
+    <script src="js/executive-icons.js"></script>
 </body>
 </html>
