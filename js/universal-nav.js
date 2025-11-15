@@ -38,6 +38,13 @@ const UniversalNav = {
                                 <span>Dashboard</span>
                             </a>
                         </li>
+
+                        <li class="bf-nav-item">
+                            <a href="markets.html" class="bf-nav-link ${activePage === 'markets' ? 'active' : ''}" data-page="markets">
+                                <span class="bf-nav-icon"></span>
+                                <span>Mercados</span>
+                            </a>
+                        </li>
                         
                         <li class="bf-nav-item bf-nav-dropdown-item">
                             <a href="#" class="bf-nav-link ${['trading', 'lending', 'analytics'].includes(activePage) ? 'active' : ''}" data-page="products">
@@ -140,6 +147,7 @@ const UniversalNav = {
         
         if (filename.includes('index')) return 'home';
         if (filename.includes('dashboard')) return 'dashboard';
+        if (filename.includes('markets')) return 'markets';
         if (filename.includes('trading')) return 'trading';
         if (filename.includes('lending')) return 'lending';
         if (filename.includes('analytics')) return 'analytics';
@@ -162,6 +170,7 @@ const UniversalNav = {
         const iconMap = {
             'home': 'home',
             'dashboard': 'dashboard',
+            'markets': 'trading', // Usando un icono existente relevante
             'products': 'enterprise',
             'trading': 'trading',
             'lending': 'lending',

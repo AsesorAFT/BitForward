@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercados | BitForward</title>
+    
+    <!-- Estilos del Sistema de Diseño y Universales -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/universal-nav.css">
+    <link rel="stylesheet" href="css/universal-footer.css">
+    
+    <!-- Estilos de la página de Mercados -->
+    <link rel="stylesheet" href="css/markets.css">
+    
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navegación Universal -->
+    <div id="bf-universal-nav-container"></div>
+
+    <!-- Contenido Principal de Mercados -->
+    <main class="markets-container">
+        <header class="markets-header">
+            <h1>Explorar Mercados</h1>
+            <p>Encuentra tu próxima oportunidad de trading en nuestra selección de mercados globales.</p>
+        </header>
+
+        <div class="markets-table-container card">
+            <div class="markets-table-header">
+                <div class="header-item">Par</div>
+                <div class="header-item">Último Precio</div>
+                <div class="header-item">Cambio 24h</div>
+                <div class="header-item">Volumen 24h</div>
+                <div class="header-item"></div>
+            </div>
+            <div id="markets-list">
+                <!-- Los datos del mercado se insertarán aquí dinámicamente -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Universal -->
+    <div id="bf-universal-footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/universal-nav.js"></script>
+    <script src="js/universal-footer.js"></script>
+    <script src="js/markets-data.js"></script>
+</body>
+</html>

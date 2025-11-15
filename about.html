@@ -6,248 +6,74 @@
     <title>Sobre BitForward | Innovación DeFi</title>
     <meta name="description" content="Descubre BitForward: La plataforma DeFi innovadora que revoluciona los contratos forward, lending y derivados financieros">
     
-    <link rel="icon" type="image/svg+xml" href="assets/logo-astronaut-rocket.svg">
-    <link rel="stylesheet" href="css/dashboard-simple.css">
-    <link rel="stylesheet" href="css/crypto-theme.css">
-    <link rel="stylesheet" href="css/glassmorphism.css">
-    <link rel="stylesheet" href="css/modern-navigation.css">
-    <link rel="stylesheet" href="css/executive-icons.css">
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/universal-nav.css">
     <link rel="stylesheet" href="css/universal-footer.css">
     
     <style>
-        :root {
-            --primary: #3B82F6;
-            --secondary: #06B6D4;
-            --accent: #F59E0B;
-            --success: #10B981;
-            --dark: #0F172A;
-            --darker: #080E1D;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, var(--darker) 100%);
-            color: #E2E8F0;
-            line-height: 1.6;
-            overflow-x: hidden;
+            background-color: var(--bf-bg-primary);
+            color: var(--bf-text-primary);
         }
 
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
-            padding: 1rem 2rem;
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
         }
 
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.5));
-        }
-
-        .brand-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #CBD5E1;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary);
-            background: rgba(6, 182, 212, 0.1);
-        }
-
-        /* Hero Section */
         .hero {
-            margin-top: 80px;
-            padding: 6rem 2rem;
             text-align: center;
-            position: relative;
+            padding: 4rem 0;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #3B82F6, #06B6D4, #8B5CF6);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--bf-primary-color), var(--bf-secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
-            color: #94A3B8;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-
-        .hero-badges {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .badge {
-            padding: 0.5rem 1.5rem;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 50px;
-            font-weight: 600;
-            color: var(--secondary);
-        }
-
-        /* Content Container */
-        .container {
-            max-width: 1400px;
+            font-size: 1.25rem;
+            color: var(--bf-text-secondary);
+            max-width: 700px;
             margin: 0 auto;
-            padding: 0 2rem 4rem;
         }
 
-        /* Section */
         .section {
-            margin-bottom: 6rem;
+            margin-bottom: 4rem;
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2.25rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--bf-text-primary);
         }
 
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: #94A3B8;
-            margin-bottom: 3rem;
-        }
-
-        /* Cards Grid */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
-        .card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s;
+        /* Usando la clase .card del design-system.css */
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--bf-text-primary);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(6, 182, 212, 0.5);
-            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.2);
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #F8FAFC;
-        }
-
-        .card-description {
-            color: #94A3B8;
-            line-height: 1.8;
-        }
-
-        /* Stats */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .stat-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #94A3B8;
-            font-size: 1rem;
-        }
-
-        /* Timeline */
         .timeline {
             position: relative;
-            padding-left: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 2rem;
         }
 
         .timeline::before {
@@ -257,251 +83,74 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            background: var(--bf-border-color);
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 3rem;
-            padding-left: 2rem;
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
         }
 
         .timeline-dot {
             position: absolute;
-            left: -3.5rem;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            background: var(--secondary);
+            left: -7px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            background: var(--bf-primary-color);
             border-radius: 50%;
-            border: 4px solid var(--dark);
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
         }
 
         .timeline-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--bf-primary-color);
             margin-bottom: 0.5rem;
         }
-
-        .timeline-description {
-            color: #94A3B8;
-        }
-
-        /* CTA Section */
+        
         .cta-section {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 20px;
-            padding: 4rem 2rem;
             text-align: center;
-            margin: 4rem 0;
+            padding: 3rem 0;
         }
 
-        .cta-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(6, 182, 212, 0.1);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
     </style>
 </head>
 <body>
-    <div id="bf-nav-container"></div>
+    <div id="bf-universal-nav-container"></div>
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>🚀 BitForward</h1>
+        <h1>Sobre BitForward</h1>
         <p class="hero-subtitle">
-            La plataforma DeFi innovadora que revoluciona los contratos forward, 
-            lending y derivados financieros en blockchain
+            Nuestra misión es construir un sistema financiero abierto, transparente y accesible para todos, impulsado por la tecnología blockchain.
         </p>
-        <div class="hero-badges">
-            <span class="badge">✨ DeFi 3.0</span>
-            <span class="badge">🔒 Seguro</span>
-            <span class="badge">⚡ Rápido</span>
-            <span class="badge">🌐 Multi-chain</span>
-        </div>
     </section>
 
     <div class="container">
         <!-- ¿Qué es BitForward? -->
         <section class="section">
-            <h2 class="section-title">¿Qué es BitForward?</h2>
-            <p class="section-subtitle">
-                Una plataforma financiera descentralizada de nueva generación
-            </p>
+            <h2 class="section-title">Nuestros Valores</h2>
             
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-icon">📊</div>
-                    <h3 class="card-title">Contratos Forward Innovadores</h3>
-                    <p class="card-description">
-                        Crea y ejecuta contratos forward descentralizados para cualquier activo crypto. 
-                        Protege tu portfolio contra la volatilidad con instrumentos financieros profesionales.
+                    <h3>Innovación Constante</h3>
+                    <p>
+                        Buscamos sin descanso las mejores soluciones tecnológicas para resolver problemas financieros complejos de forma descentralizada.
                     </p>
                 </div>
 
                 <div class="card">
-                    <div class="card-icon">💰</div>
-                    <h3 class="card-title">Lending & Borrowing DeFi</h3>
-                    <p class="card-description">
-                        Presta tus activos y genera intereses pasivos, o pide prestado con colateral. 
-                        Tasas competitivas y liquidez profunda garantizada por pools automatizados.
+                    <h3>Seguridad Primero</h3>
+                    <p>
+                        La protección de los activos de nuestros usuarios es nuestra máxima prioridad. Implementamos múltiples capas de seguridad y auditorías constantes.
                     </p>
                 </div>
 
                 <div class="card">
-                    <div class="card-icon">🔄</div>
-                    <h3 class="card-title">Trading Descentralizado</h3>
-                    <p class="card-description">
-                        Opera con los mejores spreads del mercado DeFi. Swaps instantáneos, 
-                        orderbook híbrido y ejecución optimizada mediante AMM inteligentes.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">🛡️</div>
-                    <h3 class="card-title">Seguros & Coberturas</h3>
-                    <p class="card-description">
-                        Protege tus inversiones con seguros descentralizados. Coberturas contra 
-                        exploits, liquidaciones y riesgos de smart contracts.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">📈</div>
-                    <h3 class="card-title">Analytics Avanzado</h3>
-                    <p class="card-description">
-                        Herramientas profesionales de análisis on-chain. Visualiza métricas en tiempo real, 
-                        TVL, volúmenes y comportamiento del mercado.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">🏢</div>
-                    <h3 class="card-title">Soluciones Enterprise</h3>
-                    <p class="card-description">
-                        APIs institucionales, integraciones whitelabel y soluciones B2B para empresas. 
-                        Escalable, auditable y compatible con regulaciones.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats -->
-        <section class="section">
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-value">$250M+</div>
-                    <div class="stat-label">Total Value Locked</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">50K+</div>
-                    <div class="stat-label">Usuarios Activos</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">$2B+</div>
-                    <div class="stat-label">Volumen Transaccionado</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">99.9%</div>
-                    <div class="stat-label">Uptime</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tecnología -->
-        <section class="section">
-            <h2 class="section-title">Tecnología de Vanguardia</h2>
-            <p class="section-subtitle">
-                Construido sobre la infraestructura blockchain más avanzada
-            </p>
-
-            <div class="cards-grid">
-                <div class="card">
-                    <h3 class="card-title">🔗 Multi-Chain</h3>
-                    <p class="card-description">
-                        Soporta Ethereum, Binance Smart Chain, Solana, Polygon y más. 
-                        Interoperabilidad nativa mediante bridges descentralizados.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title">⚡ Layer 2 Optimized</h3>
-                    <p class="card-description">
-                        Transacciones ultra-rápidas y económicas mediante Optimistic Rollups y zkSync. 
-                        Escalabilidad sin comprometer seguridad.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title">🔐 Seguridad Audited</h3>
-                    <p class="card-description">
-                        Smart contracts auditados por CertiK, PeckShield y Quantstamp. 
-                        Bug bounties activos y programa de recompensas.
+                    <h3>Transparencia Radical</h3>
+                    <p>
+                        Operamos sobre una base de código abierto y todas las transacciones son verificables en la blockchain. Creemos en la confianza a través de la transparencia.
                     </p>
                 </div>
             </div>
@@ -509,156 +158,45 @@
 
         <!-- Roadmap -->
         <section class="section">
-            <h2 class="section-title">Roadmap 2025-2026</h2>
-            <p class="section-subtitle">
-                El futuro de BitForward
-            </p>
+            <h2 class="section-title">Nuestra Trayectoria</h2>
 
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <h3 class="timeline-title">Q1 2025 - Lanzamiento Beta</h3>
-                    <p class="timeline-description">
-                        ✅ Contratos forward v1.0<br>
-                        ✅ Lending pools básicos<br>
-                        ✅ UI/UX optimizada<br>
-                        ✅ Auditorías de seguridad completadas
-                    </p>
+                    <p>Lanzamiento de la plataforma con contratos forward y pools de lending.</p>
                 </div>
 
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <h3 class="timeline-title">Q2 2025 - Expansión Multi-Chain</h3>
-                    <p class="timeline-description">
-                        🚀 Integración Solana y Polygon<br>
-                        🚀 Cross-chain bridges<br>
-                        🚀 Staking y governance token<br>
-                        🚀 Mobile app (iOS & Android)
-                    </p>
+                    <p>Integración con Solana y Polygon para mayor escalabilidad y menores costes.</p>
                 </div>
 
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <h3 class="timeline-title">Q3 2025 - Derivados Avanzados</h3>
-                    <p class="timeline-description">
-                        📊 Options y futures descentralizados<br>
-                        📊 Perpetual swaps con apalancamiento<br>
-                        📊 Market making automatizado<br>
-                        📊 API institucional v1.0
-                    </p>
+                    <h3 class="timeline-title">Q3 2025 - Exchange y Mercados</h3>
+                    <p>Lanzamiento de la interfaz de trading spot y la página de exploración de mercados.</p>
                 </div>
 
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <h3 class="timeline-title">Q4 2025 - Enterprise & DAO</h3>
-                    <p class="timeline-description">
-                        🏢 Soluciones whitelabel<br>
-                        🏢 DAO governance completo<br>
-                        🏢 Integración con TradFi<br>
-                        🏢 Expansión global regulada
-                    </p>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h3 class="timeline-title">Q1 2026 - Innovación Continua</h3>
-                    <p class="timeline-description">
-                        ✨ Real World Assets (RWA)<br>
-                        ✨ AI-powered trading bots<br>
-                        ✨ Social trading features<br>
-                        ✨ Metaverse integrations
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Team -->
-        <section class="section">
-            <h2 class="section-title">Equipo AFORTU Holdings</h2>
-            <p class="section-subtitle">
-                Expertos en finanzas, blockchain y tecnología
-            </p>
-
-            <div class="cards-grid">
-                <div class="card">
-                    <h3 class="card-title">💼 Experiencia Combinada</h3>
-                    <p class="card-description">
-                        +50 años de experiencia en finanzas tradicionales, 
-                        blockchain y desarrollo de software enterprise.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title">🎓 Formación de Elite</h3>
-                    <p class="card-description">
-                        Graduados de las mejores universidades en finanzas, 
-                        ingeniería y ciencias de la computación.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title">🌟 Track Record Comprobado</h3>
-                    <p class="card-description">
-                        Proyectos previos exitosos en DeFi con +$500M en TVL agregado 
-                        y miles de usuarios satisfechos.
-                    </p>
+                    <h3 class="timeline-title">Q4 2025 - Gobernanza DAO</h3>
+                    <p>Transición a un modelo de gobernanza descentralizada a través de la BitForward DAO.</p>
                 </div>
             </div>
         </section>
 
         <!-- CTA -->
         <section class="cta-section">
-            <h2 class="cta-title">¿Listo para el futuro de DeFi?</h2>
-            <p class="section-subtitle">
-                Únete a miles de usuarios que ya están revolucionando sus finanzas
-            </p>
-            <div class="cta-buttons">
-                <a href="index.html#login" class="btn btn-primary">Comenzar Ahora →</a>
-                <a href="dashboard.html" class="btn btn-secondary">Explorar Dashboard</a>
-            </div>
+            <h2 class="section-title">Únete a la Revolución DeFi</h2>
+            <a href="trading.html" class="btn btn-primary">Empezar a Operar</a>
         </section>
     </div>
 
-        <div id="bf-universal-footer-container"></div>
-
-    <script>
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Animate cards on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.card, .stat-card, .timeline-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
-    </script>
+    <div id="bf-universal-footer-container"></div>
     
-    <!-- Modern Navigation Script -->
-    <script src="js/modern-navigation.js"></script>
-    <script src="js/executive-icons.js"></script>
+    <!-- Scripts Universales -->
     <script src="js/universal-nav.js"></script>
     <script src="js/universal-footer.js"></script>
 </body>
