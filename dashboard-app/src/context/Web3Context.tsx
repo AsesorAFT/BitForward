@@ -26,7 +26,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
       const browserProvider = new ethers.BrowserProvider(window.ethereum);
       const accounts = await browserProvider.send('eth_requestAccounts', []);
       const signerInstance = await browserProvider.getSigner();
-      
+
       setProvider(browserProvider);
       setSigner(signerInstance);
       setAccount(accounts[0]);
@@ -40,7 +40,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
       });
 
     } catch (error) {
-      console.error("Failed to connect wallet:", error);
+      console.error('Failed to connect wallet:', error);
     }
   };
 

@@ -4,42 +4,42 @@
  */
 
 class NotificationSystem {
-    constructor() {
-        this.container = null;
-        this.notifications = new Map();
-        this.config = {
-            duration: 5000,
-            maxNotifications: 5,
-            position: 'top-right',
-            animationDuration: 300
-        };
-        this.initialize();
+  constructor() {
+    this.container = null;
+    this.notifications = new Map();
+    this.config = {
+      duration: 5000,
+      maxNotifications: 5,
+      position: 'top-right',
+      animationDuration: 300
+    };
+    this.initialize();
+  }
+
+  initialize() {
+    this.createContainer();
+    this.setupStyles();
+    console.log('📢 Notification System initialized');
+  }
+
+  createContainer() {
+    // Crear contenedor si no existe
+    this.container = document.getElementById('notification-container');
+    if (!this.container) {
+      this.container = document.createElement('div');
+      this.container.id = 'notification-container';
+      this.container.className = 'notification-container';
+      document.body.appendChild(this.container);
     }
+  }
 
-    initialize() {
-        this.createContainer();
-        this.setupStyles();
-        console.log('📢 Notification System initialized');
-    }
+  setupStyles() {
+    // Verificar si los estilos ya están aplicados
+    if (document.getElementById('notification-styles')) {return;}
 
-    createContainer() {
-        // Crear contenedor si no existe
-        this.container = document.getElementById('notification-container');
-        if (!this.container) {
-            this.container = document.createElement('div');
-            this.container.id = 'notification-container';
-            this.container.className = 'notification-container';
-            document.body.appendChild(this.container);
-        }
-    }
-
-    setupStyles() {
-        // Verificar si los estilos ya están aplicados
-        if (document.getElementById('notification-styles')) return;
-
-        const styles = document.createElement('style');
-        styles.id = 'notification-styles';
-        styles.textContent = `
+    const styles = document.createElement('style');
+    styles.id = 'notification-styles';
+    styles.textContent = `
             .notification-container {
                 position: fixed;
                 top: 1rem;
@@ -260,119 +260,119 @@ class NotificationSystem {
                 animation: pulse 0.3s ease-in-out;
             }
         `;
-        document.head.appendChild(styles);
-    }
+    document.head.appendChild(styles);
+  }
 
-    /**
+  /**
      * Muestra una notificación
      * @param {string} message - Mensaje principal
      * @param {string} type - Tipo de notificación (success, error, warning, info, validation)
      * @param {Object} options - Opciones adicionales
      */
-    show(message, type = 'info', options = {}) {
-        const config = { ...this.config, ...options };
-        const id = this.generateId();
-        
-        const notification = this.createNotification(id, message, type, config);
-        this.addToContainer(notification);
-        
-        // Mostrar con animación
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 10);
+  show(message, type = 'info', options = {}) {
+    const config = { ...this.config, ...options };
+    const id = this.generateId();
 
-        // Auto-remover si se especifica duración
-        if (config.duration > 0) {
-            this.startProgress(notification, config.duration);
-            setTimeout(() => {
-                this.remove(id);
-            }, config.duration);
-        }
+    const notification = this.createNotification(id, message, type, config);
+    this.addToContainer(notification);
 
-        // Limitar número de notificaciones
-        this.limitNotifications();
+    // Mostrar con animación
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 10);
 
-        return id;
+    // Auto-remover si se especifica duración
+    if (config.duration > 0) {
+      this.startProgress(notification, config.duration);
+      setTimeout(() => {
+        this.remove(id);
+      }, config.duration);
     }
 
-    /**
+    // Limitar número de notificaciones
+    this.limitNotifications();
+
+    return id;
+  }
+
+  /**
      * Muestra notificación de éxito
      */
-    success(message, options = {}) {
-        return this.show(message, 'success', {
-            title: '✅ Éxito',
-            ...options
-        });
-    }
+  success(message, options = {}) {
+    return this.show(message, 'success', {
+      title: '✅ Éxito',
+      ...options
+    });
+  }
 
-    /**
+  /**
      * Muestra notificación de error
      */
-    error(message, options = {}) {
-        return this.show(message, 'error', {
-            title: '❌ Error',
-            duration: 8000, // Errores duran más tiempo
-            ...options
-        });
-    }
+  error(message, options = {}) {
+    return this.show(message, 'error', {
+      title: '❌ Error',
+      duration: 8000, // Errores duran más tiempo
+      ...options
+    });
+  }
 
-    /**
+  /**
      * Muestra notificación de warning
      */
-    warning(message, options = {}) {
-        return this.show(message, 'warning', {
-            title: '⚠️ Advertencia',
-            duration: 6000,
-            ...options
-        });
-    }
+  warning(message, options = {}) {
+    return this.show(message, 'warning', {
+      title: '⚠️ Advertencia',
+      duration: 6000,
+      ...options
+    });
+  }
 
-    /**
+  /**
      * Muestra notificación informativa
      */
-    info(message, options = {}) {
-        return this.show(message, 'info', {
-            title: 'ℹ️ Información',
-            ...options
-        });
-    }
+  info(message, options = {}) {
+    return this.show(message, 'info', {
+      title: 'ℹ️ Información',
+      ...options
+    });
+  }
 
-    /**
+  /**
      * Muestra errores de validación
      */
-    validationErrors(errors, warnings = [], options = {}) {
-        const message = errors.length === 1 ? 
-            'Se encontró un error en el formulario:' : 
-            `Se encontraron ${errors.length} errores en el formulario:`;
+  validationErrors(errors, warnings = [], options = {}) {
+    const message = errors.length === 1 ?
+      'Se encontró un error en el formulario:' :
+      `Se encontraron ${errors.length} errores en el formulario:`;
 
-        const notification = this.createValidationNotification(message, errors, warnings, options);
-        const id = this.generateId();
-        notification.dataset.id = id;
-        
-        this.addToContainer(notification);
-        
-        setTimeout(() => {
-            notification.classList.add('show');
-            notification.classList.add('shake'); // Efecto de shake para errores
-        }, 10);
+    const notification = this.createValidationNotification(message, errors, warnings, options);
+    const id = this.generateId();
+    notification.dataset.id = id;
 
-        // Auto-remover después de tiempo extendido para errores de validación
-        setTimeout(() => {
-            this.remove(id);
-        }, 10000);
+    this.addToContainer(notification);
 
-        return id;
-    }
+    setTimeout(() => {
+      notification.classList.add('show');
+      notification.classList.add('shake'); // Efecto de shake para errores
+    }, 10);
 
-    createNotification(id, message, type, config) {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.dataset.id = id;
+    // Auto-remover después de tiempo extendido para errores de validación
+    setTimeout(() => {
+      this.remove(id);
+    }, 10000);
 
-        const title = config.title || this.getDefaultTitle(type);
-        const details = config.details || '';
+    return id;
+  }
 
-        notification.innerHTML = `
+  createNotification(id, message, type, config) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.dataset.id = id;
+
+    const title = config.title || this.getDefaultTitle(type);
+    const details = config.details || '';
+
+    notification.innerHTML = `
             <div class="notification-header">
                 <div class="notification-title">${title}</div>
                 <button class="notification-close" onclick="notificationSystem.remove('${id}')">&times;</button>
@@ -384,32 +384,32 @@ class NotificationSystem {
             <div class="notification-progress"></div>
         `;
 
-        return notification;
-    }
+    return notification;
+  }
 
-    createValidationNotification(message, errors, warnings, options) {
-        const notification = document.createElement('div');
-        notification.className = 'notification validation';
+  createValidationNotification(message, errors, warnings, options) {
+    const notification = document.createElement('div');
+    notification.className = 'notification validation';
 
-        let errorsHtml = '';
-        if (errors.length > 0) {
-            errorsHtml = `
+    let errorsHtml = '';
+    if (errors.length > 0) {
+      errorsHtml = `
                 <ul class="notification-errors">
                     ${errors.map(error => `<li>${error}</li>`).join('')}
                 </ul>
             `;
-        }
+    }
 
-        let warningsHtml = '';
-        if (warnings.length > 0) {
-            warningsHtml = `
+    let warningsHtml = '';
+    if (warnings.length > 0) {
+      warningsHtml = `
                 <ul class="notification-warnings">
                     ${warnings.map(warning => `<li>${warning}</li>`).join('')}
                 </ul>
             `;
-        }
+    }
 
-        notification.innerHTML = `
+    notification.innerHTML = `
             <div class="notification-header">
                 <div class="notification-title">🔍 Errores de Validación</div>
                 <button class="notification-close" onclick="notificationSystem.remove(this.closest('.notification').dataset.id)">&times;</button>
@@ -422,112 +422,112 @@ class NotificationSystem {
             <div class="notification-progress"></div>
         `;
 
-        return notification;
-    }
+    return notification;
+  }
 
-    addToContainer(notification) {
-        this.container.appendChild(notification);
-        this.notifications.set(notification.dataset.id, notification);
-    }
+  addToContainer(notification) {
+    this.container.appendChild(notification);
+    this.notifications.set(notification.dataset.id, notification);
+  }
 
-    startProgress(notification, duration) {
-        const progressBar = notification.querySelector('.notification-progress');
-        if (progressBar) {
-            progressBar.style.width = '100%';
-            progressBar.style.transition = `width ${duration}ms linear`;
-            setTimeout(() => {
-                progressBar.style.width = '0%';
-            }, 10);
+  startProgress(notification, duration) {
+    const progressBar = notification.querySelector('.notification-progress');
+    if (progressBar) {
+      progressBar.style.width = '100%';
+      progressBar.style.transition = `width ${duration}ms linear`;
+      setTimeout(() => {
+        progressBar.style.width = '0%';
+      }, 10);
+    }
+  }
+
+  remove(id) {
+    const notification = this.notifications.get(id);
+    if (notification) {
+      notification.classList.add('hide');
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.parentNode.removeChild(notification);
         }
+        this.notifications.delete(id);
+      }, this.config.animationDuration);
     }
+  }
 
-    remove(id) {
-        const notification = this.notifications.get(id);
-        if (notification) {
-            notification.classList.add('hide');
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-                this.notifications.delete(id);
-            }, this.config.animationDuration);
-        }
-    }
+  removeAll() {
+    this.notifications.forEach((notification, id) => {
+      this.remove(id);
+    });
+  }
 
-    removeAll() {
-        this.notifications.forEach((notification, id) => {
-            this.remove(id);
-        });
+  limitNotifications() {
+    const notificationElements = Array.from(this.container.children);
+    while (notificationElements.length > this.config.maxNotifications) {
+      const oldest = notificationElements.shift();
+      if (oldest.dataset.id) {
+        this.remove(oldest.dataset.id);
+      }
     }
+  }
 
-    limitNotifications() {
-        const notificationElements = Array.from(this.container.children);
-        while (notificationElements.length > this.config.maxNotifications) {
-            const oldest = notificationElements.shift();
-            if (oldest.dataset.id) {
-                this.remove(oldest.dataset.id);
-            }
-        }
-    }
+  generateId() {
+    return `notification_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+  }
 
-    generateId() {
-        return `notification_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-    }
+  getDefaultTitle(type) {
+    const titles = {
+      success: '✅ Éxito',
+      error: '❌ Error',
+      warning: '⚠️ Advertencia',
+      info: 'ℹ️ Información',
+      validation: '🔍 Validación'
+    };
+    return titles[type] || 'ℹ️ Notificación';
+  }
 
-    getDefaultTitle(type) {
-        const titles = {
-            success: '✅ Éxito',
-            error: '❌ Error',
-            warning: '⚠️ Advertencia',
-            info: 'ℹ️ Información',
-            validation: '🔍 Validación'
-        };
-        return titles[type] || 'ℹ️ Notificación';
-    }
+  // Métodos de utilidad para contratos
+  contractCreated(contractId, blockchain, amount) {
+    this.success(
+      `Contrato creado exitosamente en ${blockchain.toUpperCase()}`,
+      {
+        details: `ID: ${contractId.substring(0, 12)}... | Cantidad: ${amount}`,
+        duration: 4000
+      }
+    );
+  }
 
-    // Métodos de utilidad para contratos
-    contractCreated(contractId, blockchain, amount) {
-        this.success(
-            `Contrato creado exitosamente en ${blockchain.toUpperCase()}`,
-            {
-                details: `ID: ${contractId.substring(0, 12)}... | Cantidad: ${amount}`,
-                duration: 4000
-            }
-        );
-    }
+  contractExecuted(contractId, pnl) {
+    const isProfitable = pnl >= 0;
+    const method = isProfitable ? 'success' : 'warning';
 
-    contractExecuted(contractId, pnl) {
-        const isProfitable = pnl >= 0;
-        const method = isProfitable ? 'success' : 'warning';
-        
-        this[method](
-            `Contrato ejecutado ${isProfitable ? 'con ganancias' : 'con pérdidas'}`,
-            {
-                details: `ID: ${contractId.substring(0, 12)}... | P&L: ${pnl >= 0 ? '+' : ''}${pnl.toFixed(4)}`,
-                duration: 6000
-            }
-        );
-    }
+    this[method](
+      `Contrato ejecutado ${isProfitable ? 'con ganancias' : 'con pérdidas'}`,
+      {
+        details: `ID: ${contractId.substring(0, 12)}... | P&L: ${pnl >= 0 ? '+' : ''}${pnl.toFixed(4)}`,
+        duration: 6000
+      }
+    );
+  }
 
-    walletConnected(blockchain, address) {
-        this.success(
-            `Wallet ${blockchain.toUpperCase()} conectada`,
-            {
-                details: `${address.substring(0, 8)}...${address.substring(-6)}`,
-                duration: 3000
-            }
-        );
-    }
+  walletConnected(blockchain, address) {
+    this.success(
+      `Wallet ${blockchain.toUpperCase()} conectada`,
+      {
+        details: `${address.substring(0, 8)}...${address.substring(-6)}`,
+        duration: 3000
+      }
+    );
+  }
 
-    networkError(message) {
-        this.error(
-            'Error de conexión con la blockchain',
-            {
-                details: message,
-                duration: 8000
-            }
-        );
-    }
+  networkError(message) {
+    this.error(
+      'Error de conexión con la blockchain',
+      {
+        details: message,
+        duration: 8000
+      }
+    );
+  }
 }
 
 // Crear instancia global
@@ -535,12 +535,12 @@ const notificationSystem = new NotificationSystem();
 
 // Exportar para uso en diferentes entornos
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { NotificationSystem, notificationSystem };
+  module.exports = { NotificationSystem, notificationSystem };
 }
 
 if (typeof window !== 'undefined') {
-    window.NotificationSystem = NotificationSystem;
-    window.notificationSystem = notificationSystem;
+  window.NotificationSystem = NotificationSystem;
+  window.notificationSystem = notificationSystem;
 }
 
 console.log('📢 BitForward Notification System loaded');

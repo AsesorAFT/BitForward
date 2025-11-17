@@ -45,7 +45,7 @@ export const StrategyExecutor = () => {
       alert('Please connect your wallet first');
       return;
     }
-    
+
     setSelectedStrategy(strategyId);
     // TODO: Implement strategy execution logic
     console.log(`Executing strategy: ${strategyId}`);
@@ -67,14 +67,14 @@ export const StrategyExecutor = () => {
         <span className="card-icon">⚡</span>
         Strategy Executor
       </h3>
-      
+
       <p style={{ marginBottom: '1.5rem', color: 'var(--text-secondary)' }}>
         Choose from automated DeFi strategies to optimize your portfolio returns
       </p>
 
       <div className="strategy-grid">
         {strategies.map((strategy) => (
-          <div 
+          <div
             key={strategy.id}
             className={`strategy-item ${selectedStrategy === strategy.id ? 'selected' : ''}`}
             onClick={() => executeStrategy(strategy.id)}
@@ -82,11 +82,11 @@ export const StrategyExecutor = () => {
             <div className="strategy-icon">{strategy.icon}</div>
             <div className="strategy-title">{strategy.title}</div>
             <div className="strategy-description">{strategy.description}</div>
-            
+
             <div className="strategy-metrics">
               <div className="metric">
                 <span className="metric-label">Risk:</span>
-                <span 
+                <span
                   className="metric-value"
                   style={{ color: getRiskColor(strategy.riskLevel) }}
                 >
@@ -101,7 +101,7 @@ export const StrategyExecutor = () => {
               </div>
             </div>
 
-            <button 
+            <button
               className="btn btn-primary strategy-btn"
               onClick={(e) => {
                 e.stopPropagation();

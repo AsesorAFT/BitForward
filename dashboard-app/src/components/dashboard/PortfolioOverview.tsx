@@ -28,7 +28,7 @@ export const PortfolioOverview = () => {
         <span className="card-icon">💼</span>
         Portfolio Overview
       </h3>
-      
+
       <div className="portfolio-stats">
         <div className="stat-item">
           <div className={`stat-value ${loading ? 'loading' : ''}`}>
@@ -36,17 +36,17 @@ export const PortfolioOverview = () => {
           </div>
           <div className="stat-label">Wallet Balance</div>
         </div>
-        
+
         <div className="stat-item">
           <div className="stat-value">$0.00</div>
           <div className="stat-label">Total USD Value</div>
         </div>
-        
+
         <div className="stat-item">
           <div className="stat-value">0</div>
           <div className="stat-label">Active Positions</div>
         </div>
-        
+
         <div className="stat-item">
           <div className="stat-value">+0.00%</div>
           <div className="stat-label">24h Change</div>

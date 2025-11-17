@@ -4,86 +4,86 @@
  */
 
 class DashboardCustomizer {
-    constructor() {
-        this.draggableOptions = {
-            draggable: '.widget',
-            handle: '.widget-header',
-            animation: 150,
-            ghostClass: 'widget-ghost',
-            chosenClass: 'widget-chosen',
-            dragClass: 'widget-drag',
-            forceFallback: true  // Better mobile support
-        };
-        
-        this.layoutKey = 'bf-dashboard-layout';
-        this.visibilityKey = 'bf-widget-visibility';
-        this.layoutSettings = this.loadLayoutSettings();
-        this.widgetSettings = this.loadWidgetSettings();
-        
-        this.init();
-    }
-    
-    init() {
-        // Initialize once DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            this.renderCustomizeButton();
-            this.setupDashboard();
-        });
-        
-        // Re-initialize if page content changes
-        document.addEventListener('page-content-updated', () => {
-            this.renderCustomizeButton();
-            this.setupDashboard();
-        });
-    }
-    
-    renderCustomizeButton() {
-        const dashboardHeader = document.querySelector('.dashboard-header');
-        if (!dashboardHeader) return;
-        
-        // Check if button already exists
-        if (dashboardHeader.querySelector('.customize-dashboard-btn')) return;
-        
-        // Create the customize button
-        const customizeBtn = document.createElement('button');
-        customizeBtn.className = 'customize-dashboard-btn';
-        customizeBtn.innerHTML = '<i class="fas fa-cog"></i> Personalizar';
-        
-        // Insert button
-        const actions = dashboardHeader.querySelector('.dashboard-actions') || dashboardHeader;
-        actions.appendChild(customizeBtn);
-        
-        // Add click event
-        customizeBtn.addEventListener('click', () => this.openCustomizeModal());
-    }
-    
-    setupDashboard() {
-        const dashboard = document.querySelector('.dashboard-widgets');
-        if (!dashboard) return;
-        
-        // Add customizable class
-        dashboard.classList.add('customizable-dashboard');
-        
-        // Find all widgets and mark them
-        const widgets = dashboard.querySelectorAll('.card, .panel, .widget-container');
-        widgets.forEach((widget, index) => {
-            if (!widget.classList.contains('widget')) {
-                widget.classList.add('widget');
-            }
-            
-            // Add ID if not present
-            if (!widget.id) {
-                widget.id = `widget-${index}`;
-            }
-            
-            // Add widget header if not present
-            if (!widget.querySelector('.widget-header')) {
-                const title = widget.querySelector('.card-title, .panel-title, h2, h3') || { textContent: 'Widget' };
-                const titleText = title.textContent;
-                
-                const header = document.createElement('div');
-                header.className = 'widget-header';
-                header.innerHTML = `
+  constructor() {
+    this.draggableOptions = {
+      draggable: '.widget',
+      handle: '.widget-header',
+      animation: 150,
+      ghostClass: 'widget-ghost',
+      chosenClass: 'widget-chosen',
+      dragClass: 'widget-drag',
+      forceFallback: true  // Better mobile support
+    };
+
+    this.layoutKey = 'bf-dashboard-layout';
+    this.visibilityKey = 'bf-widget-visibility';
+    this.layoutSettings = this.loadLayoutSettings();
+    this.widgetSettings = this.loadWidgetSettings();
+
+    this.init();
+  }
+
+  init() {
+    // Initialize once DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      this.renderCustomizeButton();
+      this.setupDashboard();
+    });
+
+    // Re-initialize if page content changes
+    document.addEventListener('page-content-updated', () => {
+      this.renderCustomizeButton();
+      this.setupDashboard();
+    });
+  }
+
+  renderCustomizeButton() {
+    const dashboardHeader = document.querySelector('.dashboard-header');
+    if (!dashboardHeader) {return;}
+
+    // Check if button already exists
+    if (dashboardHeader.querySelector('.customize-dashboard-btn')) {return;}
+
+    // Create the customize button
+    const customizeBtn = document.createElement('button');
+    customizeBtn.className = 'customize-dashboard-btn';
+    customizeBtn.innerHTML = '<i class="fas fa-cog"></i> Personalizar';
+
+    // Insert button
+    const actions = dashboardHeader.querySelector('.dashboard-actions') || dashboardHeader;
+    actions.appendChild(customizeBtn);
+
+    // Add click event
+    customizeBtn.addEventListener('click', () => this.openCustomizeModal());
+  }
+
+  setupDashboard() {
+    const dashboard = document.querySelector('.dashboard-widgets');
+    if (!dashboard) {return;}
+
+    // Add customizable class
+    dashboard.classList.add('customizable-dashboard');
+
+    // Find all widgets and mark them
+    const widgets = dashboard.querySelectorAll('.card, .panel, .widget-container');
+    widgets.forEach((widget, index) => {
+      if (!widget.classList.contains('widget')) {
+        widget.classList.add('widget');
+      }
+
+      // Add ID if not present
+      if (!widget.id) {
+        widget.id = `widget-${index}`;
+      }
+
+      // Add widget header if not present
+      if (!widget.querySelector('.widget-header')) {
+        const title = widget.querySelector('.card-title, .panel-title, h2, h3') || { textContent: 'Widget' };
+        const titleText = title.textContent;
+
+        const header = document.createElement('div');
+        header.className = 'widget-header';
+        header.innerHTML = `
                     <div class="widget-drag-handle">
                         <i class="fas fa-grip-lines"></i>
                     </div>
@@ -100,205 +100,205 @@ class DashboardCustomizer {
                         </button>
                     </div>
                 `;
-                
-                // Insert header at the beginning of the widget
-                widget.insertBefore(header, widget.firstChild);
-                
-                // Add click handlers
-                header.querySelector('.widget-minimize').addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    this.toggleWidgetMinimize(widget.id);
-                });
-                
-                header.querySelector('.widget-maximize').addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    this.toggleWidgetMaximize(widget.id);
-                });
-                
-                header.querySelector('.widget-close').addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    this.toggleWidgetVisibility(widget.id, false);
-                });
-            }
-            
-            // Apply saved settings
-            this.applyWidgetSettings(widget);
+
+        // Insert header at the beginning of the widget
+        widget.insertBefore(header, widget.firstChild);
+
+        // Add click handlers
+        header.querySelector('.widget-minimize').addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.toggleWidgetMinimize(widget.id);
         });
-        
-        // Initialize drag and drop
-        if (typeof Sortable !== 'undefined') {
-            this.initSortable(dashboard);
-        } else {
-            // Dynamically load Sortable.js if not available
-            this.loadSortableJS().then(() => {
-                this.initSortable(dashboard);
-            });
-        }
-        
-        // Apply saved layout
-        this.applyLayoutSettings(dashboard);
-    }
-    
-    initSortable(dashboard) {
-        if (!window.Sortable) return;
-        
-        // Initialize Sortable on the dashboard
-        const sortable = new Sortable(dashboard, this.draggableOptions);
-        
-        // Save layout when order changes
-        sortable.options.onSort = () => {
-            this.saveCurrentLayout(dashboard);
-        };
-    }
-    
-    loadSortableJS() {
-        return new Promise((resolve, reject) => {
-            if (window.Sortable) {
-                resolve();
-                return;
-            }
-            
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js';
-            script.onload = resolve;
-            script.onerror = reject;
-            document.head.appendChild(script);
+
+        header.querySelector('.widget-maximize').addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.toggleWidgetMaximize(widget.id);
         });
-    }
-    
-    saveCurrentLayout(dashboard) {
-        const widgets = dashboard.querySelectorAll('.widget');
-        const layout = Array.from(widgets).map(widget => widget.id);
-        
-        this.layoutSettings = layout;
-        localStorage.setItem(this.layoutKey, JSON.stringify(layout));
-        
-        console.log('Dashboard layout saved', layout);
-    }
-    
-    applyLayoutSettings(dashboard) {
-        if (!this.layoutSettings || this.layoutSettings.length === 0) return;
-        
-        const widgetMap = {};
-        dashboard.querySelectorAll('.widget').forEach(widget => {
-            widgetMap[widget.id] = widget;
+
+        header.querySelector('.widget-close').addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.toggleWidgetVisibility(widget.id, false);
         });
-        
-        // Reorder according to saved layout
-        this.layoutSettings.forEach(widgetId => {
-            const widget = widgetMap[widgetId];
-            if (widget) {
-                dashboard.appendChild(widget);
-            }
-        });
+      }
+
+      // Apply saved settings
+      this.applyWidgetSettings(widget);
+    });
+
+    // Initialize drag and drop
+    if (typeof Sortable !== 'undefined') {
+      this.initSortable(dashboard);
+    } else {
+      // Dynamically load Sortable.js if not available
+      this.loadSortableJS().then(() => {
+        this.initSortable(dashboard);
+      });
     }
-    
-    applyWidgetSettings(widget) {
-        const widgetId = widget.id;
-        const settings = this.widgetSettings[widgetId];
-        
-        if (!settings) return;
-        
-        // Apply visibility
-        if (settings.visible === false) {
-            widget.classList.add('widget-hidden');
-        } else {
-            widget.classList.remove('widget-hidden');
-        }
-        
-        // Apply minimize state
-        if (settings.minimized) {
-            widget.classList.add('widget-minimized');
-        } else {
-            widget.classList.remove('widget-minimized');
-        }
-        
-        // Apply maximize state
-        if (settings.maximized) {
-            widget.classList.add('widget-maximized');
-        } else {
-            widget.classList.remove('widget-maximized');
-        }
+
+    // Apply saved layout
+    this.applyLayoutSettings(dashboard);
+  }
+
+  initSortable(dashboard) {
+    if (!window.Sortable) {return;}
+
+    // Initialize Sortable on the dashboard
+    const sortable = new Sortable(dashboard, this.draggableOptions);
+
+    // Save layout when order changes
+    sortable.options.onSort = () => {
+      this.saveCurrentLayout(dashboard);
+    };
+  }
+
+  loadSortableJS() {
+    return new Promise((resolve, reject) => {
+      if (window.Sortable) {
+        resolve();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js';
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  saveCurrentLayout(dashboard) {
+    const widgets = dashboard.querySelectorAll('.widget');
+    const layout = Array.from(widgets).map(widget => widget.id);
+
+    this.layoutSettings = layout;
+    localStorage.setItem(this.layoutKey, JSON.stringify(layout));
+
+    console.log('Dashboard layout saved', layout);
+  }
+
+  applyLayoutSettings(dashboard) {
+    if (!this.layoutSettings || this.layoutSettings.length === 0) {return;}
+
+    const widgetMap = {};
+    dashboard.querySelectorAll('.widget').forEach(widget => {
+      widgetMap[widget.id] = widget;
+    });
+
+    // Reorder according to saved layout
+    this.layoutSettings.forEach(widgetId => {
+      const widget = widgetMap[widgetId];
+      if (widget) {
+        dashboard.appendChild(widget);
+      }
+    });
+  }
+
+  applyWidgetSettings(widget) {
+    const widgetId = widget.id;
+    const settings = this.widgetSettings[widgetId];
+
+    if (!settings) {return;}
+
+    // Apply visibility
+    if (settings.visible === false) {
+      widget.classList.add('widget-hidden');
+    } else {
+      widget.classList.remove('widget-hidden');
     }
-    
-    toggleWidgetMinimize(widgetId) {
-        const widget = document.getElementById(widgetId);
-        if (!widget) return;
-        
-        widget.classList.toggle('widget-minimized');
-        
-        // Update settings
-        this.widgetSettings[widgetId] = {
-            ...this.widgetSettings[widgetId] || {},
-            minimized: widget.classList.contains('widget-minimized'),
-            maximized: false  // Can't be both minimized and maximized
-        };
-        
-        // Save settings
-        this.saveWidgetSettings();
+
+    // Apply minimize state
+    if (settings.minimized) {
+      widget.classList.add('widget-minimized');
+    } else {
+      widget.classList.remove('widget-minimized');
     }
-    
-    toggleWidgetMaximize(widgetId) {
-        const widget = document.getElementById(widgetId);
-        if (!widget) return;
-        
-        // Remove maximized class from all widgets first
-        document.querySelectorAll('.widget-maximized').forEach(w => {
-            if (w.id !== widgetId) {
-                w.classList.remove('widget-maximized');
-                if (this.widgetSettings[w.id]) {
-                    this.widgetSettings[w.id].maximized = false;
-                }
-            }
-        });
-        
-        // Toggle for this widget
-        widget.classList.toggle('widget-maximized');
-        
-        // Update settings
-        this.widgetSettings[widgetId] = {
-            ...this.widgetSettings[widgetId] || {},
-            maximized: widget.classList.contains('widget-maximized'),
-            minimized: false  // Can't be both minimized and maximized
-        };
-        
-        // Save settings
-        this.saveWidgetSettings();
+
+    // Apply maximize state
+    if (settings.maximized) {
+      widget.classList.add('widget-maximized');
+    } else {
+      widget.classList.remove('widget-maximized');
     }
-    
-    toggleWidgetVisibility(widgetId, visible) {
-        const widget = document.getElementById(widgetId);
-        if (!widget) return;
-        
-        if (visible === undefined) {
-            // Toggle if no value provided
-            visible = !widget.classList.contains('widget-hidden');
+  }
+
+  toggleWidgetMinimize(widgetId) {
+    const widget = document.getElementById(widgetId);
+    if (!widget) {return;}
+
+    widget.classList.toggle('widget-minimized');
+
+    // Update settings
+    this.widgetSettings[widgetId] = {
+      ...this.widgetSettings[widgetId] || {},
+      minimized: widget.classList.contains('widget-minimized'),
+      maximized: false  // Can't be both minimized and maximized
+    };
+
+    // Save settings
+    this.saveWidgetSettings();
+  }
+
+  toggleWidgetMaximize(widgetId) {
+    const widget = document.getElementById(widgetId);
+    if (!widget) {return;}
+
+    // Remove maximized class from all widgets first
+    document.querySelectorAll('.widget-maximized').forEach(w => {
+      if (w.id !== widgetId) {
+        w.classList.remove('widget-maximized');
+        if (this.widgetSettings[w.id]) {
+          this.widgetSettings[w.id].maximized = false;
         }
-        
-        if (visible) {
-            widget.classList.remove('widget-hidden');
-        } else {
-            widget.classList.add('widget-hidden');
-        }
-        
-        // Update settings
-        this.widgetSettings[widgetId] = {
-            ...this.widgetSettings[widgetId] || {},
-            visible: visible
-        };
-        
-        // Save settings
-        this.saveWidgetSettings();
+      }
+    });
+
+    // Toggle for this widget
+    widget.classList.toggle('widget-maximized');
+
+    // Update settings
+    this.widgetSettings[widgetId] = {
+      ...this.widgetSettings[widgetId] || {},
+      maximized: widget.classList.contains('widget-maximized'),
+      minimized: false  // Can't be both minimized and maximized
+    };
+
+    // Save settings
+    this.saveWidgetSettings();
+  }
+
+  toggleWidgetVisibility(widgetId, visible) {
+    const widget = document.getElementById(widgetId);
+    if (!widget) {return;}
+
+    if (visible === undefined) {
+      // Toggle if no value provided
+      visible = !widget.classList.contains('widget-hidden');
     }
-    
-    openCustomizeModal() {
-        // Create modal if it doesn't exist
-        let modal = document.getElementById('customize-dashboard-modal');
-        if (!modal) {
-            modal = document.createElement('div');
-            modal.id = 'customize-dashboard-modal';
-            modal.className = 'modal';
-            modal.innerHTML = `
+
+    if (visible) {
+      widget.classList.remove('widget-hidden');
+    } else {
+      widget.classList.add('widget-hidden');
+    }
+
+    // Update settings
+    this.widgetSettings[widgetId] = {
+      ...this.widgetSettings[widgetId] || {},
+      visible: visible
+    };
+
+    // Save settings
+    this.saveWidgetSettings();
+  }
+
+  openCustomizeModal() {
+    // Create modal if it doesn't exist
+    let modal = document.getElementById('customize-dashboard-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'customize-dashboard-modal';
+      modal.className = 'modal';
+      modal.innerHTML = `
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3>Personalizar Dashboard</h3>
@@ -383,115 +383,115 @@ class DashboardCustomizer {
                     </div>
                 </div>
             `;
-            
-            document.body.appendChild(modal);
-            
-            // Add event listeners
-            modal.querySelector('.modal-close').addEventListener('click', () => {
-                modal.classList.remove('open');
-            });
-            
-            // Tab navigation
-            const tabs = modal.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // Deactivate all tabs
-                    tabs.forEach(t => t.classList.remove('active'));
-                    modal.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-                    
-                    // Activate selected tab
-                    tab.classList.add('active');
-                    const tabContent = document.getElementById(`${tab.dataset.tab}-tab`);
-                    tabContent.classList.remove('hidden');
-                });
-            });
-            
-            // Save button
-            modal.querySelector('.btn-save').addEventListener('click', () => {
-                this.saveCustomizationSettings(modal);
-                modal.classList.remove('open');
-            });
-            
-            // Reset button
-            modal.querySelector('.btn-reset').addEventListener('click', () => {
-                if (confirm('¿Estás seguro de que quieres restablecer todos los ajustes personalizados?')) {
-                    this.resetCustomizationSettings();
-                    modal.classList.remove('open');
-                }
-            });
-            
-            // Layout option changes
-            const layoutOptions = modal.querySelectorAll('input[name="layout"]');
-            layoutOptions.forEach(option => {
-                option.addEventListener('change', () => {
-                    this.updateLayoutPreview(option.value);
-                });
-            });
-            
-            // Column width slider
-            const columnSlider = modal.querySelector('#column-width');
-            if (columnSlider) {
-                columnSlider.addEventListener('input', () => {
-                    const value = columnSlider.value;
-                    modal.querySelector('#column-value').textContent = `${value}/12`;
-                });
-            }
-            
-            // Theme options
-            modal.querySelectorAll('.color-option').forEach(option => {
-                option.addEventListener('click', () => {
-                    modal.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
-                    option.classList.add('selected');
-                });
-            });
-            
-            modal.querySelectorAll('.effect-option').forEach(option => {
-                option.addEventListener('click', () => {
-                    modal.querySelectorAll('.effect-option').forEach(o => o.classList.remove('selected'));
-                    option.classList.add('selected');
-                });
-            });
-            
-            modal.querySelectorAll('.card-option').forEach(option => {
-                option.addEventListener('click', () => {
-                    modal.querySelectorAll('.card-option').forEach(o => o.classList.remove('selected'));
-                    option.classList.add('selected');
-                });
-            });
+
+      document.body.appendChild(modal);
+
+      // Add event listeners
+      modal.querySelector('.modal-close').addEventListener('click', () => {
+        modal.classList.remove('open');
+      });
+
+      // Tab navigation
+      const tabs = modal.querySelectorAll('.tab-btn');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Deactivate all tabs
+          tabs.forEach(t => t.classList.remove('active'));
+          modal.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+          // Activate selected tab
+          tab.classList.add('active');
+          const tabContent = document.getElementById(`${tab.dataset.tab}-tab`);
+          tabContent.classList.remove('hidden');
+        });
+      });
+
+      // Save button
+      modal.querySelector('.btn-save').addEventListener('click', () => {
+        this.saveCustomizationSettings(modal);
+        modal.classList.remove('open');
+      });
+
+      // Reset button
+      modal.querySelector('.btn-reset').addEventListener('click', () => {
+        if (confirm('¿Estás seguro de que quieres restablecer todos los ajustes personalizados?')) {
+          this.resetCustomizationSettings();
+          modal.classList.remove('open');
         }
-        
-        // Update widget toggles
-        this.updateWidgetToggles(modal);
-        
-        // Update theme settings
-        this.updateThemeSettings(modal);
-        
-        // Open the modal
-        modal.classList.add('open');
+      });
+
+      // Layout option changes
+      const layoutOptions = modal.querySelectorAll('input[name="layout"]');
+      layoutOptions.forEach(option => {
+        option.addEventListener('change', () => {
+          this.updateLayoutPreview(option.value);
+        });
+      });
+
+      // Column width slider
+      const columnSlider = modal.querySelector('#column-width');
+      if (columnSlider) {
+        columnSlider.addEventListener('input', () => {
+          const value = columnSlider.value;
+          modal.querySelector('#column-value').textContent = `${value}/12`;
+        });
+      }
+
+      // Theme options
+      modal.querySelectorAll('.color-option').forEach(option => {
+        option.addEventListener('click', () => {
+          modal.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+          option.classList.add('selected');
+        });
+      });
+
+      modal.querySelectorAll('.effect-option').forEach(option => {
+        option.addEventListener('click', () => {
+          modal.querySelectorAll('.effect-option').forEach(o => o.classList.remove('selected'));
+          option.classList.add('selected');
+        });
+      });
+
+      modal.querySelectorAll('.card-option').forEach(option => {
+        option.addEventListener('click', () => {
+          modal.querySelectorAll('.card-option').forEach(o => o.classList.remove('selected'));
+          option.classList.add('selected');
+        });
+      });
     }
-    
-    updateWidgetToggles(modal) {
-        const container = modal.querySelector('.widget-toggles');
-        if (!container) return;
-        
-        container.innerHTML = '';
-        
-        // Get all available widgets
-        const dashboard = document.querySelector('.dashboard-widgets');
-        if (!dashboard) return;
-        
-        const widgets = dashboard.querySelectorAll('.widget');
-        
-        widgets.forEach(widget => {
-            const widgetId = widget.id;
-            const widgetTitle = widget.querySelector('.widget-title')?.textContent || 
-                               widget.querySelector('.card-title')?.textContent || 
+
+    // Update widget toggles
+    this.updateWidgetToggles(modal);
+
+    // Update theme settings
+    this.updateThemeSettings(modal);
+
+    // Open the modal
+    modal.classList.add('open');
+  }
+
+  updateWidgetToggles(modal) {
+    const container = modal.querySelector('.widget-toggles');
+    if (!container) {return;}
+
+    container.innerHTML = '';
+
+    // Get all available widgets
+    const dashboard = document.querySelector('.dashboard-widgets');
+    if (!dashboard) {return;}
+
+    const widgets = dashboard.querySelectorAll('.widget');
+
+    widgets.forEach(widget => {
+      const widgetId = widget.id;
+      const widgetTitle = widget.querySelector('.widget-title')?.textContent ||
+                               widget.querySelector('.card-title')?.textContent ||
                                'Widget';
-            
-            // Create toggle item
-            const toggleItem = document.createElement('div');
-            toggleItem.className = 'widget-toggle-item';
-            toggleItem.innerHTML = `
+
+      // Create toggle item
+      const toggleItem = document.createElement('div');
+      toggleItem.className = 'widget-toggle-item';
+      toggleItem.innerHTML = `
                 <div class="toggle-info">
                     <span class="toggle-title">${widgetTitle}</span>
                     <span class="toggle-id">${widgetId}</span>
@@ -501,230 +501,230 @@ class DashboardCustomizer {
                     <span class="slider"></span>
                 </label>
             `;
-            
-            // Add event listener
-            toggleItem.querySelector(`#toggle-${widgetId}`).addEventListener('change', (e) => {
-                this.toggleWidgetVisibility(widgetId, e.target.checked);
-            });
-            
-            container.appendChild(toggleItem);
-        });
+
+      // Add event listener
+      toggleItem.querySelector(`#toggle-${widgetId}`).addEventListener('change', (e) => {
+        this.toggleWidgetVisibility(widgetId, e.target.checked);
+      });
+
+      container.appendChild(toggleItem);
+    });
+  }
+
+  updateThemeSettings(modal) {
+    // Load saved theme settings
+    const themeSettings = this.loadThemeSettings();
+
+    // Apply color scheme selection
+    if (themeSettings.colorScheme) {
+      modal.querySelectorAll('.color-option').forEach(option => {
+        option.classList.toggle('selected', option.dataset.color === themeSettings.colorScheme);
+      });
     }
-    
-    updateThemeSettings(modal) {
-        // Load saved theme settings
-        const themeSettings = this.loadThemeSettings();
-        
-        // Apply color scheme selection
-        if (themeSettings.colorScheme) {
-            modal.querySelectorAll('.color-option').forEach(option => {
-                option.classList.toggle('selected', option.dataset.color === themeSettings.colorScheme);
-            });
-        }
-        
-        // Apply background effect selection
-        if (themeSettings.backgroundEffect) {
-            modal.querySelectorAll('.effect-option').forEach(option => {
-                option.classList.toggle('selected', option.dataset.effect === themeSettings.backgroundEffect);
-            });
-        }
-        
-        // Apply card style selection
-        if (themeSettings.cardStyle) {
-            modal.querySelectorAll('.card-option').forEach(option => {
-                option.classList.toggle('selected', option.dataset.style === themeSettings.cardStyle);
-            });
-        }
+
+    // Apply background effect selection
+    if (themeSettings.backgroundEffect) {
+      modal.querySelectorAll('.effect-option').forEach(option => {
+        option.classList.toggle('selected', option.dataset.effect === themeSettings.backgroundEffect);
+      });
     }
-    
-    saveCustomizationSettings(modal) {
-        // Save layout type
-        const layoutType = modal.querySelector('input[name="layout"]:checked')?.value || 'grid';
-        
-        // Save column width
-        const columnWidth = modal.querySelector('#column-width')?.value || 6;
-        
-        // Save theme settings
-        const colorScheme = modal.querySelector('.color-option.selected')?.dataset.color || 'default';
-        const backgroundEffect = modal.querySelector('.effect-option.selected')?.dataset.effect || 'none';
-        const cardStyle = modal.querySelector('.card-option.selected')?.dataset.style || 'glass';
-        
-        const themeSettings = {
-            colorScheme,
-            backgroundEffect,
-            cardStyle
-        };
-        
-        // Save to localStorage
-        localStorage.setItem('bf-layout-type', layoutType);
-        localStorage.setItem('bf-column-width', columnWidth);
-        localStorage.setItem('bf-theme-settings', JSON.stringify(themeSettings));
-        
-        // Apply settings
-        this.applyLayoutType(layoutType);
-        this.applyColumnWidth(columnWidth);
-        this.applyThemeSettings(themeSettings);
-        
-        // Notify success
-        this.showToast('Configuración guardada con éxito');
+
+    // Apply card style selection
+    if (themeSettings.cardStyle) {
+      modal.querySelectorAll('.card-option').forEach(option => {
+        option.classList.toggle('selected', option.dataset.style === themeSettings.cardStyle);
+      });
     }
-    
-    resetCustomizationSettings() {
-        // Clear layout settings
-        localStorage.removeItem(this.layoutKey);
-        localStorage.removeItem(this.visibilityKey);
-        localStorage.removeItem('bf-layout-type');
-        localStorage.removeItem('bf-column-width');
-        localStorage.removeItem('bf-theme-settings');
-        
-        // Reset widget settings
-        this.widgetSettings = {};
-        
-        // Reset layout settings
-        this.layoutSettings = [];
-        
-        // Reload the page to apply defaults
-        window.location.reload();
+  }
+
+  saveCustomizationSettings(modal) {
+    // Save layout type
+    const layoutType = modal.querySelector('input[name="layout"]:checked')?.value || 'grid';
+
+    // Save column width
+    const columnWidth = modal.querySelector('#column-width')?.value || 6;
+
+    // Save theme settings
+    const colorScheme = modal.querySelector('.color-option.selected')?.dataset.color || 'default';
+    const backgroundEffect = modal.querySelector('.effect-option.selected')?.dataset.effect || 'none';
+    const cardStyle = modal.querySelector('.card-option.selected')?.dataset.style || 'glass';
+
+    const themeSettings = {
+      colorScheme,
+      backgroundEffect,
+      cardStyle
+    };
+
+    // Save to localStorage
+    localStorage.setItem('bf-layout-type', layoutType);
+    localStorage.setItem('bf-column-width', columnWidth);
+    localStorage.setItem('bf-theme-settings', JSON.stringify(themeSettings));
+
+    // Apply settings
+    this.applyLayoutType(layoutType);
+    this.applyColumnWidth(columnWidth);
+    this.applyThemeSettings(themeSettings);
+
+    // Notify success
+    this.showToast('Configuración guardada con éxito');
+  }
+
+  resetCustomizationSettings() {
+    // Clear layout settings
+    localStorage.removeItem(this.layoutKey);
+    localStorage.removeItem(this.visibilityKey);
+    localStorage.removeItem('bf-layout-type');
+    localStorage.removeItem('bf-column-width');
+    localStorage.removeItem('bf-theme-settings');
+
+    // Reset widget settings
+    this.widgetSettings = {};
+
+    // Reset layout settings
+    this.layoutSettings = [];
+
+    // Reload the page to apply defaults
+    window.location.reload();
+  }
+
+  updateLayoutPreview(layoutType) {
+    // Show/hide column settings based on layout type
+    const columnSettings = document.querySelector('.column-settings');
+    if (columnSettings) {
+      columnSettings.style.display = layoutType === 'columns' ? 'block' : 'none';
     }
-    
-    updateLayoutPreview(layoutType) {
-        // Show/hide column settings based on layout type
-        const columnSettings = document.querySelector('.column-settings');
-        if (columnSettings) {
-            columnSettings.style.display = layoutType === 'columns' ? 'block' : 'none';
-        }
+  }
+
+  applyLayoutType(layoutType) {
+    const dashboard = document.querySelector('.dashboard-widgets');
+    if (!dashboard) {return;}
+
+    // Remove existing layout classes
+    dashboard.classList.remove('layout-grid', 'layout-stack', 'layout-columns');
+
+    // Add selected layout class
+    dashboard.classList.add(`layout-${layoutType}`);
+  }
+
+  applyColumnWidth(width) {
+    document.documentElement.style.setProperty('--dashboard-column-width', `${width}/12`);
+  }
+
+  applyThemeSettings(settings) {
+    const { colorScheme, backgroundEffect, cardStyle } = settings;
+
+    // Apply color scheme
+    document.body.dataset.colorScheme = colorScheme;
+
+    // Apply card style
+    document.body.dataset.cardStyle = cardStyle;
+
+    // Apply background effect
+    this.applyBackgroundEffect(backgroundEffect);
+  }
+
+  applyBackgroundEffect(effect) {
+    // Remove existing effect
+    const existingEffect = document.getElementById('background-effect');
+    if (existingEffect) {
+      existingEffect.remove();
     }
-    
-    applyLayoutType(layoutType) {
-        const dashboard = document.querySelector('.dashboard-widgets');
-        if (!dashboard) return;
-        
-        // Remove existing layout classes
-        dashboard.classList.remove('layout-grid', 'layout-stack', 'layout-columns');
-        
-        // Add selected layout class
-        dashboard.classList.add(`layout-${layoutType}`);
+
+    // Add new effect if not 'none'
+    if (effect && effect !== 'none') {
+      const effectElement = document.createElement('div');
+      effectElement.id = 'background-effect';
+      effectElement.className = `bg-effect bg-effect-${effect}`;
+      document.body.appendChild(effectElement);
+
+      // Initialize the effect
+      switch (effect) {
+        case 'particles':
+          this.initParticlesEffect(effectElement);
+          break;
+        case 'gradient':
+          this.initGradientEffect(effectElement);
+          break;
+        case 'waves':
+          this.initWavesEffect(effectElement);
+          break;
+      }
     }
-    
-    applyColumnWidth(width) {
-        document.documentElement.style.setProperty('--dashboard-column-width', `${width}/12`);
+  }
+
+  initParticlesEffect(element) {
+    // Basic particles effect
+    element.innerHTML = '';
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.animationDuration = `${Math.random() * 30 + 10}s`;
+      particle.style.animationDelay = `${Math.random() * 5}s`;
+      element.appendChild(particle);
     }
-    
-    applyThemeSettings(settings) {
-        const { colorScheme, backgroundEffect, cardStyle } = settings;
-        
-        // Apply color scheme
-        document.body.dataset.colorScheme = colorScheme;
-        
-        // Apply card style
-        document.body.dataset.cardStyle = cardStyle;
-        
-        // Apply background effect
-        this.applyBackgroundEffect(backgroundEffect);
+  }
+
+  initGradientEffect(element) {
+    element.innerHTML = '<div class="gradient-animation"></div>';
+  }
+
+  initWavesEffect(element) {
+    for (let i = 1; i <= 3; i++) {
+      const wave = document.createElement('div');
+      wave.className = `wave wave-${i}`;
+      element.appendChild(wave);
     }
-    
-    applyBackgroundEffect(effect) {
-        // Remove existing effect
-        const existingEffect = document.getElementById('background-effect');
-        if (existingEffect) {
-            existingEffect.remove();
-        }
-        
-        // Add new effect if not 'none'
-        if (effect && effect !== 'none') {
-            const effectElement = document.createElement('div');
-            effectElement.id = 'background-effect';
-            effectElement.className = `bg-effect bg-effect-${effect}`;
-            document.body.appendChild(effectElement);
-            
-            // Initialize the effect
-            switch (effect) {
-                case 'particles':
-                    this.initParticlesEffect(effectElement);
-                    break;
-                case 'gradient':
-                    this.initGradientEffect(effectElement);
-                    break;
-                case 'waves':
-                    this.initWavesEffect(effectElement);
-                    break;
-            }
-        }
+  }
+
+  loadLayoutSettings() {
+    try {
+      const saved = localStorage.getItem(this.layoutKey);
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error('Error loading layout settings', e);
+      return [];
     }
-    
-    initParticlesEffect(element) {
-        // Basic particles effect
-        element.innerHTML = '';
-        for (let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
-            particle.style.animationDuration = `${Math.random() * 30 + 10}s`;
-            particle.style.animationDelay = `${Math.random() * 5}s`;
-            element.appendChild(particle);
-        }
+  }
+
+  loadWidgetSettings() {
+    try {
+      const saved = localStorage.getItem(this.visibilityKey);
+      return saved ? JSON.parse(saved) : {};
+    } catch (e) {
+      console.error('Error loading widget settings', e);
+      return {};
     }
-    
-    initGradientEffect(element) {
-        element.innerHTML = '<div class="gradient-animation"></div>';
+  }
+
+  loadThemeSettings() {
+    try {
+      const saved = localStorage.getItem('bf-theme-settings');
+      return saved ? JSON.parse(saved) : {
+        colorScheme: 'default',
+        backgroundEffect: 'none',
+        cardStyle: 'glass'
+      };
+    } catch (e) {
+      console.error('Error loading theme settings', e);
+      return {
+        colorScheme: 'default',
+        backgroundEffect: 'none',
+        cardStyle: 'glass'
+      };
     }
-    
-    initWavesEffect(element) {
-        for (let i = 1; i <= 3; i++) {
-            const wave = document.createElement('div');
-            wave.className = `wave wave-${i}`;
-            element.appendChild(wave);
-        }
-    }
-    
-    loadLayoutSettings() {
-        try {
-            const saved = localStorage.getItem(this.layoutKey);
-            return saved ? JSON.parse(saved) : [];
-        } catch (e) {
-            console.error('Error loading layout settings', e);
-            return [];
-        }
-    }
-    
-    loadWidgetSettings() {
-        try {
-            const saved = localStorage.getItem(this.visibilityKey);
-            return saved ? JSON.parse(saved) : {};
-        } catch (e) {
-            console.error('Error loading widget settings', e);
-            return {};
-        }
-    }
-    
-    loadThemeSettings() {
-        try {
-            const saved = localStorage.getItem('bf-theme-settings');
-            return saved ? JSON.parse(saved) : {
-                colorScheme: 'default',
-                backgroundEffect: 'none',
-                cardStyle: 'glass'
-            };
-        } catch (e) {
-            console.error('Error loading theme settings', e);
-            return {
-                colorScheme: 'default',
-                backgroundEffect: 'none',
-                cardStyle: 'glass'
-            };
-        }
-    }
-    
-    saveWidgetSettings() {
-        localStorage.setItem(this.visibilityKey, JSON.stringify(this.widgetSettings));
-    }
-    
-    showToast(message, type = 'success') {
-        // Create toast element
-        const toast = document.createElement('div');
-        toast.className = `dashboard-toast toast-${type}`;
-        toast.innerHTML = `
+  }
+
+  saveWidgetSettings() {
+    localStorage.setItem(this.visibilityKey, JSON.stringify(this.widgetSettings));
+  }
+
+  showToast(message, type = 'success') {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `dashboard-toast toast-${type}`;
+    toast.innerHTML = `
             <div class="toast-content">
                 <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
                 <span>${message}</span>
@@ -733,27 +733,27 @@ class DashboardCustomizer {
                 <i class="fas fa-times"></i>
             </button>
         `;
-        
-        // Add to document
-        document.body.appendChild(toast);
-        
-        // Add close event
-        toast.querySelector('.toast-close').addEventListener('click', () => {
-            toast.classList.add('hiding');
-            setTimeout(() => toast.remove(), 300);
-        });
-        
-        // Show toast with animation
-        setTimeout(() => toast.classList.add('show'), 10);
-        
-        // Auto hide after 3 seconds
-        setTimeout(() => {
-            if (document.body.contains(toast)) {
-                toast.classList.add('hiding');
-                setTimeout(() => toast.remove(), 300);
-            }
-        }, 3000);
-    }
+
+    // Add to document
+    document.body.appendChild(toast);
+
+    // Add close event
+    toast.querySelector('.toast-close').addEventListener('click', () => {
+      toast.classList.add('hiding');
+      setTimeout(() => toast.remove(), 300);
+    });
+
+    // Show toast with animation
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    // Auto hide after 3 seconds
+    setTimeout(() => {
+      if (document.body.contains(toast)) {
+        toast.classList.add('hiding');
+        setTimeout(() => toast.remove(), 300);
+      }
+    }, 3000);
+  }
 }
 
 // Add styles for customizable dashboard

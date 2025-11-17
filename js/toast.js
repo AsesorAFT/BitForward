@@ -1,7 +1,7 @@
 /**
  * BitForward - Toast Notification System
  * Quick Win #4: Sistema de notificaciones moderno (+20% mejor UX)
- * 
+ *
  * Features:
  * - Toast notifications elegantes
  * - Múltiples tipos (success, error, info, warning)
@@ -12,43 +12,43 @@
  */
 
 class ToastManager {
-    constructor() {
-        this.container = null;
-        this.toasts = [];
-        this.maxToasts = 5;
-        this.defaultDuration = 5000;
-        this.position = 'top-right'; // top-right, top-left, bottom-right, bottom-left
-        
-        this.init();
-    }
+  constructor() {
+    this.container = null;
+    this.toasts = [];
+    this.maxToasts = 5;
+    this.defaultDuration = 5000;
+    this.position = 'top-right'; // top-right, top-left, bottom-right, bottom-left
 
-    /**
+    this.init();
+  }
+
+  /**
      * Inicializar el contenedor de toasts
      */
-    init() {
-        // Crear contenedor si no existe
-        if (!this.container) {
-            this.container = document.createElement('div');
-            this.container.id = 'toast-container';
-            this.container.className = `toast-container ${this.position}`;
-            document.body.appendChild(this.container);
-        }
-
-        // Inject CSS
-        this.injectStyles();
-        
-        console.log('🎨 Toast Manager inicializado - Quick Win #4');
+  init() {
+    // Crear contenedor si no existe
+    if (!this.container) {
+      this.container = document.createElement('div');
+      this.container.id = 'toast-container';
+      this.container.className = `toast-container ${this.position}`;
+      document.body.appendChild(this.container);
     }
 
-    /**
+    // Inject CSS
+    this.injectStyles();
+
+    console.log('🎨 Toast Manager inicializado - Quick Win #4');
+  }
+
+  /**
      * Inyectar estilos CSS
      */
-    injectStyles() {
-        if (document.getElementById('toast-styles')) return;
+  injectStyles() {
+    if (document.getElementById('toast-styles')) {return;}
 
-        const style = document.createElement('style');
-        style.id = 'toast-styles';
-        style.textContent = `
+    const style = document.createElement('style');
+    style.id = 'toast-styles';
+    style.textContent = `
             .toast-container {
                 position: fixed;
                 z-index: 9999;
@@ -230,190 +230,190 @@ class ToastManager {
                 }
             }
         `;
-        
-        document.head.appendChild(style);
-    }
 
-    /**
+    document.head.appendChild(style);
+  }
+
+  /**
      * Mostrar un toast
      * @param {Object} options - Configuración del toast
      * @returns {string} Toast ID
      */
-    show(options) {
-        const {
-            type = 'info',
-            title = '',
-            message = '',
-            duration = this.defaultDuration,
-            closeable = true,
-            onClose = null
-        } = options;
+  show(options) {
+    const {
+      type = 'info',
+      title = '',
+      message = '',
+      duration = this.defaultDuration,
+      closeable = true,
+      onClose = null
+    } = options;
 
-        // Limitar número de toasts visibles
-        if (this.toasts.length >= this.maxToasts) {
-            this.removeToast(this.toasts[0].id);
-        }
-
-        // Crear toast ID único
-        const toastId = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-
-        // Crear elemento toast
-        const toast = this.createToastElement(toastId, type, title, message, duration, closeable);
-
-        // Agregar al contenedor
-        this.container.appendChild(toast);
-
-        // Guardar referencia
-        const toastData = {
-            id: toastId,
-            element: toast,
-            timer: null,
-            onClose
-        };
-        this.toasts.push(toastData);
-
-        // Auto-dismiss
-        if (duration > 0) {
-            toastData.timer = setTimeout(() => {
-                this.removeToast(toastId);
-            }, duration);
-        }
-
-        return toastId;
+    // Limitar número de toasts visibles
+    if (this.toasts.length >= this.maxToasts) {
+      this.removeToast(this.toasts[0].id);
     }
 
-    /**
+    // Crear toast ID único
+    const toastId = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+    // Crear elemento toast
+    const toast = this.createToastElement(toastId, type, title, message, duration, closeable);
+
+    // Agregar al contenedor
+    this.container.appendChild(toast);
+
+    // Guardar referencia
+    const toastData = {
+      id: toastId,
+      element: toast,
+      timer: null,
+      onClose
+    };
+    this.toasts.push(toastData);
+
+    // Auto-dismiss
+    if (duration > 0) {
+      toastData.timer = setTimeout(() => {
+        this.removeToast(toastId);
+      }, duration);
+    }
+
+    return toastId;
+  }
+
+  /**
      * Crear elemento HTML del toast
      */
-    createToastElement(id, type, title, message, duration, closeable) {
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.id = id;
-        toast.style.position = 'relative';
+  createToastElement(id, type, title, message, duration, closeable) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.id = id;
+    toast.style.position = 'relative';
 
-        // Icon
-        const icon = this.getIcon(type);
-        const iconEl = document.createElement('div');
-        iconEl.className = `toast-icon ${type}`;
-        iconEl.innerHTML = icon;
+    // Icon
+    const icon = this.getIcon(type);
+    const iconEl = document.createElement('div');
+    iconEl.className = `toast-icon ${type}`;
+    iconEl.innerHTML = icon;
 
-        // Content
-        const content = document.createElement('div');
-        content.className = 'toast-content';
-        
-        if (title) {
-            const titleEl = document.createElement('div');
-            titleEl.className = 'toast-title';
-            titleEl.textContent = title;
-            content.appendChild(titleEl);
-        }
-        
-        if (message) {
-            const messageEl = document.createElement('div');
-            messageEl.className = 'toast-message';
-            messageEl.textContent = message;
-            content.appendChild(messageEl);
-        }
+    // Content
+    const content = document.createElement('div');
+    content.className = 'toast-content';
 
-        // Close button
-        let closeBtn;
-        if (closeable) {
-            closeBtn = document.createElement('button');
-            closeBtn.className = 'toast-close';
-            closeBtn.innerHTML = '×';
-            closeBtn.onclick = () => this.removeToast(id);
-        }
-
-        // Progress bar
-        let progressBar;
-        if (duration > 0) {
-            progressBar = document.createElement('div');
-            progressBar.className = 'toast-progress';
-            progressBar.style.setProperty('--duration', `${duration}ms`);
-        }
-
-        // Ensamblar
-        toast.appendChild(iconEl);
-        toast.appendChild(content);
-        if (closeBtn) toast.appendChild(closeBtn);
-        if (progressBar) toast.appendChild(progressBar);
-
-        return toast;
+    if (title) {
+      const titleEl = document.createElement('div');
+      titleEl.className = 'toast-title';
+      titleEl.textContent = title;
+      content.appendChild(titleEl);
     }
 
-    /**
+    if (message) {
+      const messageEl = document.createElement('div');
+      messageEl.className = 'toast-message';
+      messageEl.textContent = message;
+      content.appendChild(messageEl);
+    }
+
+    // Close button
+    let closeBtn;
+    if (closeable) {
+      closeBtn = document.createElement('button');
+      closeBtn.className = 'toast-close';
+      closeBtn.innerHTML = '×';
+      closeBtn.onclick = () => this.removeToast(id);
+    }
+
+    // Progress bar
+    let progressBar;
+    if (duration > 0) {
+      progressBar = document.createElement('div');
+      progressBar.className = 'toast-progress';
+      progressBar.style.setProperty('--duration', `${duration}ms`);
+    }
+
+    // Ensamblar
+    toast.appendChild(iconEl);
+    toast.appendChild(content);
+    if (closeBtn) {toast.appendChild(closeBtn);}
+    if (progressBar) {toast.appendChild(progressBar);}
+
+    return toast;
+  }
+
+  /**
      * Obtener icono según tipo
      */
-    getIcon(type) {
-        const icons = {
-            success: '✓',
-            error: '✕',
-            warning: '⚠',
-            info: 'ℹ'
-        };
-        return icons[type] || icons.info;
-    }
+  getIcon(type) {
+    const icons = {
+      success: '✓',
+      error: '✕',
+      warning: '⚠',
+      info: 'ℹ'
+    };
+    return icons[type] || icons.info;
+  }
 
-    /**
+  /**
      * Remover un toast
      */
-    removeToast(toastId) {
-        const toastData = this.toasts.find(t => t.id === toastId);
-        if (!toastData) return;
+  removeToast(toastId) {
+    const toastData = this.toasts.find(t => t.id === toastId);
+    if (!toastData) {return;}
 
-        // Limpiar timer
-        if (toastData.timer) {
-            clearTimeout(toastData.timer);
-        }
-
-        // Animar salida
-        toastData.element.classList.add('removing');
-
-        // Remover del DOM después de la animación
-        setTimeout(() => {
-            toastData.element.remove();
-            this.toasts = this.toasts.filter(t => t.id !== toastId);
-
-            // Callback
-            if (toastData.onClose) {
-                toastData.onClose();
-            }
-        }, 300);
+    // Limpiar timer
+    if (toastData.timer) {
+      clearTimeout(toastData.timer);
     }
 
-    /**
+    // Animar salida
+    toastData.element.classList.add('removing');
+
+    // Remover del DOM después de la animación
+    setTimeout(() => {
+      toastData.element.remove();
+      this.toasts = this.toasts.filter(t => t.id !== toastId);
+
+      // Callback
+      if (toastData.onClose) {
+        toastData.onClose();
+      }
+    }, 300);
+  }
+
+  /**
      * Shortcuts para tipos comunes
      */
-    success(message, title = 'Éxito', duration) {
-        return this.show({ type: 'success', title, message, duration });
-    }
+  success(message, title = 'Éxito', duration) {
+    return this.show({ type: 'success', title, message, duration });
+  }
 
-    error(message, title = 'Error', duration) {
-        return this.show({ type: 'error', title, message, duration });
-    }
+  error(message, title = 'Error', duration) {
+    return this.show({ type: 'error', title, message, duration });
+  }
 
-    warning(message, title = 'Advertencia', duration) {
-        return this.show({ type: 'warning', title, message, duration });
-    }
+  warning(message, title = 'Advertencia', duration) {
+    return this.show({ type: 'warning', title, message, duration });
+  }
 
-    info(message, title = 'Información', duration) {
-        return this.show({ type: 'info', title, message, duration });
-    }
+  info(message, title = 'Información', duration) {
+    return this.show({ type: 'info', title, message, duration });
+  }
 
-    /**
+  /**
      * Remover todos los toasts
      */
-    clear() {
-        this.toasts.forEach(toast => this.removeToast(toast.id));
-    }
+  clear() {
+    this.toasts.forEach(toast => this.removeToast(toast.id));
+  }
 
-    /**
+  /**
      * Cambiar posición del contenedor
      */
-    setPosition(position) {
-        this.position = position;
-        this.container.className = `toast-container ${position}`;
-    }
+  setPosition(position) {
+    this.position = position;
+    this.container.className = `toast-container ${position}`;
+  }
 }
 
 // Crear instancia global
@@ -442,5 +442,5 @@ console.log('🎨 Toast Notifications activadas - Quick Win #4 (+20% UX)');
 
 // Export
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = ToastManager;
+  module.exports = ToastManager;
 }

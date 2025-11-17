@@ -4,40 +4,40 @@
  */
 
 class NotificationSystem {
-    constructor() {
-        this.notifications = [];
-        this.maxNotifications = 50; // Max number to store
-        this.unreadCount = 0;
-        
-        // Initialize DOM elements
-        this.initializeUI();
-        
-        // Load saved notifications
-        this.loadNotifications();
-        
-        // Setup event listeners
-        this.setupListeners();
-        
-        // Check for new notifications periodically
-        this.startPolling();
+  constructor() {
+    this.notifications = [];
+    this.maxNotifications = 50; // Max number to store
+    this.unreadCount = 0;
+
+    // Initialize DOM elements
+    this.initializeUI();
+
+    // Load saved notifications
+    this.loadNotifications();
+
+    // Setup event listeners
+    this.setupListeners();
+
+    // Check for new notifications periodically
+    this.startPolling();
+  }
+
+  initializeUI() {
+    // Create notification panel if it doesn't exist
+    if (!document.querySelector('.notification-panel')) {
+      this.createNotificationPanel();
     }
-    
-    initializeUI() {
-        // Create notification panel if it doesn't exist
-        if (!document.querySelector('.notification-panel')) {
-            this.createNotificationPanel();
-        }
-        
-        // Create notification bell in header
-        if (!document.querySelector('.notification-bell')) {
-            this.createNotificationBell();
-        }
+
+    // Create notification bell in header
+    if (!document.querySelector('.notification-bell')) {
+      this.createNotificationBell();
     }
-    
-    createNotificationPanel() {
-        const panel = document.createElement('div');
-        panel.className = 'notification-panel';
-        panel.innerHTML = `
+  }
+
+  createNotificationPanel() {
+    const panel = document.createElement('div');
+    panel.className = 'notification-panel';
+    panel.innerHTML = `
             <div class="notification-header">
                 <h3>Notificaciones</h3>
                 <div class="notification-actions">
@@ -58,198 +58,198 @@ class NotificationSystem {
                 <button class="clear-all">Limpiar todo</button>
             </div>
         `;
-        
-        document.body.appendChild(panel);
-        
-        // Add event listeners to notification panel buttons
-        panel.querySelector('.mark-all-read').addEventListener('click', () => this.markAllAsRead());
-        panel.querySelector('.close-btn').addEventListener('click', () => this.togglePanel());
-        panel.querySelector('.clear-all').addEventListener('click', () => this.clearAllNotifications());
-        
-        // Filter buttons
-        const filterButtons = panel.querySelectorAll('.notification-filters button');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-                this.filterNotifications(e.target.dataset.filter);
-            });
-        });
-        
-        // Load more button
-        panel.querySelector('.load-more').addEventListener('click', () => this.loadMoreNotifications());
-        
-        // Add theme transition class
-        panel.classList.add('theme-transition');
-    }
-    
-    createNotificationBell() {
-        // Find header element
-        const header = document.querySelector('header');
-        if (!header) return;
-        
-        // Find user menu or action area in header
-        const userArea = header.querySelector('.user-actions, .user-menu, .header-actions') || 
+
+    document.body.appendChild(panel);
+
+    // Add event listeners to notification panel buttons
+    panel.querySelector('.mark-all-read').addEventListener('click', () => this.markAllAsRead());
+    panel.querySelector('.close-btn').addEventListener('click', () => this.togglePanel());
+    panel.querySelector('.clear-all').addEventListener('click', () => this.clearAllNotifications());
+
+    // Filter buttons
+    const filterButtons = panel.querySelectorAll('.notification-filters button');
+    filterButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        this.filterNotifications(e.target.dataset.filter);
+      });
+    });
+
+    // Load more button
+    panel.querySelector('.load-more').addEventListener('click', () => this.loadMoreNotifications());
+
+    // Add theme transition class
+    panel.classList.add('theme-transition');
+  }
+
+  createNotificationBell() {
+    // Find header element
+    const header = document.querySelector('header');
+    if (!header) {return;}
+
+    // Find user menu or action area in header
+    const userArea = header.querySelector('.user-actions, .user-menu, .header-actions') ||
                         header.querySelector('nav') || header;
-        
-        // Create notification bell element
-        const bell = document.createElement('div');
-        bell.className = 'notification-bell';
-        bell.innerHTML = `
+
+    // Create notification bell element
+    const bell = document.createElement('div');
+    bell.className = 'notification-bell';
+    bell.innerHTML = `
             <button class="notification-toggle">
                 <i class="fas fa-bell"></i>
                 <span class="notification-badge">0</span>
             </button>
         `;
-        
-        // Insert before the last child (usually user profile)
-        userArea.insertBefore(bell, userArea.lastElementChild);
-        
-        // Add event listener
-        bell.querySelector('.notification-toggle').addEventListener('click', () => this.togglePanel());
-        
-        // Add theme transition class
-        bell.classList.add('theme-transition');
+
+    // Insert before the last child (usually user profile)
+    userArea.insertBefore(bell, userArea.lastElementChild);
+
+    // Add event listener
+    bell.querySelector('.notification-toggle').addEventListener('click', () => this.togglePanel());
+
+    // Add theme transition class
+    bell.classList.add('theme-transition');
+  }
+
+  togglePanel() {
+    const panel = document.querySelector('.notification-panel');
+    if (panel.classList.contains('open')) {
+      panel.classList.remove('open');
+      // If panel is closing, mark viewed notifications as read
+      this.updateReadStatus();
+    } else {
+      panel.classList.add('open');
+      this.renderNotifications();
     }
-    
-    togglePanel() {
-        const panel = document.querySelector('.notification-panel');
-        if (panel.classList.contains('open')) {
-            panel.classList.remove('open');
-            // If panel is closing, mark viewed notifications as read
-            this.updateReadStatus();
-        } else {
-            panel.classList.add('open');
-            this.renderNotifications();
-        }
+  }
+
+  loadNotifications() {
+    // Try to load from localStorage first
+    const savedNotifications = localStorage.getItem('bf-notifications');
+    if (savedNotifications) {
+      this.notifications = JSON.parse(savedNotifications);
+      this.updateUnreadCount();
+      this.updateBadge();
     }
-    
-    loadNotifications() {
-        // Try to load from localStorage first
-        const savedNotifications = localStorage.getItem('bf-notifications');
-        if (savedNotifications) {
-            this.notifications = JSON.parse(savedNotifications);
-            this.updateUnreadCount();
-            this.updateBadge();
-        }
-        
-        // Demo data if no notifications exist
-        if (this.notifications.length === 0) {
-            this.addDemoNotifications();
-        }
+
+    // Demo data if no notifications exist
+    if (this.notifications.length === 0) {
+      this.addDemoNotifications();
     }
-    
-    addDemoNotifications() {
-        const now = new Date();
-        const demoNotifications = [
-            {
-                id: 'demo-1',
-                type: 'alert',
-                title: 'Alerta de Precio',
-                message: 'BTC ha subido más de 5% en las últimas 24 horas',
-                timestamp: now.getTime() - 1800000, // 30 minutes ago
-                read: false,
-                icon: 'fa-chart-line',
-                action: '/pages/portafolio.html'
-            },
-            {
-                id: 'demo-2',
-                type: 'transaction',
-                title: 'Transacción Completada',
-                message: 'Tu compra de 0.25 ETH se ha completado exitosamente',
-                timestamp: now.getTime() - 3600000, // 1 hour ago
-                read: true,
-                icon: 'fa-check-circle',
-                action: '/pages/contratos.html'
-            },
-            {
-                id: 'demo-3',
-                type: 'update',
-                title: 'Actualización de Sistema',
-                message: 'BitForward ha sido actualizado a la versión 2.5',
-                timestamp: now.getTime() - 86400000, // 1 day ago
-                read: true,
-                icon: 'fa-sync',
-                action: null
-            }
-        ];
-        
-        this.notifications = demoNotifications;
-        this.saveNotifications();
-        this.updateUnreadCount();
-        this.updateBadge();
+  }
+
+  addDemoNotifications() {
+    const now = new Date();
+    const demoNotifications = [
+      {
+        id: 'demo-1',
+        type: 'alert',
+        title: 'Alerta de Precio',
+        message: 'BTC ha subido más de 5% en las últimas 24 horas',
+        timestamp: now.getTime() - 1800000, // 30 minutes ago
+        read: false,
+        icon: 'fa-chart-line',
+        action: '/pages/portafolio.html'
+      },
+      {
+        id: 'demo-2',
+        type: 'transaction',
+        title: 'Transacción Completada',
+        message: 'Tu compra de 0.25 ETH se ha completado exitosamente',
+        timestamp: now.getTime() - 3600000, // 1 hour ago
+        read: true,
+        icon: 'fa-check-circle',
+        action: '/pages/contratos.html'
+      },
+      {
+        id: 'demo-3',
+        type: 'update',
+        title: 'Actualización de Sistema',
+        message: 'BitForward ha sido actualizado a la versión 2.5',
+        timestamp: now.getTime() - 86400000, // 1 day ago
+        read: true,
+        icon: 'fa-sync',
+        action: null
+      }
+    ];
+
+    this.notifications = demoNotifications;
+    this.saveNotifications();
+    this.updateUnreadCount();
+    this.updateBadge();
+  }
+
+  addNotification(notification) {
+    // Generate unique ID if not provided
+    if (!notification.id) {
+      notification.id = 'notif-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
     }
-    
-    addNotification(notification) {
-        // Generate unique ID if not provided
-        if (!notification.id) {
-            notification.id = 'notif-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-        }
-        
-        // Add timestamp if not provided
-        if (!notification.timestamp) {
-            notification.timestamp = Date.now();
-        }
-        
-        // Set as unread by default
-        if (notification.read === undefined) {
-            notification.read = false;
-        }
-        
-        // Add to beginning of array
-        this.notifications.unshift(notification);
-        
-        // Trim array if too long
-        if (this.notifications.length > this.maxNotifications) {
-            this.notifications = this.notifications.slice(0, this.maxNotifications);
-        }
-        
-        // Save notifications
-        this.saveNotifications();
-        
-        // Update UI
-        this.updateUnreadCount();
-        this.updateBadge();
-        this.showToast(notification);
-        
-        // If panel is open, re-render
-        const panel = document.querySelector('.notification-panel');
-        if (panel && panel.classList.contains('open')) {
-            this.renderNotifications();
-        }
-        
-        // Dispatch event
-        window.dispatchEvent(new CustomEvent('bf-notification-added', { 
-            detail: { notification } 
-        }));
+
+    // Add timestamp if not provided
+    if (!notification.timestamp) {
+      notification.timestamp = Date.now();
     }
-    
-    renderNotifications() {
-        const container = document.querySelector('.notifications-list');
-        if (!container) return;
-        
-        const activeFilter = document.querySelector('.notification-filters button.active').dataset.filter;
-        let filteredNotifications = this.getFilteredNotifications(activeFilter);
-        
-        // Show only the most recent 10 notifications initially
-        const notifications = filteredNotifications.slice(0, 10);
-        
-        if (notifications.length === 0) {
-            container.innerHTML = `<div class="no-notifications">No hay notificaciones</div>`;
-            return;
-        }
-        
-        container.innerHTML = '';
-        
-        notifications.forEach(notification => {
-            const notificationEl = document.createElement('div');
-            notificationEl.className = `notification-item ${notification.type} ${notification.read ? 'read' : 'unread'}`;
-            notificationEl.dataset.id = notification.id;
-            
-            // Calculate relative time
-            const relativeTime = this.getRelativeTime(notification.timestamp);
-            
-            notificationEl.innerHTML = `
+
+    // Set as unread by default
+    if (notification.read === undefined) {
+      notification.read = false;
+    }
+
+    // Add to beginning of array
+    this.notifications.unshift(notification);
+
+    // Trim array if too long
+    if (this.notifications.length > this.maxNotifications) {
+      this.notifications = this.notifications.slice(0, this.maxNotifications);
+    }
+
+    // Save notifications
+    this.saveNotifications();
+
+    // Update UI
+    this.updateUnreadCount();
+    this.updateBadge();
+    this.showToast(notification);
+
+    // If panel is open, re-render
+    const panel = document.querySelector('.notification-panel');
+    if (panel && panel.classList.contains('open')) {
+      this.renderNotifications();
+    }
+
+    // Dispatch event
+    window.dispatchEvent(new CustomEvent('bf-notification-added', {
+      detail: { notification }
+    }));
+  }
+
+  renderNotifications() {
+    const container = document.querySelector('.notifications-list');
+    if (!container) {return;}
+
+    const activeFilter = document.querySelector('.notification-filters button.active').dataset.filter;
+    const filteredNotifications = this.getFilteredNotifications(activeFilter);
+
+    // Show only the most recent 10 notifications initially
+    const notifications = filteredNotifications.slice(0, 10);
+
+    if (notifications.length === 0) {
+      container.innerHTML = '<div class="no-notifications">No hay notificaciones</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+
+    notifications.forEach(notification => {
+      const notificationEl = document.createElement('div');
+      notificationEl.className = `notification-item ${notification.type} ${notification.read ? 'read' : 'unread'}`;
+      notificationEl.dataset.id = notification.id;
+
+      // Calculate relative time
+      const relativeTime = this.getRelativeTime(notification.timestamp);
+
+      notificationEl.innerHTML = `
                 <div class="notification-icon">
                     <i class="fas ${notification.icon || this.getIconForType(notification.type)}"></i>
                 </div>
@@ -270,229 +270,229 @@ class NotificationSystem {
                     </button>
                 </div>
             `;
-            
-            container.appendChild(notificationEl);
-            
-            // Add event listeners
-            notificationEl.querySelector('.mark-read').addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.toggleReadStatus(notification.id);
-            });
-            
-            notificationEl.querySelector('.delete-notification').addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.removeNotification(notification.id);
-            });
-            
-            // Make entire notification clickable if it has an action
-            if (notification.action) {
-                notificationEl.addEventListener('click', () => {
-                    if (!notification.read) {
-                        this.markAsRead(notification.id);
-                    }
-                    window.location.href = notification.action;
-                });
-            }
+
+      container.appendChild(notificationEl);
+
+      // Add event listeners
+      notificationEl.querySelector('.mark-read').addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleReadStatus(notification.id);
+      });
+
+      notificationEl.querySelector('.delete-notification').addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.removeNotification(notification.id);
+      });
+
+      // Make entire notification clickable if it has an action
+      if (notification.action) {
+        notificationEl.addEventListener('click', () => {
+          if (!notification.read) {
+            this.markAsRead(notification.id);
+          }
+          window.location.href = notification.action;
         });
+      }
+    });
+  }
+
+  getIconForType(type) {
+    switch(type) {
+      case 'alert': return 'fa-exclamation-circle';
+      case 'transaction': return 'fa-exchange-alt';
+      case 'update': return 'fa-info-circle';
+      default: return 'fa-bell';
     }
-    
-    getIconForType(type) {
-        switch(type) {
-            case 'alert': return 'fa-exclamation-circle';
-            case 'transaction': return 'fa-exchange-alt';
-            case 'update': return 'fa-info-circle';
-            default: return 'fa-bell';
-        }
+  }
+
+  getRelativeTime(timestamp) {
+    const now = Date.now();
+    const diff = now - timestamp;
+
+    // Convert to seconds
+    const seconds = Math.floor(diff / 1000);
+
+    if (seconds < 60) {
+      return 'ahora';
+    } else if (seconds < 3600) {
+      const minutes = Math.floor(seconds / 60);
+      return `hace ${minutes} min`;
+    } else if (seconds < 86400) {
+      const hours = Math.floor(seconds / 3600);
+      return `hace ${hours}h`;
+    } else {
+      const days = Math.floor(seconds / 86400);
+      return `hace ${days}d`;
     }
-    
-    getRelativeTime(timestamp) {
-        const now = Date.now();
-        const diff = now - timestamp;
-        
-        // Convert to seconds
-        const seconds = Math.floor(diff / 1000);
-        
-        if (seconds < 60) {
-            return 'ahora';
-        } else if (seconds < 3600) {
-            const minutes = Math.floor(seconds / 60);
-            return `hace ${minutes} min`;
-        } else if (seconds < 86400) {
-            const hours = Math.floor(seconds / 3600);
-            return `hace ${hours}h`;
-        } else {
-            const days = Math.floor(seconds / 86400);
-            return `hace ${days}d`;
-        }
+  }
+
+  filterNotifications(filter) {
+    const container = document.querySelector('.notifications-list');
+    if (!container) {return;}
+
+    // Re-render with the new filter
+    this.renderNotifications();
+  }
+
+  getFilteredNotifications(filter) {
+    if (filter === 'all') {
+      return this.notifications;
     }
-    
-    filterNotifications(filter) {
-        const container = document.querySelector('.notifications-list');
-        if (!container) return;
-        
-        // Re-render with the new filter
-        this.renderNotifications();
+
+    return this.notifications.filter(notification => notification.type === filter);
+  }
+
+  markAsRead(id) {
+    const notification = this.notifications.find(n => n.id === id);
+    if (notification && !notification.read) {
+      notification.read = true;
+      this.saveNotifications();
+      this.updateUnreadCount();
+      this.updateBadge();
+
+      // Update UI if panel open
+      const notificationEl = document.querySelector(`.notification-item[data-id="${id}"]`);
+      if (notificationEl) {
+        notificationEl.classList.remove('unread');
+        notificationEl.classList.add('read');
+        notificationEl.querySelector('.mark-read i').className = 'fas fa-envelope-open';
+      }
     }
-    
-    getFilteredNotifications(filter) {
-        if (filter === 'all') {
-            return this.notifications;
-        }
-        
-        return this.notifications.filter(notification => notification.type === filter);
+  }
+
+  toggleReadStatus(id) {
+    const notification = this.notifications.find(n => n.id === id);
+    if (notification) {
+      notification.read = !notification.read;
+      this.saveNotifications();
+      this.updateUnreadCount();
+      this.updateBadge();
+
+      // Update UI
+      const notificationEl = document.querySelector(`.notification-item[data-id="${id}"]`);
+      if (notificationEl) {
+        notificationEl.classList.toggle('unread');
+        notificationEl.classList.toggle('read');
+        notificationEl.querySelector('.mark-read i').className = `fas ${notification.read ? 'fa-envelope-open' : 'fa-envelope'}`;
+      }
     }
-    
-    markAsRead(id) {
-        const notification = this.notifications.find(n => n.id === id);
-        if (notification && !notification.read) {
-            notification.read = true;
-            this.saveNotifications();
-            this.updateUnreadCount();
-            this.updateBadge();
-            
-            // Update UI if panel open
-            const notificationEl = document.querySelector(`.notification-item[data-id="${id}"]`);
-            if (notificationEl) {
-                notificationEl.classList.remove('unread');
-                notificationEl.classList.add('read');
-                notificationEl.querySelector('.mark-read i').className = 'fas fa-envelope-open';
-            }
-        }
+  }
+
+  markAllAsRead() {
+    let updated = false;
+
+    this.notifications.forEach(notification => {
+      if (!notification.read) {
+        notification.read = true;
+        updated = true;
+      }
+    });
+
+    if (updated) {
+      this.saveNotifications();
+      this.updateUnreadCount();
+      this.updateBadge();
+
+      // Update UI
+      const unreadNotifications = document.querySelectorAll('.notification-item.unread');
+      unreadNotifications.forEach(el => {
+        el.classList.remove('unread');
+        el.classList.add('read');
+        el.querySelector('.mark-read i').className = 'fas fa-envelope-open';
+      });
     }
-    
-    toggleReadStatus(id) {
-        const notification = this.notifications.find(n => n.id === id);
-        if (notification) {
-            notification.read = !notification.read;
-            this.saveNotifications();
-            this.updateUnreadCount();
-            this.updateBadge();
-            
-            // Update UI
-            const notificationEl = document.querySelector(`.notification-item[data-id="${id}"]`);
-            if (notificationEl) {
-                notificationEl.classList.toggle('unread');
-                notificationEl.classList.toggle('read');
-                notificationEl.querySelector('.mark-read i').className = `fas ${notification.read ? 'fa-envelope-open' : 'fa-envelope'}`;
-            }
-        }
+  }
+
+  updateReadStatus() {
+    // Mark notifications as read when panel is viewed
+    const visibleNotifications = document.querySelectorAll('.notification-item.unread');
+    visibleNotifications.forEach(el => {
+      const id = el.dataset.id;
+      this.markAsRead(id);
+    });
+  }
+
+  removeNotification(id) {
+    const index = this.notifications.findIndex(n => n.id === id);
+    if (index !== -1) {
+      // Check if it was unread before removing
+      const wasUnread = !this.notifications[index].read;
+
+      // Remove from array
+      this.notifications.splice(index, 1);
+      this.saveNotifications();
+
+      // Update UI
+      const notificationEl = document.querySelector(`.notification-item[data-id="${id}"]`);
+      if (notificationEl) {
+        notificationEl.classList.add('removing');
+        setTimeout(() => {
+          notificationEl.remove();
+
+          // Check if we need to show "no notifications" message
+          const container = document.querySelector('.notifications-list');
+          if (container && container.children.length === 0) {
+            container.innerHTML = '<div class="no-notifications">No hay notificaciones</div>';
+          }
+        }, 300);
+      }
+
+      // Update badge if needed
+      if (wasUnread) {
+        this.updateUnreadCount();
+        this.updateBadge();
+      }
     }
-    
-    markAllAsRead() {
-        let updated = false;
-        
-        this.notifications.forEach(notification => {
-            if (!notification.read) {
-                notification.read = true;
-                updated = true;
-            }
-        });
-        
-        if (updated) {
-            this.saveNotifications();
-            this.updateUnreadCount();
-            this.updateBadge();
-            
-            // Update UI
-            const unreadNotifications = document.querySelectorAll('.notification-item.unread');
-            unreadNotifications.forEach(el => {
-                el.classList.remove('unread');
-                el.classList.add('read');
-                el.querySelector('.mark-read i').className = 'fas fa-envelope-open';
-            });
-        }
+  }
+
+  clearAllNotifications() {
+    if (confirm('¿Estás seguro de que quieres eliminar todas las notificaciones?')) {
+      this.notifications = [];
+      this.saveNotifications();
+      this.updateUnreadCount();
+      this.updateBadge();
+
+      // Update UI
+      const container = document.querySelector('.notifications-list');
+      if (container) {
+        container.innerHTML = '<div class="no-notifications">No hay notificaciones</div>';
+      }
     }
-    
-    updateReadStatus() {
-        // Mark notifications as read when panel is viewed
-        const visibleNotifications = document.querySelectorAll('.notification-item.unread');
-        visibleNotifications.forEach(el => {
-            const id = el.dataset.id;
-            this.markAsRead(id);
-        });
+  }
+
+  loadMoreNotifications() {
+    const container = document.querySelector('.notifications-list');
+    if (!container) {return;}
+
+    const activeFilter = document.querySelector('.notification-filters button.active').dataset.filter;
+    const filteredNotifications = this.getFilteredNotifications(activeFilter);
+
+    // Count current notifications
+    const currentCount = container.querySelectorAll('.notification-item').length;
+
+    // Load next 10
+    const nextBatch = filteredNotifications.slice(currentCount, currentCount + 10);
+
+    if (nextBatch.length === 0) {
+      // No more to load
+      return;
     }
-    
-    removeNotification(id) {
-        const index = this.notifications.findIndex(n => n.id === id);
-        if (index !== -1) {
-            // Check if it was unread before removing
-            const wasUnread = !this.notifications[index].read;
-            
-            // Remove from array
-            this.notifications.splice(index, 1);
-            this.saveNotifications();
-            
-            // Update UI
-            const notificationEl = document.querySelector(`.notification-item[data-id="${id}"]`);
-            if (notificationEl) {
-                notificationEl.classList.add('removing');
-                setTimeout(() => {
-                    notificationEl.remove();
-                    
-                    // Check if we need to show "no notifications" message
-                    const container = document.querySelector('.notifications-list');
-                    if (container && container.children.length === 0) {
-                        container.innerHTML = `<div class="no-notifications">No hay notificaciones</div>`;
-                    }
-                }, 300);
-            }
-            
-            // Update badge if needed
-            if (wasUnread) {
-                this.updateUnreadCount();
-                this.updateBadge();
-            }
-        }
+
+    // Remove "no notifications" message if it exists
+    const noNotificationsMsg = container.querySelector('.no-notifications');
+    if (noNotificationsMsg) {
+      noNotificationsMsg.remove();
     }
-    
-    clearAllNotifications() {
-        if (confirm('¿Estás seguro de que quieres eliminar todas las notificaciones?')) {
-            this.notifications = [];
-            this.saveNotifications();
-            this.updateUnreadCount();
-            this.updateBadge();
-            
-            // Update UI
-            const container = document.querySelector('.notifications-list');
-            if (container) {
-                container.innerHTML = `<div class="no-notifications">No hay notificaciones</div>`;
-            }
-        }
-    }
-    
-    loadMoreNotifications() {
-        const container = document.querySelector('.notifications-list');
-        if (!container) return;
-        
-        const activeFilter = document.querySelector('.notification-filters button.active').dataset.filter;
-        let filteredNotifications = this.getFilteredNotifications(activeFilter);
-        
-        // Count current notifications
-        const currentCount = container.querySelectorAll('.notification-item').length;
-        
-        // Load next 10
-        const nextBatch = filteredNotifications.slice(currentCount, currentCount + 10);
-        
-        if (nextBatch.length === 0) {
-            // No more to load
-            return;
-        }
-        
-        // Remove "no notifications" message if it exists
-        const noNotificationsMsg = container.querySelector('.no-notifications');
-        if (noNotificationsMsg) {
-            noNotificationsMsg.remove();
-        }
-        
-        nextBatch.forEach(notification => {
-            const notificationEl = document.createElement('div');
-            notificationEl.className = `notification-item ${notification.type} ${notification.read ? 'read' : 'unread'}`;
-            notificationEl.dataset.id = notification.id;
-            
-            // Calculate relative time
-            const relativeTime = this.getRelativeTime(notification.timestamp);
-            
-            notificationEl.innerHTML = `
+
+    nextBatch.forEach(notification => {
+      const notificationEl = document.createElement('div');
+      notificationEl.className = `notification-item ${notification.type} ${notification.read ? 'read' : 'unread'}`;
+      notificationEl.dataset.id = notification.id;
+
+      // Calculate relative time
+      const relativeTime = this.getRelativeTime(notification.timestamp);
+
+      notificationEl.innerHTML = `
                 <div class="notification-icon">
                     <i class="fas ${notification.icon || this.getIconForType(notification.type)}"></i>
                 </div>
@@ -513,64 +513,64 @@ class NotificationSystem {
                     </button>
                 </div>
             `;
-            
-            // Add with animation
-            notificationEl.style.opacity = '0';
-            container.appendChild(notificationEl);
-            
-            // Trigger animation
-            setTimeout(() => {
-                notificationEl.style.opacity = '1';
-            }, 10);
-            
-            // Add event listeners
-            notificationEl.querySelector('.mark-read').addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.toggleReadStatus(notification.id);
-            });
-            
-            notificationEl.querySelector('.delete-notification').addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.removeNotification(notification.id);
-            });
-            
-            // Make entire notification clickable if it has an action
-            if (notification.action) {
-                notificationEl.addEventListener('click', () => {
-                    if (!notification.read) {
-                        this.markAsRead(notification.id);
-                    }
-                    window.location.href = notification.action;
-                });
-            }
+
+      // Add with animation
+      notificationEl.style.opacity = '0';
+      container.appendChild(notificationEl);
+
+      // Trigger animation
+      setTimeout(() => {
+        notificationEl.style.opacity = '1';
+      }, 10);
+
+      // Add event listeners
+      notificationEl.querySelector('.mark-read').addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleReadStatus(notification.id);
+      });
+
+      notificationEl.querySelector('.delete-notification').addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.removeNotification(notification.id);
+      });
+
+      // Make entire notification clickable if it has an action
+      if (notification.action) {
+        notificationEl.addEventListener('click', () => {
+          if (!notification.read) {
+            this.markAsRead(notification.id);
+          }
+          window.location.href = notification.action;
         });
-        
-        // Hide "load more" button if no more notifications
-        if (currentCount + nextBatch.length >= filteredNotifications.length) {
-            const loadMoreBtn = document.querySelector('.load-more');
-            if (loadMoreBtn) {
-                loadMoreBtn.style.display = 'none';
-            }
-        }
+      }
+    });
+
+    // Hide "load more" button if no more notifications
+    if (currentCount + nextBatch.length >= filteredNotifications.length) {
+      const loadMoreBtn = document.querySelector('.load-more');
+      if (loadMoreBtn) {
+        loadMoreBtn.style.display = 'none';
+      }
     }
-    
-    updateUnreadCount() {
-        this.unreadCount = this.notifications.filter(n => !n.read).length;
+  }
+
+  updateUnreadCount() {
+    this.unreadCount = this.notifications.filter(n => !n.read).length;
+  }
+
+  updateBadge() {
+    const badge = document.querySelector('.notification-badge');
+    if (badge) {
+      badge.textContent = this.unreadCount;
+      badge.style.display = this.unreadCount > 0 ? 'flex' : 'none';
     }
-    
-    updateBadge() {
-        const badge = document.querySelector('.notification-badge');
-        if (badge) {
-            badge.textContent = this.unreadCount;
-            badge.style.display = this.unreadCount > 0 ? 'flex' : 'none';
-        }
-    }
-    
-    showToast(notification) {
-        // Create toast element
-        const toast = document.createElement('div');
-        toast.className = 'notification-toast';
-        toast.innerHTML = `
+  }
+
+  showToast(notification) {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = 'notification-toast';
+    toast.innerHTML = `
             <div class="notification-toast-icon">
                 <i class="fas ${notification.icon || this.getIconForType(notification.type)}"></i>
             </div>
@@ -582,136 +582,136 @@ class NotificationSystem {
                 <i class="fas fa-times"></i>
             </button>
         `;
-        
-        // Add to document
-        document.body.appendChild(toast);
-        
-        // Add event listeners
-        toast.querySelector('.notification-toast-close').addEventListener('click', () => {
-            toast.classList.add('hiding');
-            setTimeout(() => toast.remove(), 300);
-        });
-        
-        // Make clickable if it has an action
-        if (notification.action) {
-            toast.addEventListener('click', (e) => {
-                if (!e.target.closest('.notification-toast-close')) {
-                    this.markAsRead(notification.id);
-                    window.location.href = notification.action;
-                }
-            });
+
+    // Add to document
+    document.body.appendChild(toast);
+
+    // Add event listeners
+    toast.querySelector('.notification-toast-close').addEventListener('click', () => {
+      toast.classList.add('hiding');
+      setTimeout(() => toast.remove(), 300);
+    });
+
+    // Make clickable if it has an action
+    if (notification.action) {
+      toast.addEventListener('click', (e) => {
+        if (!e.target.closest('.notification-toast-close')) {
+          this.markAsRead(notification.id);
+          window.location.href = notification.action;
         }
-        
-        // Show toast with animation
-        setTimeout(() => toast.classList.add('show'), 10);
-        
-        // Auto hide after 5 seconds
-        setTimeout(() => {
-            if (document.body.contains(toast)) {
-                toast.classList.add('hiding');
-                setTimeout(() => toast.remove(), 300);
-            }
-        }, 5000);
+      });
     }
-    
-    saveNotifications() {
-        localStorage.setItem('bf-notifications', JSON.stringify(this.notifications));
+
+    // Show toast with animation
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    // Auto hide after 5 seconds
+    setTimeout(() => {
+      if (document.body.contains(toast)) {
+        toast.classList.add('hiding');
+        setTimeout(() => toast.remove(), 300);
+      }
+    }, 5000);
+  }
+
+  saveNotifications() {
+    localStorage.setItem('bf-notifications', JSON.stringify(this.notifications));
+  }
+
+  setupListeners() {
+    // Listen for page updates
+    document.addEventListener('page-content-updated', () => {
+      // Re-initialize UI elements if needed
+      this.initializeUI();
+    });
+
+    // Listen for theme changes
+    window.addEventListener('bf-theme-changed', () => {
+      // Re-render notifications with new theme
+      if (document.querySelector('.notification-panel.open')) {
+        this.renderNotifications();
+      }
+    });
+  }
+
+  startPolling() {
+    // Check for new price alerts, updates, etc. every minute
+    setInterval(() => this.checkForNewNotifications(), 60000);
+  }
+
+  checkForNewNotifications() {
+    // In a real app, this would make API calls to check for new notifications
+    // For demo purposes, we'll occasionally add random notifications
+
+    // 10% chance to get a new notification every minute
+    if (Math.random() < 0.1) {
+      this.addRandomNotification();
     }
-    
-    setupListeners() {
-        // Listen for page updates
-        document.addEventListener('page-content-updated', () => {
-            // Re-initialize UI elements if needed
-            this.initializeUI();
-        });
-        
-        // Listen for theme changes
-        window.addEventListener('bf-theme-changed', () => {
-            // Re-render notifications with new theme
-            if (document.querySelector('.notification-panel.open')) {
-                this.renderNotifications();
-            }
-        });
+  }
+
+  addRandomNotification() {
+    const now = Date.now();
+    const types = ['alert', 'transaction', 'update'];
+    const type = types[Math.floor(Math.random() * types.length)];
+
+    let notification;
+
+    switch (type) {
+      case 'alert':
+        const coins = ['BTC', 'ETH', 'SOL', 'ADA', 'DOT'];
+        const coin = coins[Math.floor(Math.random() * coins.length)];
+        const percent = (Math.random() * 10).toFixed(1);
+        const direction = Math.random() > 0.5 ? 'subido' : 'bajado';
+
+        notification = {
+          type: 'alert',
+          title: `Alerta de Precio: ${coin}`,
+          message: `${coin} ha ${direction} ${percent}% en las últimas 24 horas`,
+          timestamp: now,
+          icon: 'fa-chart-line',
+          action: '/pages/portafolio.html'
+        };
+        break;
+
+      case 'transaction':
+        const actions = ['compra', 'venta', 'transferencia', 'conversión', 'stake'];
+        const action = actions[Math.floor(Math.random() * actions.length)];
+        const amount = (Math.random() * 2).toFixed(3);
+        const tokens = ['ETH', 'BTC', 'USDT', 'SOL', 'MATIC'];
+        const token = tokens[Math.floor(Math.random() * tokens.length)];
+
+        notification = {
+          type: 'transaction',
+          title: `${action.charAt(0).toUpperCase() + action.slice(1)} Completada`,
+          message: `Tu ${action} de ${amount} ${token} se ha completado exitosamente`,
+          timestamp: now,
+          icon: 'fa-check-circle',
+          action: '/pages/contratos.html'
+        };
+        break;
+
+      case 'update':
+        const updates = [
+          'BitForward ha sido actualizado a la versión 2.5.1',
+          'Nueva funcionalidad disponible: Trading automático',
+          'Mantenimiento programado para mañana a las 02:00',
+          'Se ha agregado soporte para 5 nuevas criptomonedas',
+          'Tu KYC ha sido verificado exitosamente'
+        ];
+
+        notification = {
+          type: 'update',
+          title: 'Actualización del Sistema',
+          message: updates[Math.floor(Math.random() * updates.length)],
+          timestamp: now,
+          icon: 'fa-info-circle',
+          action: null
+        };
+        break;
     }
-    
-    startPolling() {
-        // Check for new price alerts, updates, etc. every minute
-        setInterval(() => this.checkForNewNotifications(), 60000);
-    }
-    
-    checkForNewNotifications() {
-        // In a real app, this would make API calls to check for new notifications
-        // For demo purposes, we'll occasionally add random notifications
-        
-        // 10% chance to get a new notification every minute
-        if (Math.random() < 0.1) {
-            this.addRandomNotification();
-        }
-    }
-    
-    addRandomNotification() {
-        const now = Date.now();
-        const types = ['alert', 'transaction', 'update'];
-        const type = types[Math.floor(Math.random() * types.length)];
-        
-        let notification;
-        
-        switch (type) {
-            case 'alert':
-                const coins = ['BTC', 'ETH', 'SOL', 'ADA', 'DOT'];
-                const coin = coins[Math.floor(Math.random() * coins.length)];
-                const percent = (Math.random() * 10).toFixed(1);
-                const direction = Math.random() > 0.5 ? 'subido' : 'bajado';
-                
-                notification = {
-                    type: 'alert',
-                    title: `Alerta de Precio: ${coin}`,
-                    message: `${coin} ha ${direction} ${percent}% en las últimas 24 horas`,
-                    timestamp: now,
-                    icon: 'fa-chart-line',
-                    action: '/pages/portafolio.html'
-                };
-                break;
-                
-            case 'transaction':
-                const actions = ['compra', 'venta', 'transferencia', 'conversión', 'stake'];
-                const action = actions[Math.floor(Math.random() * actions.length)];
-                const amount = (Math.random() * 2).toFixed(3);
-                const tokens = ['ETH', 'BTC', 'USDT', 'SOL', 'MATIC'];
-                const token = tokens[Math.floor(Math.random() * tokens.length)];
-                
-                notification = {
-                    type: 'transaction',
-                    title: `${action.charAt(0).toUpperCase() + action.slice(1)} Completada`,
-                    message: `Tu ${action} de ${amount} ${token} se ha completado exitosamente`,
-                    timestamp: now,
-                    icon: 'fa-check-circle',
-                    action: '/pages/contratos.html'
-                };
-                break;
-                
-            case 'update':
-                const updates = [
-                    'BitForward ha sido actualizado a la versión 2.5.1',
-                    'Nueva funcionalidad disponible: Trading automático',
-                    'Mantenimiento programado para mañana a las 02:00',
-                    'Se ha agregado soporte para 5 nuevas criptomonedas',
-                    'Tu KYC ha sido verificado exitosamente'
-                ];
-                
-                notification = {
-                    type: 'update',
-                    title: 'Actualización del Sistema',
-                    message: updates[Math.floor(Math.random() * updates.length)],
-                    timestamp: now,
-                    icon: 'fa-info-circle',
-                    action: null
-                };
-                break;
-        }
-        
-        this.addNotification(notification);
-    }
+
+    this.addNotification(notification);
+  }
 }
 
 // Add notification styles to document

@@ -1,7 +1,7 @@
 /**
  * BitForward - Security Middleware
  * Sistema completo de seguridad para protección contra amenazas comunes
- * 
+ *
  * Protecciones implementadas:
  * - Helmet.js (Security headers)
  * - Rate Limiting (Anti-DDoS)
@@ -24,7 +24,7 @@ const hpp = require('hpp');
  */
 function setupSecurity(app) {
   console.log('🔒 Setting up security middleware...');
-  
+
   // 1. Helmet - Security Headers (Quick Win #3: CSP Mejorado)
   app.use(helmet({
     contentSecurityPolicy: {
@@ -33,40 +33,40 @@ function setupSecurity(app) {
         scriptSrc: [
           "'self'",
           "'unsafe-inline'", // TODO: Eliminar en producción, usar nonce
-          "https://cdn.jsdelivr.net",
-          "https://cdn.ethers.io",
-          "https://unpkg.com",
-          "https://www.googletagmanager.com", // Google Analytics
+          'https://cdn.jsdelivr.net',
+          'https://cdn.ethers.io',
+          'https://unpkg.com',
+          'https://www.googletagmanager.com', // Google Analytics
         ],
         styleSrc: [
           "'self'",
           "'unsafe-inline'", // Necesario para estilos inline
-          "https://fonts.googleapis.com",
+          'https://fonts.googleapis.com',
         ],
         fontSrc: [
           "'self'",
-          "https://fonts.gstatic.com",
-          "data:",
+          'https://fonts.gstatic.com',
+          'data:',
         ],
         imgSrc: [
           "'self'",
-          "data:",
-          "https:",
-          "blob:",
-          "https://www.googletagmanager.com", // GA tracking pixel
+          'data:',
+          'https:',
+          'blob:',
+          'https://www.googletagmanager.com', // GA tracking pixel
         ],
         connectSrc: [
           "'self'",
-          "https://api.coingecko.com",
-          "wss://stream.binance.com",
-          "https://mainnet.infura.io",
-          "https://polygon-rpc.com",
-          "https://bsc-dataseed.binance.org",
-          "https://api.avax.network",
-          "https://arb1.arbitrum.io",
-          "https://mainnet.optimism.io",
-          "https://www.google-analytics.com", // GA
-          "https://analytics.google.com",     // GA4
+          'https://api.coingecko.com',
+          'wss://stream.binance.com',
+          'https://mainnet.infura.io',
+          'https://polygon-rpc.com',
+          'https://bsc-dataseed.binance.org',
+          'https://api.avax.network',
+          'https://arb1.arbitrum.io',
+          'https://mainnet.optimism.io',
+          'https://www.google-analytics.com', // GA
+          'https://analytics.google.com',     // GA4
         ],
         frameSrc: ["'none'"],
         objectSrc: ["'none'"],
@@ -77,7 +77,7 @@ function setupSecurity(app) {
       },
     },
     crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
     hsts: {
       maxAge: 31536000,        // 1 año
       includeSubDomains: true,
@@ -87,11 +87,11 @@ function setupSecurity(app) {
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
     xssFilter: true,
   }));
-  
+
   console.log('✅ CSP Headers mejorados - Quick Win #3 (+15% security score)');
-  
+
   // 2. Rate Limiting - Anti-DDoS
-  
+
   // Limiter general para toda la API
   const generalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutos
@@ -111,7 +111,7 @@ function setupSecurity(app) {
       });
     }
   });
-  
+
   // Limiter estricto para endpoints de autenticación
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutos
@@ -122,7 +122,7 @@ function setupSecurity(app) {
       retryAfter: '15 minutes'
     }
   });
-  
+
   // Limiter para APIs externas (más generoso)
   const apiLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minuto
@@ -132,12 +132,12 @@ function setupSecurity(app) {
       retryAfter: '1 minute'
     }
   });
-  
+
   // Aplicar limiters
   app.use('/api/', generalLimiter);
   app.use('/api/auth/', authLimiter);
   app.use('/api/prices/', apiLimiter);
-  
+
   // 3. Data Sanitization - Prevenir NoSQL Injection
   app.use(mongoSanitize({
     replaceWith: '_',
@@ -145,7 +145,7 @@ function setupSecurity(app) {
       console.warn(`⚠️ Sanitized key: ${key} from IP: ${req.ip}`);
     }
   }));
-  
+
   // 4. HTTP Parameter Pollution Protection
   app.use(hpp({
     whitelist: [
@@ -156,7 +156,7 @@ function setupSecurity(app) {
       'filter'
     ]
   }));
-  
+
   // 5. Custom XSS Protection Middleware
   app.use((req, res, next) => {
     // Sanitizar todos los strings en body, query, params
@@ -171,29 +171,29 @@ function setupSecurity(app) {
     }
     next();
   });
-  
+
   // 6. Security Headers Adicionales
   app.use((req, res, next) => {
     // Prevenir clickjacking
     res.setHeader('X-Frame-Options', 'DENY');
-    
+
     // Prevenir MIME sniffing
     res.setHeader('X-Content-Type-Options', 'nosniff');
-    
+
     // XSS Protection (legacy pero útil)
     res.setHeader('X-XSS-Protection', '1; mode=block');
-    
+
     // Referrer Policy
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-    
+
     // Permissions Policy (antes Feature-Policy)
-    res.setHeader('Permissions-Policy', 
+    res.setHeader('Permissions-Policy',
       'geolocation=(), microphone=(), camera=(), payment=()'
     );
-    
+
     next();
   });
-  
+
   // 7. Request Logging para Auditoría
   app.use((req, res, next) => {
     const logEntry = {
@@ -203,15 +203,15 @@ function setupSecurity(app) {
       ip: req.ip,
       userAgent: req.get('user-agent'),
     };
-    
+
     // Log solo requests sospechosas
     if (isSuspiciousRequest(req)) {
       console.warn('⚠️ Suspicious request detected:', logEntry);
     }
-    
+
     next();
   });
-  
+
   console.log('✅ Security middleware configured successfully');
 }
 
@@ -222,16 +222,16 @@ function sanitizeObject(obj) {
   if (typeof obj !== 'object' || obj === null) {
     return sanitizeString(obj);
   }
-  
+
   const sanitized = Array.isArray(obj) ? [] : {};
-  
+
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const sanitizedKey = sanitizeString(key);
       sanitized[sanitizedKey] = sanitizeObject(obj[key]);
     }
   }
-  
+
   return sanitized;
 }
 
@@ -242,7 +242,7 @@ function sanitizeString(value) {
   if (typeof value !== 'string') {
     return value;
   }
-  
+
   // Eliminar caracteres peligrosos
   return value
     .replace(/[<>]/g, '') // Remover < y >
@@ -268,9 +268,9 @@ function isSuspiciousRequest(req) {
     // Command injection
     /(\||;|&|\$\(|`)/,
   ];
-  
+
   const testString = `${req.path} ${JSON.stringify(req.query)} ${JSON.stringify(req.body)}`;
-  
+
   return suspicious.some(pattern => pattern.test(testString));
 }
 
@@ -280,7 +280,7 @@ function isSuspiciousRequest(req) {
 function verifyOrigin(req, res, next) {
   const origin = req.get('origin');
   const referer = req.get('referer');
-  
+
   // Lista blanca de orígenes permitidos
   const allowedOrigins = [
     'http://localhost:3000',
@@ -289,17 +289,17 @@ function verifyOrigin(req, res, next) {
     'https://bitforward.io',
     'https://www.bitforward.io',
   ];
-  
+
   // Permitir requests sin origin (navegación directa)
   if (!origin && !referer) {
     return next();
   }
-  
+
   // Verificar origin
   if (origin && allowedOrigins.includes(origin)) {
     return next();
   }
-  
+
   // Verificar referer como fallback
   if (referer) {
     const refererOrigin = new URL(referer).origin;
@@ -307,9 +307,9 @@ function verifyOrigin(req, res, next) {
       return next();
     }
   }
-  
+
   console.warn(`⚠️ Unauthorized origin: ${origin || referer} from IP: ${req.ip}`);
-  
+
   res.status(403).json({
     error: 'Forbidden',
     message: 'Origin not allowed'
@@ -321,14 +321,14 @@ function verifyOrigin(req, res, next) {
  */
 function validateJWT(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
-  
+
   if (!token) {
     return res.status(401).json({
       error: 'Unauthorized',
       message: 'No token provided'
     });
   }
-  
+
   try {
     // Aquí iría la validación real del JWT
     // Por ahora, solo verificar que existe
@@ -349,16 +349,16 @@ function constantTimeCompare(a, b) {
   if (typeof a !== 'string' || typeof b !== 'string') {
     return false;
   }
-  
+
   if (a.length !== b.length) {
     return false;
   }
-  
+
   let result = 0;
   for (let i = 0; i < a.length; i++) {
     result |= a.charCodeAt(i) ^ b.charCodeAt(i);
   }
-  
+
   return result === 0;
 }
 
@@ -382,7 +382,7 @@ function addCSPNonce(req, res, next) {
  */
 function blockMaliciousBots(req, res, next) {
   const userAgent = req.get('user-agent') || '';
-  
+
   const blockedBots = [
     /sqlmap/i,
     /nikto/i,
@@ -390,7 +390,7 @@ function blockMaliciousBots(req, res, next) {
     /masscan/i,
     /acunetix/i,
   ];
-  
+
   if (blockedBots.some(bot => bot.test(userAgent))) {
     console.warn(`⚠️ Malicious bot blocked: ${userAgent} from IP: ${req.ip}`);
     return res.status(403).json({
@@ -398,7 +398,7 @@ function blockMaliciousBots(req, res, next) {
       message: 'Access denied'
     });
   }
-  
+
   next();
 }
 

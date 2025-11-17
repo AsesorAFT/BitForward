@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="css/universal-footer.css">
     
     <!-- Estilos Específicos del Dashboard -->
-    <link rel="stylesheet" href="css/dashboard-revamp.css">
+    <link rel="stylesheet" href="css/dashboard-modern.css">
+    <link rel="stylesheet" href="css/responsive.css">
     
     <!-- Biblioteca de Gráficos (ApexCharts) -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -83,6 +84,22 @@
                 <!-- El gráfico de ApexCharts se renderizará aquí -->
             </div>
         </section>
+
+        <!-- Nuevos Gráficos -->
+        <div class="dashboard-columns">
+            <div class="column-main">
+                <section class="card chart-card">
+                    <h2 class="card-header-title">Ganancias/Pérdidas Mensuales</h2>
+                    <div id="monthly-pl-chart"></div>
+                </section>
+            </div>
+            <div class="column-side">
+                <section class="card chart-card">
+                    <h2 class="card-header-title">Distribución de Activos</h2>
+                    <div id="asset-allocation-chart"></div>
+                </section>
+            </div>
+        </div>
 
         <!-- Acciones Rápidas y Tabla de Activos -->
         <div class="dashboard-columns">
@@ -167,7 +184,7 @@
     </main>
 
     <!-- Contenedor para el Footer Universal -->
-    <div id="bf-universal-footer-container"></div>
+    <footer id="universal-footer"></footer>
 
     <!-- Scripts Universales y de la Página -->
     <script src="js/universal-nav.js"></script>

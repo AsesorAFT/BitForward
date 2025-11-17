@@ -1,79 +1,79 @@
 /**
  * BitForward Service Worker Registration
  * Registra y gestiona el ciclo de vida del Service Worker
- * 
+ *
  * @version 1.0.0
  */
 
 class ServiceWorkerManager {
-    constructor() {
-        this.registration = null;
-        this.updateAvailable = false;
-    }
+  constructor() {
+    this.registration = null;
+    this.updateAvailable = false;
+  }
 
-    /**
+  /**
      * Inicializar Service Worker
      */
-    async init() {
-        if (!('serviceWorker' in navigator)) {
-            console.log('[SW Manager] Service Worker no soportado');
-            return false;
-        }
-
-        try {
-            // Usar Service Worker avanzado con estrategias de cache
-            this.registration = await navigator.serviceWorker.register('/js/sw-advanced.js', {
-                scope: '/',
-                updateViaCache: 'none' // Siempre buscar actualizaciones
-            });
-
-            console.log('[SW Manager] Advanced Service Worker registrado:', this.registration.scope);
-
-            // Escuchar actualizaciones
-            this.registration.addEventListener('updatefound', () => {
-                this.handleUpdate();
-            });
-
-            // Verificar actualizaciones cada 1 hora
-            setInterval(() => {
-                this.checkForUpdates();
-            }, 60 * 60 * 1000);
-
-            // Verificar si ya hay actualización disponible
-            if (this.registration.waiting) {
-                this.showUpdateNotification();
-            }
-
-            return true;
-
-        } catch (error) {
-            console.error('[SW Manager] Error al registrar Service Worker:', error);
-            return false;
-        }
+  async init() {
+    if (!('serviceWorker' in navigator)) {
+      console.log('[SW Manager] Service Worker no soportado');
+      return false;
     }
 
-    /**
+    try {
+      // Usar Service Worker avanzado con estrategias de cache
+      this.registration = await navigator.serviceWorker.register('/js/sw-advanced.js', {
+        scope: '/',
+        updateViaCache: 'none' // Siempre buscar actualizaciones
+      });
+
+      console.log('[SW Manager] Advanced Service Worker registrado:', this.registration.scope);
+
+      // Escuchar actualizaciones
+      this.registration.addEventListener('updatefound', () => {
+        this.handleUpdate();
+      });
+
+      // Verificar actualizaciones cada 1 hora
+      setInterval(() => {
+        this.checkForUpdates();
+      }, 60 * 60 * 1000);
+
+      // Verificar si ya hay actualización disponible
+      if (this.registration.waiting) {
+        this.showUpdateNotification();
+      }
+
+      return true;
+
+    } catch (error) {
+      console.error('[SW Manager] Error al registrar Service Worker:', error);
+      return false;
+    }
+  }
+
+  /**
      * Manejar actualización del Service Worker
      */
-    handleUpdate() {
-        const newWorker = this.registration.installing;
-        console.log('[SW Manager] Nueva versión del Service Worker detectada');
+  handleUpdate() {
+    const newWorker = this.registration.installing;
+    console.log('[SW Manager] Nueva versión del Service Worker detectada');
 
-        newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                this.updateAvailable = true;
-                this.showUpdateNotification();
-            }
-        });
-    }
+    newWorker.addEventListener('statechange', () => {
+      if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+        this.updateAvailable = true;
+        this.showUpdateNotification();
+      }
+    });
+  }
 
-    /**
+  /**
      * Mostrar notificación de actualización
      */
-    showUpdateNotification() {
-        const notification = document.createElement('div');
-        notification.id = 'sw-update-notification';
-        notification.innerHTML = `
+  showUpdateNotification() {
+    const notification = document.createElement('div');
+    notification.id = 'sw-update-notification';
+    notification.innerHTML = `
             <div style="
                 position: fixed;
                 bottom: 20px;
@@ -132,112 +132,112 @@ class ServiceWorkerManager {
             </style>
         `;
 
-        document.body.appendChild(notification);
+    document.body.appendChild(notification);
 
-        // Botón actualizar
-        document.getElementById('sw-update-btn').addEventListener('click', () => {
-            this.activateUpdate();
-        });
+    // Botón actualizar
+    document.getElementById('sw-update-btn').addEventListener('click', () => {
+      this.activateUpdate();
+    });
 
-        // Botón cerrar
-        document.getElementById('sw-dismiss-btn').addEventListener('click', () => {
-            notification.remove();
-        });
-    }
+    // Botón cerrar
+    document.getElementById('sw-dismiss-btn').addEventListener('click', () => {
+      notification.remove();
+    });
+  }
 
-    /**
+  /**
      * Activar actualización del Service Worker
      */
-    activateUpdate() {
-        if (!this.registration || !this.registration.waiting) {
-            return;
-        }
-
-        this.registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-
-        // Recargar cuando el nuevo SW tome control
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-            window.location.reload();
-        });
+  activateUpdate() {
+    if (!this.registration || !this.registration.waiting) {
+      return;
     }
 
-    /**
+    this.registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+
+    // Recargar cuando el nuevo SW tome control
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      window.location.reload();
+    });
+  }
+
+  /**
      * Verificar actualizaciones manualmente
      */
-    async checkForUpdates() {
-        if (!this.registration) {
-            return;
-        }
-
-        try {
-            await this.registration.update();
-            console.log('[SW Manager] Verificación de actualización completada');
-        } catch (error) {
-            console.error('[SW Manager] Error al verificar actualización:', error);
-        }
+  async checkForUpdates() {
+    if (!this.registration) {
+      return;
     }
 
-    /**
+    try {
+      await this.registration.update();
+      console.log('[SW Manager] Verificación de actualización completada');
+    } catch (error) {
+      console.error('[SW Manager] Error al verificar actualización:', error);
+    }
+  }
+
+  /**
      * Limpiar cache manualmente
      */
-    async clearCache() {
-        if (!this.registration) {
-            return false;
-        }
-
-        return new Promise((resolve) => {
-            const messageChannel = new MessageChannel();
-            
-            messageChannel.port1.onmessage = (event) => {
-                resolve(event.data.success);
-            };
-
-            this.registration.active.postMessage(
-                { type: 'CLEAR_CACHE' },
-                [messageChannel.port2]
-            );
-        });
+  async clearCache() {
+    if (!this.registration) {
+      return false;
     }
 
-    /**
+    return new Promise((resolve) => {
+      const messageChannel = new MessageChannel();
+
+      messageChannel.port1.onmessage = (event) => {
+        resolve(event.data.success);
+      };
+
+      this.registration.active.postMessage(
+        { type: 'CLEAR_CACHE' },
+        [messageChannel.port2]
+      );
+    });
+  }
+
+  /**
      * Obtener tamaño del cache
      */
-    async getCacheSize() {
-        if (!this.registration) {
-            return 0;
-        }
-
-        return new Promise((resolve) => {
-            const messageChannel = new MessageChannel();
-            
-            messageChannel.port1.onmessage = (event) => {
-                resolve(event.data.size);
-            };
-
-            this.registration.active.postMessage(
-                { type: 'GET_CACHE_SIZE' },
-                [messageChannel.port2]
-            );
-        });
+  async getCacheSize() {
+    if (!this.registration) {
+      return 0;
     }
 
-    /**
+    return new Promise((resolve) => {
+      const messageChannel = new MessageChannel();
+
+      messageChannel.port1.onmessage = (event) => {
+        resolve(event.data.size);
+      };
+
+      this.registration.active.postMessage(
+        { type: 'GET_CACHE_SIZE' },
+        [messageChannel.port2]
+      );
+    });
+  }
+
+  /**
      * Desregistrar Service Worker
      */
-    async unregister() {
-        if (!this.registration) {
-            return false;
-        }
-
-        try {
-            const result = await this.registration.unregister();
-            console.log('[SW Manager] Service Worker desregistrado');
-            return result;
-        } catch (error) {
-            console.error('[SW Manager] Error al desregistrar:', error);
-            return false;
-        }
+  async unregister() {
+    if (!this.registration) {
+      return false;
     }
+
+    try {
+      const result = await this.registration.unregister();
+      console.log('[SW Manager] Service Worker desregistrado');
+      return result;
+    } catch (error) {
+      console.error('[SW Manager] Error al desregistrar:', error);
+      return false;
+    }
+  }
 }
 
 // Instancia global
@@ -245,11 +245,11 @@ const swManager = new ServiceWorkerManager();
 
 // Auto-inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        swManager.init();
-    });
-} else {
+  document.addEventListener('DOMContentLoaded', () => {
     swManager.init();
+  });
+} else {
+  swManager.init();
 }
 
 // Exportar para uso externo

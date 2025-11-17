@@ -210,10 +210,10 @@ const htmlContent = `<!DOCTYPE html>
 fs.writeFileSync(OUTPUT_HTML, htmlContent);
 
 console.log(`✅ Vista previa creada en: ${OUTPUT_HTML}`);
-console.log(`\n� Para ver el logo:`);
-console.log(`   1. Abre el archivo en tu navegador`);
+console.log('\n� Para ver el logo:');
+console.log('   1. Abre el archivo en tu navegador');
 console.log(`   2. O ejecuta: open ${OUTPUT_HTML}`);
-console.log(`\n💾 Para crear el GIF:`);
-console.log(`   - Visita: https://svgtogif.com`);
-console.log(`   - O usa screenshot + herramientas de grabación de pantalla`);
+console.log('\n💾 Para crear el GIF:');
+console.log('   - Visita: https://svgtogif.com');
+console.log('   - O usa screenshot + herramientas de grabación de pantalla');
 

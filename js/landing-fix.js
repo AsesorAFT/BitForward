@@ -4,40 +4,40 @@
  */
 
 (function() {
-    'use strict';
+  'use strict';
 
-    // Configuración de debug
-    const DEBUG = true;
-    const log = (...args) => DEBUG && console.log('[Landing Fix]', ...args);
+  // Configuración de debug
+  const DEBUG = true;
+  const log = (...args) => DEBUG && console.log('[Landing Fix]', ...args);
 
-    /**
+  /**
      * Forzar visibilidad del landing page
      */
-    function showLandingPage() {
-        const landingPage = document.querySelector('.landing-page');
-        
-        if (landingPage) {
-            landingPage.style.cssText = `
+  function showLandingPage() {
+    const landingPage = document.querySelector('.landing-page');
+
+    if (landingPage) {
+      landingPage.style.cssText = `
                 display: block !important;
                 opacity: 1 !important;
                 visibility: visible !important;
                 position: relative;
                 z-index: 1;
             `;
-            log('✅ Landing page visible');
-        } else {
-            log('⚠️ Landing page no encontrado');
-        }
+      log('✅ Landing page visible');
+    } else {
+      log('⚠️ Landing page no encontrado');
     }
+  }
 
-    /**
+  /**
      * Forzar visibilidad del logo del cohete
      */
-    function showRocketLogo() {
-        const logo = document.querySelector('.animated-logo');
-        
-        if (logo) {
-            logo.style.cssText = `
+  function showRocketLogo() {
+    const logo = document.querySelector('.animated-logo');
+
+    if (logo) {
+      logo.style.cssText = `
                 display: block !important;
                 opacity: 1 !important;
                 visibility: visible !important;
@@ -46,42 +46,42 @@
                 filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.5));
                 transition: all 0.3s ease;
             `;
-            
-            // Verificar que el SVG se cargó
-            if (logo.complete) {
-                log('✅ Logo del cohete visible y cargado');
-            } else {
-                logo.addEventListener('load', () => {
-                    log('✅ Logo del cohete cargado');
-                });
-                logo.addEventListener('error', (e) => {
-                    log('❌ Error cargando logo:', e);
-                    // Intentar con logo alternativo
-                    logo.src = 'assets/logo-astronaut-rocket.svg';
-                });
-            }
 
-            // Agregar animación de entrada
-            logo.style.animation = 'rocketEntrance 0.6s ease-out';
-        } else {
-            log('⚠️ Logo del cohete no encontrado');
-        }
+      // Verificar que el SVG se cargó
+      if (logo.complete) {
+        log('✅ Logo del cohete visible y cargado');
+      } else {
+        logo.addEventListener('load', () => {
+          log('✅ Logo del cohete cargado');
+        });
+        logo.addEventListener('error', (e) => {
+          log('❌ Error cargando logo:', e);
+          // Intentar con logo alternativo
+          logo.src = 'assets/logo-astronaut-rocket.svg';
+        });
+      }
+
+      // Agregar animación de entrada
+      logo.style.animation = 'rocketEntrance 0.6s ease-out';
+    } else {
+      log('⚠️ Logo del cohete no encontrado');
     }
+  }
 
-    /**
+  /**
      * Agregar estilos de animación si no existen
      */
-    function addAnimationStyles() {
-        const styleId = 'landing-fix-styles';
-        
-        // No agregar si ya existe
-        if (document.getElementById(styleId)) {
-            return;
-        }
+  function addAnimationStyles() {
+    const styleId = 'landing-fix-styles';
 
-        const style = document.createElement('style');
-        style.id = styleId;
-        style.textContent = `
+    // No agregar si ya existe
+    if (document.getElementById(styleId)) {
+      return;
+    }
+
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.textContent = `
             /* Animación de entrada del cohete */
             @keyframes rocketEntrance {
                 0% {
@@ -139,145 +139,145 @@
             }
         `;
 
-        document.head.appendChild(style);
-        log('✅ Estilos de animación agregados');
-    }
+    document.head.appendChild(style);
+    log('✅ Estilos de animación agregados');
+  }
 
-    /**
+  /**
      * Verificar y reparar estructura
      */
-    function verifyStructure() {
-        const checks = {
-            header: !!document.querySelector('header'),
-            logo: !!document.querySelector('.animated-logo'),
-            landing: !!document.querySelector('.landing-page'),
-            hero: !!document.querySelector('.hero-section'),
-        };
+  function verifyStructure() {
+    const checks = {
+      header: !!document.querySelector('header'),
+      logo: !!document.querySelector('.animated-logo'),
+      landing: !!document.querySelector('.landing-page'),
+      hero: !!document.querySelector('.hero-section'),
+    };
 
-        log('🔍 Verificación de estructura:', checks);
+    log('🔍 Verificación de estructura:', checks);
 
-        // Si falta algo, mostrar advertencia
-        Object.entries(checks).forEach(([key, exists]) => {
-            if (!exists) {
-                log(`⚠️ Falta elemento: ${key}`);
-            }
-        });
+    // Si falta algo, mostrar advertencia
+    Object.entries(checks).forEach(([key, exists]) => {
+      if (!exists) {
+        log(`⚠️ Falta elemento: ${key}`);
+      }
+    });
 
-        return checks;
-    }
+    return checks;
+  }
 
-    /**
+  /**
      * Configurar observer para monitorear cambios
      */
-    function setupMutationObserver() {
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                // Si se oculta el landing, mostrarlo de nuevo
-                if (mutation.target.classList && mutation.target.classList.contains('landing-page')) {
-                    const display = window.getComputedStyle(mutation.target).display;
-                    if (display === 'none' && !document.body.classList.contains('wallet-connected')) {
-                        log('⚠️ Landing page oculto detectado, restaurando...');
-                        showLandingPage();
-                    }
-                }
-            });
-        });
+  function setupMutationObserver() {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        // Si se oculta el landing, mostrarlo de nuevo
+        if (mutation.target.classList && mutation.target.classList.contains('landing-page')) {
+          const display = window.getComputedStyle(mutation.target).display;
+          if (display === 'none' && !document.body.classList.contains('wallet-connected')) {
+            log('⚠️ Landing page oculto detectado, restaurando...');
+            showLandingPage();
+          }
+        }
+      });
+    });
 
-        // Observar cambios en el body
-        observer.observe(document.body, {
-            attributes: true,
-            attributeFilter: ['class', 'style'],
-            subtree: true,
-            childList: true,
-        });
+    // Observar cambios en el body
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class', 'style'],
+      subtree: true,
+      childList: true,
+    });
 
-        log('✅ Observer configurado');
-    }
+    log('✅ Observer configurado');
+  }
 
-    /**
+  /**
      * Test visual del logo
      */
-    function testLogoVisibility() {
-        const logo = document.querySelector('.animated-logo');
-        if (!logo) {
-            log('❌ Logo no encontrado');
-            return false;
-        }
+  function testLogoVisibility() {
+    const logo = document.querySelector('.animated-logo');
+    if (!logo) {
+      log('❌ Logo no encontrado');
+      return false;
+    }
 
-        const styles = window.getComputedStyle(logo);
-        const isVisible = 
+    const styles = window.getComputedStyle(logo);
+    const isVisible =
             styles.display !== 'none' &&
             styles.visibility !== 'hidden' &&
             parseFloat(styles.opacity) > 0 &&
             logo.offsetWidth > 0 &&
             logo.offsetHeight > 0;
 
-        log('🧪 Test de visibilidad del logo:', {
-            display: styles.display,
-            visibility: styles.visibility,
-            opacity: styles.opacity,
-            width: logo.offsetWidth,
-            height: logo.offsetHeight,
-            visible: isVisible,
-            src: logo.src,
-        });
+    log('🧪 Test de visibilidad del logo:', {
+      display: styles.display,
+      visibility: styles.visibility,
+      opacity: styles.opacity,
+      width: logo.offsetWidth,
+      height: logo.offsetHeight,
+      visible: isVisible,
+      src: logo.src,
+    });
 
-        return isVisible;
-    }
+    return isVisible;
+  }
 
-    /**
+  /**
      * Agregar helpers de debug al window
      */
-    function addDebugHelpers() {
-        window.landingDebug = {
-            showLanding: showLandingPage,
-            showLogo: showRocketLogo,
-            testLogo: testLogoVisibility,
-            verify: verifyStructure,
-        };
-        log('🔧 Debug helpers agregados a window.landingDebug');
-    }
+  function addDebugHelpers() {
+    window.landingDebug = {
+      showLanding: showLandingPage,
+      showLogo: showRocketLogo,
+      testLogo: testLogoVisibility,
+      verify: verifyStructure,
+    };
+    log('🔧 Debug helpers agregados a window.landingDebug');
+  }
 
-    /**
+  /**
      * Inicialización principal
      */
-    function init() {
-        log('🚀 Inicializando Landing Page Fix...');
+  function init() {
+    log('🚀 Inicializando Landing Page Fix...');
 
-        // 1. Agregar estilos
-        addAnimationStyles();
+    // 1. Agregar estilos
+    addAnimationStyles();
 
-        // 2. Verificar estructura
-        verifyStructure();
+    // 2. Verificar estructura
+    verifyStructure();
 
-        // 3. Mostrar elementos
-        showLandingPage();
-        showRocketLogo();
+    // 3. Mostrar elementos
+    showLandingPage();
+    showRocketLogo();
 
-        // 4. Test de visibilidad
-        setTimeout(() => {
-            testLogoVisibility();
-        }, 500);
+    // 4. Test de visibilidad
+    setTimeout(() => {
+      testLogoVisibility();
+    }, 500);
 
-        // 5. Configurar observer
-        setupMutationObserver();
+    // 5. Configurar observer
+    setupMutationObserver();
 
-        // 6. Agregar debug helpers
-        addDebugHelpers();
+    // 6. Agregar debug helpers
+    addDebugHelpers();
 
-        log('✅ Landing Page Fix inicializado correctamente');
-    }
+    log('✅ Landing Page Fix inicializado correctamente');
+  }
 
-    // Ejecutar al cargar DOM
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
+  // Ejecutar al cargar DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
-    // También ejecutar inmediatamente por si el DOM ya está listo
-    if (document.body) {
-        init();
-    }
+  // También ejecutar inmediatamente por si el DOM ya está listo
+  if (document.body) {
+    init();
+  }
 
 })();
