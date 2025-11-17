@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./*.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./js/**/*.js",
-    "./phoenix/**/*.html"
+    './*.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+    './js/**/*.js',
+    './phoenix/**/*.html'
   ],
   theme: {
     extend: {
@@ -16,7 +16,7 @@ export default {
         'bf-dark': '#0F172A',         // Azul marino oscuro
         'bf-light': '#F8FAFC',        // Blanco suave
         'bf-gray': '#64748B',         // Gris neutro
-        
+
         // Colores de criptomonedas
         'crypto-btc': '#F7931A',      // Bitcoin naranja
         'crypto-eth': '#627EEA',      // Ethereum azul
@@ -24,10 +24,10 @@ export default {
         'crypto-usdt': '#26A17B',     // Tether verde
         'crypto-usdc': '#2775CA',     // USD Coin azul
         'crypto-dai': '#F5AC37',      // DAI dorado
-        
+
         // Estados y alertas
         'success': '#059669',         // Verde éxito
-        'warning': '#D97706',         // Naranja advertencia  
+        'warning': '#D97706',         // Naranja advertencia
         'error': '#DC2626',           // Rojo error
         'info': '#2563EB',            // Azul información
       },
@@ -96,4 +96,4 @@ export default {
     },
   },
   plugins: [],
-}
+};

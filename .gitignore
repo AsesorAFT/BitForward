@@ -27,6 +27,8 @@ server/logs/
 dist/
 build/
 .cache/
+/lighthouse-report.html
+/stats.html
 
 # IDE and editor files
 .vscode/

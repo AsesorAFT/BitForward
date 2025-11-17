@@ -4,13 +4,13 @@
  */
 
 const UniversalNav = {
-    /**
+  /**
      * Renderizar navegación en un elemento
      */
-    render: function(containerId = 'bf-nav-container', activePage = '') {
-        const container = document.getElementById(containerId) || document.body;
-        
-        const navHTML = `
+  render: function(containerId = 'bf-nav-container', activePage = '') {
+    const container = document.getElementById(containerId) || document.body;
+
+    const navHTML = `
             <!-- Modern Navigation -->
             <nav class="bf-modern-nav">
                 <div class="bf-nav-container">
@@ -129,118 +129,198 @@ const UniversalNav = {
                 </div>
             </nav>
         `;
-        
-        container.innerHTML = navHTML;
-        
-        // Cargar iconos después de renderizar
-        setTimeout(() => {
-            this.loadIcons();
-        }, 100);
-    },
-    
-    /**
+
+    container.innerHTML = navHTML;
+
+    // Cargar iconos después de renderizar
+    setTimeout(() => {
+      this.loadIcons();
+    }, 100);
+  },
+
+  /**
      * Detectar página activa automáticamente
      */
-    detectActivePage: function() {
-        const path = window.location.pathname;
-        const filename = path.split('/').pop() || 'index.html';
-        
-        if (filename.includes('index')) return 'home';
-        if (filename.includes('dashboard')) return 'dashboard';
-        if (filename.includes('markets')) return 'markets';
-        if (filename.includes('trading')) return 'trading';
-        if (filename.includes('lending')) return 'lending';
-        if (filename.includes('analytics')) return 'analytics';
-        if (filename.includes('about')) return 'about';
-        if (filename.includes('community')) return 'community';
-        if (filename.includes('enterprise')) return 'enterprise';
-        
-        return '';
-    },
-    
-    /**
+  detectActivePage: function() {
+    const path = window.location.pathname;
+    const filename = path.split('/').pop() || 'index.html';
+
+    if (filename.includes('index')) {return 'home';}
+    if (filename.includes('dashboard')) {return 'dashboard';}
+    if (filename.includes('markets')) {return 'markets';}
+    if (filename.includes('trading')) {return 'trading';}
+    if (filename.includes('lending')) {return 'lending';}
+    if (filename.includes('analytics')) {return 'analytics';}
+    if (filename.includes('about')) {return 'about';}
+    if (filename.includes('community')) {return 'community';}
+    if (filename.includes('enterprise')) {return 'enterprise';}
+
+    return '';
+  },
+
+  /**
      * Cargar iconos en los elementos de navegación
      */
-    loadIcons: function() {
-        if (typeof ExecutiveIcons === 'undefined') {
-            console.warn('ExecutiveIcons not loaded yet');
-            return;
+  loadIcons: function() {
+    if (typeof ExecutiveIcons === 'undefined') {
+      console.warn('ExecutiveIcons not loaded yet');
+      return;
+    }
+
+    const iconMap = {
+      'home': 'home',
+      'dashboard': 'dashboard',
+      'markets': 'trading', // Usando un icono existente relevante
+      'products': 'enterprise',
+      'trading': 'trading',
+      'lending': 'lending',
+      'analytics': 'analytics',
+      'about': 'info',
+      'community': 'community',
+      'enterprise': 'enterprise'
+    };
+
+    // Navigation links
+    document.querySelectorAll('.bf-nav-link[data-page]').forEach(link => {
+      const page = link.getAttribute('data-page');
+      const iconEl = link.querySelector('.bf-nav-icon');
+      if (iconEl && iconMap[page]) {
+        iconEl.innerHTML = ExecutiveIcons[iconMap[page]] || '';
+      }
+    });
+
+    // Dropdown links
+    const dropdownIconMap = {
+      'trading': 'trading',
+      'lending': 'lending',
+      'analytics': 'analytics'
+    };
+
+    document.querySelectorAll('.bf-dropdown-link').forEach(link => {
+      const href = link.getAttribute('href');
+      const iconEl = link.querySelector('.bf-dropdown-icon');
+
+      for (const [key, icon] of Object.entries(dropdownIconMap)) {
+        if (href.includes(key) && iconEl) {
+          iconEl.innerHTML = ExecutiveIcons[icon] || '';
+          break;
         }
-        
-        const iconMap = {
-            'home': 'home',
-            'dashboard': 'dashboard',
-            'markets': 'trading', // Usando un icono existente relevante
-            'products': 'enterprise',
-            'trading': 'trading',
-            'lending': 'lending',
-            'analytics': 'analytics',
-            'about': 'info',
-            'community': 'community',
-            'enterprise': 'enterprise'
-        };
-        
-        // Navigation links
-        document.querySelectorAll('.bf-nav-link[data-page]').forEach(link => {
-            const page = link.getAttribute('data-page');
-            const iconEl = link.querySelector('.bf-nav-icon');
-            if (iconEl && iconMap[page]) {
-                iconEl.innerHTML = ExecutiveIcons[iconMap[page]] || '';
-            }
-        });
-        
-        // Dropdown links
-        const dropdownIconMap = {
-            'trading': 'trading',
-            'lending': 'lending',
-            'analytics': 'analytics'
-        };
-        
-        document.querySelectorAll('.bf-dropdown-link').forEach(link => {
-            const href = link.getAttribute('href');
-            const iconEl = link.querySelector('.bf-dropdown-icon');
-            
-            for (let [key, icon] of Object.entries(dropdownIconMap)) {
-                if (href.includes(key) && iconEl) {
-                    iconEl.innerHTML = ExecutiveIcons[icon] || '';
-                    break;
-                }
-            }
-        });
-        
-        // Search icon
-        const searchIcon = document.querySelector('.bf-search-icon');
-        if (searchIcon) {
-            searchIcon.innerHTML = ExecutiveIcons.search || '🔍';
-        }
-        
-        // Notification icon
-        const notificationBtn = document.querySelector('.bf-notification-btn > span:first-child');
-        if (notificationBtn) {
-            notificationBtn.innerHTML = ExecutiveIcons.notification || '🔔';
-        }
-        
-        // Wallet icon
-        const walletBtn = document.querySelector('.bf-wallet-btn > span:first-child');
-        if (walletBtn) {
-            walletBtn.innerHTML = ExecutiveIcons.wallet || '🔌';
-        }
-    },
-    
-    /**
+      }
+    });
+
+    // Search icon
+    const searchIcon = document.querySelector('.bf-search-icon');
+    if (searchIcon) {
+      searchIcon.innerHTML = ExecutiveIcons.search || '🔍';
+    }
+
+    // Notification icon
+    const notificationBtn = document.querySelector('.bf-notification-btn > span:first-child');
+    if (notificationBtn) {
+      notificationBtn.innerHTML = ExecutiveIcons.notification || '🔔';
+    }
+
+    // Wallet icon
+    const walletBtn = document.querySelector('.bf-wallet-btn > span:first-child');
+    if (walletBtn) {
+      walletBtn.innerHTML = ExecutiveIcons.wallet || '🔌';
+    }
+  },
+
+  /**
      * Inicializar navegación automáticamente
      */
-    init: function() {
-        const activePage = this.detectActivePage();
-        this.render('bf-nav-container', activePage);
+  init: function() {
+    const activePage = this.detectActivePage();
+    this.render('bf-nav-container', activePage);
+    this.initMobileMenu(); // Añadir inicializador del menú móvil
+  },
+
+  /**
+     * Manejar la funcionalidad del menú móvil
+     */
+  initMobileMenu: function() {
+    const mobileToggle = document.querySelector('.bf-mobile-toggle');
+    const navLinks = document.querySelector('.bf-nav-links');
+    const dropdownItems = document.querySelectorAll('.bf-nav-dropdown-item');
+
+    if (!mobileToggle || !navLinks) {
+      console.warn('Mobile menu elements not found');
+      return;
     }
+
+    // Toggle del menú principal
+    mobileToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.classList.toggle('active');
+      navLinks.classList.toggle('mobile-active');
+
+      // Prevenir scroll del body cuando el menú está abierto
+      document.body.style.overflow = navLinks.classList.contains('mobile-active') ? 'hidden' : '';
+    });
+
+    // Manejar dropdowns en móvil
+    dropdownItems.forEach(item => {
+      const toggleLink = item.querySelector('.bf-nav-link');
+
+      toggleLink.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024) { // Usar el breakpoint de tablet
+          e.preventDefault();
+
+          // Cerrar otros dropdowns abiertos
+          dropdownItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('open');
+            }
+          });
+
+          item.classList.toggle('open');
+        }
+      });
+    });
+
+    // Cerrar menú al hacer click en un enlace que no sea dropdown
+    navLinks.querySelectorAll('a').forEach(link => {
+      if (!link.parentElement.classList.contains('bf-nav-dropdown-item')) {
+        link.addEventListener('click', () => {
+          if (navLinks.classList.contains('mobile-active')) {
+            mobileToggle.classList.remove('active');
+            navLinks.classList.remove('mobile-active');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+    });
+
+    // Cerrar menú al hacer click fuera
+    document.addEventListener('click', (e) => {
+      if (navLinks.classList.contains('mobile-active') && !e.target.closest('.bf-modern-nav')) {
+        mobileToggle.classList.remove('active');
+        navLinks.classList.remove('mobile-active');
+        document.body.style.overflow = '';
+        dropdownItems.forEach(item => item.classList.remove('open'));
+      }
+    });
+
+    // Manejar cambios de tamaño de ventana
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1024) {
+        mobileToggle.classList.remove('active');
+        navLinks.classList.remove('mobile-active');
+        document.body.style.overflow = '';
+        dropdownItems.forEach(item => item.classList.remove('open'));
+      }
+    });
+
+    console.log('📱 Mobile menu initialized');
+  }
 };
 
 // Auto-inicializar si encuentra el contenedor
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('bf-nav-container')) {
-        UniversalNav.init();
-    }
+  if (document.getElementById('bf-nav-container')) {
+    UniversalNav.init();
+  }
 });
 
 // Exportar para uso global

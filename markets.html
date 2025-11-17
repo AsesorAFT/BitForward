@@ -12,6 +12,7 @@
     
     <!-- Estilos de la página de Mercados -->
     <link rel="stylesheet" href="css/markets.css">
+    <link rel="stylesheet" href="css/responsive.css">
     
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,22 +30,26 @@
             <p>Encuentra tu próxima oportunidad de trading en nuestra selección de mercados globales.</p>
         </header>
 
-        <div class="markets-table-container card">
-            <div class="markets-table-header">
-                <div class="header-item">Par</div>
-                <div class="header-item">Último Precio</div>
-                <div class="header-item">Cambio 24h</div>
-                <div class="header-item">Volumen 24h</div>
-                <div class="header-item"></div>
-            </div>
-            <div id="markets-list">
-                <!-- Los datos del mercado se insertarán aquí dinámicamente -->
-            </div>
+        <div class="markets-table-container card table-wrapper table-responsive-stack">
+            <table id="markets-table" class="table-markets">
+                <thead>
+                    <tr>
+                        <th>Activo</th>
+                        <th>Precio</th>
+                        <th>Cambio (24h)</th>
+                        <th>Volumen (24h)</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="markets-list">
+                    <!-- Los datos del mercado se insertarán aquí dinámicamente -->
+                </tbody>
+            </table>
         </div>
     </main>
 
     <!-- Footer Universal -->
-    <div id="bf-universal-footer-container"></div>
+    <footer id="universal-footer"></footer>
 
     <!-- Scripts -->
     <script src="js/universal-nav.js"></script>

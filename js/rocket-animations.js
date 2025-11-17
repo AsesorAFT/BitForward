@@ -28,18 +28,18 @@
   let launchButton;
 
   // Inicializar cuando el DOM esté listo
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 BitForward Rocket Animation Initializing...');
-    
+
     // Buscar sección hero
     heroSection = document.querySelector('.hero, header, .header-section, .banner');
-    
+
     // Buscar botón de lanzamiento/inicio
     launchButton = document.querySelector('.launch-button, .cta-button, .primary-button, button.primary');
-    
+
     // Inicializar animaciones
     initRocketAnimations();
-    
+
     console.log('🚀 BitForward Rocket Animation Ready');
   });
 
@@ -51,18 +51,18 @@
     if (heroSection) {
       // Añadir clase para estilos
       heroSection.classList.add('rocket-hero');
-      
+
       // Configurar cohetes aleatorios volando por la sección hero
       setTimeout(() => {
         launchRandomRocket();
       }, CONFIG.initialDelay);
     }
-    
+
     // Si tenemos el botón de lanzamiento, añadimos efectos
     if (launchButton) {
       setupLaunchButton(launchButton);
     }
-    
+
     // Añadir efecto de despegue al hacer scroll
     setupScrollLaunchEffect();
   }
@@ -74,10 +74,10 @@
     // Seleccionar tamaño aleatorio
     const sizes = Object.values(CONFIG.rocketSize);
     const size = sizes[Math.floor(Math.random() * sizes.length)];
-    
+
     // Seleccionar ruta aleatoria
     const path = CONFIG.paths[Math.floor(Math.random() * CONFIG.paths.length)];
-    
+
     // Configurar cohete
     const rocketConfig = {
       size: size,
@@ -86,17 +86,17 @@
       endPosition: path.end,
       delay: 0
     };
-    
+
     // Lanzar cohete usando la función global
     if (window.BitForwardSpace && window.BitForwardSpace.addFlyingRocket) {
       window.BitForwardSpace.addFlyingRocket(rocketConfig);
     }
-    
+
     // Programar el siguiente cohete
-    const nextRocketDelay = Math.random() * 
-      (CONFIG.rocketFrequency.max - CONFIG.rocketFrequency.min) + 
+    const nextRocketDelay = Math.random() *
+      (CONFIG.rocketFrequency.max - CONFIG.rocketFrequency.min) +
       CONFIG.rocketFrequency.min;
-    
+
     setTimeout(launchRandomRocket, nextRocketDelay);
   }
 
@@ -107,24 +107,24 @@
   function setupLaunchButton(button) {
     // Añadir clases
     button.classList.add('rocket-launch-button');
-    
+
     // Añadir ícono de cohete si no tiene uno
     if (!button.querySelector('i[class*="rocket"]')) {
       const rocketIcon = document.createElement('i');
       rocketIcon.className = 'rocket-icon';
       button.prepend(rocketIcon);
     }
-    
+
     // Añadir efecto de lanzamiento al hacer clic
     button.addEventListener('click', function(e) {
       // No lanzar si se hace clic en un enlace interno (prevenir comportamiento por defecto)
       if (this.tagName === 'A' && this.getAttribute('href').startsWith('#')) {
         e.preventDefault();
       }
-      
+
       // Añadir clase de animación
       this.classList.add('launching');
-      
+
       // Lanzar 3 cohetes en secuencia
       for (let i = 0; i < 3; i++) {
         setTimeout(() => {
@@ -135,18 +135,18 @@
             endPosition: { x: 20 + i * 30, y: -10 },
             delay: 0
           };
-          
+
           if (window.BitForwardSpace && window.BitForwardSpace.addFlyingRocket) {
             window.BitForwardSpace.addFlyingRocket(config);
           }
         }, i * 200);
       }
-      
+
       // Restablecer clase después de la animación
       setTimeout(() => {
         this.classList.remove('launching');
       }, 1000);
-      
+
       // Si era un enlace interno, hacer scroll suave después de un pequeño retraso
       if (this.tagName === 'A' && this.getAttribute('href').startsWith('#')) {
         const target = document.querySelector(this.getAttribute('href'));
@@ -165,44 +165,44 @@
   function setupScrollLaunchEffect() {
     let lastScrollTop = 0;
     let scrollingUp = false;
-    let scrollThreshold = 300; // Umbral de scroll rápido
+    const scrollThreshold = 300; // Umbral de scroll rápido
     let lastScrollTime = Date.now();
     let scrollSpeed = 0;
-    
-    window.addEventListener('scroll', function() {
+
+    window.addEventListener('scroll', () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const now = Date.now();
       const timeDiff = now - lastScrollTime;
-      
+
       // Calcular velocidad de scroll
       if (timeDiff > 0) {
         scrollSpeed = Math.abs(scrollTop - lastScrollTop) / timeDiff * 1000;
       }
-      
+
       // Determinar dirección de scroll
       const currentScrollingUp = scrollTop < lastScrollTop;
-      
+
       // Lanzar cohete en cambio de dirección con scroll rápido
       if (currentScrollingUp !== scrollingUp && scrollSpeed > scrollThreshold) {
         const config = {
           size: 30 + scrollSpeed / 20,
           duration: 3,
-          startPosition: { 
-            x: Math.random() * 30 + 35, 
+          startPosition: {
+            x: Math.random() * 30 + 35,
             y: 110
           },
-          endPosition: { 
-            x: Math.random() * 30 + 35, 
-            y: -10 
+          endPosition: {
+            x: Math.random() * 30 + 35,
+            y: -10
           },
           delay: 0
         };
-        
+
         if (window.BitForwardSpace && window.BitForwardSpace.addFlyingRocket) {
           window.BitForwardSpace.addFlyingRocket(config);
         }
       }
-      
+
       // Actualizar valores
       scrollingUp = currentScrollingUp;
       lastScrollTop = scrollTop;

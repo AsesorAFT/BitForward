@@ -1,0 +1,54 @@
+# .github/workflows/deploy.yml
+
+name: '🚀 Deploy BitForward to Netlify'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: '🏗️ Build & Deploy'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: '📥 Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: '⚙️ Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: '📦 Install Dependencies'
+        run: npm ci
+
+      - name: '🔍 Lint Code'
+        run: npm run lint
+
+      - name: '🧪 Run Tests'
+        run: npm test --if-present
+
+      - name: '🛠️ Build Production Artifacts'
+        run: npm run build
+        env:
+          NODE_ENV: production
+          # Si tuvieras variables de entorno para el build, irían aquí
+          # VITE_API_URL: ${{ secrets.VITE_API_URL }}
+
+      - name: '🚀 Deploy to Netlify'
+        uses: nwtgck/actions-netlify@v2
+        with:
+          publish-dir: './dist'
+          production-branch: main
+          # El `github-token` es para comentarios en PRs
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 3

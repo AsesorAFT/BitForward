@@ -12,6 +12,7 @@
     
     <!-- Estilos de la Interfaz de Exchange -->
     <link rel="stylesheet" href="css/exchange.css">
+    <link rel="stylesheet" href="css/responsive.css">
     
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -107,7 +108,7 @@
         <!-- 5. Posiciones del Usuario -->
         <footer class="exchange-module exchange-user-positions">
             <div class="exchange-module-header">Posiciones Abiertas</div>
-            <div class="user-positions-container">
+            <div class="user-positions-container table-wrapper table-responsive-stack">
                 <table class="user-positions-table">
                     <thead>
                         <tr>
@@ -121,17 +122,20 @@
                     <tbody>
                         <!-- Ejemplo de posición -->
                         <tr>
-                            <td>BTC/USD</td>
-                            <td class="positive">COMPRA</td>
-                            <td>0.5</td>
-                            <td>$65,120.00</td>
-                            <td class="positive">+$1,190.25</td>
+                            <td data-label="Par">BTC/USD</td>
+                            <td data-label="Tipo" class="positive">COMPRA</td>
+                            <td data-label="Cantidad">0.5</td>
+                            <td data-label="Precio Entrada">$65,120.00</td>
+                            <td data-label="P/L no realizado" class="positive">+$1,190.25</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </footer>
     </div>
+
+    <!-- Footer Universal -->
+    <footer id="universal-footer"></footer>
 
     <!-- Scripts -->
     <script src="js/universal-nav.js"></script>

@@ -13,7 +13,9 @@
     position: relative;
     overflow: hidden;
     text-align: center;
-    background: var(--hero-bg-gradient);
+    background: 
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(13, 17, 23, 0) 0%, var(--color-background) 100%),
+        linear-gradient(180deg, var(--color-surface) 0%, var(--color-background) 100%);
     z-index: 1;
 }
 
@@ -42,6 +44,8 @@
     max-width: 800px;
     z-index: 2;
     animation: fadeInUp 1s ease-out forwards;
+    position: relative;
+    padding-bottom: 10vh; /* Space for visual elements if any */
 }
 
 .hero-title {
@@ -56,10 +60,9 @@
 }
 
 .hero-title .highlight {
-    background: linear-gradient(135deg, var(--bf-accent-secondary), var(--bf-accent-primary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-primary);
+    background: none;
+    -webkit-text-fill-color: unset;
 }
 
 .hero-subtitle {
@@ -73,6 +76,7 @@
 
 .hero-cta {
     display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
     justify-content: center;
     gap: 1rem;
 }
@@ -97,4 +101,14 @@
     .hero-subtitle {
         font-size: 1.25rem; /* 20px */
     }
+}
+
+/* Estilos adicionales para el nuevo diseño del héroe */
+#connect-wallet-btn {
+    transition: var(--transition-normal);
+}
+
+#connect-wallet-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }

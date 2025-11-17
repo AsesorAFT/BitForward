@@ -249,7 +249,131 @@
 }
 
 .stat-card-change.negative {
-    color: #EF4444;
+    color: var(--color-error);
+}
+
+/* ===================================
+   CHARTS
+   =================================== */
+
+.chart-card {
+    padding: var(--space-6);
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+}
+
+.chart-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-headings);
+}
+
+.chart-legend {
+    display: flex;
+    gap: var(--space-4);
+    font-size: var(--font-size-sm);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.legend-item::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-primary); /* Default color */
+}
+
+/* ===================================
+   ASSETS TABLE & QUICK ACTIONS
+   =================================== */
+
+.dashboard-columns {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+}
+
+@media (max-width: 992px) {
+    .dashboard-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+.assets-table-card, .quick-actions-card {
+    height: 100%;
+}
+
+.card-header-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-headings);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.assets-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.assets-table th, .assets-table td {
+    padding: var(--space-3) var(--space-2);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.assets-table th {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+}
+
+.asset-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.asset-logo {
+    width: 32px;
+    height: 32px;
+}
+
+.asset-name {
+    display: block;
+    font-weight: var(--font-weight-medium);
+}
+
+.asset-symbol {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.btn.full-width {
+    width: 100%;
+    text-align: center;
 }
 
 /* ===================================

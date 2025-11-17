@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/typography.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/wallet.css">
+    <link rel="stylesheet" href="css/responsive.css">
     
     <!-- Universal Navigation Styles (al final para sobrescribir) -->
     <link rel="stylesheet" href="css/modern-navigation.css">
@@ -27,6 +28,9 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https/fonts.gstatic.com" crossorigin>
+    
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <body class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen text-white">
     
@@ -58,7 +62,7 @@
                     <p class="text-sm text-blue-300">Fear & Greed: 72</p>
                 </div>
                 
-                <div class="glass-effect rounded-xl p-4 border border-blue-500/30">
+                <div class="glass-effect rounded-xl p-4 border border-blue-500/30 flex flex-col">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-blue-200 text-sm">Dominancia BTC</span>
                         <svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
@@ -66,10 +70,10 @@
                         </svg>
                     </div>
                     <p class="text-2xl font-bold text-white">54.2%</p>
-                    <p class="text-sm text-green-400">+1.3% (24h)</p>
+                    <div id="btc-dominance-sparkline" class="flex-grow"></div>
                 </div>
                 
-                <div class="glass-effect rounded-xl p-4 border border-purple-500/30">
+                <div class="glass-effect rounded-xl p-4 border border-purple-500/30 flex flex-col">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-blue-200 text-sm">Market Cap Total</span>
                         <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,10 +81,10 @@
                         </svg>
                     </div>
                     <p class="text-2xl font-bold text-white">$2.4T</p>
-                    <p class="text-sm text-green-400">+5.2% (24h)</p>
+                    <div id="market-cap-sparkline" class="flex-grow"></div>
                 </div>
                 
-                <div class="glass-effect rounded-xl p-4 border border-yellow-500/30">
+                <div class="glass-effect rounded-xl p-4 border border-yellow-500/30 flex flex-col">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-blue-200 text-sm">Vol. 24h</span>
                         <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,7 +92,7 @@
                         </svg>
                     </div>
                     <p class="text-2xl font-bold text-white">$125B</p>
-                    <p class="text-sm text-yellow-400">Alto volumen</p>
+                    <div id="volume-sparkline" class="flex-grow"></div>
                 </div>
             </div>
 
@@ -338,40 +342,40 @@
                 <h3 class="text-xl font-bold text-white mb-6">Métricas On-Chain</h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="bg-black/20 rounded-lg p-4">
+                    <div class="bg-black/20 rounded-lg p-4 flex flex-col">
                         <div class="flex items-center gap-2 mb-2">
                             <div class="w-2 h-2 bg-green-400 rounded-full"></div>
                             <span class="text-blue-200 text-sm">Active Addresses</span>
                         </div>
                         <p class="text-2xl font-bold text-white">1.2M</p>
-                        <p class="text-xs text-green-400 mt-1">+8.4% (7d)</p>
+                        <div id="active-addresses-sparkline" class="flex-grow mt-1"></div>
                     </div>
 
-                    <div class="bg-black/20 rounded-lg p-4">
+                    <div class="bg-black/20 rounded-lg p-4 flex flex-col">
                         <div class="flex items-center gap-2 mb-2">
                             <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
                             <span class="text-blue-200 text-sm">Hash Rate</span>
                         </div>
                         <p class="text-2xl font-bold text-white">425 EH/s</p>
-                        <p class="text-xs text-blue-400 mt-1">ATH histórico</p>
+                        <div id="hash-rate-sparkline" class="flex-grow mt-1"></div>
                     </div>
 
-                    <div class="bg-black/20 rounded-lg p-4">
+                    <div class="bg-black/20 rounded-lg p-4 flex flex-col">
                         <div class="flex items-center gap-2 mb-2">
                             <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
                             <span class="text-blue-200 text-sm">Exchange Netflow</span>
                         </div>
                         <p class="text-2xl font-bold text-green-400">-15.2K</p>
-                        <p class="text-xs text-green-400 mt-1">Salidas netas</p>
+                        <div id="netflow-sparkline" class="flex-grow mt-1"></div>
                     </div>
 
-                    <div class="bg-black/20 rounded-lg p-4">
+                    <div class="bg-black/20 rounded-lg p-4 flex flex-col">
                         <div class="flex items-center gap-2 mb-2">
                             <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
                             <span class="text-blue-200 text-sm">Stablecoin Supply</span>
                         </div>
                         <p class="text-2xl font-bold text-white">$145B</p>
-                        <p class="text-xs text-yellow-400 mt-1">Liquidez alta</p>
+                        <div id="stablecoin-sparkline" class="flex-grow mt-1"></div>
                     </div>
                 </div>
             </div>
@@ -443,5 +447,6 @@
     <!-- Universal Navigation & Footer Scripts -->
     <script src="js/universal-nav.js"></script>
     <script src="js/universal-footer.js"></script>
+    <script src="js/analytics-charts.js"></script>
 </body>
 </html>

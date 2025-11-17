@@ -1,9 +1,9 @@
 /**
  * BitForward - Vite Code Splitting Configuration
- * 
+ *
  * Performance Optimization - Phase B
  * Configuración avanzada de code splitting para reducir bundle size
- * 
+ *
  * Estrategias:
  * 1. Route-based splitting
  * 2. Vendor splitting (node_modules)
@@ -19,13 +19,13 @@ export default defineConfig({
   build: {
     // Output directory
     outDir: 'dist',
-    
+
     // Enable source maps for debugging
     sourcemap: true,
-    
+
     // Target modern browsers for smaller bundles
     target: 'es2020',
-    
+
     // Minify with terser for better compression
     minify: 'terser',
     terserOptions: {
@@ -38,7 +38,7 @@ export default defineConfig({
         comments: false, // Remove comments
       },
     },
-    
+
     // Rollup options for advanced code splitting
     rollupOptions: {
       // Entry points
@@ -48,7 +48,7 @@ export default defineConfig({
         lending: './lending.html',
         enterprise: './enterprise.html',
       },
-      
+
       // Output configuration
       output: {
         // Manual chunks for better code splitting
@@ -68,11 +68,11 @@ export default defineConfig({
             if (id.includes('framer-motion')) {
               return 'vendor-animations';
             }
-            
+
             // All other vendors
             return 'vendor';
           }
-          
+
           // Route-based chunks
           if (id.includes('/js/dashboard')) {
             return 'route-dashboard';
@@ -83,58 +83,58 @@ export default defineConfig({
           if (id.includes('/js/wallet')) {
             return 'route-wallet';
           }
-          
+
           // Component chunks
           if (id.includes('/components/')) {
             return 'components';
           }
-          
+
           // Utility chunks
           if (id.includes('/utils/')) {
             return 'utils';
           }
-          
+
           // Blockchain-related code
           if (id.includes('/js/blockchain') || id.includes('/js/bitforward-web3')) {
             return 'blockchain';
           }
-          
+
           // UI/Theme chunks
           if (id.includes('/js/rocket-theme') || id.includes('/js/enhancements')) {
             return 'ui-theme';
           }
         },
-        
+
         // Chunk file naming
         chunkFileNames: 'js/[name]-[hash].js',
         entryFileNames: 'js/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.');
           const ext = info[info.length - 1];
-          
+
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
-            return `assets/images/[name]-[hash][extname]`;
+            return 'assets/images/[name]-[hash][extname]';
           } else if (/woff2?|ttf|eot/i.test(ext)) {
-            return `assets/fonts/[name]-[hash][extname]`;
+            return 'assets/fonts/[name]-[hash][extname]';
           } else if (/css/i.test(ext)) {
-            return `css/[name]-[hash][extname]`;
+            return 'css/[name]-[hash][extname]';
           }
-          
-          return `assets/[name]-[hash][extname]`;
+
+          return 'assets/[name]-[hash][extname]';
         },
       },
     },
-    
+
     // Chunk size warnings
     chunkSizeWarningLimit: 500, // KB
-    
+
     // CSS code splitting
     cssCodeSplit: true,
-    
+
     // Asset inlining threshold (10KB)
     assetsInlineLimit: 10240,
   },
-  
+
   // Optimizations
   optimizeDeps: {
     include: [
@@ -146,7 +146,7 @@ export default defineConfig({
       'web3',
     ],
   },
-  
+
   // Server configuration for development
   server: {
     port: 3000,
@@ -156,12 +156,12 @@ export default defineConfig({
       overlay: true,
     },
   },
-  
+
   // Preview configuration
   preview: {
     port: 8080,
   },
-  
+
   // Plugins
   plugins: [
     // Bundle visualizer
@@ -173,7 +173,7 @@ export default defineConfig({
       template: 'treemap', // sunburst, treemap, network
     }),
   ],
-  
+
   // Performance budgets
   performance: {
     maxEntrypointSize: 300000, // 300KB

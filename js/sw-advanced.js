@@ -1,7 +1,7 @@
 /**
  * BitForward - Advanced Service Worker
  * PWA con estrategias de cache inteligentes
- * 
+ *
  * Estrategias:
  * - Cache-First: Assets estáticos (JS, CSS, fonts, images)
  * - Network-First: APIs y datos dinámicos
@@ -41,12 +41,12 @@ const RULES = {
     return /\.(woff2?|ttf|eot|otf)$/.test(url.pathname);
   },
   isApiRequest: (url) => {
-    return url.pathname.startsWith('/api/') || 
+    return url.pathname.startsWith('/api/') ||
            url.hostname.includes('coingecko.com') ||
            url.hostname.includes('binance.com');
   },
   isPriceRequest: (url) => {
-    return url.pathname.includes('/price') || 
+    return url.pathname.includes('/price') ||
            url.hostname.includes('coingecko.com');
   },
 };
@@ -56,7 +56,7 @@ const RULES = {
  */
 self.addEventListener('install', (event) => {
   console.log('🚀 Service Worker installing...');
-  
+
   event.waitUntil(
     caches.open(CACHE_NAMES.static)
       .then(cache => {
@@ -78,7 +78,7 @@ self.addEventListener('install', (event) => {
  */
 self.addEventListener('activate', (event) => {
   console.log('🔄 Service Worker activating...');
-  
+
   event.waitUntil(
     caches.keys()
       .then(cacheNames => {
@@ -86,7 +86,7 @@ self.addEventListener('activate', (event) => {
           cacheNames
             .filter(cacheName => {
               // Eliminar caches que no sean de la versión actual
-              return cacheName.startsWith('bitforward-') && 
+              return cacheName.startsWith('bitforward-') &&
                      !Object.values(CACHE_NAMES).includes(cacheName);
             })
             .map(cacheName => {
@@ -108,17 +108,17 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
-  
+
   // Solo cachear GET requests
   if (request.method !== 'GET') {
     return;
   }
-  
+
   // Ignorar requests de chrome extensions
   if (url.protocol === 'chrome-extension:') {
     return;
   }
-  
+
   // Aplicar estrategia según el tipo de request
   if (RULES.isStaticAsset(url)) {
     // Cache-First para assets estáticos
@@ -155,19 +155,19 @@ async function cacheFirst(request, cacheName) {
     // Buscar en cache
     const cache = await caches.open(cacheName);
     const cached = await cache.match(request);
-    
+
     if (cached) {
       return cached;
     }
-    
+
     // Si no está en cache, ir a la red
     const response = await fetch(request);
-    
+
     // Cachear la respuesta si es válida
     if (response && response.status === 200) {
       cache.put(request, response.clone());
     }
-    
+
     return response;
   } catch (error) {
     console.error('Cache-First error:', error);
@@ -182,23 +182,23 @@ async function cacheFirst(request, cacheName) {
 async function networkFirst(request, cacheName) {
   try {
     const response = await fetch(request);
-    
+
     // Cachear respuesta exitosa
     if (response && response.status === 200) {
       const cache = await caches.open(cacheName);
       cache.put(request, response.clone());
     }
-    
+
     return response;
   } catch (error) {
     // Si la red falla, intentar cache
     const cache = await caches.open(cacheName);
     const cached = await cache.match(request);
-    
+
     if (cached) {
       return cached;
     }
-    
+
     return offlineFallback(request);
   }
 }
@@ -210,7 +210,7 @@ async function networkFirst(request, cacheName) {
 async function staleWhileRevalidate(request, cacheName) {
   const cache = await caches.open(cacheName);
   const cached = await cache.match(request);
-  
+
   // Fetch de la red en background
   const fetchPromise = fetch(request)
     .then(response => {
@@ -222,7 +222,7 @@ async function staleWhileRevalidate(request, cacheName) {
     .catch(error => {
       console.warn('Background fetch failed:', error);
     });
-  
+
   // Retornar cache inmediatamente o esperar al fetch
   return cached || fetchPromise;
 }
@@ -236,12 +236,12 @@ async function offlineFallback(request) {
   if (request.mode === 'navigate') {
     const cache = await caches.open(CACHE_NAMES.static);
     const offline = await cache.match('/offline.html');
-    
+
     if (offline) {
       return offline;
     }
   }
-  
+
   // Para otros requests, retornar error
   return new Response('Offline - No cached version available', {
     status: 503,
@@ -257,16 +257,16 @@ async function offlineFallback(request) {
  */
 self.addEventListener('message', (event) => {
   const { type, data } = event.data;
-  
+
   switch (type) {
     case 'SKIP_WAITING':
       self.skipWaiting();
       break;
-      
+
     case 'CLIENTS_CLAIM':
       self.clients.claim();
       break;
-      
+
     case 'CLEAR_CACHE':
       event.waitUntil(
         caches.keys().then(names => {
@@ -274,7 +274,7 @@ self.addEventListener('message', (event) => {
         })
       );
       break;
-      
+
     case 'GET_CACHE_SIZE':
       event.waitUntil(
         getCacheSize().then(size => {
@@ -282,7 +282,7 @@ self.addEventListener('message', (event) => {
         })
       );
       break;
-      
+
     default:
       console.warn('Unknown message type:', type);
   }
@@ -294,11 +294,11 @@ self.addEventListener('message', (event) => {
 async function getCacheSize() {
   const cacheNames = await caches.keys();
   let totalSize = 0;
-  
+
   for (const name of cacheNames) {
     const cache = await caches.open(name);
     const requests = await cache.keys();
-    
+
     for (const request of requests) {
       const response = await cache.match(request);
       if (response) {
@@ -307,7 +307,7 @@ async function getCacheSize() {
       }
     }
   }
-  
+
   return totalSize;
 }
 
@@ -316,7 +316,7 @@ async function getCacheSize() {
  */
 self.addEventListener('sync', (event) => {
   console.log('🔄 Background sync:', event.tag);
-  
+
   if (event.tag === 'sync-transactions') {
     event.waitUntil(syncTransactions());
   }
@@ -340,7 +340,7 @@ async function syncTransactions() {
  */
 self.addEventListener('push', (event) => {
   const data = event.data ? event.data.json() : {};
-  
+
   const options = {
     body: data.body || 'Notificación de BitForward',
     icon: '/assets/logo-rocket-animated.svg',
@@ -358,7 +358,7 @@ self.addEventListener('push', (event) => {
       },
     ],
   };
-  
+
   event.waitUntil(
     self.registration.showNotification(
       data.title || 'BitForward',
@@ -372,7 +372,7 @@ self.addEventListener('push', (event) => {
  */
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  
+
   if (event.action === 'open') {
     event.waitUntil(
       clients.openWindow(event.notification.data.url || '/')

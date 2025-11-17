@@ -2,7 +2,7 @@
 
 /**
  * BitForward - Generate Secure Environment Variables
- * 
+ *
  * This script generates secure random values for production environment variables.
  * Run: node scripts/generate-env-vars.js
  */

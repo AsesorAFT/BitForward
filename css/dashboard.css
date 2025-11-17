@@ -686,6 +686,18 @@ button:focus-visible,
 .widget-container:nth-child(4) { animation-delay: 0.4s; }
 .widget-container:nth-child(5) { animation-delay: 0.5s; }
 
+/* Sparkline chart containers */
+#btc-dominance-sparkline,
+#market-cap-sparkline,
+#volume-sparkline,
+#active-addresses-sparkline,
+#hash-rate-sparkline,
+#netflow-sparkline,
+#stablecoin-sparkline {
+    min-height: 50px; /* Ensure a minimum height */
+    flex-grow: 1;
+}
+
 /* Loading States */
 .loading {
     display: flex;

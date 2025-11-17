@@ -1,0 +1,42 @@
+# .eslintignore
+
+# Dependencies
+node_modules/
+server/node_modules/
+dashboard-app/node_modules/
+
+# Build outputs
+dist/
+build/
+.vite/
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Generated files
+stats.html
+lighthouse-report.html
+
+# Vendor/External libraries
+public/vendor/
+assets/vendor/
