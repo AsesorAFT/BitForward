@@ -8,20 +8,20 @@
   body {
     font-size: 14px;
   }
-  
+
   /* Header móvil */
   .landing-nav {
     padding: 0 1rem;
   }
-  
+
   .landing-brand h1 {
     font-size: 1.2rem;
   }
-  
+
   .landing-brand p {
     font-size: 0.65rem;
   }
-  
+
   .landing-menu {
     position: absolute;
     top: 100%;
@@ -35,141 +35,150 @@
     z-index: 1000;
     animation: slideDown 0.3s ease forwards;
   }
-  
+
   @keyframes slideDown {
-    0% { transform: translateY(-10px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
-  
+
   /* Hero section en móvil */
   .hero-section {
     padding: 7rem 1rem 3rem;
   }
-  
+
   .hero-title {
     font-size: 2.2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
-  
+
   .hero-cta {
     flex-direction: column;
     gap: 1rem;
   }
-  
-  .btn-primary, .btn-secondary {
+
+  .btn-primary,
+  .btn-secondary {
     width: 100%;
   }
-  
+
   /* Secciones en móvil */
   .features-section {
     padding: 3rem 1rem;
   }
-  
+
   .section-title {
     font-size: 1.8rem;
     margin-bottom: 2rem;
   }
-  
+
   /* Tarjetas en móvil */
   .features-grid {
     gap: 1rem;
   }
-  
+
   .feature-card {
     padding: 1.5rem;
   }
-  
+
   .feature-icon {
     width: 50px;
     height: 50px;
   }
-  
+
   /* Dashboard en móvil */
   .header-content {
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
   }
-  
+
   .logo-section {
     width: 100%;
     justify-content: space-between;
   }
-  
+
   .logo-container {
     width: 40px;
     height: 40px;
   }
-  
+
   .brand-title {
     font-size: 1.2rem;
   }
-  
+
   .brand-subtitle {
     font-size: 0.7rem;
   }
-  
+
   main {
     padding: 1rem;
   }
-  
+
   /* Gráficos y tablas en móvil */
-  .grid-1, .grid-md-2, .grid-lg-4 {
+  .grid-1,
+  .grid-md-2,
+  .grid-lg-4 {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .metric-card {
     margin-bottom: 0.5rem;
   }
-  
+
   .table-scroll {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   /* Elementos animados en móvil - cohete fijo eliminado */
-  
+
   /* Modal de login en móvil */
   #login-modal > div {
     padding: 2rem 1rem;
   }
-  
+
   /* Menú de navegación móvil */
   .mobile-menu-active .landing-menu {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   /* Tooltips y ayudas en móvil */
   .tooltip {
     display: none;
   }
-  
+
   /* Efectos reducidos para mejor rendimiento */
   .star {
     display: none;
   }
-  
+
   .stars-container {
     display: none;
   }
-  
+
   /* Mostrar solo estrellas grandes para mejor rendimiento */
-  .star[style*="width: 2"] {
+  .star[style*='width: 2'] {
     display: block;
   }
-  
+
   /* Ocultar partículas en dispositivos móviles para mejorar rendimiento */
   .particles-container {
     display: none;
   }
-  
+
   /* Botón de menú más visible */
   .mobile-menu-toggle {
     background: rgba(59, 130, 246, 0.2);
@@ -180,7 +189,7 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   /* Optimizar footer en móvil */
   .footer {
     padding: 2rem 1rem;
@@ -192,24 +201,24 @@
   .hero-title {
     font-size: 3rem;
   }
-  
+
   .features-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   main {
     padding: 1.5rem;
   }
-  
+
   /* Mostrar menos estrellas en tablets */
   .star:nth-child(odd) {
     display: none;
   }
-  
+
   /* Reducir animaciones para mejorar rendimiento */
   .shooting-star {
     animation-duration: 1.5s;
@@ -218,19 +227,20 @@
 
 /* Pantallas grandes */
 @media (min-width: 1400px) {
-  .features-section, .stats-section {
+  .features-section,
+  .stats-section {
     max-width: 1400px;
     margin: 0 auto;
   }
-  
+
   .hero-title {
     font-size: 4rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.7rem;
   }
-  
+
   /* Más estrellas en pantallas grandes */
   .stars-container::after {
     content: '';

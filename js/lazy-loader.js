@@ -1,7 +1,7 @@
 /**
  * BitForward - Lazy Loader Module
  * Sistema de carga dinámica de módulos para optimizar performance
- * 
+ *
  * Características:
  * - Dynamic imports
  * - Route-based code splitting
@@ -17,52 +17,58 @@ class LazyLoader {
     this.observers = new Map();
     this.retryAttempts = 3;
     this.retryDelay = 1000;
-    
+
     this.init();
   }
-  
+
   /**
    * Inicializar lazy loader
    */
   init() {
     console.log('🚀 LazyLoader initialized - Quick Win #1');
-    
+
     // Setup Intersection Observer para lazy loading de componentes visibles
     this.setupIntersectionObserver();
-    
+
     // Lazy load de Ethers.js solo cuando se conecta wallet
     this.setupEthersLazyLoad();
-    
+
     // Lazy load de imágenes fuera del viewport
     this.lazyLoadImages();
-    
+
     // Preload critical modules on idle
     if ('requestIdleCallback' in window) {
       requestIdleCallback(() => this.preloadCriticalModules());
     } else {
       setTimeout(() => this.preloadCriticalModules(), 2000);
     }
-    
+
     console.log('✅ Lazy loading activado - Bundle size reducido ~40%');
   }
-  
+
   /**
    * Setup lazy loading de Ethers.js
    */
   setupEthersLazyLoad() {
     // Solo cargar Ethers cuando se hace click en "Conectar Wallet"
-    const walletButtons = document.querySelectorAll('#wallet-connect, button[onclick*="connectWallet"]');
-    
+    const walletButtons = document.querySelectorAll(
+      '#wallet-connect, button[onclick*="connectWallet"]'
+    );
+
     walletButtons.forEach(button => {
-      button.addEventListener('click', async () => {
-        if (!window.ethers) {
-          console.log('⏳ Cargando Ethers.js...');
-          await this.loadEthers();
-        }
-      }, { once: true, capture: true });
+      button.addEventListener(
+        'click',
+        async () => {
+          if (!window.ethers) {
+            console.log('⏳ Cargando Ethers.js...');
+            await this.loadEthers();
+          }
+        },
+        { once: true, capture: true }
+      );
     });
   }
-  
+
   /**
    * Cargar Ethers.js de forma diferida
    */
@@ -70,7 +76,7 @@ class LazyLoader {
     if (window.ethers) {
       return Promise.resolve();
     }
-    
+
     try {
       await this.loadScript('https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js');
       console.log('✅ Ethers.js cargado exitosamente');
@@ -80,28 +86,31 @@ class LazyLoader {
       throw error;
     }
   }
-  
+
   /**
    * Lazy loading de imágenes con Intersection Observer
    */
   lazyLoadImages() {
     const images = document.querySelectorAll('img[data-src], img[loading="lazy"]');
-    
+
     if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
+      const imageObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+              }
+              img.classList.add('lazy-loaded');
+              imageObserver.unobserve(img);
             }
-            img.classList.add('lazy-loaded');
-            imageObserver.unobserve(img);
-          }
-        });
-      }, { rootMargin: '50px' });
-      
+          });
+        },
+        { rootMargin: '50px' }
+      );
+
       images.forEach(img => imageObserver.observe(img));
     } else {
       // Fallback para navegadores antiguos
@@ -113,7 +122,7 @@ class LazyLoader {
       });
     }
   }
-  
+
   /**
    * Cargar script de forma asíncrona
    */
@@ -121,11 +130,11 @@ class LazyLoader {
     if (this.loadedModules.has(src)) {
       return Promise.resolve();
     }
-    
+
     if (this.loadingModules.has(src)) {
       return this.loadingModules.get(src);
     }
-    
+
     const promise = new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = src;
@@ -138,11 +147,11 @@ class LazyLoader {
       script.onerror = reject;
       document.head.appendChild(script);
     });
-    
+
     this.loadingModules.set(src, promise);
     return promise;
   }
-  
+
   /**
    * Setup Intersection Observer para componentes visibles
    */
@@ -152,13 +161,13 @@ class LazyLoader {
       rootMargin: '50px',
       threshold: 0.01,
     };
-    
-    const observer = new IntersectionObserver((entries) => {
+
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const element = entry.target;
           const moduleName = element.dataset.lazyModule;
-          
+
           if (moduleName) {
             this.loadModule(moduleName)
               .then(module => {
@@ -174,15 +183,15 @@ class LazyLoader {
         }
       });
     }, options);
-    
+
     // Observar elementos con data-lazy-module
     document.querySelectorAll('[data-lazy-module]').forEach(el => {
       observer.observe(el);
     });
-    
+
     this.observers.set('intersection', observer);
   }
-  
+
   /**
    * Cargar módulo de forma lazy
    * @param {string} moduleName - Nombre del módulo
@@ -190,58 +199,54 @@ class LazyLoader {
    * @returns {Promise<Module>}
    */
   async loadModule(moduleName, options = {}) {
-    const {
-      retry = this.retryAttempts,
-      timeout = 10000,
-      preload = false,
-    } = options;
-    
+    const { retry = this.retryAttempts, timeout = 10000, preload = false } = options;
+
     // Si ya está cargado, retornar del cache
     if (this.loadedModules.has(moduleName)) {
       return this.loadedModules.get(moduleName);
     }
-    
+
     // Si ya se está cargando, esperar a que termine
     if (this.loadingModules.has(moduleName)) {
       return this.loadingModules.get(moduleName);
     }
-    
+
     // Mostrar loading state
     if (!preload) {
       this.showLoadingState(moduleName);
     }
-    
+
     // Promise de carga
     const loadPromise = this.importWithRetry(moduleName, retry, timeout);
-    
+
     // Guardar en loading modules
     this.loadingModules.set(moduleName, loadPromise);
-    
+
     try {
       const module = await loadPromise;
-      
+
       // Guardar en cache
       this.loadedModules.set(moduleName, module);
       this.loadingModules.delete(moduleName);
-      
+
       // Ocultar loading state
       if (!preload) {
         this.hideLoadingState(moduleName);
       }
-      
+
       console.log(`✅ Module loaded: ${moduleName}`);
       return module;
     } catch (error) {
       this.loadingModules.delete(moduleName);
-      
+
       if (!preload) {
         this.showErrorState(moduleName, error);
       }
-      
+
       throw error;
     }
   }
-  
+
   /**
    * Import con retry automático
    */
@@ -251,10 +256,10 @@ class LazyLoader {
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => reject(new Error('Module load timeout')), timeout);
       });
-      
+
       // Import promise
       const importPromise = this.getModuleImport(moduleName);
-      
+
       // Race entre import y timeout
       return await Promise.race([importPromise, timeoutPromise]);
     } catch (error) {
@@ -266,7 +271,7 @@ class LazyLoader {
       throw error;
     }
   }
-  
+
   /**
    * Obtener import dinámico según el módulo
    */
@@ -276,50 +281,46 @@ class LazyLoader {
       'wallet-manager': () => import('./wallet-manager-real.js'),
       'wallet-web3': () => import('./bitforward-web3.js'),
       'wallet-auth': () => import('./wallet-auth-client.js'),
-      
+
       // Price feed modules
       'price-feeds': () => import('./price-feeds.js'),
       'price-display': () => import('./price-display.js'),
       'price-widgets': () => import('./price-widgets.js'),
-      
+
       // Dashboard modules
-      'dashboard': () => import('./dashboard.js'),
+      dashboard: () => import('./dashboard.js'),
       'dashboard-web3': () => import('./dashboard-web3.js'),
       'dashboard-renderer': () => import('./dashboard-renderer.js'),
-      
+
       // UI modules
-      'enhancements': () => import('./enhancements.js'),
-      'transitions': () => import('./transitions.js'),
+      enhancements: () => import('./enhancements.js'),
+      transitions: () => import('./transitions.js'),
       'rocket-theme': () => import('./rocket-theme.js'),
       'logo-manager': () => import('./logo-manager.js'),
-      
+
       // Other modules
       'news-feed': () => import('./news-feed.js'),
-      'lending': () => import('./lending.js'),
-      'auth': () => import('./auth.js'),
+      lending: () => import('./lending.js'),
+      auth: () => import('./auth.js'),
     };
-    
+
     const importFn = modules[moduleName];
-    
+
     if (!importFn) {
       return Promise.reject(new Error(`Unknown module: ${moduleName}`));
     }
-    
+
     return importFn();
   }
-  
+
   /**
    * Preload critical modules
    */
   async preloadCriticalModules() {
-    const criticalModules = [
-      'wallet-manager',
-      'price-feeds',
-      'dashboard',
-    ];
-    
+    const criticalModules = ['wallet-manager', 'price-feeds', 'dashboard'];
+
     console.log('🔄 Preloading critical modules...');
-    
+
     for (const moduleName of criticalModules) {
       try {
         await this.loadModule(moduleName, { preload: true });
@@ -327,10 +328,10 @@ class LazyLoader {
         console.warn(`Failed to preload ${moduleName}:`, error);
       }
     }
-    
+
     console.log('✅ Critical modules preloaded');
   }
-  
+
   /**
    * Preload módulo sin ejecutarlo
    */
@@ -343,25 +344,23 @@ class LazyLoader {
       return false;
     }
   }
-  
+
   /**
    * Cargar múltiples módulos en paralelo
    */
   async loadModules(moduleNames) {
-    return Promise.all(
-      moduleNames.map(name => this.loadModule(name))
-    );
+    return Promise.all(moduleNames.map(name => this.loadModule(name)));
   }
-  
+
   /**
    * Mostrar estado de carga
    */
   showLoadingState(moduleName) {
     const event = new CustomEvent('module-loading', {
-      detail: { module: moduleName }
+      detail: { module: moduleName },
     });
     window.dispatchEvent(event);
-    
+
     // Mostrar spinner si hay un contenedor
     const container = document.querySelector(`[data-module="${moduleName}"]`);
     if (container) {
@@ -374,16 +373,16 @@ class LazyLoader {
       `;
     }
   }
-  
+
   /**
    * Ocultar estado de carga
    */
   hideLoadingState(moduleName) {
     const event = new CustomEvent('module-loaded', {
-      detail: { module: moduleName }
+      detail: { module: moduleName },
     });
     window.dispatchEvent(event);
-    
+
     const container = document.querySelector(`[data-module="${moduleName}"]`);
     if (container) {
       container.classList.remove('loading');
@@ -393,16 +392,16 @@ class LazyLoader {
       }
     }
   }
-  
+
   /**
    * Mostrar estado de error
    */
   showErrorState(moduleName, error) {
     const event = new CustomEvent('module-error', {
-      detail: { module: moduleName, error }
+      detail: { module: moduleName, error },
     });
     window.dispatchEvent(event);
-    
+
     const container = document.querySelector(`[data-module="${moduleName}"]`);
     if (container) {
       container.classList.add('error');
@@ -416,14 +415,14 @@ class LazyLoader {
       `;
     }
   }
-  
+
   /**
    * Delay helper
    */
   delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  
+
   /**
    * Limpiar módulos no utilizados (garbage collection)
    */
@@ -433,7 +432,7 @@ class LazyLoader {
     });
     console.log(`🗑️ Cleaned up ${moduleNames.length} modules`);
   }
-  
+
   /**
    * Obtener estadísticas de carga
    */

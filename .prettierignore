@@ -1,26 +1,8 @@
-# Dependencies
-node_modules
-package-lock.json
-
-# Build outputs
 dist
-build
-.next
-out
-
-# Cache
-.cache
-*.log
-
-# Artifacts
-artifacts
-cache
+node_modules
 coverage
-
-# Config
-.env
-.env.*
-
-# Lock files
-yarn.lock
-pnpm-lock.yaml
+*.config.js
+*.config.cjs
+package-lock.json
+.husky
+public/assets
