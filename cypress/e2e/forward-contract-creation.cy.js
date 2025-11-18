@@ -7,19 +7,23 @@ describe('Forward Contract Creation Flow', () => {
 
   it('debería crear un contrato forward exitosamente', () => {
     // Mock de respuesta API
-    cy.mockApiResponse('contracts', {
-      id: '123',
-      asset: 'BTC',
-      amount: 1.5,
-      price: 50000,
-      status: 'active'
-    }, 201);
+    cy.mockApiResponse(
+      'contracts',
+      {
+        id: '123',
+        asset: 'BTC',
+        amount: 1.5,
+        price: 50000,
+        status: 'active',
+      },
+      201
+    );
 
     // Crear contrato
     cy.createForwardContract({
       asset: 'BTC',
       amount: '1.5',
-      price: '50000'
+      price: '50000',
     });
 
     // Verificar notificación de éxito
@@ -58,7 +62,7 @@ describe('Forward Contract Creation Flow', () => {
 
   it('debería calcular colateral correctamente', () => {
     cy.get('[data-cy=create-contract-btn]').click();
-    
+
     cy.get('[data-cy=price-input]').type('50000');
     cy.get('[data-cy=collateral-display]').should('contain', '5,000'); // 10% de 50,000
 
@@ -72,7 +76,7 @@ describe('Forward Contract Creation Flow', () => {
     cy.createForwardContract({
       asset: 'BTC',
       amount: '1.5',
-      price: '50000'
+      price: '50000',
     });
 
     cy.verifyNotification('Error al crear contrato', 'error');

@@ -2,7 +2,7 @@
 
 /**
  * BitForward - Generate Secure Environment Variables
- * 
+ *
  * This script generates secure random values for production environment variables.
  * Run: node scripts/generate-env-vars.js
  */
@@ -39,7 +39,7 @@ const envVars = [
   { name: 'JWT_SECRET', value: jwtSecret, description: 'Main JWT signing secret' },
   { name: 'JWT_REFRESH_SECRET', value: jwtRefreshSecret, description: 'Refresh token secret' },
   { name: 'SESSION_SECRET', value: sessionSecret, description: 'Session encryption secret' },
-  { name: 'ENCRYPTION_KEY', value: encryptionKey, description: 'Data encryption key' }
+  { name: 'ENCRYPTION_KEY', value: encryptionKey, description: 'Data encryption key' },
 ];
 
 envVars.forEach(({ name, value, description }) => {
@@ -168,7 +168,7 @@ try {
   console.log(`✅ Created file: ${envFilePath}\n`);
   console.log('⚠️  IMPORTANT: This file contains sensitive secrets!');
   console.log('   - Do NOT commit this file to Git');
-  console.log('   - It\'s already in .gitignore');
+  console.log("   - It's already in .gitignore");
   console.log('   - Copy values to your hosting dashboard\n');
 } catch (error) {
   console.error('❌ Error creating .env file:', error.message);
@@ -182,5 +182,7 @@ console.log('3. Add each variable listed above');
 console.log('4. Select "Production" environment');
 console.log('5. Click "Save"');
 console.log('6. Redeploy your application\n');
-console.log('🔗 Vercel Dashboard: https://vercel.com/asesoraft/bitforward/settings/environment-variables\n');
+console.log(
+  '🔗 Vercel Dashboard: https://vercel.com/asesoraft/bitforward/settings/environment-variables\n'
+);
 console.log('✅ Done!\n');

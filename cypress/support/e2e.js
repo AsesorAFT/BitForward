@@ -15,7 +15,7 @@ beforeEach(() => {
   // Clear localStorage y cookies
   cy.clearLocalStorage();
   cy.clearCookies();
-  
+
   // Set viewport
   cy.viewport(1280, 720);
 });

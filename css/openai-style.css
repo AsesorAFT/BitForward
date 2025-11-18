@@ -7,20 +7,20 @@
    OPENAI COLOR PALETTE
    =================================== */
 :root {
-    --openai-bg-primary: #0D0D0D;
-    --openai-bg-secondary: #171717;
-    --openai-bg-tertiary: #202020;
-    --openai-border: rgba(255, 255, 255, 0.06);
-    --openai-text-primary: #ECECEC;
-    --openai-text-secondary: #ABABAB;
-    --openai-text-tertiary: #6E6E6E;
-    --openai-accent: #10A37F;
-    --openai-accent-hover: #1A7F64;
-    --openai-purple: #8B5CF6;
-    --openai-blue: #3B82F6;
-    --openai-success: #10A37F;
-    --openai-danger: #EF4444;
-    --openai-warning: #F59E0B;
+  --openai-bg-primary: #0d0d0d;
+  --openai-bg-secondary: #171717;
+  --openai-bg-tertiary: #202020;
+  --openai-border: rgba(255, 255, 255, 0.06);
+  --openai-text-primary: #ececec;
+  --openai-text-secondary: #ababab;
+  --openai-text-tertiary: #6e6e6e;
+  --openai-accent: #10a37f;
+  --openai-accent-hover: #1a7f64;
+  --openai-purple: #8b5cf6;
+  --openai-blue: #3b82f6;
+  --openai-success: #10a37f;
+  --openai-danger: #ef4444;
+  --openai-warning: #f59e0b;
 }
 
 /* ===================================
@@ -29,214 +29,220 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--openai-bg-primary);
-    color: var(--openai-text-primary);
-    line-height: 1.6;
-    font-size: 15px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'liga', 'kern';
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  background: var(--openai-bg-primary);
+  color: var(--openai-text-primary);
+  line-height: 1.6;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga', 'kern';
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
 }
 
 h2 {
-    font-size: 2rem;
-    font-weight: 600;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 /* ===================================
    OPENAI LAYOUT
    =================================== */
 .dashboard-wrapper {
-    background: var(--openai-bg-primary);
-    min-height: 100vh;
-    position: relative;
+  background: var(--openai-bg-primary);
+  min-height: 100vh;
+  position: relative;
 }
 
 /* Subtle gradient overlay */
 .dashboard-wrapper::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 600px;
-    background: radial-gradient(
-        ellipse 80% 50% at 50% -20%,
-        rgba(139, 92, 246, 0.15),
-        transparent
-    );
-    pointer-events: none;
-    z-index: 0;
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.15), transparent);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .dashboard-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem 3rem;
-    position: relative;
-    z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* ===================================
    OPENAI HEADER
    =================================== */
 .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background: rgba(13, 13, 13, 0.8);
-    backdrop-filter: blur(12px) saturate(180%);
-    border-bottom: 1px solid var(--openai-border);
-    padding: 0.75rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(13, 13, 13, 0.8);
+  backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid var(--openai-border);
+  padding: 0.75rem 0;
 }
 
 .nav-main {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nav-main .logo {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--openai-text-primary);
-    text-decoration: none;
-    letter-spacing: -0.02em;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--openai-text-primary);
+  text-decoration: none;
+  letter-spacing: -0.02em;
 }
 
 .nav-links {
-    display: flex;
-    gap: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .nav-links a {
-    color: var(--openai-text-secondary);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--openai-text-secondary);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-links a:hover {
-    color: var(--openai-text-primary);
-    background: var(--openai-bg-tertiary);
+  color: var(--openai-text-primary);
+  background: var(--openai-bg-tertiary);
 }
 
 .nav-links a.active {
-    color: var(--openai-text-primary);
-    background: var(--openai-bg-secondary);
+  color: var(--openai-text-primary);
+  background: var(--openai-bg-secondary);
 }
 
 .nav-actions {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
 }
 
 .btn-icon {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.5rem;
-    background: transparent;
-    border: 1px solid var(--openai-border);
-    color: var(--openai-text-secondary);
-    cursor: pointer;
-    transition: all 0.15s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--openai-border);
+  color: var(--openai-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .btn-icon:hover {
-    background: var(--openai-bg-tertiary);
-    border-color: var(--openai-text-tertiary);
-    color: var(--openai-text-primary);
+  background: var(--openai-bg-tertiary);
+  border-color: var(--openai-text-tertiary);
+  color: var(--openai-text-primary);
 }
 
 /* ===================================
    OPENAI BUTTONS
    =================================== */
 .btn-primary {
-    background: var(--openai-accent);
-    color: white;
-    border: none;
-    padding: 0.625rem 1.25rem;
-    border-radius: 0.5rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: var(--openai-accent);
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-primary:hover {
-    background: var(--openai-accent-hover);
-    box-shadow: 0 4px 12px rgba(16, 163, 127, 0.2);
-    transform: translateY(-1px);
+  background: var(--openai-accent-hover);
+  box-shadow: 0 4px 12px rgba(16, 163, 127, 0.2);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-    background: var(--openai-bg-secondary);
-    color: var(--openai-text-primary);
-    border: 1px solid var(--openai-border);
-    padding: 0.625rem 1.25rem;
-    border-radius: 0.5rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s ease;
+  background: var(--openai-bg-secondary);
+  color: var(--openai-text-primary);
+  border: 1px solid var(--openai-border);
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .btn-secondary:hover {
-    background: var(--openai-bg-tertiary);
-    border-color: var(--openai-text-tertiary);
+  background: var(--openai-bg-tertiary);
+  border-color: var(--openai-text-tertiary);
 }
 
 /* ===================================
    OPENAI HERO
    =================================== */
 .dashboard-hero {
-    padding: 6rem 0 3rem;
-    text-align: left;
+  padding: 6rem 0 3rem;
+  text-align: left;
 }
 
 .dashboard-hero h1 {
-    background: linear-gradient(
-        135deg,
-        var(--openai-text-primary) 0%,
-        var(--openai-text-secondary) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 1rem;
+  background: linear-gradient(
+    135deg,
+    var(--openai-text-primary) 0%,
+    var(--openai-text-secondary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
 }
 
 .hero-subtitle {
-    font-size: 1.125rem;
-    color: var(--openai-text-secondary);
-    font-weight: 400;
-    max-width: 600px;
+  font-size: 1.125rem;
+  color: var(--openai-text-secondary);
+  font-weight: 400;
+  max-width: 600px;
 }
 
 /* ===================================
@@ -245,423 +251,431 @@ h2 {
 .stat-card,
 .asset-card,
 .market-card {
-    background: var(--openai-bg-secondary);
-    border: 1px solid var(--openai-border);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--openai-bg-secondary);
+  border: 1px solid var(--openai-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stat-card:hover,
 .asset-card:hover,
 .market-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* Stats Cards */
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
-    margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
 }
 
 .stat-card-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 0.75rem;
-    background: linear-gradient(135deg, var(--openai-purple), var(--openai-blue));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--openai-purple), var(--openai-blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .stat-card-icon svg {
-    width: 24px;
-    height: 24px;
-    color: white;
+  width: 24px;
+  height: 24px;
+  color: white;
 }
 
 .stat-card-content label {
-    display: block;
-    font-size: 0.8125rem;
-    color: var(--openai-text-secondary);
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--openai-text-secondary);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .stat-card-content value {
-    display: block;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--openai-text-primary);
-    letter-spacing: -0.03em;
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--openai-text-primary);
+  letter-spacing: -0.03em;
 }
 
 .stat-card-change {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    margin-top: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
-    font-size: 0.8125rem;
-    font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
 }
 
 .stat-card-change.positive {
-    background: rgba(16, 163, 127, 0.1);
-    color: var(--openai-success);
+  background: rgba(16, 163, 127, 0.1);
+  color: var(--openai-success);
 }
 
 .stat-card-change.negative {
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--openai-danger);
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--openai-danger);
 }
 
 /* ===================================
    OPENAI QUICK ACTIONS
    =================================== */
 .quick-actions {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
 }
 
 .quick-action-btn {
-    flex: 1;
-    min-width: 200px;
-    padding: 1rem 1.5rem;
-    border-radius: 0.75rem;
-    border: 1px solid var(--openai-border);
-    background: var(--openai-bg-secondary);
-    color: var(--openai-text-primary);
-    font-size: 0.9375rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
+  flex: 1;
+  min-width: 200px;
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--openai-border);
+  background: var(--openai-bg-secondary);
+  color: var(--openai-text-primary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
 }
 
 .quick-action-btn.primary {
-    background: var(--openai-accent);
-    border-color: var(--openai-accent);
-    color: white;
+  background: var(--openai-accent);
+  border-color: var(--openai-accent);
+  color: white;
 }
 
 .quick-action-btn:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .quick-action-btn.primary:hover {
-    background: var(--openai-accent-hover);
-    box-shadow: 0 8px 24px rgba(16, 163, 127, 0.25);
+  background: var(--openai-accent-hover);
+  box-shadow: 0 8px 24px rgba(16, 163, 127, 0.25);
 }
 
 /* ===================================
    OPENAI SECTIONS
    =================================== */
 .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .section-header h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--openai-text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--openai-text-primary);
 }
 
 .link-view-all {
-    color: var(--openai-text-secondary);
-    text-decoration: none;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    transition: color 0.15s ease;
+  color: var(--openai-text-secondary);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
 }
 
 .link-view-all:hover {
-    color: var(--openai-text-primary);
+  color: var(--openai-text-primary);
 }
 
 /* ===================================
    OPENAI TRANSACTIONS TABLE
    =================================== */
 .transactions-table-wrapper {
-    background: var(--openai-bg-secondary);
-    border: 1px solid var(--openai-border);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    overflow-x: auto;
+  background: var(--openai-bg-secondary);
+  border: 1px solid var(--openai-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  overflow-x: auto;
 }
 
 .transactions-table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .transactions-table th {
-    text-align: left;
-    padding: 0.75rem 1rem;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--openai-text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid var(--openai-border);
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--openai-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--openai-border);
 }
 
 .transactions-table td {
-    padding: 1rem;
-    border-bottom: 1px solid var(--openai-border);
-    font-size: 0.9375rem;
-    color: var(--openai-text-primary);
+  padding: 1rem;
+  border-bottom: 1px solid var(--openai-border);
+  font-size: 0.9375rem;
+  color: var(--openai-text-primary);
 }
 
 .transactions-table tbody tr:last-child td {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .transactions-table tbody tr {
-    transition: background 0.15s ease;
+  transition: background 0.15s ease;
 }
 
 .transactions-table tbody tr:hover {
-    background: var(--openai-bg-tertiary);
+  background: var(--openai-bg-tertiary);
 }
 
 .transaction-type {
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.375rem;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    text-transform: capitalize;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 .transaction-type.buy {
-    background: rgba(16, 163, 127, 0.1);
-    color: var(--openai-success);
+  background: rgba(16, 163, 127, 0.1);
+  color: var(--openai-success);
 }
 
 .transaction-type.sell {
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--openai-danger);
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--openai-danger);
 }
 
 .transaction-type.transfer {
-    background: rgba(59, 130, 246, 0.1);
-    color: var(--openai-blue);
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--openai-blue);
 }
 
 .transaction-status {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 
 .status-dot.completed {
-    background: var(--openai-success);
+  background: var(--openai-success);
 }
 
 .status-dot.pending {
-    background: var(--openai-warning);
+  background: var(--openai-warning);
 }
 
 .status-dot.failed {
-    background: var(--openai-danger);
+  background: var(--openai-danger);
 }
 
 /* ===================================
    OPENAI FOOTER
    =================================== */
 .site-footer {
-    background: var(--openai-bg-primary);
-    border-top: 1px solid var(--openai-border);
-    padding: 3rem 0 2rem;
-    margin-top: 4rem;
+  background: var(--openai-bg-primary);
+  border-top: 1px solid var(--openai-border);
+  padding: 3rem 0 2rem;
+  margin-top: 4rem;
 }
 
 .footer-content {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 3rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
 }
 
 .footer-section h3,
 .footer-section h4 {
-    color: var(--openai-text-primary);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+  color: var(--openai-text-primary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .footer-section p,
 .footer-section a {
-    color: var(--openai-text-secondary);
-    font-size: 0.9375rem;
-    text-decoration: none;
-    transition: color 0.15s ease;
+  color: var(--openai-text-secondary);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: color 0.15s ease;
 }
 
 .footer-section a:hover {
-    color: var(--openai-text-primary);
+  color: var(--openai-text-primary);
 }
 
 .footer-section ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footer-section ul li {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .footer-bottom {
-    max-width: 1280px;
-    margin: 2rem auto 0;
-    padding: 2rem 3rem 0;
-    border-top: 1px solid var(--openai-border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  max-width: 1280px;
+  margin: 2rem auto 0;
+  padding: 2rem 3rem 0;
+  border-top: 1px solid var(--openai-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .footer-bottom p {
-    color: var(--openai-text-tertiary);
-    font-size: 0.875rem;
+  color: var(--openai-text-tertiary);
+  font-size: 0.875rem;
 }
 
 .footer-social {
-    display: flex;
-    gap: 0.75rem;
+  display: flex;
+  gap: 0.75rem;
 }
 
 .footer-social a {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.5rem;
-    background: var(--openai-bg-secondary);
-    border: 1px solid var(--openai-border);
-    color: var(--openai-text-secondary);
-    transition: all 0.15s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: var(--openai-bg-secondary);
+  border: 1px solid var(--openai-border);
+  color: var(--openai-text-secondary);
+  transition: all 0.15s ease;
 }
 
 .footer-social a:hover {
-    background: var(--openai-bg-tertiary);
-    border-color: var(--openai-text-tertiary);
-    color: var(--openai-text-primary);
+  background: var(--openai-bg-tertiary);
+  border-color: var(--openai-text-tertiary);
+  color: var(--openai-text-primary);
 }
 
 /* ===================================
    OPENAI ANIMATIONS
    =================================== */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .reveal {
-    animation: fadeInUp 0.6s ease-out forwards;
-    opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
 }
 
-.reveal:nth-child(1) { animation-delay: 0.05s; }
-.reveal:nth-child(2) { animation-delay: 0.1s; }
-.reveal:nth-child(3) { animation-delay: 0.15s; }
-.reveal:nth-child(4) { animation-delay: 0.2s; }
+.reveal:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.reveal:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.reveal:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.reveal:nth-child(4) {
+  animation-delay: 0.2s;
+}
 
 /* ===================================
    OPENAI SCROLLBAR
    =================================== */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--openai-bg-secondary);
+  background: var(--openai-bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--openai-bg-tertiary);
-    border-radius: 4px;
+  background: var(--openai-bg-tertiary);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--openai-text-tertiary);
+  background: var(--openai-text-tertiary);
 }
 
 /* ===================================
    RESPONSIVE OPENAI STYLE
    =================================== */
 @media (max-width: 768px) {
-    .dashboard-container,
-    .nav-main,
-    .footer-content,
-    .footer-bottom {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-    
-    h1 {
-        font-size: 2rem;
-    }
-    
-    .dashboard-hero {
-        padding: 4rem 0 2rem;
-    }
-    
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .quick-actions {
-        flex-direction: column;
-    }
-    
-    .quick-action-btn {
-        width: 100%;
-    }
-    
-    .nav-links {
-        display: none;
-    }
-    
-    .footer-bottom {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
+  .dashboard-container,
+  .nav-main,
+  .footer-content,
+  .footer-bottom {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .dashboard-hero {
+    padding: 4rem 0 2rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-actions {
+    flex-direction: column;
+  }
+
+  .quick-action-btn {
+    width: 100%;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
 }

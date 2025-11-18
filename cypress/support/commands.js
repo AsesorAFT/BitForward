@@ -5,8 +5,8 @@
 import { ethers } from 'ethers';
 
 // Comando para conectar wallet (mock)
-Cypress.Commands.add('connectWallet', (address) => {
-  cy.window().then((win) => {
+Cypress.Commands.add('connectWallet', address => {
+  cy.window().then(win => {
     // Mock de MetaMask
     win.ethereum = {
       isMetaMask: true,
@@ -25,7 +25,7 @@ Cypress.Commands.add('connectWallet', (address) => {
         return Promise.resolve(null);
       },
       on: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     };
   });
 });
@@ -33,7 +33,7 @@ Cypress.Commands.add('connectWallet', (address) => {
 // Comando para login con wallet
 Cypress.Commands.add('loginWithWallet', () => {
   const testAddress = '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb27';
-  
+
   cy.connectWallet(testAddress);
   cy.visit('/');
   cy.get('[data-cy=connect-wallet-btn]').click();
@@ -41,13 +41,13 @@ Cypress.Commands.add('loginWithWallet', () => {
 });
 
 // Comando para crear un contrato forward
-Cypress.Commands.add('createForwardContract', (contractData) => {
+Cypress.Commands.add('createForwardContract', contractData => {
   const defaultData = {
     asset: 'BTC',
     amount: '1.5',
     price: '50000',
     expirationDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    ...contractData
+    ...contractData,
   };
 
   cy.get('[data-cy=create-contract-btn]').click();
@@ -60,16 +60,14 @@ Cypress.Commands.add('createForwardContract', (contractData) => {
 
 // Comando para verificar notificación
 Cypress.Commands.add('verifyNotification', (message, type = 'success') => {
-  cy.get(`[data-cy=notification-${type}]`)
-    .should('be.visible')
-    .and('contain', message);
+  cy.get(`[data-cy=notification-${type}]`).should('be.visible').and('contain', message);
 });
 
 // Comando para interceptar llamadas API
 Cypress.Commands.add('mockApiResponse', (endpoint, response, statusCode = 200) => {
   cy.intercept('**/api/' + endpoint, {
     statusCode,
-    body: response
+    body: response,
   }).as(endpoint.replace('/', '_'));
 });
 
@@ -80,20 +78,18 @@ Cypress.Commands.add('waitForPageLoad', () => {
 });
 
 // Comando para verificar balance
-Cypress.Commands.add('verifyBalance', (expectedBalance) => {
-  cy.get('[data-cy=wallet-balance]')
-    .should('be.visible')
-    .and('contain', expectedBalance);
+Cypress.Commands.add('verifyBalance', expectedBalance => {
+  cy.get('[data-cy=wallet-balance]').should('be.visible').and('contain', expectedBalance);
 });
 
 // Comando para navegar por el menú
-Cypress.Commands.add('navigateTo', (section) => {
+Cypress.Commands.add('navigateTo', section => {
   cy.get(`[data-cy=nav-${section}]`).click();
   cy.url().should('include', `/${section}`);
 });
 
 // Comando para verificar tabla de contratos
-Cypress.Commands.add('verifyContractInTable', (contractId) => {
+Cypress.Commands.add('verifyContractInTable', contractId => {
   cy.get('[data-cy=contracts-table]')
     .find(`[data-cy=contract-row-${contractId}]`)
     .should('exist')
