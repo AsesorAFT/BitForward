@@ -9,7 +9,7 @@ describe('Dashboard and Metrics', () => {
       totalContracts: 42,
       activeContracts: 15,
       totalVolume: '1250000',
-      avgContractValue: '25000'
+      avgContractValue: '25000',
     });
 
     cy.waitForPageLoad();
@@ -21,20 +21,20 @@ describe('Dashboard and Metrics', () => {
 
   it('debería filtrar contratos por activo', () => {
     cy.get('[data-cy=asset-filter]').select('BTC');
-    
+
     cy.get('[data-cy=contracts-table]')
       .find('[data-cy^=contract-row-]')
-      .each(($row) => {
+      .each($row => {
         cy.wrap($row).should('contain', 'BTC');
       });
   });
 
   it('debería filtrar contratos por estado', () => {
     cy.get('[data-cy=status-filter]').select('active');
-    
+
     cy.get('[data-cy=contracts-table]')
       .find('[data-cy=status-badge]')
-      .each(($badge) => {
+      .each($badge => {
         cy.wrap($badge).should('contain', 'Activo');
       });
   });
@@ -42,7 +42,7 @@ describe('Dashboard and Metrics', () => {
   it('debería paginar resultados correctamente', () => {
     cy.get('[data-cy=pagination-next]').click();
     cy.url().should('include', 'page=2');
-    
+
     cy.get('[data-cy=contracts-table]').should('be.visible');
   });
 
@@ -53,7 +53,7 @@ describe('Dashboard and Metrics', () => {
 
   it('debería exportar datos en CSV', () => {
     cy.get('[data-cy=export-csv-btn]').click();
-    
+
     // Verificar que se descargó el archivo
     cy.readFile('cypress/downloads/contracts.csv').should('exist');
   });

@@ -16,9 +16,18 @@
 
 /* Fondo espacial base para el cuerpo */
 body {
-  background: linear-gradient(135deg, var(--space-bg-darker), var(--space-bg-dark), var(--space-bg-darker));
+  background: linear-gradient(
+    135deg,
+    var(--space-bg-darker),
+    var(--space-bg-dark),
+    var(--space-bg-darker)
+  );
   color: #e2e8f0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
@@ -46,10 +55,12 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(ellipse at center, 
-                             transparent 0%, 
-                             rgba(8, 14, 29, 0.2) 70%, 
-                             rgba(8, 14, 29, 0.5) 100%);
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(8, 14, 29, 0.2) 70%,
+    rgba(8, 14, 29, 0.5) 100%
+  );
   z-index: -1;
   pointer-events: none;
 }
@@ -94,7 +105,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     radial-gradient(1px 1px at 50px 160px, #ffffff40 100%, transparent),
     radial-gradient(1px 1px at 90px 40px, #ffffff30 100%, transparent),
     radial-gradient(1px 1px at 130px 80px, #ffffff40 100%, transparent),
@@ -106,16 +117,33 @@ body {
 
 /* Animación para el efecto de paralaje al desplazarse */
 @keyframes parallaxScroll {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-200px); }
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-200px);
+  }
 }
 
 /* Animación para las nebulosas */
 @keyframes nebulaFloat {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
-  25% { transform: translate(5%, 2%) rotate(5deg); opacity: 0.6; }
-  50% { transform: translate(2%, 5%) rotate(10deg); opacity: 0.5; }
-  75% { transform: translate(-3%, 3%) rotate(5deg); opacity: 0.6; }
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.5;
+  }
+  25% {
+    transform: translate(5%, 2%) rotate(5deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(2%, 5%) rotate(10deg);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(-3%, 3%) rotate(5deg);
+    opacity: 0.6;
+  }
 }
 
 /* Estilos de contenedor para aplicar sobre contenido */
@@ -192,12 +220,14 @@ body {
 
 /* Media queries para responsividad */
 @media (max-width: 768px) {
-  .nebula-1, .nebula-2 {
+  .nebula-1,
+  .nebula-2 {
     opacity: 0.3;
     filter: blur(80px);
   }
-  
-  .space-container, .space-card {
+
+  .space-container,
+  .space-card {
     padding: 1rem;
   }
 }
