@@ -2,66 +2,66 @@
 // Sistema de Dashboard en tiempo real con métricas avanzadas
 
 class BitForwardDashboard {
-    constructor(bitForwardInstance) {
-        this.bf = bitForwardInstance;
-        this.charts = new Map();
-        this.widgets = new Map();
-        this.updateInterval = null;
-        this.initialize();
+  constructor(bitForwardInstance) {
+    this.bf = bitForwardInstance;
+    this.charts = new Map();
+    this.widgets = new Map();
+    this.updateInterval = null;
+    this.initialize();
+  }
+
+  initialize() {
+    this.setupRealTimeUpdates();
+    this.createWidgets();
+    this.setupEventListeners();
+    console.log('📊 Dashboard BitForward inicializado');
+  }
+
+  // --- Widgets del Dashboard ---
+
+  createWidgets() {
+    this.widgets.set('portfolio', new PortfolioWidget(this.bf));
+    this.widgets.set('performance', new PerformanceWidget(this.bf));
+    this.widgets.set('riskMetrics', new RiskMetricsWidget(this.bf));
+    this.widgets.set('marketOverview', new MarketOverviewWidget(this.bf));
+    this.widgets.set('activeContracts', new ActiveContractsWidget(this.bf));
+  }
+
+  setupRealTimeUpdates() {
+    this.updateInterval = setInterval(() => {
+      this.updateAllWidgets();
+    }, 5000); // Actualizar cada 5 segundos
+  }
+
+  updateAllWidgets() {
+    this.widgets.forEach(widget => {
+      widget.update();
+    });
+  }
+
+  setupEventListeners() {
+    this.bf.on(this.bf.events.CONTRACT_CREATED, () => this.updateAllWidgets());
+    this.bf.on(this.bf.events.CONTRACT_EXECUTED, () => this.updateAllWidgets());
+    this.bf.on(this.bf.events.PORTFOLIO_UPDATED, () => this.updateAllWidgets());
+  }
+
+  // --- Métodos de Renderizado ---
+
+  renderDashboard(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error('Container del dashboard no encontrado');
+      return;
     }
 
-    initialize() {
-        this.setupRealTimeUpdates();
-        this.createWidgets();
-        this.setupEventListeners();
-        console.log('📊 Dashboard BitForward inicializado');
-    }
+    container.innerHTML = this.generateDashboardHTML();
+    this.attachEventHandlers();
+    this.renderAllWidgets();
+  }
 
-    // --- Widgets del Dashboard ---
-    
-    createWidgets() {
-        this.widgets.set('portfolio', new PortfolioWidget(this.bf));
-        this.widgets.set('performance', new PerformanceWidget(this.bf));
-        this.widgets.set('riskMetrics', new RiskMetricsWidget(this.bf));
-        this.widgets.set('marketOverview', new MarketOverviewWidget(this.bf));
-        this.widgets.set('activeContracts', new ActiveContractsWidget(this.bf));
-    }
-
-    setupRealTimeUpdates() {
-        this.updateInterval = setInterval(() => {
-            this.updateAllWidgets();
-        }, 5000); // Actualizar cada 5 segundos
-    }
-
-    updateAllWidgets() {
-        this.widgets.forEach(widget => {
-            widget.update();
-        });
-    }
-
-    setupEventListeners() {
-        this.bf.on(this.bf.events.CONTRACT_CREATED, () => this.updateAllWidgets());
-        this.bf.on(this.bf.events.CONTRACT_EXECUTED, () => this.updateAllWidgets());
-        this.bf.on(this.bf.events.PORTFOLIO_UPDATED, () => this.updateAllWidgets());
-    }
-
-    // --- Métodos de Renderizado ---
-    
-    renderDashboard(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) {
-            console.error('Container del dashboard no encontrado');
-            return;
-        }
-
-        container.innerHTML = this.generateDashboardHTML();
-        this.attachEventHandlers();
-        this.renderAllWidgets();
-    }
-
-    generateDashboardHTML() {
-        const i18n = window.i18n;
-        return `
+  generateDashboardHTML() {
+    const i18n = window.i18n;
+    return `
             <div class="bitforward-dashboard">
                 <header class="dashboard-header">
                     <div class="dashboard-logo">
@@ -102,35 +102,37 @@ class BitForwardDashboard {
                 </div>
             </div>
         `;
-    }
+  }
 
-    renderAllWidgets() {
-        this.widgets.forEach((widget, name) => {
-            const contentElement = document.getElementById(`${name.replace(/([A-Z])/g, '-$1').toLowerCase()}-content`);
-            if (contentElement) {
-                widget.render(contentElement);
-            }
-        });
-    }
+  renderAllWidgets() {
+    this.widgets.forEach((widget, name) => {
+      const contentElement = document.getElementById(
+        `${name.replace(/([A-Z])/g, '-$1').toLowerCase()}-content`
+      );
+      if (contentElement) {
+        widget.render(contentElement);
+      }
+    });
+  }
 
-    attachEventHandlers() {
-        // Agregar handlers para interactividad del dashboard
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('contract-detail-btn')) {
-                this.showContractDetails(e.target.dataset.contractId);
-            }
-        });
-    }
+  attachEventHandlers() {
+    // Agregar handlers para interactividad del dashboard
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('contract-detail-btn')) {
+        this.showContractDetails(e.target.dataset.contractId);
+      }
+    });
+  }
 
-    showContractDetails(contractId) {
-        const contract = this.bf.contracts.find(c => c.id === contractId);
-        if (contract) {
-            this.openModal('Contract Details', this.generateContractDetailsHTML(contract));
-        }
+  showContractDetails(contractId) {
+    const contract = this.bf.contracts.find(c => c.id === contractId);
+    if (contract) {
+      this.openModal('Contract Details', this.generateContractDetailsHTML(contract));
     }
+  }
 
-    generateContractDetailsHTML(contract) {
-        return `
+  generateContractDetailsHTML(contract) {
+    return `
             <div class="contract-details">
                 <div class="detail-row">
                     <label>ID:</label>
@@ -160,21 +162,25 @@ class BitForwardDashboard {
                     <label>Time to Expiry:</label>
                     <span>${BitForwardUtils.calculateTimeToExpiry(contract.executionDate)}</span>
                 </div>
-                ${contract.pnl !== undefined ? `
+                ${
+                  contract.pnl !== undefined
+                    ? `
                     <div class="detail-row">
                         <label>P&L:</label>
                         <span class="${contract.pnl >= 0 ? 'profit' : 'loss'}">${BitForwardUtils.formatCurrency(contract.pnl)}</span>
                     </div>
-                ` : ''}
+                `
+                    : ''
+                }
             </div>
         `;
-    }
+  }
 
-    openModal(title, content) {
-        // Crear modal dinámico
-        const modal = document.createElement('div');
-        modal.className = 'bitforward-modal';
-        modal.innerHTML = `
+  openModal(title, content) {
+    // Crear modal dinámico
+    const modal = document.createElement('div');
+    modal.className = 'bitforward-modal';
+    modal.innerHTML = `
             <div class="modal-backdrop"></div>
             <div class="modal-content">
                 <header class="modal-header">
@@ -184,41 +190,41 @@ class BitForwardDashboard {
                 <div class="modal-body">${content}</div>
             </div>
         `;
-        
-        document.body.appendChild(modal);
-        
-        // Event listeners para cerrar
-        modal.querySelector('.modal-close').onclick = () => modal.remove();
-        modal.querySelector('.modal-backdrop').onclick = () => modal.remove();
-    }
 
-    destroy() {
-        if (this.updateInterval) {
-            clearInterval(this.updateInterval);
-        }
-        this.widgets.clear();
-        this.charts.clear();
+    document.body.appendChild(modal);
+
+    // Event listeners para cerrar
+    modal.querySelector('.modal-close').onclick = () => modal.remove();
+    modal.querySelector('.modal-backdrop').onclick = () => modal.remove();
+  }
+
+  destroy() {
+    if (this.updateInterval) {
+      clearInterval(this.updateInterval);
     }
+    this.widgets.clear();
+    this.charts.clear();
+  }
 }
 
 // --- Widgets Especializados ---
 
 class PortfolioWidget {
-    constructor(bitForwardInstance) {
-        this.bf = bitForwardInstance;
-        this.data = null;
-    }
+  constructor(bitForwardInstance) {
+    this.bf = bitForwardInstance;
+    this.data = null;
+  }
 
-    update() {
-        this.data = this.bf.calculatePortfolio();
-    }
+  update() {
+    this.data = this.bf.calculatePortfolio();
+  }
 
-    render(container) {
-        if (!this.data) this.update();
-        
-        const i18n = window.i18n;
-        
-        container.innerHTML = `
+  render(container) {
+    if (!this.data) this.update();
+
+    const i18n = window.i18n;
+
+    container.innerHTML = `
             <div class="portfolio-summary">
                 <div class="metric">
                     <span class="value">${this.data.contracts}</span>
@@ -238,35 +244,39 @@ class PortfolioWidget {
                 </div>
             </div>
             <div class="blockchain-breakdown">
-                ${Object.entries(this.data.byBlockchain).map(([chain, data]) => `
+                ${Object.entries(this.data.byBlockchain)
+                  .map(
+                    ([chain, data]) => `
                     <div class="chain-item">
                         <span class="chain-name">${chain}</span>
                         <span class="chain-count">${data.count} contracts</span>
                         <span class="chain-amount">${data.totalAmount.toFixed(4)}</span>
                     </div>
-                `).join('')}
+                `
+                  )
+                  .join('')}
             </div>
         `;
-    }
+  }
 }
 
 class PerformanceWidget {
-    constructor(bitForwardInstance) {
-        this.bf = bitForwardInstance;
-        this.analytics = null;
-    }
+  constructor(bitForwardInstance) {
+    this.bf = bitForwardInstance;
+    this.analytics = null;
+  }
 
-    update() {
-        this.analytics = this.bf.generateAnalytics();
-    }
+  update() {
+    this.analytics = this.bf.generateAnalytics();
+  }
 
-    render(container) {
-        if (!this.analytics) this.update();
-        
-        const perf = this.analytics.performance;
-        const i18n = window.i18n;
-        
-        container.innerHTML = `
+  render(container) {
+    if (!this.analytics) this.update();
+
+    const perf = this.analytics.performance;
+    const i18n = window.i18n;
+
+    container.innerHTML = `
             <div class="performance-metrics">
                 <div class="metric-card">
                     <h4 data-i18n="performance.win.rate">${i18n ? i18n.t('performance.win.rate') : 'Win Rate'}</h4>
@@ -282,22 +292,22 @@ class PerformanceWidget {
                 </div>
             </div>
         `;
-    }
+  }
 }
 
 class RiskMetricsWidget {
-    constructor(bitForwardInstance) {
-        this.bf = bitForwardInstance;
-    }
+  constructor(bitForwardInstance) {
+    this.bf = bitForwardInstance;
+  }
 
-    update() {
-        // Actualizar métricas de riesgo
-    }
+  update() {
+    // Actualizar métricas de riesgo
+  }
 
-    render(container) {
-        const portfolio = this.bf.calculatePortfolio();
-        
-        container.innerHTML = `
+  render(container) {
+    const portfolio = this.bf.calculatePortfolio();
+
+    container.innerHTML = `
             <div class="risk-indicators">
                 <div class="risk-gauge">
                     <div class="gauge-label">Portfolio Risk</div>
@@ -315,35 +325,35 @@ class RiskMetricsWidget {
                 </div>
             </div>
         `;
-    }
+  }
 
-    calculateConcentrationRisk() {
-        const portfolio = this.bf.calculatePortfolio();
-        const chains = Object.keys(portfolio.byBlockchain);
-        return chains.length < 2 ? 'HIGH' : chains.length < 3 ? 'MEDIUM' : 'LOW';
-    }
+  calculateConcentrationRisk() {
+    const portfolio = this.bf.calculatePortfolio();
+    const chains = Object.keys(portfolio.byBlockchain);
+    return chains.length < 2 ? 'HIGH' : chains.length < 3 ? 'MEDIUM' : 'LOW';
+  }
 }
 
 class MarketOverviewWidget {
-    constructor(bitForwardInstance) {
-        this.bf = bitForwardInstance;
-        this.marketData = {};
-    }
+  constructor(bitForwardInstance) {
+    this.bf = bitForwardInstance;
+    this.marketData = {};
+  }
 
-    update() {
-        // Simular datos de mercado
-        this.marketData = {
-            btcPrice: 45000 + (Math.random() - 0.5) * 2000,
-            ethPrice: 3000 + (Math.random() - 0.5) * 200,
-            solPrice: 100 + (Math.random() - 0.5) * 10,
-            marketTrend: Math.random() > 0.5 ? 'up' : 'down'
-        };
-    }
+  update() {
+    // Simular datos de mercado
+    this.marketData = {
+      btcPrice: 45000 + (Math.random() - 0.5) * 2000,
+      ethPrice: 3000 + (Math.random() - 0.5) * 200,
+      solPrice: 100 + (Math.random() - 0.5) * 10,
+      marketTrend: Math.random() > 0.5 ? 'up' : 'down',
+    };
+  }
 
-    render(container) {
-        if (!this.marketData.btcPrice) this.update();
-        
-        container.innerHTML = `
+  render(container) {
+    if (!this.marketData.btcPrice) this.update();
+
+    container.innerHTML = `
             <div class="market-prices">
                 <div class="price-item">
                     <span class="crypto-name">BTC</span>
@@ -359,23 +369,23 @@ class MarketOverviewWidget {
                 </div>
             </div>
         `;
-    }
+  }
 }
 
 class ActiveContractsWidget {
-    constructor(bitForwardInstance) {
-        this.bf = bitForwardInstance;
-    }
+  constructor(bitForwardInstance) {
+    this.bf = bitForwardInstance;
+  }
 
-    update() {
-        // Se actualiza automáticamente con los contratos
-    }
+  update() {
+    // Se actualiza automáticamente con los contratos
+  }
 
-    render(container) {
-        const activeContracts = this.bf.getContractsByStatus('active');
-        const pendingContracts = this.bf.getContractsByStatus('pending_counterparty');
-        
-        container.innerHTML = `
+  render(container) {
+    const activeContracts = this.bf.getContractsByStatus('active');
+    const pendingContracts = this.bf.getContractsByStatus('pending_counterparty');
+
+    container.innerHTML = `
             <div class="contracts-table">
                 <table>
                     <thead>
@@ -390,7 +400,9 @@ class ActiveContractsWidget {
                         </tr>
                     </thead>
                     <tbody>
-                        ${[...activeContracts, ...pendingContracts].map(contract => `
+                        ${[...activeContracts, ...pendingContracts]
+                          .map(
+                            contract => `
                             <tr>
                                 <td>${contract.id.substring(0, 8)}...</td>
                                 <td><span class="blockchain-badge ${contract.blockchain}">${contract.blockchain}</span></td>
@@ -404,28 +416,33 @@ class ActiveContractsWidget {
                                     </button>
                                 </td>
                             </tr>
-                        `).join('')}
+                        `
+                          )
+                          .join('')}
                     </tbody>
                 </table>
-                ${activeContracts.length === 0 && pendingContracts.length === 0 ? 
-                    '<p class="no-contracts">No active contracts</p>' : ''}
+                ${
+                  activeContracts.length === 0 && pendingContracts.length === 0
+                    ? '<p class="no-contracts">No active contracts</p>'
+                    : ''
+                }
             </div>
         `;
-    }
+  }
 }
 
 // Exportar para uso
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        BitForwardDashboard,
-        PortfolioWidget,
-        PerformanceWidget,
-        RiskMetricsWidget,
-        MarketOverviewWidget,
-        ActiveContractsWidget
-    };
+  module.exports = {
+    BitForwardDashboard,
+    PortfolioWidget,
+    PerformanceWidget,
+    RiskMetricsWidget,
+    MarketOverviewWidget,
+    ActiveContractsWidget,
+  };
 }
 
 if (typeof window !== 'undefined') {
-    window.BitForwardDashboard = BitForwardDashboard;
+  window.BitForwardDashboard = BitForwardDashboard;
 }
