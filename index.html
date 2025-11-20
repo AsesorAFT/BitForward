@@ -19,27 +19,35 @@
   </head>
 
   <body>
-    <bf-nav>
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
       <a class="cta" href="enterprise.html">Enterprise</a>
-    </bf-nav>
+    </bf-header>
 
-    <div class="landing-page">
+    <div
+      class="landing-page bg-gradient-to-br from-bf-bg-primary via-bf-bg-secondary to-[#080e1d] min-h-screen flex flex-col items-center justify-start pt-0"
+    >
       <!-- ================================================================== -->
       <!-- NUEVA SECCIÓN DE HÉROE                                             -->
       <!-- Utiliza los estilos de hero-revamp.css y design-system.css         -->
       <!-- ================================================================== -->
-      <section class="hero-section" id="inicio">
-        <div class="hero-content">
-          <h1 class="hero-title">
-            El Futuro del Trading es <span class="highlight">Descentralizado</span>
+      <section
+        class="hero-section w-full flex flex-col items-center justify-center py-20 px-4 md:px-0"
+        id="inicio"
+      >
+        <div class="hero-content max-w-3xl text-center">
+          <h1
+            class="hero-title text-4xl md:text-6xl font-extrabold text-bf-text-primary mb-6 leading-tight"
+          >
+            El Futuro del Trading es
+            <span class="highlight text-bf-accent-secondary">Descentralizado</span>
           </h1>
-          <p class="hero-subtitle">
+          <p class="hero-subtitle text-lg md:text-2xl text-bf-text-tertiary mb-8">
             BitForward te ofrece las herramientas para operar con contratos forward y futuros
             directamente en la blockchain. Seguro, transparente y sin intermediarios.
           </p>
-          <div class="hero-cta">
-            <a href="trading.html" class="btn btn-primary">Empezar a Operar</a>
-            <a href="#features" class="btn btn-secondary">Conocer Más</a>
+          <div class="hero-cta flex flex-col md:flex-row gap-4 justify-center">
+            <a href="trading.html" class="btn btn-primary text-lg px-8 py-3">Empezar a Operar</a>
+            <a href="#features" class="btn btn-secondary text-lg px-8 py-3">Conocer Más</a>
           </div>
         </div>
       </section>
@@ -48,11 +56,17 @@
       <!-- SECCIÓN DE CARACTERÍSTICAS (Refactorizada)                         -->
       <!-- Utiliza la clase .card del nuevo sistema de diseño                 -->
       <!-- ================================================================== -->
-      <section class="features-section reveal" id="features">
-        <h2 class="section-title">Nuestros Productos</h2>
-        <div class="features-grid">
-          <div class="card">
-            <div class="feature-icon">
+      <section class="features-section reveal w-full max-w-6xl mx-auto py-16 px-4" id="features">
+        <h2
+          class="section-title text-3xl md:text-4xl font-bold text-bf-text-primary mb-10 text-center"
+        >
+          Nuestros Productos
+        </h2>
+        <div class="features-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="card glass-effect rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border border-bf-border-color hover:scale-[1.03] transition-transform"
+          >
+            <div class="feature-icon mb-4 text-bf-accent-secondary">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
@@ -62,14 +76,16 @@
                 />
               </svg>
             </div>
-            <h3 class="feature-title">Contratos a Futuro</h3>
-            <p class="feature-description">
+            <h3 class="feature-title text-xl font-semibold mb-2">Contratos a Futuro</h3>
+            <p class="feature-description text-bf-text-tertiary mb-0">
               Crea contratos a futuro sobre BTC, ETH, SOL y más. Protege tu inversión contra la
               volatilidad del mercado.
             </p>
           </div>
-          <div class="card">
-            <div class="feature-icon">
+          <div
+            class="card glass-effect rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border border-bf-border-color hover:scale-[1.03] transition-transform"
+          >
+            <div class="feature-icon mb-4 text-bf-accent-secondary">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
@@ -79,14 +95,16 @@
                 />
               </svg>
             </div>
-            <h3 class="feature-title">Fondo de Préstamos</h3>
-            <p class="feature-description">
+            <h3 class="feature-title text-xl font-semibold mb-2">Fondo de Préstamos</h3>
+            <p class="feature-description text-bf-text-tertiary mb-0">
               Deposita tus activos y genera rendimientos del 8-15% anual. Liquidez garantizada y
               seguridad empresarial.
             </p>
           </div>
-          <div class="card">
-            <div class="feature-icon">
+          <div
+            class="card glass-effect rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border border-bf-border-color hover:scale-[1.03] transition-transform"
+          >
+            <div class="feature-icon mb-4 text-bf-accent-secondary">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
@@ -96,14 +114,16 @@
                 />
               </svg>
             </div>
-            <h3 class="feature-title">Seguridad Empresarial</h3>
-            <p class="feature-description">
+            <h3 class="feature-title text-xl font-semibold mb-2">Seguridad Empresarial</h3>
+            <p class="feature-description text-bf-text-tertiary mb-0">
               Auditorías de seguridad, contratos verificados y custodia institucional para proteger
               tus activos.
             </p>
           </div>
-          <div class="card">
-            <div class="feature-icon">
+          <div
+            class="card glass-effect rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border border-bf-border-color hover:scale-[1.03] transition-transform"
+          >
+            <div class="feature-icon mb-4 text-bf-accent-secondary">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
@@ -113,14 +133,16 @@
                 />
               </svg>
             </div>
-            <h3 class="feature-title">Análisis Avanzado</h3>
-            <p class="feature-description">
+            <h3 class="feature-title text-xl font-semibold mb-2">Análisis Avanzado</h3>
+            <p class="feature-description text-bf-text-tertiary mb-0">
               Panel de control en tiempo real con métricas de riesgo, ganancias y pérdidas, y
               análisis predictivo impulsado por IA.
             </p>
           </div>
-          <div class="card">
-            <div class="feature-icon">
+          <div
+            class="card glass-effect rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border border-bf-border-color hover:scale-[1.03] transition-transform"
+          >
+            <div class="feature-icon mb-4 text-bf-accent-secondary">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
@@ -130,14 +152,16 @@
                 />
               </svg>
             </div>
-            <h3 class="feature-title">Integración Multi-Chain</h3>
-            <p class="feature-description">
+            <h3 class="feature-title text-xl font-semibold mb-2">Integración Multi-Chain</h3>
+            <p class="feature-description text-bf-text-tertiary mb-0">
               Soporte para Ethereum, Polygon, BSC, Solana y más. Una plataforma, múltiples
               blockchains.
             </p>
           </div>
-          <div class="card">
-            <div class="feature-icon">
+          <div
+            class="card glass-effect rounded-2xl p-8 flex flex-col items-center text-center shadow-lg border border-bf-border-color hover:scale-[1.03] transition-transform"
+          >
+            <div class="feature-icon mb-4 text-bf-accent-secondary">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
@@ -147,8 +171,8 @@
                 />
               </svg>
             </div>
-            <h3 class="feature-title">Soporte Empresarial</h3>
-            <p class="feature-description">
+            <h3 class="feature-title text-xl font-semibold mb-2">Soporte Empresarial</h3>
+            <p class="feature-description text-bf-text-tertiary mb-0">
               Equipo dedicado 24/7, onboarding personalizado y soluciones a medida para tu empresa.
             </p>
           </div>
@@ -158,23 +182,31 @@
       <!-- ================================================================== -->
       <!-- SECCIÓN DE ESTADÍSTICAS (Simplificada)                             -->
       <!-- ================================================================== -->
-      <section class="stats-section">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-value">$5.2M+</div>
-            <div class="stat-label">Valor Total Bloqueado</div>
+      <section class="stats-section w-full max-w-5xl mx-auto py-12 px-4">
+        <div class="stats-grid grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div
+            class="stat-card glass-effect rounded-xl p-8 flex flex-col items-center text-center border border-bf-border-color"
+          >
+            <div class="stat-value text-3xl font-bold text-bf-accent-secondary mb-2">$5.2M+</div>
+            <div class="stat-label text-bf-text-tertiary">Valor Total Bloqueado</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-value">1,800+</div>
-            <div class="stat-label">Contratos Activos</div>
+          <div
+            class="stat-card glass-effect rounded-xl p-8 flex flex-col items-center text-center border border-bf-border-color"
+          >
+            <div class="stat-value text-3xl font-bold text-bf-accent-secondary mb-2">1,800+</div>
+            <div class="stat-label text-bf-text-tertiary">Contratos Activos</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-value">99.9%</div>
-            <div class="stat-label">Uptime Garantizado</div>
+          <div
+            class="stat-card glass-effect rounded-xl p-8 flex flex-col items-center text-center border border-bf-border-color"
+          >
+            <div class="stat-value text-3xl font-bold text-bf-accent-secondary mb-2">99.9%</div>
+            <div class="stat-label text-bf-text-tertiary">Uptime Garantizado</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-value">24/7</div>
-            <div class="stat-label">Soporte Disponible</div>
+          <div
+            class="stat-card glass-effect rounded-xl p-8 flex flex-col items-center text-center border border-bf-border-color"
+          >
+            <div class="stat-value text-3xl font-bold text-bf-accent-secondary mb-2">24/7</div>
+            <div class="stat-label text-bf-text-tertiary">Soporte Disponible</div>
           </div>
         </div>
       </section>
@@ -209,7 +241,7 @@
     <script type="module" src="js/analytics.js"></script>
     <script type="module" src="js/scroll-animations.js"></script>
     <!-- Componentes Universales -->
-    <script type="module" src="js/components/bf-nav.js"></script>
+    <script type="module" src="js/components/bf-header.js"></script>
     <script type="module" src="js/components/bf-footer.js"></script>
 
     <!-- Lógica principal de la aplicación -->
