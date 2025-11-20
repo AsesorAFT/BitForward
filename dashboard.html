@@ -21,11 +21,13 @@
   </head>
   <body>
     <!-- Contenedor para la Navegación Universal -->
+
     <bf-header logo-src="assets/logo-astronaut-rocket.svg">
       <a class="cta" href="enterprise.html">Enterprise</a>
     </bf-header>
+    <bf-sidebar></bf-sidebar>
 
-    <main class="dashboard-main">
+    <main class="dashboard-main" style="margin-left: 240px; min-height: 100vh">
       <div class="dashboard-header">
         <h1 class="dashboard-title">Tu Panel de Control</h1>
         <p class="dashboard-subtitle">
@@ -215,6 +217,7 @@
 
     <!-- Scripts Universales y de la Página -->
     <script type="module" src="js/components/bf-header.js"></script>
+    <script type="module" src="js/components/bf-sidebar.js"></script>
     <script type="module" src="js/components/bf-footer.js"></script>
     <script type="module" src="js/dashboard-charts.js"></script>
   </body>

@@ -23,12 +23,14 @@
   </head>
   <body>
     <!-- Navegación Universal -->
+
     <bf-header logo-src="assets/logo-astronaut-rocket.svg">
       <a class="cta" href="enterprise.html">Enterprise</a>
     </bf-header>
+    <bf-sidebar></bf-sidebar>
 
     <!-- Contenedor Principal del Exchange -->
-    <div class="exchange-container">
+    <div class="exchange-container" style="margin-left: 240px; min-height: 100vh">
       <!-- 1. Header del Mercado -->
       <header class="exchange-module exchange-header">
         <div class="market-info-bar">
@@ -142,6 +144,7 @@
 
     <!-- Scripts -->
     <script type="module" src="js/components/bf-header.js"></script>
+    <script type="module" src="js/components/bf-sidebar.js"></script>
     <script type="module" src="js/components/bf-footer.js"></script>
     <script type="module" src="js/exchange-simulator.js"></script>
     <script type="module" src="js/exchange-ui.js"></script>
