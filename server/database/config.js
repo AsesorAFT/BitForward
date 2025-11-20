@@ -2,10 +2,15 @@ const knex = require('knex');
 const path = require('path');
 
 // Configuración de la base de datos SQLite
+const dbFile =
+  process.env.DATABASE_FILE ||
+  process.env.DATABASE_PATH ||
+  path.join(__dirname, 'bitforward.sqlite3');
+
 const db = knex({
   client: 'sqlite3',
   connection: {
-    filename: path.join(__dirname, 'bitforward.sqlite3'),
+    filename: dbFile,
   },
   useNullAsDefault: true, // Configuración recomendada para SQLite
   pool: {

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="BitForward Mission Control - Contratos, préstamos, vault y hedges en un solo panel"
+    />
+    <title>Mission Control | BitForward</title>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="css/design-system.css" />
+    <link rel="stylesheet" href="css/dashboard-modern.css" />
+    <link rel="stylesheet" href="css/animations-advanced.css" />
+    <link rel="stylesheet" href="css/mission-control.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="module" src="js/mission-control.js"></script>
+  </head>
+  <body class="mc-body">
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
+      <a class="cta" href="enterprise.html">Enterprise</a>
+    </bf-header>
+
+    <main class="mc-shell">
+      <section class="mc-hero card">
+        <div>
+          <p class="eyebrow">Mission Control</p>
+          <h1>BitForward Command Center</h1>
+          <p class="lead">
+            Contratos forward, préstamos, posiciones de vault y coberturas en un panel unificado.
+            Incluye precios en vivo y selección de red.
+          </p>
+          <div class="mc-actions">
+            <button class="btn primary" id="refresh-dashboard">Refrescar datos</button>
+            <div class="network-select">
+              <label for="network-picker">Red</label>
+              <select id="network-picker"></select>
+            </div>
+          </div>
+        </div>
+        <div class="mc-prices" id="price-cards"></div>
+      </section>
+
+      <section class="mc-grid">
+        <div class="card mc-stat">
+          <div class="stat-label">Contratos Activos</div>
+          <div class="stat-value" id="stat-contracts">--</div>
+          <div class="stat-sub" id="stat-contracts-detail">Cargando...</div>
+        </div>
+        <div class="card mc-stat">
+          <div class="stat-label">Préstamos</div>
+          <div class="stat-value" id="stat-loans">--</div>
+          <div class="stat-sub" id="stat-loans-detail">Cargando...</div>
+        </div>
+        <div class="card mc-stat">
+          <div class="stat-label">Vault Positions</div>
+          <div class="stat-value" id="stat-positions">--</div>
+          <div class="stat-sub" id="stat-positions-detail">Cargando...</div>
+        </div>
+        <div class="card mc-stat">
+          <div class="stat-label">Hedges</div>
+          <div class="stat-value" id="stat-hedges">--</div>
+          <div class="stat-sub" id="stat-hedges-detail">Cargando...</div>
+        </div>
+      </section>
+
+      <section class="mc-panels">
+        <div class="card mc-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Protfolio &amp; Riesgo</p>
+              <h2>Distribución y riesgo</h2>
+            </div>
+            <div class="pill" id="risk-indicator">Risk: --</div>
+          </div>
+          <div id="tvl-chart"></div>
+        </div>
+
+        <div class="card mc-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Alertas</p>
+              <h2>Alertas y eventos</h2>
+            </div>
+            <span class="pill secondary" id="alert-count">0</span>
+          </div>
+          <ul class="alert-list" id="alert-list"></ul>
+        </div>
+      </section>
+
+      <section class="mc-columns">
+        <div class="card mc-table">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Contratos &amp; Hedges</p>
+              <h2>Contratos forward y hedges</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tipo</th>
+                  <th>Activo</th>
+                  <th>Monto</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="contracts-table"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mc-table">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Préstamos y Vault</p>
+              <h2>Préstamos y posiciones</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>Asset</th>
+                  <th>Monto</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="loans-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
