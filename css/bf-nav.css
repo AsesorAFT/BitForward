@@ -1,0 +1,77 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+nav {
+  background: #0b0b0c;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid #141416;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.bf-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #14f195;
+}
+
+.bf-logo img {
+  width: 28px;
+  height: 28px;
+}
+
+.bf-menu {
+  display: flex;
+  gap: 1.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+a {
+  color: #e9eef1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+
+a:hover {
+  color: #14f195;
+}
+
+::slotted(a) {
+  color: #e9eef1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+
+::slotted(a:hover) {
+  color: #14f195;
+}
+
+::slotted(.cta) {
+  background: #14f195;
+  color: #0b0b0c !important;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+::slotted(.cta:hover) {
+  transform: scale(1.05);
+}

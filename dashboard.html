@@ -1,177 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BitForward Dashboard - Gestión profesional de porfolios de criptomonedas">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="BitForward Dashboard - Gestión profesional de porfolios de criptomonedas"
+    />
     <title>Dashboard | BitForward</title>
-    
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    
+
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+
     <!-- Sistema de Diseño y Estilos Universales -->
-    <link rel="stylesheet" href="css/design-system.css">
-    <link rel="stylesheet" href="css/universal-nav.css">
-    <link rel="stylesheet" href="css/universal-footer.css">
-    
+    <link rel="stylesheet" href="css/design-system.css" />
     <!-- Estilos Específicos del Dashboard -->
-    <link rel="stylesheet" href="css/dashboard-revamp.css">
-    
+    <link rel="stylesheet" href="css/dashboard-revamp.css" />
+
     <!-- Biblioteca de Gráficos (ApexCharts) -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Contenedor para la Navegación Universal -->
-    <div id="bf-universal-nav-container"></div>
+    <bf-nav>
+      <a class="cta" href="enterprise.html">Enterprise</a>
+    </bf-nav>
 
     <main class="dashboard-main">
-        <div class="dashboard-header">
-            <h1 class="dashboard-title">Tu Panel de Control</h1>
-            <p class="dashboard-subtitle">Gestiona tus activos y estrategias de trading en un solo lugar.</p>
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Tu Panel de Control</h1>
+        <p class="dashboard-subtitle">
+          Gestiona tus activos y estrategias de trading en un solo lugar.
+        </p>
+      </div>
+
+      <!-- Sección de Métricas Principales -->
+      <section class="stats-grid">
+        <div class="card stat-card">
+          <div class="stat-icon" style="--icon-color: #22c55e">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+              />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Valor del Portfolio</span>
+            <span class="stat-value" id="portfolio-value">$125,847.32</span>
+          </div>
+          <div class="stat-change positive">+12.5%</div>
         </div>
-
-        <!-- Sección de Métricas Principales -->
-        <section class="stats-grid">
-            <div class="card stat-card">
-                <div class="stat-icon" style="--icon-color: #22C55E;">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/></svg>
-                </div>
-                <div class="stat-content">
-                    <span class="stat-label">Valor del Portfolio</span>
-                    <span class="stat-value" id="portfolio-value">$125,847.32</span>
-                </div>
-                <div class="stat-change positive">+12.5%</div>
-            </div>
-            <div class="card stat-card">
-                <div class="stat-icon" style="--icon-color: #3B82F6;">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                </div>
-                <div class="stat-content">
-                    <span class="stat-label">Fondos Disponibles</span>
-                    <span class="stat-value" id="portfolio-balance">$45,230.18</span>
-                </div>
-            </div>
-            <div class="card stat-card">
-                <div class="stat-icon" style="--icon-color: #F97316;">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                </div>
-                <div class="stat-content">
-                    <span class="stat-label">P/L (24h)</span>
-                    <span class="stat-value" id="portfolio-profit">+$2,847.52</span>
-                </div>
-                <div class="stat-change positive">+2.31%</div>
-            </div>
-            <div class="card stat-card">
-                <div class="stat-icon" style="--icon-color: #A855F7;">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                </div>
-                <div class="stat-content">
-                    <span class="stat-label">Contratos Activos</span>
-                    <span class="stat-value">8</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Gráfico Principal -->
-        <section class="card chart-card">
-            <div class="chart-header">
-                <h2 class="chart-title">Evolución del Portfolio</h2>
-                <div class="chart-legend">
-                    <span class="legend-item">Valor Total</span>
-                </div>
-            </div>
-            <div id="market-overview-container">
-                <!-- El gráfico de ApexCharts se renderizará aquí -->
-            </div>
-        </section>
-
-        <!-- Acciones Rápidas y Tabla de Activos -->
-        <div class="dashboard-columns">
-            <div class="column-main">
-                <section class="card assets-table-card">
-                    <h2 class="card-header-title">Tus Activos</h2>
-                    <div class="table-responsive">
-                        <table class="assets-table">
-                            <thead>
-                                <tr>
-                                    <th>Activo</th>
-                                    <th>Balance</th>
-                                    <th>Precio</th>
-                                    <th>Valor</th>
-                                    <th>Cambio (24h)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="assets-container">
-                                <!-- Los activos se cargarán aquí dinámicamente -->
-                                <tr>
-                                    <td>
-                                        <div class="asset-info">
-                                            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=029" alt="BTC" class="asset-logo">
-                                            <div>
-                                                <span class="asset-name">Bitcoin</span>
-                                                <span class="asset-symbol">BTC</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>1.25 BTC</td>
-                                    <td>$67,123.45</td>
-                                    <td>$83,904.31</td>
-                                    <td class="positive">+1.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="asset-info">
-                                            <img src="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=029" alt="ETH" class="asset-logo">
-                                            <div>
-                                                <span class="asset-name">Ethereum</span>
-                                                <span class="asset-symbol">ETH</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>15.2 ETH</td>
-                                    <td>$3,540.12</td>
-                                    <td>$53,810.00</td>
-                                    <td class="negative">-0.8%</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="asset-info">
-                                            <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=029" alt="SOL" class="asset-logo">
-                                            <div>
-                                                <span class="asset-name">Solana</span>
-                                                <span class="asset-symbol">SOL</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>120 SOL</td>
-                                    <td>$172.50</td>
-                                    <td>$20,700.00</td>
-                                    <td class="positive">+4.2%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-            </div>
-            <div class="column-side">
-                <section class="card quick-actions-card">
-                    <h2 class="card-header-title">Acciones Rápidas</h2>
-                    <div class="actions-list">
-                        <button class="btn btn-primary full-width">Crear Contrato</button>
-                        <button class="btn btn-secondary full-width">Depositar Fondos</button>
-                        <button class="btn btn-secondary full-width">Retirar Fondos</button>
-                        <button class="btn btn-secondary full-width">Ver Análisis</button>
-                    </div>
-                </section>
-            </div>
+        <div class="card stat-card">
+          <div class="stat-icon" style="--icon-color: #3b82f6">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Fondos Disponibles</span>
+            <span class="stat-value" id="portfolio-balance">$45,230.18</span>
+          </div>
         </div>
+        <div class="card stat-card">
+          <div class="stat-icon" style="--icon-color: #f97316">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+              />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">P/L (24h)</span>
+            <span class="stat-value" id="portfolio-profit">+$2,847.52</span>
+          </div>
+          <div class="stat-change positive">+2.31%</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-icon" style="--icon-color: #a855f7">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Contratos Activos</span>
+            <span class="stat-value">8</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gráfico Principal -->
+      <section class="card chart-card">
+        <div class="chart-header">
+          <h2 class="chart-title">Evolución del Portfolio</h2>
+          <div class="chart-legend">
+            <span class="legend-item">Valor Total</span>
+          </div>
+        </div>
+        <div id="market-overview-container">
+          <!-- El gráfico de ApexCharts se renderizará aquí -->
+        </div>
+      </section>
+
+      <!-- Acciones Rápidas y Tabla de Activos -->
+      <div class="dashboard-columns">
+        <div class="column-main">
+          <section class="card assets-table-card">
+            <h2 class="card-header-title">Tus Activos</h2>
+            <div class="table-responsive">
+              <table class="assets-table">
+                <thead>
+                  <tr>
+                    <th>Activo</th>
+                    <th>Balance</th>
+                    <th>Precio</th>
+                    <th>Valor</th>
+                    <th>Cambio (24h)</th>
+                  </tr>
+                </thead>
+                <tbody id="assets-container">
+                  <!-- Los activos se cargarán aquí dinámicamente -->
+                  <tr>
+                    <td>
+                      <div class="asset-info">
+                        <img
+                          src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=029"
+                          alt="BTC"
+                          class="asset-logo"
+                        />
+                        <div>
+                          <span class="asset-name">Bitcoin</span>
+                          <span class="asset-symbol">BTC</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>1.25 BTC</td>
+                    <td>$67,123.45</td>
+                    <td>$83,904.31</td>
+                    <td class="positive">+1.5%</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="asset-info">
+                        <img
+                          src="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=029"
+                          alt="ETH"
+                          class="asset-logo"
+                        />
+                        <div>
+                          <span class="asset-name">Ethereum</span>
+                          <span class="asset-symbol">ETH</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>15.2 ETH</td>
+                    <td>$3,540.12</td>
+                    <td>$53,810.00</td>
+                    <td class="negative">-0.8%</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="asset-info">
+                        <img
+                          src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=029"
+                          alt="SOL"
+                          class="asset-logo"
+                        />
+                        <div>
+                          <span class="asset-name">Solana</span>
+                          <span class="asset-symbol">SOL</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>120 SOL</td>
+                    <td>$172.50</td>
+                    <td>$20,700.00</td>
+                    <td class="positive">+4.2%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+        <div class="column-side">
+          <section class="card quick-actions-card">
+            <h2 class="card-header-title">Acciones Rápidas</h2>
+            <div class="actions-list">
+              <button class="btn btn-primary full-width">Crear Contrato</button>
+              <button class="btn btn-secondary full-width">Depositar Fondos</button>
+              <button class="btn btn-secondary full-width">Retirar Fondos</button>
+              <button class="btn btn-secondary full-width">Ver Análisis</button>
+            </div>
+          </section>
+        </div>
+      </div>
     </main>
 
     <!-- Contenedor para el Footer Universal -->
-    <div id="bf-universal-footer-container"></div>
+    <bf-footer></bf-footer>
 
     <!-- Scripts Universales y de la Página -->
-    <script src="js/universal-nav.js"></script>
-    <script src="js/universal-footer.js"></script>
-    <script src="js/dashboard-charts.js"></script>
-</body>
+    <script type="module" src="js/components/bf-nav.js"></script>
+    <script type="module" src="js/components/bf-footer.js"></script>
+    <script type="module" src="js/dashboard-charts.js"></script>
+  </body>
 </html>

@@ -20,6 +20,7 @@
 ```
 
 ### **Build Output:**
+
 ```
 dist/
 ├── index.html                 (66KB → 12KB gzip)
@@ -52,6 +53,7 @@ dist/
 ### **Opción 1: Vercel (Recomendado para Frontend)** ⚡
 
 #### **Características:**
+
 - ✅ Deploy automático desde Git
 - ✅ SSL gratis
 - ✅ CDN global
@@ -74,6 +76,7 @@ vercel --prod
 ```
 
 #### **Archivo `vercel.json`:**
+
 ```json
 {
   "version": 2,
@@ -110,6 +113,7 @@ vercel --prod
 ### **Opción 2: Netlify** 🌟
 
 #### **Características:**
+
 - ✅ Deploy continuo desde Git
 - ✅ SSL gratis
 - ✅ Forms & Functions
@@ -130,6 +134,7 @@ netlify deploy --prod --dir=dist
 ```
 
 #### **Archivo `netlify.toml`:**
+
 ```toml
 [build]
   command = "npm run build"
@@ -164,6 +169,7 @@ netlify deploy --prod --dir=dist
 ### **Opción 3: Railway (Fullstack)** 🚂
 
 #### **Características:**
+
 - ✅ Frontend + Backend juntos
 - ✅ PostgreSQL/MySQL/Redis incluidos
 - ✅ Deploy desde Git
@@ -187,6 +193,7 @@ railway up
 ```
 
 #### **Archivo `railway.json`:**
+
 ```json
 {
   "build": {
@@ -208,6 +215,7 @@ railway up
 ### **Opción 4: Render** 💎
 
 #### **Características:**
+
 - ✅ Static Sites + Web Services
 - ✅ SSL gratis
 - ✅ Auto-deploy desde Git
@@ -225,6 +233,7 @@ railway up
    - Start Command: `npm start`
 
 #### **Archivo `render.yaml`:**
+
 ```yaml
 services:
   # Frontend
@@ -233,7 +242,7 @@ services:
     env: static
     buildCommand: npm run build
     staticPublishPath: ./dist
-    
+
   # Backend
   - type: web
     name: bitforward-backend
@@ -254,6 +263,7 @@ services:
 ### **Opción 5: DigitalOcean App Platform** 🌊
 
 #### **Características:**
+
 - ✅ Managed hosting
 - ✅ SSL automático
 - ✅ Databases incluidos
@@ -275,6 +285,7 @@ services:
 ### **Opción 6: AWS (S3 + CloudFront + Lambda)** ☁️
 
 #### **Características:**
+
 - ✅ Máxima escalabilidad
 - ✅ CDN global
 - ✅ Pay-per-use
@@ -297,12 +308,13 @@ aws cloudfront create-invalidation --distribution-id YOUR_ID --paths "/*"
 ```
 
 #### **Infrastructure as Code (Terraform):**
+
 ```hcl
 # main.tf
 resource "aws_s3_bucket" "app" {
   bucket = "bitforward-app"
   acl    = "public-read"
-  
+
   website {
     index_document = "index.html"
     error_document = "index.html"
@@ -314,22 +326,22 @@ resource "aws_cloudfront_distribution" "app" {
     domain_name = aws_s3_bucket.app.bucket_regional_domain_name
     origin_id   = "S3-bitforward"
   }
-  
+
   enabled = true
   default_root_object = "index.html"
-  
+
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "S3-bitforward"
-    
+
     forwarded_values {
       query_string = false
       cookies {
         forward = "none"
       }
     }
-    
+
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
     default_ttl            = 3600
@@ -345,6 +357,7 @@ resource "aws_cloudfront_distribution" "app" {
 ### **Opción 7: VPS (DigitalOcean Droplet / Linode)** 🖥️
 
 #### **Características:**
+
 - ✅ Control completo
 - ✅ Múltiples apps en un servidor
 - ✅ SSH access
@@ -392,11 +405,12 @@ systemctl restart nginx
 ```
 
 #### **Nginx Config (`/etc/nginx/sites-available/bitforward`):**
+
 ```nginx
 server {
     listen 80;
     server_name bitforward.io www.bitforward.io;
-    
+
     # Redirect HTTP to HTTPS
     return 301 https://$server_name$request_uri;
 }
@@ -404,39 +418,39 @@ server {
 server {
     listen 443 ssl http2;
     server_name bitforward.io www.bitforward.io;
-    
+
     # SSL Configuration (Let's Encrypt)
     ssl_certificate /etc/letsencrypt/live/bitforward.io/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/bitforward.io/privkey.pem;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers on;
-    
+
     # Security Headers
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
     add_header X-Frame-Options "DENY" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    
+
     # Gzip Compression
     gzip on;
     gzip_vary on;
     gzip_min_length 1024;
     gzip_types text/plain text/css text/xml text/javascript application/javascript application/json application/xml+rss image/svg+xml;
-    
+
     # Static Files
     location / {
         root /var/www/bitforward/dist;
         try_files $uri $uri/ /index.html;
-        
+
         # Cache static assets
         location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
             expires 1y;
             add_header Cache-Control "public, immutable";
         }
     }
-    
+
     # API Proxy
     location /api {
         proxy_pass http://localhost:5000;
@@ -448,11 +462,11 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
-        
+
         # Rate Limiting
         limit_req zone=api burst=20 nodelay;
     }
-    
+
     # WebSocket Support
     location /ws {
         proxy_pass http://localhost:5000;
@@ -467,6 +481,7 @@ limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;
 ```
 
 #### **SSL con Let's Encrypt:**
+
 ```bash
 # Instalar Certbot
 apt-get install certbot python3-certbot-nginx
@@ -522,6 +537,7 @@ LOG_LEVEL=warn
 ### **Configurar en Hosting:**
 
 #### **Vercel:**
+
 ```bash
 vercel env add NODE_ENV production
 vercel env add JWT_SECRET your_secret
@@ -529,12 +545,14 @@ vercel env add JWT_SECRET your_secret
 ```
 
 #### **Netlify:**
+
 ```bash
 netlify env:set NODE_ENV production
 netlify env:set JWT_SECRET your_secret
 ```
 
 #### **Railway/Render:**
+
 Agregar en el dashboard web
 
 ---
@@ -542,6 +560,7 @@ Agregar en el dashboard web
 ## 🌍 Custom Domain Setup
 
 ### **1. Comprar Dominio:**
+
 - Namecheap
 - GoDaddy
 - Google Domains
@@ -550,6 +569,7 @@ Agregar en el dashboard web
 ### **2. Configurar DNS:**
 
 #### **Para Vercel/Netlify:**
+
 ```
 Type    Name    Value
 A       @       76.76.21.21
@@ -557,6 +577,7 @@ CNAME   www     your-app.vercel.app
 ```
 
 #### **Para VPS:**
+
 ```
 Type    Name    Value
 A       @       YOUR_SERVER_IP
@@ -564,6 +585,7 @@ A       www     YOUR_SERVER_IP
 ```
 
 #### **Cloudflare (Recomendado):**
+
 1. Agregar sitio a Cloudflare
 2. Cambiar nameservers en registrar
 3. Configurar DNS:
@@ -580,14 +602,17 @@ A       www     YOUR_SERVER_IP
 ### **3. SSL Certificate:**
 
 #### **Opción A: Let's Encrypt (Free):**
+
 ```bash
 certbot --nginx -d bitforward.io -d www.bitforward.io
 ```
 
 #### **Opción B: Cloudflare (Free):**
+
 Ya incluido si usas proxy
 
 #### **Opción C: Vercel/Netlify:**
+
 SSL automático, no requiere configuración
 
 ---
@@ -619,7 +644,9 @@ Sentry.init({
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag() {
+    dataLayer.push(arguments);
+  }
   gtag('js', new Date());
   gtag('config', 'G-XXXXXXXXXX');
 </script>
@@ -662,6 +689,7 @@ LogRocket.init('your-app-id/bitforward');
 ## ✅ Pre-Launch Checklist
 
 ### **Code & Build:**
+
 - [x] Build completado sin errores
 - [x] Tests passing (102/102)
 - [x] Coverage > 80% (85%)
@@ -671,6 +699,7 @@ LogRocket.init('your-app-id/bitforward');
 - [x] PWA manifest configurado
 
 ### **Security:**
+
 - [x] OWASP Top 10 protected
 - [x] Security headers configurados
 - [x] Rate limiting activo
@@ -681,6 +710,7 @@ LogRocket.init('your-app-id/bitforward');
 - [ ] Security scan completado (OWASP ZAP)
 
 ### **Performance:**
+
 - [x] Lighthouse score > 90
 - [x] Gzip/Brotli compression
 - [x] Lazy loading implementado
@@ -689,6 +719,7 @@ LogRocket.init('your-app-id/bitforward');
 - [ ] DNS optimizado
 
 ### **Monitoring:**
+
 - [ ] Sentry configurado
 - [ ] Analytics instalado
 - [ ] Uptime monitoring activo
@@ -696,6 +727,7 @@ LogRocket.init('your-app-id/bitforward');
 - [ ] Logging configurado
 
 ### **Domain & SSL:**
+
 - [ ] Dominio comprado
 - [ ] DNS configurado
 - [ ] SSL certificate instalado
@@ -703,6 +735,7 @@ LogRocket.init('your-app-id/bitforward');
 - [ ] WWW redirect configurado
 
 ### **Environment:**
+
 - [ ] Environment variables configuradas
 - [ ] Database migrated
 - [ ] Backup system activo
@@ -710,6 +743,7 @@ LogRocket.init('your-app-id/bitforward');
 - [ ] API keys rotadas (no usar dev keys)
 
 ### **Documentation:**
+
 - [x] README actualizado
 - [x] API docs completas
 - [x] Deployment guide (este doc)
@@ -753,6 +787,7 @@ Uptime:    UptimeRobot (free)
 ```
 
 **Pros:**
+
 - ✅ Deploy en < 10 minutos
 - ✅ SSL automático
 - ✅ CI/CD incluido
@@ -767,12 +802,14 @@ Uptime:    UptimeRobot (free)
 ## 📞 Support
 
 ### **Deployment Issues:**
+
 1. Revisar logs del hosting
 2. Verificar environment variables
 3. Confirmar SSL certificate
 4. Test API endpoints
 
 ### **Debug Tools:**
+
 ```bash
 # Test local build
 npm run build
@@ -790,6 +827,7 @@ npm run lighthouse
 ## 🎊 Post-Deployment
 
 ### **Inmediatamente después:**
+
 1. ✅ Test sitio en producción
 2. ✅ Verificar SSL (https)
 3. ✅ Test API endpoints
@@ -797,12 +835,14 @@ npm run lighthouse
 5. ✅ Configurar alertas de error
 
 ### **Primera semana:**
+
 1. Monitorear logs
 2. Revisar analytics
 3. Fix bugs reportados
 4. Optimizar basado en métricas reales
 
 ### **Primer mes:**
+
 1. Review performance metrics
 2. Optimizar queries lentas
 3. Implementar features pedidas

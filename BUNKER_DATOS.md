@@ -6,7 +6,7 @@
 
 ### 📋 Pre-requisitos
 
-- **Node.js** v16+ 
+- **Node.js** v16+
 - **npm** v8+
 - Terminal/Consola
 
@@ -25,6 +25,7 @@ npm run db:setup
 ### 🎮 Comandos de Operación
 
 #### Desarrollo Local
+
 ```bash
 # Iniciar el servidor backend con persistencia
 npm run server:dev
@@ -34,6 +35,7 @@ npm run frontend
 ```
 
 #### Comandos de Base de Datos
+
 ```bash
 # Configurar la base de datos por primera vez
 npm run db:setup
@@ -94,18 +96,21 @@ El búnker incluye 5 tablas principales:
 ### 📊 Funcionalidades Principales
 
 #### Autenticación
+
 - Registro de usuarios con validación
 - Login seguro con JWT
 - Verificación de sesiones
 - Profiles de usuario persistentes
 
 #### Contratos Forward
+
 - Creación de contratos con múltiples activos
 - Cálculo automático de P&L
 - Métricas de vencimiento
 - Historial de transacciones
 
 #### Plataforma de Préstamos
+
 - Préstamos con colateral múltiple
 - Cálculo de LTV dinámico
 - Gestión de riesgos
@@ -130,17 +135,20 @@ sqlite3 server/database/bitforward.sqlite3
 ### 🔧 Solución de Problemas
 
 #### Error: "Base de datos no inicializada"
+
 ```bash
 npm run db:setup
 ```
 
 #### Error: "Puerto 3000 en uso"
+
 ```bash
 # Cambiar puerto en server/server.js línea:
 this.port = process.env.PORT || 3001;  # Cambiar a 3001
 ```
 
 #### Error: "No se puede conectar a la API"
+
 ```bash
 # Verificar que el backend esté corriendo
 npm run server:dev
@@ -158,13 +166,13 @@ const API_BASE_URL = 'http://localhost:3000/api';
 
 ### 🎯 Ventajas del Búnker de Datos
 
-| Antes (Memoria) | Ahora (Búnker SQLite) |
-|-----------------|----------------------|
-| ❌ Datos volátiles | ✅ Persistencia permanente |
+| Antes (Memoria)             | Ahora (Búnker SQLite)         |
+| --------------------------- | ----------------------------- |
+| ❌ Datos volátiles          | ✅ Persistencia permanente    |
 | ❌ Reinicio = pérdida total | ✅ Datos sobreviven reinicios |
-| ❌ Sin auditoría | ✅ Historial completo |
-| ❌ Sin métricas históricas | ✅ Analytics temporales |
-| ❌ Prototipo demo | ✅ Aplicación empresarial |
+| ❌ Sin auditoría            | ✅ Historial completo         |
+| ❌ Sin métricas históricas  | ✅ Analytics temporales       |
+| ❌ Prototipo demo           | ✅ Aplicación empresarial     |
 
 ### 📞 Soporte
 

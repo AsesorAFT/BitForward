@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  width: 100%;
+  margin-top: 3rem;
+}
+
+footer {
+  background: #101113;
+  padding: 2.3rem;
+  text-align: center;
+  border-top: 1px solid #2a2b2d;
+  color: #9da3a8;
+  font-size: 0.95rem;
+}
+
+footer strong {
+  color: #14f195;
+}

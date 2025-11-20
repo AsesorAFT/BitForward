@@ -11,6 +11,7 @@ Esta documentación describe los componentes implementados para la plataforma Bi
 El Sistema de Eventos proporciona un mecanismo de comunicación basado en eventos que permite a los diferentes módulos comunicarse entre sí sin depender directamente unos de otros.
 
 **Características principales:**
+
 - Patrón de diseño Observer para la comunicación entre componentes
 - Suscripción y desuscripción a eventos
 - Sistema de prioridad para los manejadores de eventos
@@ -18,9 +19,10 @@ El Sistema de Eventos proporciona un mecanismo de comunicación basado en evento
 - Manejo de eventos una sola vez (once)
 
 **Uso básico:**
+
 ```javascript
 // Suscribirse a un evento
-eventSystem.on('CONTRACT_CREATED', (contract) => {
+eventSystem.on('CONTRACT_CREATED', contract => {
   console.log('Nuevo contrato creado:', contract.id);
 });
 
@@ -33,6 +35,7 @@ eventSystem.emit('CONTRACT_CREATED', { id: 'contract-123', value: 1000 });
 Este componente maneja el seguimiento y análisis de portfolios de usuarios, proporcionando una visión completa de los activos y contratos.
 
 **Características principales:**
+
 - Seguimiento de múltiples activos y contratos por usuario
 - Cálculo de valor total y rendimiento del portfolio
 - Generación de informes detallados
@@ -40,6 +43,7 @@ Este componente maneja el seguimiento y análisis de portfolios de usuarios, pro
 - Datos históricos para análisis de tendencias
 
 **Uso básico:**
+
 ```javascript
 // Obtener el portfolio completo de un usuario
 const portfolio = portfolioManager.getUserPortfolio('user-123');
@@ -56,6 +60,7 @@ const report = portfolioManager.generateDetailedReport('user-123');
 El componente de Análisis de Riesgo proporciona evaluaciones y alertas de riesgo para contratos individuales y portfolios completos.
 
 **Características principales:**
+
 - Evaluación de riesgo basada en múltiples factores
 - Alertas de riesgo configurables
 - Simulación de escenarios para análisis predictivo
@@ -63,6 +68,7 @@ El componente de Análisis de Riesgo proporciona evaluaciones y alertas de riesg
 - Integración con el sistema de eventos para notificaciones
 
 **Uso básico:**
+
 ```javascript
 // Analizar el riesgo de un contrato específico
 const contractRisk = riskAnalyzer.analyzeContractRisk(contract);
@@ -79,6 +85,7 @@ const scenarios = riskAnalyzer.simulateRiskScenarios(portfolio);
 Este componente experimental facilita la interoperabilidad entre diferentes blockchains, permitiendo transacciones y contratos que abarcan múltiples redes.
 
 **Características principales:**
+
 - Detección automática de bridges disponibles
 - Mapeo de activos entre diferentes blockchains
 - Monitoreo de transacciones cross-chain
@@ -86,6 +93,7 @@ Este componente experimental facilita la interoperabilidad entre diferentes bloc
 - Funcionalidad de rollback para transacciones fallidas
 
 **Uso básico:**
+
 ```javascript
 // Verificar disponibilidad de bridge entre cadenas
 const bridgeAvailable = crossChainBridge.hasBridge('ethereum', 'solana');
@@ -94,7 +102,7 @@ const bridgeAvailable = crossChainBridge.hasBridge('ethereum', 'solana');
 const result = await crossChainBridge.executeForwardContract({
   sourceChain: 'ethereum',
   targetChain: 'solana',
-  contract: contractData
+  contract: contractData,
 });
 ```
 
@@ -103,6 +111,7 @@ const result = await crossChainBridge.executeForwardContract({
 Este componente central integra todos los demás componentes y proporciona una interfaz unificada para la funcionalidad del sistema.
 
 **Características principales:**
+
 - Carga y detección automática de componentes
 - Gestión de dependencias entre componentes
 - Flujos de trabajo integrados entre diferentes módulos
@@ -110,6 +119,7 @@ Este componente central integra todos los demás componentes y proporciona una i
 - API unificada para aplicaciones frontend
 
 **Uso básico:**
+
 ```javascript
 // Obtener información completa del usuario
 const userInfo = await bitForwardCore.getUserCompleteInfo('user-123');
@@ -126,6 +136,7 @@ const systemHealth = bitForwardCore.checkHealth();
 Este componente gestiona la carga dinámica, inicialización y comunicación entre todos los componentes del sistema.
 
 **Características principales:**
+
 - Detección automática de componentes disponibles
 - Carga dinámica de componentes bajo demanda
 - Gestión de dependencias entre componentes
@@ -133,6 +144,7 @@ Este componente gestiona la carga dinámica, inicialización y comunicación ent
 - Monitoreo del estado de los componentes
 
 **Uso básico:**
+
 ```javascript
 // Cargar todos los componentes esenciales
 await componentLoader.loadEssentialComponents();
