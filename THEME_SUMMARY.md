@@ -5,9 +5,9 @@
 El tema espacial con cohetes ha sido implementado en BitForward para crear una experiencia visual inmersiva que complementa la naturaleza innovadora de la plataforma DeFi. Este tema representa el "despegue" y crecimiento de las inversiones a través de varios elementos visuales:
 
 ### Archivos Implementados
+
 1. **CSS:**
    - `/css/space-background.css` - Fondo cósmico con estrellas y nebulosas
-   
 2. **JavaScript:**
    - `/js/space-animations.js` - Animaciones de estrellas y elementos espaciales
    - `/js/rocket-animations.js` - Animaciones específicas para cohetes
@@ -23,12 +23,14 @@ El tema espacial con cohetes ha sido implementado en BitForward para crear una e
    - `/template-espacial.html` - Plantilla para nuevas páginas
 
 ### Páginas Actualizadas
+
 - **index.html** - Página principal con tema espacial completo
 - **enterprise.html** - Dashboard empresarial con visualizaciones temáticas
 - **lending.html** - Plataforma de préstamos con elementos espaciales
 - **phoenix/login.html** - Portal de acceso con animaciones cósmicas
 
 ### Características del Tema
+
 - **Fondo Espacial:** Estrellas dinámicas que parpadean con diferentes tamaños
 - **Nebulosas:** Efectos de color que simulan nebulosas en el espacio profundo
 - **Animaciones de Cohetes:** Representan el crecimiento de las inversiones
@@ -51,6 +53,7 @@ Database Layer (Almacenamiento)
 ```
 
 ### Componentes Principales
+
 1. **Frontend con Tema Espacial:**
    - Interfaces de usuario con elementos espaciales
    - Visualizaciones de datos con tema cósmico

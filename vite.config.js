@@ -117,9 +117,6 @@ export default defineConfig({
     
     // CSS code splitting
     cssCodeSplit: true,
-    
-    // Target para navegadores modernos
-    target: 'es2015',
   },
   
   // Optimización de dependencias
@@ -204,5 +201,6 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '3.0.0'),
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
   },
 });

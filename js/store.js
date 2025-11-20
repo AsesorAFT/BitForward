@@ -3,6 +3,10 @@
  * Store centralizado para gestión de estado de la aplicación
  */
 
+const isDevEnvironment =
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) ||
+  (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'development');
+
 class BitForwardStore {
   constructor() {
     this.state = {
@@ -55,7 +59,7 @@ class BitForwardStore {
     this.notifyListeners(previousState, this.state, source);
 
     // Log para debugging
-    if (process.env.NODE_ENV === 'development') {
+    if (isDevEnvironment) {
       console.log(`[Store] State updated by ${source}:`, {
         previous: previousState,
         updates: processedUpdates,
@@ -443,7 +447,7 @@ class BitForwardStore {
 
 // Middleware para logging
 const loggingMiddleware = (updates, previousState, store) => {
-  if (process.env.NODE_ENV === 'development') {
+  if (isDevEnvironment) {
     console.group('🔄 State Update');
     console.log('Previous:', previousState);
     console.log('Updates:', updates);

@@ -49,6 +49,7 @@
 ## 🎯 Flujo de Usuario Recomendado
 
 ### Para Nuevos Usuarios:
+
 ```
 1. enterprise.html → Conocer el ecosistema AFORTU
 2. dashboard.html → Conectar wallet
@@ -58,6 +59,7 @@
 ```
 
 ### Para Traders Activos:
+
 ```
 1. dashboard.html → Ver portafolio
 2. analytics.html → Revisar gráficos TradingView
@@ -66,6 +68,7 @@
 ```
 
 ### Para Institucionales:
+
 ```
 1. enterprise.html → Explorar servicios
 2. dashboard.html → Gestionar portafolio
@@ -89,16 +92,19 @@ Cada página mantiene el estado activo del enlace correspondiente.
 ## 🎨 Elementos de Diseño Comunes
 
 ### Header
+
 - Logo animado BitForward
 - Navegación horizontal
 - Botón "Conectar Wallet"
 
 ### Footer
+
 - Indicador de estado en vivo (🟢)
 - Versión de la plataforma
 - Links de soporte
 
 ### Efectos Visuales
+
 - Glassmorphism en todas las tarjetas
 - Gradientes espaciales
 - Animaciones suaves
@@ -109,6 +115,7 @@ Cada página mantiene el estado activo del enlace correspondiente.
 ## 📱 Responsiveness
 
 Todas las páginas son responsive:
+
 - Desktop: Vista completa con sidebars
 - Tablet: Grid adaptable
 - Mobile: Stack vertical
@@ -118,27 +125,32 @@ Todas las páginas son responsive:
 ## 🛠️ Componentes Interactivos
 
 ### Dashboard
+
 - ✅ Cálculo automático de fees
 - ✅ Actualización en tiempo real
 - ✅ Gráficos de P&L
 
 ### Trading
+
 - ✅ Slider de leverage
 - ✅ Toggle Long/Short
 - ✅ Cálculo de liquidación
 
 ### Analytics
+
 - ✅ Selector de símbolos TradingView
 - ✅ Refresh de noticias
 - ✅ Filtros de análisis
 
 ### Community
+
 - ✅ Input de mensajes (Enter para enviar)
 - ✅ Búsqueda de canales
 - ✅ Estados online/offline
 - ✅ Reacciones a mensajes
 
 ### Enterprise
+
 - ✅ Cards interactivas de proyectos
 - ✅ Barras de progreso en campañas
 - ✅ Registro a webinars
@@ -148,6 +160,7 @@ Todas las páginas son responsive:
 ## 🔐 Sistema de Autenticación
 
 Estado actual:
+
 - ✅ Botón "Conectar Wallet" en todas las páginas
 - ✅ Integración con MetaMask preparada
 - ⏳ Persistencia de sesión (próximamente)
@@ -157,12 +170,14 @@ Estado actual:
 ## 📊 Datos en Tiempo Real
 
 ### Implementado:
+
 - ✅ Precios de activos (demo)
 - ✅ Cálculos de posiciones
 - ✅ Métricas del mercado
 - ✅ Sentimiento (Fear & Greed)
 
 ### Próximamente:
+
 - ⏳ WebSocket para chat real
 - ⏳ API de noticias en vivo
 - ⏳ Price oracles de Chainlink
@@ -173,17 +188,20 @@ Estado actual:
 ## 🎓 Recursos de Ayuda
 
 ### En Analytics
+
 - TradingView: Gráficos profesionales con indicadores
 - News Feed: Últimas noticias con análisis de sentimiento
 - On-Chain: Métricas de la blockchain
 
 ### En Community
+
 - #general: Chat principal
 - #señales: Trading signals
 - #bitcoin, #ethereum: Chats específicos
 - Top Traders: Aprende de los mejores
 
 ### En Enterprise
+
 - Seminarios: Capacitación en vivo
 - Launchpad: Proyectos para invertir
 - Ecosystem: Servicios de AFORTU Holdings
@@ -210,12 +228,14 @@ Luego accede a: `http://localhost:8080/dashboard.html`
 ## ✨ Features Destacadas
 
 ### 💰 Modelo de Fees Transparente
+
 ```
 Fee Anual: 1% sobre AUM
 Performance: 10% sobre ganancias > 10%
 ```
 
 ### 📈 TradingView Professional
+
 ```
 - Múltiples timeframes
 - Indicadores técnicos
@@ -224,6 +244,7 @@ Performance: 10% sobre ganancias > 10%
 ```
 
 ### 💬 Social Trading
+
 ```
 - Compartir señales
 - Copy trading
@@ -232,6 +253,7 @@ Performance: 10% sobre ganancias > 10%
 ```
 
 ### 🏢 Ecosistema AFORTU
+
 ```
 - 6 divisiones empresariales
 - Launchpad para IDOs
@@ -258,29 +280,34 @@ open http://localhost:8080/enterprise.html
 ## 🎯 Testing Checklist
 
 ### Dashboard
+
 - [ ] Conectar wallet
 - [ ] Ver balance total
 - [ ] Revisar fees calculados
 - [ ] Navegar a otras páginas
 
 ### Trading
+
 - [ ] Cambiar asset (BTC/ETH/SOL/AVAX)
 - [ ] Toggle Long/Short
 - [ ] Mover slider de leverage
 - [ ] Ver precio de liquidación actualizado
 
 ### Analytics
+
 - [ ] Cambiar símbolo en TradingView
 - [ ] Scroll en feed de noticias
 - [ ] Revisar indicadores técnicos
 
 ### Community
+
 - [ ] Escribir mensaje en chat
 - [ ] Presionar Enter para enviar
 - [ ] Click en canales diferentes
 - [ ] Ver top traders
 
 ### Enterprise
+
 - [ ] Explorar cada división de AFORTU
 - [ ] Ver campañas de launchpad
 - [ ] Revisar seminarios próximos
@@ -288,4 +315,4 @@ open http://localhost:8080/enterprise.html
 ---
 
 **BitForward** - Proyecto Fénix v1.0  
-*Navegación fluida, diseño espacial, features completas* 🚀
+_Navegación fluida, diseño espacial, features completas_ 🚀

@@ -2,14 +2,8 @@
   "testEnvironment": "node",
   "collectCoverage": false,
   "coverageDirectory": "coverage",
-  "coveragePathIgnorePatterns": [
-    "/node_modules/",
-    "/dist/",
-    "/contracts/"
-  ],
-  "testMatch": [
-    "**/__tests__/**/*.test.js"
-  ],
+  "coveragePathIgnorePatterns": ["/node_modules/", "/dist/", "/contracts/"],
+  "testMatch": ["**/__tests__/**/*.test.js"],
   "transform": {},
   "moduleFileExtensions": ["js", "json", "node"],
   "verbose": true,

@@ -1,409 +1,479 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BitForward - Sistema de Autenticación</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
     <style>
-        .gradient-bg {
-            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
-            background-size: 400% 400%;
-            animation: gradient-shift 15s ease infinite;
+      .gradient-bg {
+        background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
+        background-size: 400% 400%;
+        animation: gradient-shift 15s ease infinite;
+      }
+
+      @keyframes gradient-shift {
+        0%,
+        100% {
+          background-position: 0% 50%;
         }
-        
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        50% {
+          background-position: 100% 50%;
         }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
         }
-        
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
+        50% {
+          opacity: 0.5;
         }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+      }
     </style>
-</head>
-<body class="gradient-bg min-h-screen text-white">
-    
-    <div class="container mx-auto px-4 py-8">
+  </head>
+  <body class="gradient-bg min-h-screen text-white flex flex-col">
+    <bf-nav>
+      <a class="cta" href="index.html">Ir al inicio</a>
+    </bf-nav>
+
+    <main class="flex-1">
+      <div class="container mx-auto px-4 py-8">
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
-                🔐 Autenticación BitForward
-            </h1>
-            <p class="text-xl text-gray-300">Sign-In with Ethereum (SIWE) + JWT</p>
+          <h1
+            class="text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent"
+          >
+            🔐 Autenticación BitForward
+          </h1>
+          <p class="text-xl text-gray-300">Sign-In with Ethereum (SIWE) + JWT</p>
         </div>
-        
+
         <!-- Main Content -->
         <div class="max-w-4xl mx-auto">
-            <!-- Status Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <!-- Wallet Status -->
-                <div class="glass rounded-xl p-6 text-center">
-                    <div class="flex items-center justify-center gap-2 mb-2">
-                        <div id="walletStatusDot" class="status-dot bg-gray-500"></div>
-                        <h3 class="text-lg font-bold">Wallet</h3>
-                    </div>
-                    <p id="walletStatus" class="text-sm text-gray-400">Desconectado</p>
-                    <p id="walletAddress" class="text-xs text-cyan-400 mt-1"></p>
-                </div>
-                
-                <!-- Auth Status -->
-                <div class="glass rounded-xl p-6 text-center">
-                    <div class="flex items-center justify-center gap-2 mb-2">
-                        <div id="authStatusDot" class="status-dot bg-gray-500"></div>
-                        <h3 class="text-lg font-bold">Autenticación</h3>
-                    </div>
-                    <p id="authStatus" class="text-sm text-gray-400">No autenticado</p>
-                    <p id="authTokenInfo" class="text-xs text-cyan-400 mt-1"></p>
-                </div>
-                
-                <!-- Server Status -->
-                <div class="glass rounded-xl p-6 text-center">
-                    <div class="flex items-center justify-center gap-2 mb-2">
-                        <div id="serverStatusDot" class="status-dot bg-yellow-500"></div>
-                        <h3 class="text-lg font-bold">Servidor</h3>
-                    </div>
-                    <p id="serverStatus" class="text-sm text-gray-400">Verificando...</p>
-                </div>
+          <!-- Status Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <!-- Wallet Status -->
+            <div class="glass rounded-xl p-6 text-center">
+              <div class="flex items-center justify-center gap-2 mb-2">
+                <div id="walletStatusDot" class="status-dot bg-gray-500"></div>
+                <h3 class="text-lg font-bold">Wallet</h3>
+              </div>
+              <p id="walletStatus" class="text-sm text-gray-400">Desconectado</p>
+              <p id="walletAddress" class="text-xs text-cyan-400 mt-1"></p>
             </div>
-            
-            <!-- Actions -->
-            <div class="glass rounded-xl p-8 mb-8">
-                <h2 class="text-2xl font-bold mb-6 text-center">Acciones</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Connect Wallet -->
-                    <button id="btnConnectWallet" class="px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-lg font-bold transition text-white shadow-lg">
-                        🦊 Conectar MetaMask
-                    </button>
-                    
-                    <!-- Login -->
-                    <button id="btnLogin" disabled class="px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg font-bold transition text-white shadow-lg opacity-50 cursor-not-allowed">
-                        🔐 Iniciar Sesión (SIWE)
-                    </button>
-                    
-                    <!-- Get User Info -->
-                    <button id="btnGetUserInfo" disabled class="px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg font-bold transition text-white shadow-lg opacity-50 cursor-not-allowed">
-                        👤 Obtener Info Usuario
-                    </button>
-                    
-                    <!-- Logout -->
-                    <button id="btnLogout" disabled class="px-6 py-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg font-bold transition text-white shadow-lg opacity-50 cursor-not-allowed">
-                        🚪 Cerrar Sesión
-                    </button>
-                </div>
+
+            <!-- Auth Status -->
+            <div class="glass rounded-xl p-6 text-center">
+              <div class="flex items-center justify-center gap-2 mb-2">
+                <div id="authStatusDot" class="status-dot bg-gray-500"></div>
+                <h3 class="text-lg font-bold">Autenticación</h3>
+              </div>
+              <p id="authStatus" class="text-sm text-gray-400">No autenticado</p>
+              <p id="authTokenInfo" class="text-xs text-cyan-400 mt-1"></p>
             </div>
-            
-            <!-- Flow Diagram -->
-            <div class="glass rounded-xl p-8 mb-8">
-                <h2 class="text-2xl font-bold mb-6 text-center">Flujo de Autenticación SIWE</h2>
-                
-                <div class="space-y-4">
-                    <div id="step1" class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg">
-                        <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center font-bold">1</div>
-                        <div class="flex-1">
-                            <p class="font-bold">Conectar Wallet</p>
-                            <p class="text-sm text-gray-400">MetaMask se conecta y proporciona dirección</p>
-                        </div>
-                        <div id="step1Status" class="text-2xl">⏳</div>
-                    </div>
-                    
-                    <div id="step2" class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg opacity-50">
-                        <div class="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center font-bold">2</div>
-                        <div class="flex-1">
-                            <p class="font-bold">Solicitar Nonce</p>
-                            <p class="text-sm text-gray-400">Servidor genera nonce único de un solo uso</p>
-                        </div>
-                        <div id="step2Status" class="text-2xl">⏳</div>
-                    </div>
-                    
-                    <div id="step3" class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg opacity-50">
-                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center font-bold">3</div>
-                        <div class="flex-1">
-                            <p class="font-bold">Firmar Mensaje</p>
-                            <p class="text-sm text-gray-400">Usuario firma mensaje con wallet (sin gas)</p>
-                        </div>
-                        <div id="step3Status" class="text-2xl">⏳</div>
-                    </div>
-                    
-                    <div id="step4" class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg opacity-50">
-                        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold">4</div>
-                        <div class="flex-1">
-                            <p class="font-bold">Verificar Firma</p>
-                            <p class="text-sm text-gray-400">Servidor verifica firma y genera JWT tokens</p>
-                        </div>
-                        <div id="step4Status" class="text-2xl">⏳</div>
-                    </div>
-                    
-                    <div id="step5" class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg opacity-50">
-                        <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold">5</div>
-                        <div class="flex-1">
-                            <p class="font-bold">Sesión Activa</p>
-                            <p class="text-sm text-gray-400">Access token (15min) + Refresh token (7 días)</p>
-                        </div>
-                        <div id="step5Status" class="text-2xl">⏳</div>
-                    </div>
-                </div>
+
+            <!-- Server Status -->
+            <div class="glass rounded-xl p-6 text-center">
+              <div class="flex items-center justify-center gap-2 mb-2">
+                <div id="serverStatusDot" class="status-dot bg-yellow-500"></div>
+                <h3 class="text-lg font-bold">Servidor</h3>
+              </div>
+              <p id="serverStatus" class="text-sm text-gray-400">Verificando...</p>
             </div>
-            
-            <!-- Console Log -->
-            <div class="glass rounded-xl p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-2xl font-bold">📝 Console Log</h2>
-                    <button id="btnClearLog" class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg text-sm">
-                        Limpiar
-                    </button>
-                </div>
-                <div id="consoleLog" class="bg-black/50 rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm space-y-1">
-                    <div class="text-cyan-400">[INFO] Sistema de autenticación inicializado</div>
-                </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="glass rounded-xl p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-center">Acciones</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Connect Wallet -->
+              <button
+                id="btnConnectWallet"
+                class="px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-lg font-bold transition text-white shadow-lg"
+              >
+                🦊 Conectar MetaMask
+              </button>
+
+              <!-- Login -->
+              <button
+                id="btnLogin"
+                disabled
+                class="px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg font-bold transition text-white shadow-lg opacity-50 cursor-not-allowed"
+              >
+                🔐 Iniciar Sesión (SIWE)
+              </button>
+
+              <!-- Get User Info -->
+              <button
+                id="btnGetUserInfo"
+                disabled
+                class="px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg font-bold transition text-white shadow-lg opacity-50 cursor-not-allowed"
+              >
+                👤 Obtener Info Usuario
+              </button>
+
+              <!-- Logout -->
+              <button
+                id="btnLogout"
+                disabled
+                class="px-6 py-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg font-bold transition text-white shadow-lg opacity-50 cursor-not-allowed"
+              >
+                🚪 Cerrar Sesión
+              </button>
             </div>
+          </div>
+
+          <!-- Flow Diagram -->
+          <div class="glass rounded-xl p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-center">Flujo de Autenticación SIWE</h2>
+
+            <div class="space-y-4">
+              <div id="step1" class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg">
+                <div
+                  class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center font-bold"
+                >
+                  1
+                </div>
+                <div class="flex-1">
+                  <p class="font-bold">Conectar Wallet</p>
+                  <p class="text-sm text-gray-400">MetaMask se conecta y proporciona dirección</p>
+                </div>
+                <div id="step1Status" class="text-2xl">⏳</div>
+              </div>
+
+              <div
+                id="step2"
+                class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg opacity-50"
+              >
+                <div
+                  class="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center font-bold"
+                >
+                  2
+                </div>
+                <div class="flex-1">
+                  <p class="font-bold">Solicitar Nonce</p>
+                  <p class="text-sm text-gray-400">Servidor genera nonce único de un solo uso</p>
+                </div>
+                <div id="step2Status" class="text-2xl">⏳</div>
+              </div>
+
+              <div
+                id="step3"
+                class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg opacity-50"
+              >
+                <div
+                  class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center font-bold"
+                >
+                  3
+                </div>
+                <div class="flex-1">
+                  <p class="font-bold">Firmar Mensaje</p>
+                  <p class="text-sm text-gray-400">Usuario firma mensaje con wallet (sin gas)</p>
+                </div>
+                <div id="step3Status" class="text-2xl">⏳</div>
+              </div>
+
+              <div
+                id="step4"
+                class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg opacity-50"
+              >
+                <div
+                  class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold"
+                >
+                  4
+                </div>
+                <div class="flex-1">
+                  <p class="font-bold">Verificar Firma</p>
+                  <p class="text-sm text-gray-400">Servidor verifica firma y genera JWT tokens</p>
+                </div>
+                <div id="step4Status" class="text-2xl">⏳</div>
+              </div>
+
+              <div
+                id="step5"
+                class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg opacity-50"
+              >
+                <div
+                  class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold"
+                >
+                  5
+                </div>
+                <div class="flex-1">
+                  <p class="font-bold">Sesión Activa</p>
+                  <p class="text-sm text-gray-400">Access token (15min) + Refresh token (7 días)</p>
+                </div>
+                <div id="step5Status" class="text-2xl">⏳</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Console Log -->
+          <div class="glass rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-2xl font-bold">📝 Console Log</h2>
+              <button
+                id="btnClearLog"
+                class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg text-sm"
+              >
+                Limpiar
+              </button>
+            </div>
+            <div
+              id="consoleLog"
+              class="bg-black/50 rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm space-y-1"
+            >
+              <div class="text-cyan-400">[INFO] Sistema de autenticación inicializado</div>
+            </div>
+          </div>
         </div>
-    </div>
-    
+      </div>
+    </main>
+
     <!-- Scripts -->
-    <script src="js/wallet-manager-real.js"></script>
-    <script src="js/wallet-auth-client.js"></script>
-    
+    <script type="module" src="js/wallet-manager-real.js"></script>
+    <script type="module" src="js/wallet-auth-client.js"></script>
+
     <script>
-        // Referencias DOM
-        const walletStatusDot = document.getElementById('walletStatusDot');
-        const walletStatus = document.getElementById('walletStatus');
-        const walletAddress = document.getElementById('walletAddress');
-        const authStatusDot = document.getElementById('authStatusDot');
-        const authStatus = document.getElementById('authStatus');
-        const authTokenInfo = document.getElementById('authTokenInfo');
-        const serverStatusDot = document.getElementById('serverStatusDot');
-        const serverStatus = document.getElementById('serverStatus');
-        const consoleLog = document.getElementById('consoleLog');
-        
-        const btnConnectWallet = document.getElementById('btnConnectWallet');
-        const btnLogin = document.getElementById('btnLogin');
-        const btnGetUserInfo = document.getElementById('btnGetUserInfo');
-        const btnLogout = document.getElementById('btnLogout');
-        const btnClearLog = document.getElementById('btnClearLog');
-        
-        // Wallet Manager
-        const walletManager = new RealWalletManager();
-        
-        // Funciones de UI
-        function log(message, type = 'info') {
-            const timestamp = new Date().toLocaleTimeString();
-            const colors = {
-                info: 'text-cyan-400',
-                success: 'text-green-400',
-                warning: 'text-yellow-400',
-                error: 'text-red-400'
-            };
-            
-            const entry = document.createElement('div');
-            entry.className = colors[type];
-            entry.textContent = `[${timestamp}] ${message}`;
-            consoleLog.insertBefore(entry, consoleLog.firstChild);
-            
-            while (consoleLog.children.length > 50) {
-                consoleLog.removeChild(consoleLog.lastChild);
-            }
+      // Referencias DOM
+      const walletStatusDot = document.getElementById('walletStatusDot');
+      const walletStatus = document.getElementById('walletStatus');
+      const walletAddress = document.getElementById('walletAddress');
+      const authStatusDot = document.getElementById('authStatusDot');
+      const authStatus = document.getElementById('authStatus');
+      const authTokenInfo = document.getElementById('authTokenInfo');
+      const serverStatusDot = document.getElementById('serverStatusDot');
+      const serverStatus = document.getElementById('serverStatus');
+      const consoleLog = document.getElementById('consoleLog');
+
+      const btnConnectWallet = document.getElementById('btnConnectWallet');
+      const btnLogin = document.getElementById('btnLogin');
+      const btnGetUserInfo = document.getElementById('btnGetUserInfo');
+      const btnLogout = document.getElementById('btnLogout');
+      const btnClearLog = document.getElementById('btnClearLog');
+
+      // Wallet Manager
+      const walletManager = new RealWalletManager();
+
+      // Funciones de UI
+      function log(message, type = 'info') {
+        const timestamp = new Date().toLocaleTimeString();
+        const colors = {
+          info: 'text-cyan-400',
+          success: 'text-green-400',
+          warning: 'text-yellow-400',
+          error: 'text-red-400',
+        };
+
+        const entry = document.createElement('div');
+        entry.className = colors[type];
+        entry.textContent = `[${timestamp}] ${message}`;
+        consoleLog.insertBefore(entry, consoleLog.firstChild);
+
+        while (consoleLog.children.length > 50) {
+          consoleLog.removeChild(consoleLog.lastChild);
         }
-        
-        function updateStepStatus(step, status) {
-            const stepEl = document.getElementById(`step${step}`);
-            const statusEl = document.getElementById(`step${step}Status`);
-            
-            stepEl.classList.remove('opacity-50');
-            
-            if (status === 'success') {
-                statusEl.textContent = '✅';
-            } else if (status === 'error') {
-                statusEl.textContent = '❌';
-            } else {
-                statusEl.textContent = '⏳';
-            }
+      }
+
+      function updateStepStatus(step, status) {
+        const stepEl = document.getElementById(`step${step}`);
+        const statusEl = document.getElementById(`step${step}Status`);
+
+        stepEl.classList.remove('opacity-50');
+
+        if (status === 'success') {
+          statusEl.textContent = '✅';
+        } else if (status === 'error') {
+          statusEl.textContent = '❌';
+        } else {
+          statusEl.textContent = '⏳';
         }
-        
-        function resetSteps() {
-            for (let i = 1; i <= 5; i++) {
-                document.getElementById(`step${i}`).classList.add('opacity-50');
-                document.getElementById(`step${i}Status`).textContent = '⏳';
-            }
+      }
+
+      function resetSteps() {
+        for (let i = 1; i <= 5; i++) {
+          document.getElementById(`step${i}`).classList.add('opacity-50');
+          document.getElementById(`step${i}Status`).textContent = '⏳';
         }
-        
-        // Event Listeners - Wallet
-        btnConnectWallet.addEventListener('click', async () => {
-            try {
-                log('Conectando MetaMask...', 'info');
-                await walletManager.connectMetaMask();
-                
-                walletStatusDot.className = 'status-dot bg-green-500';
-                walletStatus.textContent = 'Conectado';
-                walletAddress.textContent = walletManager.currentAccount.substring(0, 10) + '...';
-                
-                btnLogin.disabled = false;
-                btnLogin.classList.remove('opacity-50', 'cursor-not-allowed');
-                btnLogin.classList.add('hover:from-cyan-600', 'hover:to-blue-600');
-                
-                updateStepStatus(1, 'success');
-                log(`✅ Wallet conectado: ${walletManager.currentAccount}`, 'success');
-                
-            } catch (error) {
-                log(`❌ Error conectando wallet: ${error.message}`, 'error');
-                updateStepStatus(1, 'error');
-            }
-        });
-        
-        // Event Listeners - Auth
-        btnLogin.addEventListener('click', async () => {
-            try {
-                resetSteps();
-                updateStepStatus(1, 'success');
-                
-                log('🔐 Iniciando autenticación SIWE...', 'info');
-                updateStepStatus(2, 'loading');
-                
-                const result = await walletAuthClient.login(walletManager);
-                
-                authStatusDot.className = 'status-dot bg-green-500';
-                authStatus.textContent = 'Autenticado';
-                authTokenInfo.textContent = result.address.substring(0, 10) + '...';
-                
-                btnGetUserInfo.disabled = false;
-                btnGetUserInfo.classList.remove('opacity-50', 'cursor-not-allowed');
-                btnGetUserInfo.classList.add('hover:from-green-600', 'hover:to-emerald-600');
-                
-                btnLogout.disabled = false;
-                btnLogout.classList.remove('opacity-50', 'cursor-not-allowed');
-                btnLogout.classList.add('hover:from-red-600', 'hover:to-orange-600');
-                
-                updateStepStatus(2, 'success');
-                updateStepStatus(3, 'success');
-                updateStepStatus(4, 'success');
-                updateStepStatus(5, 'success');
-                
-                log('🎉 Autenticación exitosa!', 'success');
-                log(`📝 Access Token: ${walletAuthClient.getAccessToken().substring(0, 30)}...`, 'info');
-                
-            } catch (error) {
-                log(`❌ Error en autenticación: ${error.message}`, 'error');
-                updateStepStatus(2, 'error');
-                updateStepStatus(3, 'error');
-                updateStepStatus(4, 'error');
-            }
-        });
-        
-        btnGetUserInfo.addEventListener('click', async () => {
-            try {
-                log('👤 Obteniendo información de usuario...', 'info');
-                const userInfo = await walletAuthClient.getUserInfo();
-                
-                log(`✅ Usuario: ${userInfo.address}`, 'success');
-                log(`📍 Chain ID: ${userInfo.chainId}`, 'info');
-                
-            } catch (error) {
-                log(`❌ Error obteniendo info: ${error.message}`, 'error');
-            }
-        });
-        
-        btnLogout.addEventListener('click', async () => {
-            try {
-                log('👋 Cerrando sesión...', 'info');
-                await walletAuthClient.logout();
-                
-                authStatusDot.className = 'status-dot bg-gray-500';
-                authStatus.textContent = 'No autenticado';
-                authTokenInfo.textContent = '';
-                
-                btnGetUserInfo.disabled = true;
-                btnGetUserInfo.classList.add('opacity-50', 'cursor-not-allowed');
-                btnGetUserInfo.classList.remove('hover:from-green-600', 'hover:to-emerald-600');
-                
-                btnLogout.disabled = true;
-                btnLogout.classList.add('opacity-50', 'cursor-not-allowed');
-                btnLogout.classList.remove('hover:from-red-600', 'hover:to-orange-600');
-                
-                resetSteps();
-                updateStepStatus(1, 'success');
-                
-                log('✅ Sesión cerrada correctamente', 'success');
-                
-            } catch (error) {
-                log(`❌ Error cerrando sesión: ${error.message}`, 'error');
-            }
-        });
-        
-        btnClearLog.addEventListener('click', () => {
-            consoleLog.innerHTML = '<div class="text-cyan-400">[INFO] Log limpiado</div>';
-        });
-        
-        // Verificar estado del servidor
-        async function checkServer() {
-            try {
-                const response = await fetch('http://localhost:3000/api/health');
-                if (response.ok) {
-                    serverStatusDot.className = 'status-dot bg-green-500';
-                    serverStatus.textContent = 'Conectado';
-                    log('✅ Servidor conectado', 'success');
-                } else {
-                    throw new Error('Server not responding');
-                }
-            } catch (error) {
-                serverStatusDot.className = 'status-dot bg-red-500';
-                serverStatus.textContent = 'Desconectado';
-                log('❌ Servidor no disponible. Ejecuta: npm start en /server', 'error');
-            }
+      }
+
+      // Event Listeners - Wallet
+      btnConnectWallet.addEventListener('click', async () => {
+        try {
+          log('Conectando MetaMask...', 'info');
+          await walletManager.connectMetaMask();
+
+          walletStatusDot.className = 'status-dot bg-green-500';
+          walletStatus.textContent = 'Conectado';
+          walletAddress.textContent = walletManager.currentAccount.substring(0, 10) + '...';
+
+          btnLogin.disabled = false;
+          btnLogin.classList.remove('opacity-50', 'cursor-not-allowed');
+          btnLogin.classList.add('hover:from-cyan-600', 'hover:to-blue-600');
+
+          updateStepStatus(1, 'success');
+          log(`✅ Wallet conectado: ${walletManager.currentAccount}`, 'success');
+        } catch (error) {
+          log(`❌ Error conectando wallet: ${error.message}`, 'error');
+          updateStepStatus(1, 'error');
         }
-        
-        // Event Listeners - Auth Client
-        walletAuthClient.on('login', (data) => {
-            log(`🎉 Evento: Usuario autenticado - ${data.address}`, 'success');
-        });
-        
-        walletAuthClient.on('logout', () => {
-            log('👋 Evento: Sesión cerrada', 'info');
-        });
-        
-        walletAuthClient.on('tokenRefreshed', () => {
-            log('🔄 Evento: Token refrescado automáticamente', 'info');
-        });
-        
-        walletAuthClient.on('error', (error) => {
-            log(`❌ Evento de error: ${error.message}`, 'error');
-        });
-        
-        // Inicialización
-        checkServer();
-        
-        // Si ya está autenticado, actualizar UI
-        if (walletAuthClient.isAuthenticated()) {
-            authStatusDot.className = 'status-dot bg-green-500';
-            authStatus.textContent = 'Autenticado (sesión anterior)';
-            authTokenInfo.textContent = walletAuthClient.userAddress.substring(0, 10) + '...';
-            
-            btnGetUserInfo.disabled = false;
-            btnGetUserInfo.classList.remove('opacity-50', 'cursor-not-allowed');
-            
-            btnLogout.disabled = false;
-            btnLogout.classList.remove('opacity-50', 'cursor-not-allowed');
-            
-            log('🔑 Sesión anterior restaurada', 'success');
+      });
+
+      // Event Listeners - Auth
+      btnLogin.addEventListener('click', async () => {
+        try {
+          resetSteps();
+          updateStepStatus(1, 'success');
+
+          log('🔐 Iniciando autenticación SIWE...', 'info');
+          updateStepStatus(2, 'loading');
+
+          const result = await walletAuthClient.login(walletManager);
+
+          authStatusDot.className = 'status-dot bg-green-500';
+          authStatus.textContent = 'Autenticado';
+          authTokenInfo.textContent = result.address.substring(0, 10) + '...';
+
+          btnGetUserInfo.disabled = false;
+          btnGetUserInfo.classList.remove('opacity-50', 'cursor-not-allowed');
+          btnGetUserInfo.classList.add('hover:from-green-600', 'hover:to-emerald-600');
+
+          btnLogout.disabled = false;
+          btnLogout.classList.remove('opacity-50', 'cursor-not-allowed');
+          btnLogout.classList.add('hover:from-red-600', 'hover:to-orange-600');
+
+          updateStepStatus(2, 'success');
+          updateStepStatus(3, 'success');
+          updateStepStatus(4, 'success');
+          updateStepStatus(5, 'success');
+
+          log('🎉 Autenticación exitosa!', 'success');
+          log(`📝 Access Token: ${walletAuthClient.getAccessToken().substring(0, 30)}...`, 'info');
+        } catch (error) {
+          log(`❌ Error en autenticación: ${error.message}`, 'error');
+          updateStepStatus(2, 'error');
+          updateStepStatus(3, 'error');
+          updateStepStatus(4, 'error');
         }
+      });
+
+      btnGetUserInfo.addEventListener('click', async () => {
+        try {
+          log('👤 Obteniendo información de usuario...', 'info');
+          const userInfo = await walletAuthClient.getUserInfo();
+
+          log(`✅ Usuario: ${userInfo.address}`, 'success');
+          log(`📍 Chain ID: ${userInfo.chainId}`, 'info');
+        } catch (error) {
+          log(`❌ Error obteniendo info: ${error.message}`, 'error');
+        }
+      });
+
+      btnLogout.addEventListener('click', async () => {
+        try {
+          log('👋 Cerrando sesión...', 'info');
+          await walletAuthClient.logout();
+
+          authStatusDot.className = 'status-dot bg-gray-500';
+          authStatus.textContent = 'No autenticado';
+          authTokenInfo.textContent = '';
+
+          btnGetUserInfo.disabled = true;
+          btnGetUserInfo.classList.add('opacity-50', 'cursor-not-allowed');
+          btnGetUserInfo.classList.remove('hover:from-green-600', 'hover:to-emerald-600');
+
+          btnLogout.disabled = true;
+          btnLogout.classList.add('opacity-50', 'cursor-not-allowed');
+          btnLogout.classList.remove('hover:from-red-600', 'hover:to-orange-600');
+
+          resetSteps();
+          updateStepStatus(1, 'success');
+
+          log('✅ Sesión cerrada correctamente', 'success');
+        } catch (error) {
+          log(`❌ Error cerrando sesión: ${error.message}`, 'error');
+        }
+      });
+
+      btnClearLog.addEventListener('click', () => {
+        consoleLog.innerHTML = '<div class="text-cyan-400">[INFO] Log limpiado</div>';
+      });
+
+      // Verificar estado del servidor
+      async function checkServer() {
+        try {
+          const response = await fetch('http://localhost:3000/api/health');
+          if (response.ok) {
+            serverStatusDot.className = 'status-dot bg-green-500';
+            serverStatus.textContent = 'Conectado';
+            log('✅ Servidor conectado', 'success');
+          } else {
+            throw new Error('Server not responding');
+          }
+        } catch (error) {
+          serverStatusDot.className = 'status-dot bg-red-500';
+          serverStatus.textContent = 'Desconectado';
+          log('❌ Servidor no disponible. Ejecuta: npm start en /server', 'error');
+        }
+      }
+
+      // Event Listeners - Auth Client
+      walletAuthClient.on('login', data => {
+        log(`🎉 Evento: Usuario autenticado - ${data.address}`, 'success');
+      });
+
+      walletAuthClient.on('logout', () => {
+        log('👋 Evento: Sesión cerrada', 'info');
+      });
+
+      walletAuthClient.on('tokenRefreshed', () => {
+        log('🔄 Evento: Token refrescado automáticamente', 'info');
+      });
+
+      walletAuthClient.on('error', error => {
+        log(`❌ Evento de error: ${error.message}`, 'error');
+      });
+
+      // Inicialización
+      checkServer();
+
+      // Si ya está autenticado, actualizar UI
+      if (walletAuthClient.isAuthenticated()) {
+        authStatusDot.className = 'status-dot bg-green-500';
+        authStatus.textContent = 'Autenticado (sesión anterior)';
+        authTokenInfo.textContent = walletAuthClient.userAddress.substring(0, 10) + '...';
+
+        btnGetUserInfo.disabled = false;
+        btnGetUserInfo.classList.remove('opacity-50', 'cursor-not-allowed');
+
+        btnLogout.disabled = false;
+        btnLogout.classList.remove('opacity-50', 'cursor-not-allowed');
+
+        log('🔑 Sesión anterior restaurada', 'success');
+      }
     </script>
-</body>
+    <bf-footer></bf-footer>
+
+    <script type="module" src="js/components/bf-nav.js"></script>
+    <script type="module" src="js/components/bf-footer.js"></script>
+  </body>
 </html>

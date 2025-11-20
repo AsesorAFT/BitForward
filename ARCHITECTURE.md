@@ -89,7 +89,7 @@ sequenceDiagram
     participant API
     participant ForwardEngine
     participant Oracle
-    
+
     Usuario->>UI: Solicita crear contrato
     UI->>API: POST /contracts/forward
     API->>ForwardEngine: createForwardContract()
@@ -109,7 +109,7 @@ sequenceDiagram
     participant API
     participant Vault
     participant Oracle
-    
+
     Usuario->>UI: Solicita préstamo
     UI->>API: POST /lending/borrow
     API->>Vault: borrow()
@@ -130,6 +130,7 @@ El tema espacial está integrado en todas las páginas a través de:
 4. **rocket-animations.js:** Gestiona las animaciones específicas de cohetes
 
 Los efectos visuales representan conceptos financieros:
+
 - **Cohetes:** Crecimiento, despegue de inversiones
 - **Estrellas:** Oportunidades en el universo financiero
 - **Nebulosas:** Fondos y pools de liquidez
@@ -138,16 +139,19 @@ Los efectos visuales representan conceptos financieros:
 ## Consideraciones Técnicas
 
 ### Rendimiento
+
 - Carga progresiva de recursos
 - Optimización de animaciones CSS vs. JavaScript
 - Minificación de assets en producción
 
 ### Accesibilidad
+
 - Respeto de preferencias `prefers-reduced-motion`
 - Alternativas textuales para elementos visuales
 - Contraste adecuado de colores
 
 ### Seguridad
+
 - Protección contra XSS en animaciones dinámicas
 - Validación de datos en servicios blockchain
 - Auditoría de smart contracts
@@ -155,21 +159,25 @@ Los efectos visuales representan conceptos financieros:
 ## Próximos Pasos en el Roadmap
 
 ### Q4 2025 - Foundation
+
 - Implementar tema espacial completo en todas las páginas
 - Desplegar contratos en testnet
 - Desarrollar pantallas de análisis con gráficos animados
 
 ### Q1 2026 - MVP Launch
+
 - Desplegar contratos en mainnet
 - Implementar integración multi-chain
 - Lanzar programa de referidos con animaciones espaciales
 
 ### Q2 2026 - Growth
+
 - Añadir nuevos instrumentos financieros
 - Expandir a nuevas blockchains
 - Mejorar experiencia visual con animaciones 3D
 
 ### Q3 2026 - Scale
+
 - Implementar DAO para gobernanza
 - Desarrollar aplicaciones móviles con tema espacial
 - Expandir a nuevos mercados financieros

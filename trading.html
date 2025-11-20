@@ -1,142 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exchange | BitForward</title>
-    
+
     <!-- Estilos del Sistema de Diseño y Universales -->
-    <link rel="stylesheet" href="css/design-system.css">
-    <link rel="stylesheet" href="css/universal-nav.css">
-    <link rel="stylesheet" href="css/universal-footer.css">
-    
+    <link rel="stylesheet" href="css/design-system.css" />
     <!-- Estilos de la Interfaz de Exchange -->
-    <link rel="stylesheet" href="css/exchange.css">
-    
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="css/exchange.css" />
+
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Biblioteca de Gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Navegación Universal -->
-    <div id="bf-universal-nav-container"></div>
+    <bf-nav>
+      <a class="cta" href="enterprise.html">Enterprise</a>
+    </bf-nav>
 
     <!-- Contenedor Principal del Exchange -->
     <div class="exchange-container">
-        
-        <!-- 1. Header del Mercado -->
-        <header class="exchange-module exchange-header">
-            <div class="market-info-bar">
-                <div class="market-selector">
-                    <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=029" alt="BTC" class="pair-icon">
-                    <span class="pair-name">BTC/USD</span>
-                </div>
-                <div class="market-stat">
-                    <span class="label">Precio</span>
-                    <span class="value" id="current-price">$0.00</span>
-                </div>
-                <div class="market-stat">
-                    <span class="label">Cambio 24h</span>
-                    <span class="value positive" id="price-change">+0.00 (0.00%)</span>
-                </div>
-                <div class="market-stat">
-                    <span class="label">Volumen 24h</span>
-                    <span class="value" id="volume-24h">0 BTC</span>
-                </div>
-            </div>
-        </header>
+      <!-- 1. Header del Mercado -->
+      <header class="exchange-module exchange-header">
+        <div class="market-info-bar">
+          <div class="market-selector">
+            <img
+              src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=029"
+              alt="BTC"
+              class="pair-icon"
+            />
+            <span class="pair-name">BTC/USD</span>
+          </div>
+          <div class="market-stat">
+            <span class="label">Precio</span>
+            <span class="value" id="current-price">$0.00</span>
+          </div>
+          <div class="market-stat">
+            <span class="label">Cambio 24h</span>
+            <span class="value positive" id="price-change">+0.00 (0.00%)</span>
+          </div>
+          <div class="market-stat">
+            <span class="label">Volumen 24h</span>
+            <span class="value" id="volume-24h">0 BTC</span>
+          </div>
+        </div>
+      </header>
 
-        <!-- 2. Formularios y Libro de Órdenes -->
-        <aside class="exchange-module exchange-orders">
-            <div class="order-tabs">
-                <button class="order-tab active">Comprar</button>
-                <button class="order-tab">Vender</button>
-            </div>
-            <div class="order-form-container">
-                <div class="input-group">
-                    <label for="price">Precio (USD)</label>
-                    <input type="number" id="price" placeholder="Precio de mercado">
-                </div>
-                <div class="input-group">
-                    <label for="amount">Cantidad (BTC)</label>
-                    <input type="number" id="amount" placeholder="0.00">
-                </div>
-                <div class="input-group">
-                    <label for="total">Total (USD)</label>
-                    <input type="number" id="total" placeholder="0.00">
-                </div>
-                <button class="btn btn-primary">Comprar BTC</button>
-            </div>
-            <div class="exchange-module-header">Libro de Órdenes</div>
-            <div class="data-table-container">
-                <div class="data-table-header">
-                    <span>Precio (USD)</span>
-                    <span>Cantidad (BTC)</span>
-                    <span>Total (USD)</span>
-                </div>
-                <div id="order-book-asks"></div>
-                <div class="order-book-spread">
-                    <span id="spread-value">$67,500.50</span>
-                </div>
-                <div id="order-book-bids"></div>
-            </div>
-        </aside>
+      <!-- 2. Formularios y Libro de Órdenes -->
+      <aside class="exchange-module exchange-orders">
+        <div class="order-tabs">
+          <button class="order-tab active">Comprar</button>
+          <button class="order-tab">Vender</button>
+        </div>
+        <div class="order-form-container">
+          <div class="input-group">
+            <label for="price">Precio (USD)</label>
+            <input type="number" id="price" placeholder="Precio de mercado" />
+          </div>
+          <div class="input-group">
+            <label for="amount">Cantidad (BTC)</label>
+            <input type="number" id="amount" placeholder="0.00" />
+          </div>
+          <div class="input-group">
+            <label for="total">Total (USD)</label>
+            <input type="number" id="total" placeholder="0.00" />
+          </div>
+          <button class="btn btn-primary">Comprar BTC</button>
+        </div>
+        <div class="exchange-module-header">Libro de Órdenes</div>
+        <div class="data-table-container">
+          <div class="data-table-header">
+            <span>Precio (USD)</span>
+            <span>Cantidad (BTC)</span>
+            <span>Total (USD)</span>
+          </div>
+          <div id="order-book-asks"></div>
+          <div class="order-book-spread">
+            <span id="spread-value">$67,500.50</span>
+          </div>
+          <div id="order-book-bids"></div>
+        </div>
+      </aside>
 
-        <!-- 3. Gráfico Principal -->
-        <main class="exchange-module exchange-chart">
-            <div id="chart-container"></div>
-        </main>
+      <!-- 3. Gráfico Principal -->
+      <main class="exchange-module exchange-chart">
+        <div id="chart-container"></div>
+      </main>
 
-        <!-- 4. Historial de Trades -->
-        <aside class="exchange-module exchange-trade-history">
-            <div class="exchange-module-header">Historial de Mercado</div>
-            <div class="data-table-container">
-                <div class="data-table-header">
-                    <span>Precio (USD)</span>
-                    <span>Cantidad (BTC)</span>
-                    <span>Hora</span>
-                </div>
-                <div id="trade-history-list"></div>
-            </div>
-        </aside>
+      <!-- 4. Historial de Trades -->
+      <aside class="exchange-module exchange-trade-history">
+        <div class="exchange-module-header">Historial de Mercado</div>
+        <div class="data-table-container">
+          <div class="data-table-header">
+            <span>Precio (USD)</span>
+            <span>Cantidad (BTC)</span>
+            <span>Hora</span>
+          </div>
+          <div id="trade-history-list"></div>
+        </div>
+      </aside>
 
-        <!-- 5. Posiciones del Usuario -->
-        <footer class="exchange-module exchange-user-positions">
-            <div class="exchange-module-header">Posiciones Abiertas</div>
-            <div class="user-positions-container">
-                <table class="user-positions-table">
-                    <thead>
-                        <tr>
-                            <th>Par</th>
-                            <th>Tipo</th>
-                            <th>Cantidad</th>
-                            <th>Precio Entrada</th>
-                            <th>P/L no realizado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Ejemplo de posición -->
-                        <tr>
-                            <td>BTC/USD</td>
-                            <td class="positive">COMPRA</td>
-                            <td>0.5</td>
-                            <td>$65,120.00</td>
-                            <td class="positive">+$1,190.25</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </footer>
+      <!-- 5. Posiciones del Usuario -->
+      <footer class="exchange-module exchange-user-positions">
+        <div class="exchange-module-header">Posiciones Abiertas</div>
+        <div class="user-positions-container">
+          <table class="user-positions-table">
+            <thead>
+              <tr>
+                <th>Par</th>
+                <th>Tipo</th>
+                <th>Cantidad</th>
+                <th>Precio Entrada</th>
+                <th>P/L no realizado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Ejemplo de posición -->
+              <tr>
+                <td>BTC/USD</td>
+                <td class="positive">COMPRA</td>
+                <td>0.5</td>
+                <td>$65,120.00</td>
+                <td class="positive">+$1,190.25</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </footer>
     </div>
 
+    <bf-footer></bf-footer>
+
     <!-- Scripts -->
-    <script src="js/universal-nav.js"></script>
-    <script src="js/universal-footer.js"></script>
-    <script src="js/exchange-simulator.js"></script>
-    <script src="js/exchange-ui.js"></script>
-</body>
+    <script type="module" src="js/components/bf-nav.js"></script>
+    <script type="module" src="js/components/bf-footer.js"></script>
+    <script type="module" src="js/exchange-simulator.js"></script>
+    <script type="module" src="js/exchange-ui.js"></script>
+  </body>
 </html>

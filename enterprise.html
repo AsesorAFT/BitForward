@@ -1,935 +1,981 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BitForward | Enterprise DeFi Platform</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
     <!-- Space Theme Loader -->
-    <script src="js/space-theme-loader.js"></script>
-    
+    <script type="module" src="js/space-theme-loader.js"></script>
+
     <!-- Page Styles (deben ir primero) -->
-    <link rel="stylesheet" href="css/typography.css">
-    <link rel="stylesheet" href="css/corporate.css">
-    <link rel="stylesheet" href="css/enterprise-dashboard.css">
-    <link rel="stylesheet" href="css/auth.css">
-    
+    <link rel="stylesheet" href="css/typography.css" />
+    <link rel="stylesheet" href="css/corporate.css" />
+    <link rel="stylesheet" href="css/enterprise-dashboard.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+
     <!-- Universal Navigation Styles (deben ir al final para sobrescribir) -->
-    <link rel="stylesheet" href="css/modern-navigation.css">
-    <link rel="stylesheet" href="css/executive-icons.css">
-    <link rel="stylesheet" href="css/universal-footer.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/executive-icons.css" />
+  </head>
+  <body>
     <!-- Universal Navigation Container -->
-    <div id="bf-nav-container"></div>
+    <bf-nav>
+      <a class="cta" href="trading.html">Entrar al Exchange</a>
+    </bf-nav>
 
     <!-- Main Dashboard -->
-    <main class="bf-main" style="padding-top: 80px;">
-        <div class="bf-container">
-            
-            <!-- Hero Section -->
-            <section class="bf-hero">
-                <div class="bf-hero-content">
-                    <h1 class="bf-hero-title">
-                        Bienvenido a <span class="bitforward-holo">BitForward</span>
-                        <span class="bf-hero-subtitle">La plataforma DeFi empresarial del futuro</span>
-                    </h1>
-                    <p class="bf-hero-description">
-                        Gestiona contratos forward, préstamos con colateral y coberturas de riesgo 
-                        con la seguridad y transparencia de la blockchain.
-                    </p>
-                    <div class="bf-hero-actions">
-                        <button class="bf-btn bf-btn-primary bf-btn-lg">
-                            <i class="fas fa-plus"></i>
-                            Crear Contrato
-                        </button>
-                        <button class="bf-btn bf-btn-secondary bf-btn-lg">
-                            <i class="fas fa-book"></i>
-                            Documentación
-                        </button>
-                    </div>
+    <main class="bf-main" style="padding-top: 80px">
+      <div class="bf-container">
+        <!-- Hero Section -->
+        <section class="bf-hero">
+          <div class="bf-hero-content">
+            <h1 class="bf-hero-title">
+              Bienvenido a <span class="bitforward-holo">BitForward</span>
+              <span class="bf-hero-subtitle">La plataforma DeFi empresarial del futuro</span>
+            </h1>
+            <p class="bf-hero-description">
+              Gestiona contratos forward, préstamos con colateral y coberturas de riesgo con la
+              seguridad y transparencia de la blockchain.
+            </p>
+            <div class="bf-hero-actions">
+              <button class="bf-btn bf-btn-primary bf-btn-lg">
+                <i class="fas fa-plus"></i>
+                Crear Contrato
+              </button>
+              <button class="bf-btn bf-btn-secondary bf-btn-lg">
+                <i class="fas fa-book"></i>
+                Documentación
+              </button>
+            </div>
+          </div>
+          <div class="bf-hero-visual">
+            <div class="bf-trading-widget">
+              <div class="bf-widget-header">
+                <h3>Mercados en Vivo</h3>
+                <span class="bf-badge bf-badge-success">
+                  <i class="fas fa-circle"></i>
+                  En línea
+                </span>
+              </div>
+              <div class="bf-price-ticker">
+                <div class="bf-price-item">
+                  <span class="bf-asset">BTC/USD</span>
+                  <span class="bf-price positive">$67,234.56</span>
+                  <span class="bf-change positive">+2.34%</span>
                 </div>
-                <div class="bf-hero-visual">
-                    <div class="bf-trading-widget">
-                        <div class="bf-widget-header">
-                            <h3>Mercados en Vivo</h3>
-                            <span class="bf-badge bf-badge-success">
-                                <i class="fas fa-circle"></i>
-                                En línea
-                            </span>
-                        </div>
-                        <div class="bf-price-ticker">
-                            <div class="bf-price-item">
-                                <span class="bf-asset">BTC/USD</span>
-                                <span class="bf-price positive">$67,234.56</span>
-                                <span class="bf-change positive">+2.34%</span>
-                            </div>
-                            <div class="bf-price-item">
-                                <span class="bf-asset">ETH/USD</span>
-                                <span class="bf-price positive">$3,456.78</span>
-                                <span class="bf-change positive">+1.23%</span>
-                            </div>
-                            <div class="bf-price-item">
-                                <span class="bf-asset">SOL/USD</span>
-                                <span class="bf-price negative">$156.78</span>
-                                <span class="bf-change negative">-0.45%</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bf-price-item">
+                  <span class="bf-asset">ETH/USD</span>
+                  <span class="bf-price positive">$3,456.78</span>
+                  <span class="bf-change positive">+1.23%</span>
                 </div>
-            </section>
-
-            <!-- KPIs Dashboard -->
-            <section class="bf-kpis">
-                <div class="bf-kpis-grid">
-                    <div class="bf-metric">
-                        <div class="bf-metric-value">$24.5M</div>
-                        <div class="bf-metric-label">Total Value Locked</div>
-                        <div class="bf-metric-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            +15.2% este mes
-                        </div>
-                    </div>
-                    <div class="bf-metric">
-                        <div class="bf-metric-value">1,247</div>
-                        <div class="bf-metric-label">Contratos Activos</div>
-                        <div class="bf-metric-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            +8.7% esta semana
-                        </div>
-                    </div>
-                    <div class="bf-metric">
-                        <div class="bf-metric-value">98.9%</div>
-                        <div class="bf-metric-label">Uptime</div>
-                        <div class="bf-metric-change neutral">
-                            <i class="fas fa-check"></i>
-                            Operativo
-                        </div>
-                    </div>
-                    <div class="bf-metric">
-                        <div class="bf-metric-value">$156K</div>
-                        <div class="bf-metric-label">Ingresos Diarios</div>
-                        <div class="bf-metric-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            +23.1% vs ayer
-                        </div>
-                    </div>
+                <div class="bf-price-item">
+                  <span class="bf-asset">SOL/USD</span>
+                  <span class="bf-price negative">$156.78</span>
+                  <span class="bf-change negative">-0.45%</span>
                 </div>
-            </section>
+              </div>
+            </div>
+          </div>
+        </section>
 
-            <!-- Productos Principales -->
-            <section class="bf-products">
-                <div class="bf-section-header">
-                    <h2>Productos Financieros</h2>
-                    <p>Explora nuestra suite completa de herramientas DeFi empresariales</p>
+        <!-- KPIs Dashboard -->
+        <section class="bf-kpis">
+          <div class="bf-kpis-grid">
+            <div class="bf-metric">
+              <div class="bf-metric-value">$24.5M</div>
+              <div class="bf-metric-label">Total Value Locked</div>
+              <div class="bf-metric-change positive">
+                <i class="fas fa-arrow-up"></i>
+                +15.2% este mes
+              </div>
+            </div>
+            <div class="bf-metric">
+              <div class="bf-metric-value">1,247</div>
+              <div class="bf-metric-label">Contratos Activos</div>
+              <div class="bf-metric-change positive">
+                <i class="fas fa-arrow-up"></i>
+                +8.7% esta semana
+              </div>
+            </div>
+            <div class="bf-metric">
+              <div class="bf-metric-value">98.9%</div>
+              <div class="bf-metric-label">Uptime</div>
+              <div class="bf-metric-change neutral">
+                <i class="fas fa-check"></i>
+                Operativo
+              </div>
+            </div>
+            <div class="bf-metric">
+              <div class="bf-metric-value">$156K</div>
+              <div class="bf-metric-label">Ingresos Diarios</div>
+              <div class="bf-metric-change positive">
+                <i class="fas fa-arrow-up"></i>
+                +23.1% vs ayer
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Productos Principales -->
+        <section class="bf-products">
+          <div class="bf-section-header">
+            <h2>Productos Financieros</h2>
+            <p>Explora nuestra suite completa de herramientas DeFi empresariales</p>
+          </div>
+
+          <div class="bf-products-grid">
+            <!-- Forward Contracts -->
+            <div class="bf-product-card">
+              <div class="bf-product-icon primary">
+                <i class="fas fa-file-contract"></i>
+              </div>
+              <div class="bf-product-content">
+                <h3>Contratos Forward</h3>
+                <p>
+                  Asegura precios futuros para activos digitales con contratos inteligentes
+                  auditados.
+                </p>
+                <ul class="bf-product-features">
+                  <li><i class="fas fa-check"></i> Liquidación automática</li>
+                  <li><i class="fas fa-check"></i> Sin contrapartes centralizadas</li>
+                  <li><i class="fas fa-check"></i> Collateral dinámico</li>
+                </ul>
+              </div>
+              <div class="bf-product-actions">
+                <button class="bf-btn bf-btn-primary">
+                  <i class="fas fa-plus"></i>
+                  Crear Forward
+                </button>
+              </div>
+            </div>
+
+            <!-- Lending Platform -->
+            <div class="bf-product-card">
+              <div class="bf-product-icon gold">
+                <i class="fas fa-coins"></i>
+              </div>
+              <div class="bf-product-content">
+                <h3>Préstamos Garantizados</h3>
+                <p>Obtén liquidez instantánea usando tus cripto activos como colateral.</p>
+                <ul class="bf-product-features">
+                  <li><i class="fas fa-check"></i> APR desde 3.5%</li>
+                  <li><i class="fas fa-check"></i> Liquidación en 24h</li>
+                  <li><i class="fas fa-check"></i> Múltiples colaterales</li>
+                </ul>
+              </div>
+              <div class="bf-product-actions">
+                <button class="bf-btn bf-btn-gold">
+                  <i class="fas fa-money-bill-wave"></i>
+                  Solicitar Préstamo
+                </button>
+              </div>
+            </div>
+
+            <!-- Insurance Coverage -->
+            <div class="bf-product-card">
+              <div class="bf-product-icon success">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="bf-product-content">
+                <h3>Coberturas DeFi</h3>
+                <p>Protege tus inversiones contra volatilidad y riesgos de smart contracts.</p>
+                <ul class="bf-product-features">
+                  <li><i class="fas fa-check"></i> Cobertura hasta $10M</li>
+                  <li><i class="fas fa-check"></i> Claims automáticos</li>
+                  <li><i class="fas fa-check"></i> Primas competitivas</li>
+                </ul>
+              </div>
+              <div class="bf-product-actions">
+                <button class="bf-btn bf-btn-success">
+                  <i class="fas fa-umbrella"></i>
+                  Asegurar Portfolio
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- AFORTU Holdings Ecosystem -->
+        <section class="bf-ecosystem" id="afortu-ecosystem">
+          <div class="bf-section-header">
+            <h2>🚀 AFORTU Holdings - Ecosistema Empresarial</h2>
+            <p>Innovación, Desarrollo y Tecnología para el Futuro</p>
+          </div>
+
+          <div class="bf-ecosystem-grid">
+            <!-- Conexión -->
+            <div class="bf-ecosystem-card primary">
+              <div class="bf-ecosystem-icon">
+                <i class="fas fa-network-wired"></i>
+              </div>
+              <h3>Conexión</h3>
+              <p>Red de partners estratégicos, instituciones financieras y exchanges globales.</p>
+              <ul class="bf-ecosystem-features">
+                <li><i class="fas fa-check"></i> Integración Binance Institutional</li>
+                <li><i class="fas fa-check"></i> API FIX/REST avanzadas</li>
+                <li><i class="fas fa-check"></i> OTC & Liquidity Pools</li>
+                <li><i class="fas fa-check"></i> Cross-border settlements</li>
+              </ul>
+              <button class="bf-btn bf-btn-primary bf-btn-sm">
+                <i class="fas fa-plug"></i>
+                Conectar
+              </button>
+            </div>
+
+            <!-- Implementación -->
+            <div class="bf-ecosystem-card gold">
+              <div class="bf-ecosystem-icon">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <h3>Implementación</h3>
+              <p>Despliegue de soluciones DeFi llave en mano para empresas y proyectos.</p>
+              <ul class="bf-ecosystem-features">
+                <li><i class="fas fa-check"></i> Smart Contracts auditados</li>
+                <li><i class="fas fa-check"></i> Infraestructura AWS/Cloud</li>
+                <li><i class="fas fa-check"></i> CI/CD automatizado</li>
+                <li><i class="fas fa-check"></i> SLA 99.9% uptime</li>
+              </ul>
+              <button class="bf-btn bf-btn-gold bf-btn-sm">
+                <i class="fas fa-code-branch"></i>
+                Deploy
+              </button>
+            </div>
+
+            <!-- Desarrollo -->
+            <div class="bf-ecosystem-card success">
+              <div class="bf-ecosystem-icon">
+                <i class="fas fa-code"></i>
+              </div>
+              <h3>Desarrollo</h3>
+              <p>Equipo de ingenieros especializados en Blockchain, Web3 y FinTech.</p>
+              <ul class="bf-ecosystem-features">
+                <li><i class="fas fa-check"></i> Solidity / Rust / Go</li>
+                <li><i class="fas fa-check"></i> React / TypeScript / Node.js</li>
+                <li><i class="fas fa-check"></i> Arquitectura microservicios</li>
+                <li><i class="fas fa-check"></i> Testing & Security audits</li>
+              </ul>
+              <button class="bf-btn bf-btn-success bf-btn-sm">
+                <i class="fas fa-laptop-code"></i>
+                Dev Team
+              </button>
+            </div>
+
+            <!-- Labs -->
+            <div class="bf-ecosystem-card purple">
+              <div class="bf-ecosystem-icon">
+                <i class="fas fa-flask"></i>
+              </div>
+              <h3>Labs</h3>
+              <p>Laboratorio de investigación en tecnologías emergentes y protocolos DeFi.</p>
+              <ul class="bf-ecosystem-features">
+                <li><i class="fas fa-check"></i> zkSNARKs & Privacy tech</li>
+                <li><i class="fas fa-check"></i> Layer 2 scaling solutions</li>
+                <li><i class="fas fa-check"></i> MEV research & optimization</li>
+                <li><i class="fas fa-check"></i> AI/ML for trading</li>
+              </ul>
+              <button class="bf-btn bf-btn-purple bf-btn-sm">
+                <i class="fas fa-atom"></i>
+                Investigar
+              </button>
+            </div>
+
+            <!-- Cuamquom (Quantum Computing) -->
+            <div class="bf-ecosystem-card cyan">
+              <div class="bf-ecosystem-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h3>Cuamquom</h3>
+              <p>División de computación cuántica y criptografía post-cuántica.</p>
+              <ul class="bf-ecosystem-features">
+                <li><i class="fas fa-check"></i> Quantum-resistant crypto</li>
+                <li><i class="fas fa-check"></i> Lattice-based signatures</li>
+                <li><i class="fas fa-check"></i> Hybrid classical-quantum algos</li>
+                <li><i class="fas fa-check"></i> Future-proof blockchain</li>
+              </ul>
+              <button class="bf-btn bf-btn-cyan bf-btn-sm">
+                <i class="fas fa-infinity"></i>
+                Quantum
+              </button>
+            </div>
+
+            <!-- Systems -->
+            <div class="bf-ecosystem-card orange">
+              <div class="bf-ecosystem-icon">
+                <i class="fas fa-sitemap"></i>
+              </div>
+              <h3>Systems</h3>
+              <p>Infraestructura empresarial, ERP, CRM y herramientas de gestión.</p>
+              <ul class="bf-ecosystem-features">
+                <li><i class="fas fa-check"></i> Custom ERP integrations</li>
+                <li><i class="fas fa-check"></i> Salesforce & HubSpot connectors</li>
+                <li><i class="fas fa-check"></i> Business Intelligence dashboards</li>
+                <li><i class="fas fa-check"></i> Automated reporting</li>
+              </ul>
+              <button class="bf-btn bf-btn-orange bf-btn-sm">
+                <i class="fas fa-server"></i>
+                Systems
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Launchpad & Crowdfunding -->
+        <section class="bf-launchpad" id="launchpad">
+          <div class="bf-section-header">
+            <h2>🌟 Launchpad & Crowdfunding</h2>
+            <p>
+              Plataforma de lanzamiento de tokens y financiamiento colectivo para proyectos
+              innovadores
+            </p>
+          </div>
+
+          <div class="bf-launchpad-grid">
+            <!-- Active Campaigns -->
+            <div class="bf-launchpad-active">
+              <h3>Campañas Activas</h3>
+
+              <!-- Project 1 -->
+              <div class="bf-campaign-card featured">
+                <div class="bf-campaign-badge">🔥 Destacado</div>
+                <div class="bf-campaign-header">
+                  <div class="bf-campaign-logo">
+                    <i class="fas fa-layer-group"></i>
+                  </div>
+                  <div class="bf-campaign-info">
+                    <h4>Phoenix Protocol</h4>
+                    <p>Next-gen DeFi derivatives platform</p>
+                  </div>
                 </div>
-                
-                <div class="bf-products-grid">
-                    <!-- Forward Contracts -->
-                    <div class="bf-product-card">
-                        <div class="bf-product-icon primary">
-                            <i class="fas fa-file-contract"></i>
-                        </div>
-                        <div class="bf-product-content">
-                            <h3>Contratos Forward</h3>
-                            <p>Asegura precios futuros para activos digitales con contratos inteligentes auditados.</p>
-                            <ul class="bf-product-features">
-                                <li><i class="fas fa-check"></i> Liquidación automática</li>
-                                <li><i class="fas fa-check"></i> Sin contrapartes centralizadas</li>
-                                <li><i class="fas fa-check"></i> Collateral dinámico</li>
-                            </ul>
-                        </div>
-                        <div class="bf-product-actions">
-                            <button class="bf-btn bf-btn-primary">
-                                <i class="fas fa-plus"></i>
-                                Crear Forward
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Lending Platform -->
-                    <div class="bf-product-card">
-                        <div class="bf-product-icon gold">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="bf-product-content">
-                            <h3>Préstamos Garantizados</h3>
-                            <p>Obtén liquidez instantánea usando tus cripto activos como colateral.</p>
-                            <ul class="bf-product-features">
-                                <li><i class="fas fa-check"></i> APR desde 3.5%</li>
-                                <li><i class="fas fa-check"></i> Liquidación en 24h</li>
-                                <li><i class="fas fa-check"></i> Múltiples colaterales</li>
-                            </ul>
-                        </div>
-                        <div class="bf-product-actions">
-                            <button class="bf-btn bf-btn-gold">
-                                <i class="fas fa-money-bill-wave"></i>
-                                Solicitar Préstamo
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Insurance Coverage -->
-                    <div class="bf-product-card">
-                        <div class="bf-product-icon success">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="bf-product-content">
-                            <h3>Coberturas DeFi</h3>
-                            <p>Protege tus inversiones contra volatilidad y riesgos de smart contracts.</p>
-                            <ul class="bf-product-features">
-                                <li><i class="fas fa-check"></i> Cobertura hasta $10M</li>
-                                <li><i class="fas fa-check"></i> Claims automáticos</li>
-                                <li><i class="fas fa-check"></i> Primas competitivas</li>
-                            </ul>
-                        </div>
-                        <div class="bf-product-actions">
-                            <button class="bf-btn bf-btn-success">
-                                <i class="fas fa-umbrella"></i>
-                                Asegurar Portfolio
-                            </button>
-                        </div>
-                    </div>
+                <div class="bf-campaign-progress">
+                  <div class="bf-progress-bar">
+                    <div class="bf-progress-fill" style="width: 78%"></div>
+                  </div>
+                  <div class="bf-progress-stats">
+                    <span>$3.9M / $5M</span>
+                    <span class="bf-progress-percent">78%</span>
+                  </div>
                 </div>
-            </section>
-
-            <!-- AFORTU Holdings Ecosystem -->
-            <section class="bf-ecosystem" id="afortu-ecosystem">
-                <div class="bf-section-header">
-                    <h2>🚀 AFORTU Holdings - Ecosistema Empresarial</h2>
-                    <p>Innovación, Desarrollo y Tecnología para el Futuro</p>
+                <div class="bf-campaign-details">
+                  <div class="bf-detail-item">
+                    <span class="bf-detail-label">Token Price</span>
+                    <span class="bf-detail-value">$0.15</span>
+                  </div>
+                  <div class="bf-detail-item">
+                    <span class="bf-detail-label">Min Investment</span>
+                    <span class="bf-detail-value">$100</span>
+                  </div>
+                  <div class="bf-detail-item">
+                    <span class="bf-detail-label">Time Left</span>
+                    <span class="bf-detail-value">12d 8h</span>
+                  </div>
                 </div>
+                <button class="bf-btn bf-btn-primary bf-btn-block">
+                  <i class="fas fa-rocket"></i>
+                  Invertir Ahora
+                </button>
+              </div>
 
-                <div class="bf-ecosystem-grid">
-                    <!-- Conexión -->
-                    <div class="bf-ecosystem-card primary">
-                        <div class="bf-ecosystem-icon">
-                            <i class="fas fa-network-wired"></i>
-                        </div>
-                        <h3>Conexión</h3>
-                        <p>Red de partners estratégicos, instituciones financieras y exchanges globales.</p>
-                        <ul class="bf-ecosystem-features">
-                            <li><i class="fas fa-check"></i> Integración Binance Institutional</li>
-                            <li><i class="fas fa-check"></i> API FIX/REST avanzadas</li>
-                            <li><i class="fas fa-check"></i> OTC & Liquidity Pools</li>
-                            <li><i class="fas fa-check"></i> Cross-border settlements</li>
-                        </ul>
-                        <button class="bf-btn bf-btn-primary bf-btn-sm">
-                            <i class="fas fa-plug"></i>
-                            Conectar
-                        </button>
-                    </div>
-
-                    <!-- Implementación -->
-                    <div class="bf-ecosystem-card gold">
-                        <div class="bf-ecosystem-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <h3>Implementación</h3>
-                        <p>Despliegue de soluciones DeFi llave en mano para empresas y proyectos.</p>
-                        <ul class="bf-ecosystem-features">
-                            <li><i class="fas fa-check"></i> Smart Contracts auditados</li>
-                            <li><i class="fas fa-check"></i> Infraestructura AWS/Cloud</li>
-                            <li><i class="fas fa-check"></i> CI/CD automatizado</li>
-                            <li><i class="fas fa-check"></i> SLA 99.9% uptime</li>
-                        </ul>
-                        <button class="bf-btn bf-btn-gold bf-btn-sm">
-                            <i class="fas fa-code-branch"></i>
-                            Deploy
-                        </button>
-                    </div>
-
-                    <!-- Desarrollo -->
-                    <div class="bf-ecosystem-card success">
-                        <div class="bf-ecosystem-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h3>Desarrollo</h3>
-                        <p>Equipo de ingenieros especializados en Blockchain, Web3 y FinTech.</p>
-                        <ul class="bf-ecosystem-features">
-                            <li><i class="fas fa-check"></i> Solidity / Rust / Go</li>
-                            <li><i class="fas fa-check"></i> React / TypeScript / Node.js</li>
-                            <li><i class="fas fa-check"></i> Arquitectura microservicios</li>
-                            <li><i class="fas fa-check"></i> Testing & Security audits</li>
-                        </ul>
-                        <button class="bf-btn bf-btn-success bf-btn-sm">
-                            <i class="fas fa-laptop-code"></i>
-                            Dev Team
-                        </button>
-                    </div>
-
-                    <!-- Labs -->
-                    <div class="bf-ecosystem-card purple">
-                        <div class="bf-ecosystem-icon">
-                            <i class="fas fa-flask"></i>
-                        </div>
-                        <h3>Labs</h3>
-                        <p>Laboratorio de investigación en tecnologías emergentes y protocolos DeFi.</p>
-                        <ul class="bf-ecosystem-features">
-                            <li><i class="fas fa-check"></i> zkSNARKs & Privacy tech</li>
-                            <li><i class="fas fa-check"></i> Layer 2 scaling solutions</li>
-                            <li><i class="fas fa-check"></i> MEV research & optimization</li>
-                            <li><i class="fas fa-check"></i> AI/ML for trading</li>
-                        </ul>
-                        <button class="bf-btn bf-btn-purple bf-btn-sm">
-                            <i class="fas fa-atom"></i>
-                            Investigar
-                        </button>
-                    </div>
-
-                    <!-- Cuamquom (Quantum Computing) -->
-                    <div class="bf-ecosystem-card cyan">
-                        <div class="bf-ecosystem-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3>Cuamquom</h3>
-                        <p>División de computación cuántica y criptografía post-cuántica.</p>
-                        <ul class="bf-ecosystem-features">
-                            <li><i class="fas fa-check"></i> Quantum-resistant crypto</li>
-                            <li><i class="fas fa-check"></i> Lattice-based signatures</li>
-                            <li><i class="fas fa-check"></i> Hybrid classical-quantum algos</li>
-                            <li><i class="fas fa-check"></i> Future-proof blockchain</li>
-                        </ul>
-                        <button class="bf-btn bf-btn-cyan bf-btn-sm">
-                            <i class="fas fa-infinity"></i>
-                            Quantum
-                        </button>
-                    </div>
-
-                    <!-- Systems -->
-                    <div class="bf-ecosystem-card orange">
-                        <div class="bf-ecosystem-icon">
-                            <i class="fas fa-sitemap"></i>
-                        </div>
-                        <h3>Systems</h3>
-                        <p>Infraestructura empresarial, ERP, CRM y herramientas de gestión.</p>
-                        <ul class="bf-ecosystem-features">
-                            <li><i class="fas fa-check"></i> Custom ERP integrations</li>
-                            <li><i class="fas fa-check"></i> Salesforce & HubSpot connectors</li>
-                            <li><i class="fas fa-check"></i> Business Intelligence dashboards</li>
-                            <li><i class="fas fa-check"></i> Automated reporting</li>
-                        </ul>
-                        <button class="bf-btn bf-btn-orange bf-btn-sm">
-                            <i class="fas fa-server"></i>
-                            Systems
-                        </button>
-                    </div>
+              <!-- Project 2 -->
+              <div class="bf-campaign-card">
+                <div class="bf-campaign-header">
+                  <div class="bf-campaign-logo">
+                    <i class="fas fa-shield-alt"></i>
+                  </div>
+                  <div class="bf-campaign-info">
+                    <h4>Guardian Insurance DAO</h4>
+                    <p>Decentralized insurance protocol</p>
+                  </div>
                 </div>
-            </section>
-
-            <!-- Launchpad & Crowdfunding -->
-            <section class="bf-launchpad" id="launchpad">
-                <div class="bf-section-header">
-                    <h2>🌟 Launchpad & Crowdfunding</h2>
-                    <p>Plataforma de lanzamiento de tokens y financiamiento colectivo para proyectos innovadores</p>
+                <div class="bf-campaign-progress">
+                  <div class="bf-progress-bar">
+                    <div class="bf-progress-fill" style="width: 42%"></div>
+                  </div>
+                  <div class="bf-progress-stats">
+                    <span>$1.26M / $3M</span>
+                    <span class="bf-progress-percent">42%</span>
+                  </div>
                 </div>
-
-                <div class="bf-launchpad-grid">
-                    <!-- Active Campaigns -->
-                    <div class="bf-launchpad-active">
-                        <h3>Campañas Activas</h3>
-                        
-                        <!-- Project 1 -->
-                        <div class="bf-campaign-card featured">
-                            <div class="bf-campaign-badge">🔥 Destacado</div>
-                            <div class="bf-campaign-header">
-                                <div class="bf-campaign-logo">
-                                    <i class="fas fa-layer-group"></i>
-                                </div>
-                                <div class="bf-campaign-info">
-                                    <h4>Phoenix Protocol</h4>
-                                    <p>Next-gen DeFi derivatives platform</p>
-                                </div>
-                            </div>
-                            <div class="bf-campaign-progress">
-                                <div class="bf-progress-bar">
-                                    <div class="bf-progress-fill" style="width: 78%"></div>
-                                </div>
-                                <div class="bf-progress-stats">
-                                    <span>$3.9M / $5M</span>
-                                    <span class="bf-progress-percent">78%</span>
-                                </div>
-                            </div>
-                            <div class="bf-campaign-details">
-                                <div class="bf-detail-item">
-                                    <span class="bf-detail-label">Token Price</span>
-                                    <span class="bf-detail-value">$0.15</span>
-                                </div>
-                                <div class="bf-detail-item">
-                                    <span class="bf-detail-label">Min Investment</span>
-                                    <span class="bf-detail-value">$100</span>
-                                </div>
-                                <div class="bf-detail-item">
-                                    <span class="bf-detail-label">Time Left</span>
-                                    <span class="bf-detail-value">12d 8h</span>
-                                </div>
-                            </div>
-                            <button class="bf-btn bf-btn-primary bf-btn-block">
-                                <i class="fas fa-rocket"></i>
-                                Invertir Ahora
-                            </button>
-                        </div>
-
-                        <!-- Project 2 -->
-                        <div class="bf-campaign-card">
-                            <div class="bf-campaign-header">
-                                <div class="bf-campaign-logo">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <div class="bf-campaign-info">
-                                    <h4>Guardian Insurance DAO</h4>
-                                    <p>Decentralized insurance protocol</p>
-                                </div>
-                            </div>
-                            <div class="bf-campaign-progress">
-                                <div class="bf-progress-bar">
-                                    <div class="bf-progress-fill" style="width: 42%"></div>
-                                </div>
-                                <div class="bf-progress-stats">
-                                    <span>$1.26M / $3M</span>
-                                    <span class="bf-progress-percent">42%</span>
-                                </div>
-                            </div>
-                            <div class="bf-campaign-details">
-                                <div class="bf-detail-item">
-                                    <span class="bf-detail-label">Token Price</span>
-                                    <span class="bf-detail-value">$0.08</span>
-                                </div>
-                                <div class="bf-detail-item">
-                                    <span class="bf-detail-label">Min Investment</span>
-                                    <span class="bf-detail-value">$50</span>
-                                </div>
-                                <div class="bf-detail-item">
-                                    <span class="bf-detail-label">Time Left</span>
-                                    <span class="bf-detail-value">25d 15h</span>
-                                </div>
-                            </div>
-                            <button class="bf-btn bf-btn-primary bf-btn-block">
-                                <i class="fas fa-coins"></i>
-                                Participar
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Launchpad Stats -->
-                    <div class="bf-launchpad-stats">
-                        <h3>Estadísticas de Launchpad</h3>
-                        
-                        <div class="bf-stat-card">
-                            <div class="bf-stat-icon">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
-                            <div class="bf-stat-content">
-                                <span class="bf-stat-value">$127M</span>
-                                <span class="bf-stat-label">Total Recaudado</span>
-                            </div>
-                        </div>
-
-                        <div class="bf-stat-card">
-                            <div class="bf-stat-icon">
-                                <i class="fas fa-project-diagram"></i>
-                            </div>
-                            <div class="bf-stat-content">
-                                <span class="bf-stat-value">43</span>
-                                <span class="bf-stat-label">Proyectos Lanzados</span>
-                            </div>
-                        </div>
-
-                        <div class="bf-stat-card">
-                            <div class="bf-stat-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="bf-stat-content">
-                                <span class="bf-stat-value">18.5K</span>
-                                <span class="bf-stat-label">Inversores Activos</span>
-                            </div>
-                        </div>
-
-                        <div class="bf-stat-card">
-                            <div class="bf-stat-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="bf-stat-content">
-                                <span class="bf-stat-value">347%</span>
-                                <span class="bf-stat-label">ROI Promedio</span>
-                            </div>
-                        </div>
-
-                        <div class="bf-launchpad-cta">
-                            <h4>¿Tienes un proyecto?</h4>
-                            <p>Lanza tu token con AFORTU Holdings Launchpad</p>
-                            <button class="bf-btn bf-btn-gold bf-btn-block">
-                                <i class="fas fa-paper-plane"></i>
-                                Aplicar Ahora
-                            </button>
-                        </div>
-                    </div>
+                <div class="bf-campaign-details">
+                  <div class="bf-detail-item">
+                    <span class="bf-detail-label">Token Price</span>
+                    <span class="bf-detail-value">$0.08</span>
+                  </div>
+                  <div class="bf-detail-item">
+                    <span class="bf-detail-label">Min Investment</span>
+                    <span class="bf-detail-value">$50</span>
+                  </div>
+                  <div class="bf-detail-item">
+                    <span class="bf-detail-label">Time Left</span>
+                    <span class="bf-detail-value">25d 15h</span>
+                  </div>
                 </div>
-            </section>
+                <button class="bf-btn bf-btn-primary bf-btn-block">
+                  <i class="fas fa-coins"></i>
+                  Participar
+                </button>
+              </div>
+            </div>
 
-            <!-- Seminarios & Capacitación -->
-            <section class="bf-education" id="education">
-                <div class="bf-section-header">
-                    <h2>📚 Seminarios & Capacitación</h2>
-                    <p>Aprende con expertos en DeFi, Blockchain y Trading Institucional</p>
-                </div>
+            <!-- Launchpad Stats -->
+            <div class="bf-launchpad-stats">
+              <h3>Estadísticas de Launchpad</h3>
 
-                <div class="bf-education-grid">
-                    <!-- Webinar 1 -->
-                    <div class="bf-webinar-card">
-                        <div class="bf-webinar-badge live">🔴 En Vivo</div>
-                        <div class="bf-webinar-image">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <div class="bf-webinar-content">
-                            <h4>Estrategias Avanzadas de Forward Contracts</h4>
-                            <p class="bf-webinar-instructor">
-                                <i class="fas fa-user"></i>
-                                Dr. Carlos Méndez, Head of DeFi
-                            </p>
-                            <p class="bf-webinar-date">
-                                <i class="fas fa-calendar"></i>
-                                Hoy, 16:00 PM GMT-6
-                            </p>
-                            <div class="bf-webinar-tags">
-                                <span class="bf-tag">Trading</span>
-                                <span class="bf-tag">DeFi</span>
-                                <span class="bf-tag">Avanzado</span>
-                            </div>
-                        </div>
-                        <button class="bf-btn bf-btn-primary bf-btn-block">
-                            <i class="fas fa-play-circle"></i>
-                            Unirse Ahora
-                        </button>
-                    </div>
+              <div class="bf-stat-card">
+                <div class="bf-stat-icon">
+                  <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="bf-stat-content">
+                  <span class="bf-stat-value">$127M</span>
+                  <span class="bf-stat-label">Total Recaudado</span>
+                </div>
+              </div>
 
-                    <!-- Course 1 -->
-                    <div class="bf-webinar-card">
-                        <div class="bf-webinar-badge upcoming">📅 Próximamente</div>
-                        <div class="bf-webinar-image">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div class="bf-webinar-content">
-                            <h4>Curso: Smart Contracts en Solidity</h4>
-                            <p class="bf-webinar-instructor">
-                                <i class="fas fa-user"></i>
-                                Ing. Laura Torres, Blockchain Architect
-                            </p>
-                            <p class="bf-webinar-date">
-                                <i class="fas fa-calendar"></i>
-                                Lunes 15 Enero, 18:00 PM
-                            </p>
-                            <div class="bf-webinar-tags">
-                                <span class="bf-tag">Desarrollo</span>
-                                <span class="bf-tag">Blockchain</span>
-                                <span class="bf-tag">Intermedio</span>
-                            </div>
-                        </div>
-                        <button class="bf-btn bf-btn-secondary bf-btn-block">
-                            <i class="fas fa-bell"></i>
-                            Recordarme
-                        </button>
-                    </div>
+              <div class="bf-stat-card">
+                <div class="bf-stat-icon">
+                  <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="bf-stat-content">
+                  <span class="bf-stat-value">43</span>
+                  <span class="bf-stat-label">Proyectos Lanzados</span>
+                </div>
+              </div>
 
-                    <!-- Workshop -->
-                    <div class="bf-webinar-card">
-                        <div class="bf-webinar-badge upcoming">📅 Próximamente</div>
-                        <div class="bf-webinar-image">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <div class="bf-webinar-content">
-                            <h4>Workshop: Risk Management en Cripto</h4>
-                            <p class="bf-webinar-instructor">
-                                <i class="fas fa-user"></i>
-                                María González, Risk Analyst
-                            </p>
-                            <p class="bf-webinar-date">
-                                <i class="fas fa-calendar"></i>
-                                Miércoles 17 Enero, 15:00 PM
-                            </p>
-                            <div class="bf-webinar-tags">
-                                <span class="bf-tag">Risk</span>
-                                <span class="bf-tag">Portfolio</span>
-                                <span class="bf-tag">Principiante</span>
-                            </div>
-                        </div>
-                        <button class="bf-btn bf-btn-secondary bf-btn-block">
-                            <i class="fas fa-calendar-plus"></i>
-                            Registrarme
-                        </button>
-                    </div>
+              <div class="bf-stat-card">
+                <div class="bf-stat-icon">
+                  <i class="fas fa-users"></i>
                 </div>
-            </section>
+                <div class="bf-stat-content">
+                  <span class="bf-stat-value">18.5K</span>
+                  <span class="bf-stat-label">Inversores Activos</span>
+                </div>
+              </div>
 
-            <!-- Mis Contratos -->
-            <section class="bf-contracts" id="contracts-section">
-                <div class="bf-section-header">
-                    <h2>Mis Contratos</h2>
-                    <p>Gestiona y monitorea todos tus contratos forward activos</p>
-                    <button class="bf-btn bf-btn-primary" id="refresh-contracts-btn">
-                        <i class="fas fa-sync-alt"></i>
-                        Actualizar
-                    </button>
+              <div class="bf-stat-card">
+                <div class="bf-stat-icon">
+                  <i class="fas fa-chart-line"></i>
                 </div>
-                
-                <div class="bf-contracts-table-container">
-                    <table class="bf-contracts-table" id="contracts-table">
-                        <thead>
-                            <tr>
-                                <th>ID Contrato</th>
-                                <th>Activo</th>
-                                <th>Monto</th>
-                                <th>Precio Strike</th>
-                                <th>Vencimiento</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="contracts-table-body">
-                            <!-- Los contratos se cargarán dinámicamente aquí -->
-                        </tbody>
-                    </table>
-                    
-                    <div class="bf-no-contracts" id="no-contracts-message" style="display: none;">
-                        <div class="bf-no-contracts-icon">
-                            <i class="fas fa-file-contract"></i>
-                        </div>
-                        <h3>No tienes contratos activos</h3>
-                        <p>Crea tu primer contrato forward para comenzar a operar</p>
-                        <button class="bf-btn bf-btn-primary">
-                            <i class="fas fa-plus"></i>
-                            Crear Primer Contrato
-                        </button>
-                    </div>
+                <div class="bf-stat-content">
+                  <span class="bf-stat-value">347%</span>
+                  <span class="bf-stat-label">ROI Promedio</span>
                 </div>
-            </section>
+              </div>
 
-            <!-- Vista de Detalles del Contrato -->
-            <section class="bf-contract-details" id="contract-details-section" style="display: none;">
-                <div class="bf-contract-details-header">
-                    <div class="bf-details-title">
-                        <h2>Detalles del Contrato</h2>
-                        <span class="bf-contract-id" id="detail-contract-id">-</span>
-                    </div>
-                    <button class="bf-btn bf-btn-secondary" id="close-details-btn">
-                        <i class="fas fa-times"></i>
-                        Cerrar
-                    </button>
-                </div>
-                
-                <div class="bf-contract-details-content" id="contract-details-content">
-                    <!-- El contenido se generará dinámicamente aquí -->
-                </div>
-                
-                <div class="bf-contract-actions">
-                    <button class="bf-btn bf-btn-primary" id="share-contract-btn">
-                        <i class="fas fa-share-alt"></i>
-                        Compartir Contrato
-                    </button>
-                    <button class="bf-btn bf-btn-warning" id="modify-contract-btn">
-                        <i class="fas fa-edit"></i>
-                        Modificar
-                    </button>
-                    <button class="bf-btn bf-btn-error" id="cancel-contract-btn">
-                        <i class="fas fa-times-circle"></i>
-                        Cancelar Contrato
-                    </button>
-                </div>
-            </section>
+              <div class="bf-launchpad-cta">
+                <h4>¿Tienes un proyecto?</h4>
+                <p>Lanza tu token con AFORTU Holdings Launchpad</p>
+                <button class="bf-btn bf-btn-gold bf-btn-block">
+                  <i class="fas fa-paper-plane"></i>
+                  Aplicar Ahora
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-            <!-- Activos Soportados -->
-            <section class="bf-assets">
-                <div class="bf-section-header">
-                    <h2>Activos Soportados</h2>
-                    <p>Trabaja con los principales activos digitales del ecosistema</p>
-                </div>
-                
-                <div class="bf-assets-grid">
-                    <div class="bf-asset-card">
-                        <div class="bf-asset-icon btc">₿</div>
-                        <div class="bf-asset-info">
-                            <h4>Bitcoin</h4>
-                            <span class="bf-asset-symbol">BTC</span>
-                        </div>
-                        <div class="bf-asset-price">
-                            <span class="bf-price">$67,234.56</span>
-                            <span class="bf-change positive">+2.34%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="bf-asset-card">
-                        <div class="bf-asset-icon eth">Ξ</div>
-                        <div class="bf-asset-info">
-                            <h4>Ethereum</h4>
-                            <span class="bf-asset-symbol">ETH</span>
-                        </div>
-                        <div class="bf-asset-price">
-                            <span class="bf-price">$3,456.78</span>
-                            <span class="bf-change positive">+1.23%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="bf-asset-card">
-                        <div class="bf-asset-icon usdt">₮</div>
-                        <div class="bf-asset-info">
-                            <h4>Tether USD</h4>
-                            <span class="bf-asset-symbol">USDT</span>
-                        </div>
-                        <div class="bf-asset-price">
-                            <span class="bf-price">$1.00</span>
-                            <span class="bf-change neutral">±0.00%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="bf-asset-card">
-                        <div class="bf-asset-icon sol">◎</div>
-                        <div class="bf-asset-info">
-                            <h4>Solana</h4>
-                            <span class="bf-asset-symbol">SOL</span>
-                        </div>
-                        <div class="bf-asset-price">
-                            <span class="bf-price">$156.78</span>
-                            <span class="bf-change negative">-0.45%</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <!-- Seminarios & Capacitación -->
+        <section class="bf-education" id="education">
+          <div class="bf-section-header">
+            <h2>📚 Seminarios & Capacitación</h2>
+            <p>Aprende con expertos en DeFi, Blockchain y Trading Institucional</p>
+          </div>
 
-        </div>
+          <div class="bf-education-grid">
+            <!-- Webinar 1 -->
+            <div class="bf-webinar-card">
+              <div class="bf-webinar-badge live">🔴 En Vivo</div>
+              <div class="bf-webinar-image">
+                <i class="fas fa-video"></i>
+              </div>
+              <div class="bf-webinar-content">
+                <h4>Estrategias Avanzadas de Forward Contracts</h4>
+                <p class="bf-webinar-instructor">
+                  <i class="fas fa-user"></i>
+                  Dr. Carlos Méndez, Head of DeFi
+                </p>
+                <p class="bf-webinar-date">
+                  <i class="fas fa-calendar"></i>
+                  Hoy, 16:00 PM GMT-6
+                </p>
+                <div class="bf-webinar-tags">
+                  <span class="bf-tag">Trading</span>
+                  <span class="bf-tag">DeFi</span>
+                  <span class="bf-tag">Avanzado</span>
+                </div>
+              </div>
+              <button class="bf-btn bf-btn-primary bf-btn-block">
+                <i class="fas fa-play-circle"></i>
+                Unirse Ahora
+              </button>
+            </div>
+
+            <!-- Course 1 -->
+            <div class="bf-webinar-card">
+              <div class="bf-webinar-badge upcoming">📅 Próximamente</div>
+              <div class="bf-webinar-image">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <div class="bf-webinar-content">
+                <h4>Curso: Smart Contracts en Solidity</h4>
+                <p class="bf-webinar-instructor">
+                  <i class="fas fa-user"></i>
+                  Ing. Laura Torres, Blockchain Architect
+                </p>
+                <p class="bf-webinar-date">
+                  <i class="fas fa-calendar"></i>
+                  Lunes 15 Enero, 18:00 PM
+                </p>
+                <div class="bf-webinar-tags">
+                  <span class="bf-tag">Desarrollo</span>
+                  <span class="bf-tag">Blockchain</span>
+                  <span class="bf-tag">Intermedio</span>
+                </div>
+              </div>
+              <button class="bf-btn bf-btn-secondary bf-btn-block">
+                <i class="fas fa-bell"></i>
+                Recordarme
+              </button>
+            </div>
+
+            <!-- Workshop -->
+            <div class="bf-webinar-card">
+              <div class="bf-webinar-badge upcoming">📅 Próximamente</div>
+              <div class="bf-webinar-image">
+                <i class="fas fa-tools"></i>
+              </div>
+              <div class="bf-webinar-content">
+                <h4>Workshop: Risk Management en Cripto</h4>
+                <p class="bf-webinar-instructor">
+                  <i class="fas fa-user"></i>
+                  María González, Risk Analyst
+                </p>
+                <p class="bf-webinar-date">
+                  <i class="fas fa-calendar"></i>
+                  Miércoles 17 Enero, 15:00 PM
+                </p>
+                <div class="bf-webinar-tags">
+                  <span class="bf-tag">Risk</span>
+                  <span class="bf-tag">Portfolio</span>
+                  <span class="bf-tag">Principiante</span>
+                </div>
+              </div>
+              <button class="bf-btn bf-btn-secondary bf-btn-block">
+                <i class="fas fa-calendar-plus"></i>
+                Registrarme
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Mis Contratos -->
+        <section class="bf-contracts" id="contracts-section">
+          <div class="bf-section-header">
+            <h2>Mis Contratos</h2>
+            <p>Gestiona y monitorea todos tus contratos forward activos</p>
+            <button class="bf-btn bf-btn-primary" id="refresh-contracts-btn">
+              <i class="fas fa-sync-alt"></i>
+              Actualizar
+            </button>
+          </div>
+
+          <div class="bf-contracts-table-container">
+            <table class="bf-contracts-table" id="contracts-table">
+              <thead>
+                <tr>
+                  <th>ID Contrato</th>
+                  <th>Activo</th>
+                  <th>Monto</th>
+                  <th>Precio Strike</th>
+                  <th>Vencimiento</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="contracts-table-body">
+                <!-- Los contratos se cargarán dinámicamente aquí -->
+              </tbody>
+            </table>
+
+            <div class="bf-no-contracts" id="no-contracts-message" style="display: none">
+              <div class="bf-no-contracts-icon">
+                <i class="fas fa-file-contract"></i>
+              </div>
+              <h3>No tienes contratos activos</h3>
+              <p>Crea tu primer contrato forward para comenzar a operar</p>
+              <button class="bf-btn bf-btn-primary">
+                <i class="fas fa-plus"></i>
+                Crear Primer Contrato
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Vista de Detalles del Contrato -->
+        <section class="bf-contract-details" id="contract-details-section" style="display: none">
+          <div class="bf-contract-details-header">
+            <div class="bf-details-title">
+              <h2>Detalles del Contrato</h2>
+              <span class="bf-contract-id" id="detail-contract-id">-</span>
+            </div>
+            <button class="bf-btn bf-btn-secondary" id="close-details-btn">
+              <i class="fas fa-times"></i>
+              Cerrar
+            </button>
+          </div>
+
+          <div class="bf-contract-details-content" id="contract-details-content">
+            <!-- El contenido se generará dinámicamente aquí -->
+          </div>
+
+          <div class="bf-contract-actions">
+            <button class="bf-btn bf-btn-primary" id="share-contract-btn">
+              <i class="fas fa-share-alt"></i>
+              Compartir Contrato
+            </button>
+            <button class="bf-btn bf-btn-warning" id="modify-contract-btn">
+              <i class="fas fa-edit"></i>
+              Modificar
+            </button>
+            <button class="bf-btn bf-btn-error" id="cancel-contract-btn">
+              <i class="fas fa-times-circle"></i>
+              Cancelar Contrato
+            </button>
+          </div>
+        </section>
+
+        <!-- Activos Soportados -->
+        <section class="bf-assets">
+          <div class="bf-section-header">
+            <h2>Activos Soportados</h2>
+            <p>Trabaja con los principales activos digitales del ecosistema</p>
+          </div>
+
+          <div class="bf-assets-grid">
+            <div class="bf-asset-card">
+              <div class="bf-asset-icon btc">₿</div>
+              <div class="bf-asset-info">
+                <h4>Bitcoin</h4>
+                <span class="bf-asset-symbol">BTC</span>
+              </div>
+              <div class="bf-asset-price">
+                <span class="bf-price">$67,234.56</span>
+                <span class="bf-change positive">+2.34%</span>
+              </div>
+            </div>
+
+            <div class="bf-asset-card">
+              <div class="bf-asset-icon eth">Ξ</div>
+              <div class="bf-asset-info">
+                <h4>Ethereum</h4>
+                <span class="bf-asset-symbol">ETH</span>
+              </div>
+              <div class="bf-asset-price">
+                <span class="bf-price">$3,456.78</span>
+                <span class="bf-change positive">+1.23%</span>
+              </div>
+            </div>
+
+            <div class="bf-asset-card">
+              <div class="bf-asset-icon usdt">₮</div>
+              <div class="bf-asset-info">
+                <h4>Tether USD</h4>
+                <span class="bf-asset-symbol">USDT</span>
+              </div>
+              <div class="bf-asset-price">
+                <span class="bf-price">$1.00</span>
+                <span class="bf-change neutral">±0.00%</span>
+              </div>
+            </div>
+
+            <div class="bf-asset-card">
+              <div class="bf-asset-icon sol">◎</div>
+              <div class="bf-asset-info">
+                <h4>Solana</h4>
+                <span class="bf-asset-symbol">SOL</span>
+              </div>
+              <div class="bf-asset-price">
+                <span class="bf-price">$156.78</span>
+                <span class="bf-change negative">-0.45%</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <!-- Modales de Autenticación -->
-    
+
     <!-- Modal de Login -->
     <div class="bf-modal" id="login-modal">
-        <div class="bf-modal-backdrop"></div>
-        <div class="bf-modal-content">
-            <div class="bf-modal-header">
-                <h2>Iniciar Sesión en BitForward</h2>
-                <button class="bf-modal-close" data-modal="login-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="bf-modal-body">
-                <form id="login-form" class="bf-auth-form">
-                    <div class="bf-form-group">
-                        <label for="login-username">Usuario o Email</label>
-                        <div class="bf-input-icon">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="login-username" name="username" required 
-                                   placeholder="Ingresa tu usuario">
-                        </div>
-                    </div>
-                    
-                    <div class="bf-form-group">
-                        <label for="login-password">Contraseña</label>
-                        <div class="bf-input-icon">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="login-password" name="password" required 
-                                   placeholder="Ingresa tu contraseña">
-                            <button type="button" class="bf-password-toggle" data-target="login-password">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="bf-form-options">
-                        <label class="bf-checkbox-label">
-                            <input type="checkbox" id="remember-me">
-                            <span class="bf-checkbox"></span>
-                            Recordarme
-                        </label>
-                        <a href="#" class="bf-link">¿Olvidaste tu contraseña?</a>
-                    </div>
-                    
-                    <button type="submit" class="bf-btn bf-btn-primary bf-btn-block" id="login-submit">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Iniciar Sesión
-                    </button>
-                    
-                    <div class="bf-auth-divider">
-                        <span>o continúa con</span>
-                    </div>
-                    
-                    <div class="bf-social-auth">
-                        <button type="button" class="bf-btn bf-btn-social bf-btn-google">
-                            <i class="fab fa-google"></i>
-                            Google
-                        </button>
-                        <button type="button" class="bf-btn bf-btn-social bf-btn-github">
-                            <i class="fab fa-github"></i>
-                            GitHub
-                        </button>
-                    </div>
-                    
-                    <div class="bf-auth-footer">
-                        <p>¿No tienes cuenta? 
-                            <a href="#" class="bf-link" id="switch-to-register">Regístrate aquí</a>
-                        </p>
-                    </div>
-                </form>
-            </div>
+      <div class="bf-modal-backdrop"></div>
+      <div class="bf-modal-content">
+        <div class="bf-modal-header">
+          <h2>Iniciar Sesión en BitForward</h2>
+          <button class="bf-modal-close" data-modal="login-modal">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="bf-modal-body">
+          <form id="login-form" class="bf-auth-form">
+            <div class="bf-form-group">
+              <label for="login-username">Usuario o Email</label>
+              <div class="bf-input-icon">
+                <i class="fas fa-user"></i>
+                <input
+                  type="text"
+                  id="login-username"
+                  name="username"
+                  required
+                  placeholder="Ingresa tu usuario"
+                />
+              </div>
+            </div>
+
+            <div class="bf-form-group">
+              <label for="login-password">Contraseña</label>
+              <div class="bf-input-icon">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="login-password"
+                  name="password"
+                  required
+                  placeholder="Ingresa tu contraseña"
+                />
+                <button type="button" class="bf-password-toggle" data-target="login-password">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="bf-form-options">
+              <label class="bf-checkbox-label">
+                <input type="checkbox" id="remember-me" />
+                <span class="bf-checkbox"></span>
+                Recordarme
+              </label>
+              <a href="#" class="bf-link">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" class="bf-btn bf-btn-primary bf-btn-block" id="login-submit">
+              <i class="fas fa-sign-in-alt"></i>
+              Iniciar Sesión
+            </button>
+
+            <div class="bf-auth-divider">
+              <span>o continúa con</span>
+            </div>
+
+            <div class="bf-social-auth">
+              <button type="button" class="bf-btn bf-btn-social bf-btn-google">
+                <i class="fab fa-google"></i>
+                Google
+              </button>
+              <button type="button" class="bf-btn bf-btn-social bf-btn-github">
+                <i class="fab fa-github"></i>
+                GitHub
+              </button>
+            </div>
+
+            <div class="bf-auth-footer">
+              <p>
+                ¿No tienes cuenta?
+                <a href="#" class="bf-link" id="switch-to-register">Regístrate aquí</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+
+    <bf-footer></bf-footer>
 
     <!-- Modal de Registro -->
     <div class="bf-modal" id="register-modal">
-        <div class="bf-modal-backdrop"></div>
-        <div class="bf-modal-content">
-            <div class="bf-modal-header">
-                <h2>Crear Cuenta en BitForward</h2>
-                <button class="bf-modal-close" data-modal="register-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="bf-modal-body">
-                <form id="register-form" class="bf-auth-form">
-                    <div class="bf-form-group">
-                        <label for="register-username">Usuario</label>
-                        <div class="bf-input-icon">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="register-username" name="username" required 
-                                   placeholder="Elige un nombre de usuario" minlength="3">
-                        </div>
-                        <div class="bf-input-hint">Mínimo 3 caracteres, solo letras, números y guiones</div>
-                    </div>
-                    
-                    <div class="bf-form-group">
-                        <label for="register-email">Email</label>
-                        <div class="bf-input-icon">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="register-email" name="email" required 
-                                   placeholder="tu@email.com">
-                        </div>
-                    </div>
-                    
-                    <div class="bf-form-group">
-                        <label for="register-password">Contraseña</label>
-                        <div class="bf-input-icon">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="register-password" name="password" required 
-                                   placeholder="Crea una contraseña segura" minlength="6">
-                            <button type="button" class="bf-password-toggle" data-target="register-password">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                        <div class="bf-password-strength">
-                            <div class="bf-strength-bar">
-                                <div class="bf-strength-fill" id="password-strength"></div>
-                            </div>
-                            <div class="bf-strength-text" id="password-strength-text">
-                                Ingresa una contraseña
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bf-form-group">
-                        <label for="register-confirm-password">Confirmar Contraseña</label>
-                        <div class="bf-input-icon">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="register-confirm-password" name="confirmPassword" required 
-                                   placeholder="Confirma tu contraseña">
-                        </div>
-                    </div>
-                    
-                    <div class="bf-form-group">
-                        <label class="bf-checkbox-label">
-                            <input type="checkbox" id="agree-terms" required>
-                            <span class="bf-checkbox"></span>
-                            Acepto los <a href="#" class="bf-link">términos y condiciones</a> 
-                            y la <a href="#" class="bf-link">política de privacidad</a>
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="bf-btn bf-btn-primary bf-btn-block" id="register-submit">
-                        <i class="fas fa-user-plus"></i>
-                        Crear Cuenta
-                    </button>
-                    
-                    <div class="bf-auth-divider">
-                        <span>o regístrate con</span>
-                    </div>
-                    
-                    <div class="bf-social-auth">
-                        <button type="button" class="bf-btn bf-btn-social bf-btn-google">
-                            <i class="fab fa-google"></i>
-                            Google
-                        </button>
-                        <button type="button" class="bf-btn bf-btn-social bf-btn-github">
-                            <i class="fab fa-github"></i>
-                            GitHub
-                        </button>
-                    </div>
-                    
-                    <div class="bf-auth-footer">
-                        <p>¿Ya tienes cuenta? 
-                            <a href="#" class="bf-link" id="switch-to-login">Inicia sesión aquí</a>
-                        </p>
-                    </div>
-                </form>
-            </div>
+      <div class="bf-modal-backdrop"></div>
+      <div class="bf-modal-content">
+        <div class="bf-modal-header">
+          <h2>Crear Cuenta en BitForward</h2>
+          <button class="bf-modal-close" data-modal="register-modal">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="bf-modal-body">
+          <form id="register-form" class="bf-auth-form">
+            <div class="bf-form-group">
+              <label for="register-username">Usuario</label>
+              <div class="bf-input-icon">
+                <i class="fas fa-user"></i>
+                <input
+                  type="text"
+                  id="register-username"
+                  name="username"
+                  required
+                  placeholder="Elige un nombre de usuario"
+                  minlength="3"
+                />
+              </div>
+              <div class="bf-input-hint">Mínimo 3 caracteres, solo letras, números y guiones</div>
+            </div>
+
+            <div class="bf-form-group">
+              <label for="register-email">Email</label>
+              <div class="bf-input-icon">
+                <i class="fas fa-envelope"></i>
+                <input
+                  type="email"
+                  id="register-email"
+                  name="email"
+                  required
+                  placeholder="tu@email.com"
+                />
+              </div>
+            </div>
+
+            <div class="bf-form-group">
+              <label for="register-password">Contraseña</label>
+              <div class="bf-input-icon">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="register-password"
+                  name="password"
+                  required
+                  placeholder="Crea una contraseña segura"
+                  minlength="6"
+                />
+                <button type="button" class="bf-password-toggle" data-target="register-password">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <div class="bf-password-strength">
+                <div class="bf-strength-bar">
+                  <div class="bf-strength-fill" id="password-strength"></div>
+                </div>
+                <div class="bf-strength-text" id="password-strength-text">
+                  Ingresa una contraseña
+                </div>
+              </div>
+            </div>
+
+            <div class="bf-form-group">
+              <label for="register-confirm-password">Confirmar Contraseña</label>
+              <div class="bf-input-icon">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="register-confirm-password"
+                  name="confirmPassword"
+                  required
+                  placeholder="Confirma tu contraseña"
+                />
+              </div>
+            </div>
+
+            <div class="bf-form-group">
+              <label class="bf-checkbox-label">
+                <input type="checkbox" id="agree-terms" required />
+                <span class="bf-checkbox"></span>
+                Acepto los <a href="#" class="bf-link">términos y condiciones</a> y la
+                <a href="#" class="bf-link">política de privacidad</a>
+              </label>
+            </div>
+
+            <button type="submit" class="bf-btn bf-btn-primary bf-btn-block" id="register-submit">
+              <i class="fas fa-user-plus"></i>
+              Crear Cuenta
+            </button>
+
+            <div class="bf-auth-divider">
+              <span>o regístrate con</span>
+            </div>
+
+            <div class="bf-social-auth">
+              <button type="button" class="bf-btn bf-btn-social bf-btn-google">
+                <i class="fab fa-google"></i>
+                Google
+              </button>
+              <button type="button" class="bf-btn bf-btn-social bf-btn-github">
+                <i class="fab fa-github"></i>
+                GitHub
+              </button>
+            </div>
+
+            <div class="bf-auth-footer">
+              <p>
+                ¿Ya tienes cuenta?
+                <a href="#" class="bf-link" id="switch-to-login">Inicia sesión aquí</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <!-- Modal de Verificación de Email -->
     <div class="bf-modal" id="verification-modal">
-        <div class="bf-modal-backdrop"></div>
-        <div class="bf-modal-content">
-            <div class="bf-modal-header">
-                <h2>Verificar Email</h2>
-            </div>
-            <div class="bf-modal-body bf-text-center">
-                <div class="bf-verification-icon">
-                    <i class="fas fa-envelope-open-text"></i>
-                </div>
-                <h3>¡Registro Exitoso!</h3>
-                <p>Hemos enviado un enlace de verificación a tu email:</p>
-                <p class="bf-email-highlight" id="verification-email">usuario@email.com</p>
-                <p>Por favor, revisa tu bandeja de entrada y haz clic en el enlace para activar tu cuenta.</p>
-                
-                <div class="bf-verification-actions">
-                    <button class="bf-btn bf-btn-primary" id="resend-verification">
-                        <i class="fas fa-paper-plane"></i>
-                        Reenviar Email
-                    </button>
-                    <button class="bf-btn bf-btn-secondary" data-modal="verification-modal">
-                        Cerrar
-                    </button>
-                </div>
-            </div>
+      <div class="bf-modal-backdrop"></div>
+      <div class="bf-modal-content">
+        <div class="bf-modal-header">
+          <h2>Verificar Email</h2>
         </div>
+        <div class="bf-modal-body bf-text-center">
+          <div class="bf-verification-icon">
+            <i class="fas fa-envelope-open-text"></i>
+          </div>
+          <h3>¡Registro Exitoso!</h3>
+          <p>Hemos enviado un enlace de verificación a tu email:</p>
+          <p class="bf-email-highlight" id="verification-email">usuario@email.com</p>
+          <p>
+            Por favor, revisa tu bandeja de entrada y haz clic en el enlace para activar tu cuenta.
+          </p>
+
+          <div class="bf-verification-actions">
+            <button class="bf-btn bf-btn-primary" id="resend-verification">
+              <i class="fas fa-paper-plane"></i>
+              Reenviar Email
+            </button>
+            <button class="bf-btn bf-btn-secondary" data-modal="verification-modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Scripts -->
-    <script src="js/logo-manager.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/auth.js"></script>
-    
+    <script type="module" src="js/logo-manager.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+    <script type="module" src="js/auth.js"></script>
+
     <!-- Inicialización del Dashboard -->
     <script>
-        // Inicializar el dashboard cuando la página esté lista
-        document.addEventListener('DOMContentLoaded', () => {
-            // Inicializar sistema de autenticación (global)
-            window.BitForwardAuth = new BitForwardAuth();
-            
-            // Inicializar dashboard empresarial (global)
-            window.bitForwardDashboard = new BitForwardEnterprise();
-            
-            console.log('🎯 BitForward Enterprise Platform v2.0 - Completamente cargado');
-        });
+      // Inicializar el dashboard cuando la página esté lista
+      document.addEventListener('DOMContentLoaded', () => {
+        // Inicializar sistema de autenticación (global)
+        window.BitForwardAuth = new BitForwardAuth();
+
+        // Inicializar dashboard empresarial (global)
+        window.bitForwardDashboard = new BitForwardEnterprise();
+
+        console.log('🎯 BitForward Enterprise Platform v2.0 - Completamente cargado');
+      });
     </script>
-    
+
     <!-- Universal Navigation & Footer Scripts -->
-    <script src="js/universal-nav.js"></script>
-    <script src="js/universal-footer.js"></script>
-</body>
+    <script type="module" src="js/components/bf-nav.js"></script>
+    <script type="module" src="js/components/bf-footer.js"></script>
+  </body>
 </html>
