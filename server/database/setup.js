@@ -80,6 +80,13 @@ async function setupDatabase() {
         table.decimal('repaid_amount', 20, 8).defaultTo(0); // Cantidad ya pagada
         table.timestamp('liquidation_threshold').nullable();
         table.json('terms').nullable(); // Términos adicionales del préstamo
+        table.timestamp('approved_at').nullable();
+        table.timestamp('rejected_at').nullable();
+        table.timestamp('liquidated_at').nullable();
+        table.text('approval_notes').nullable();
+        table.text('rejection_reason').nullable();
+        table.text('liquidation_reason').nullable();
+        table.timestamp('last_payment_at').nullable();
         table.timestamps(true, true);
 
         // Índices
@@ -92,6 +99,27 @@ async function setupDatabase() {
       console.log('✅ Tabla "loans" creada con éxito');
     } else {
       console.log('📝 Tabla "loans" ya existe');
+    }
+
+    // Asegurar columnas adicionales en loans para flujos de aprobación/liquidación
+    const loanColumns = [
+      ['approved_at', table => table.timestamp('approved_at').nullable()],
+      ['rejected_at', table => table.timestamp('rejected_at').nullable()],
+      ['liquidated_at', table => table.timestamp('liquidated_at').nullable()],
+      ['approval_notes', table => table.text('approval_notes').nullable()],
+      ['rejection_reason', table => table.text('rejection_reason').nullable()],
+      ['liquidation_reason', table => table.text('liquidation_reason').nullable()],
+      ['last_payment_at', table => table.timestamp('last_payment_at').nullable()],
+    ];
+
+    for (const [columnName, definition] of loanColumns) {
+      const exists = await db.schema.hasColumn('loans', columnName);
+      if (!exists) {
+        await db.schema.table('loans', table => {
+          definition(table);
+        });
+        console.log(`✅ Columna "${columnName}" añadida a "loans"`);
+      }
     }
 
     // Tabla de transacciones/historial
@@ -118,6 +146,69 @@ async function setupDatabase() {
       console.log('✅ Tabla "transactions" creada con éxito');
     } else {
       console.log('📝 Tabla "transactions" ya existe');
+    }
+
+    // Tabla de posiciones en el vault
+    if (!(await db.schema.hasTable('vault_positions'))) {
+      await db.schema.createTable('vault_positions', table => {
+        table.string('id').primary();
+        table.integer('user_id').unsigned().references('id').inTable('users').onDelete('SET NULL');
+        table.string('asset').notNullable();
+        table.decimal('amount', 30, 12).notNullable();
+        table.decimal('value_usd', 30, 6).defaultTo(0);
+        table.decimal('health_factor', 10, 4).defaultTo(1);
+        table.string('status').defaultTo('open'); // open, closing, closed
+        table.json('metadata').nullable();
+        table.timestamps(true, true);
+        table.index(['user_id']);
+        table.index(['asset']);
+        table.index(['status']);
+      });
+      console.log('✅ Tabla "vault_positions" creada con éxito');
+    } else {
+      console.log('📝 Tabla "vault_positions" ya existe');
+    }
+
+    // Tabla de coberturas (hedges)
+    if (!(await db.schema.hasTable('hedges'))) {
+      await db.schema.createTable('hedges', table => {
+        table.string('id').primary();
+        table.integer('user_id').unsigned().references('id').inTable('users').onDelete('SET NULL');
+        table.string('asset_in').notNullable();
+        table.string('asset_out').notNullable();
+        table.decimal('amount_in', 30, 12).notNullable();
+        table.decimal('amount_out', 30, 12).nullable();
+        table.string('tx_hash').nullable();
+        table.string('status').defaultTo('pending'); // pending, executed, failed, cancelled
+        table.json('details').nullable();
+        table.timestamps(true, true);
+        table.index(['user_id']);
+        table.index(['status']);
+        table.index(['asset_in']);
+        table.index(['asset_out']);
+      });
+      console.log('✅ Tabla "hedges" creada con éxito');
+    } else {
+      console.log('📝 Tabla "hedges" ya existe');
+    }
+
+    // Tabla de liquidaciones
+    if (!(await db.schema.hasTable('liquidations'))) {
+      await db.schema.createTable('liquidations', table => {
+        table.string('id').primary();
+        table.string('loan_id').references('id').inTable('loans').onDelete('CASCADE');
+        table.integer('user_id').unsigned().references('id').inTable('users').onDelete('SET NULL');
+        table.decimal('recovered_amount', 20, 8).defaultTo(0);
+        table.string('recovered_asset').nullable();
+        table.string('reason').nullable();
+        table.timestamp('executed_at').defaultTo(db.fn.now());
+        table.json('details').nullable();
+        table.index(['loan_id']);
+        table.index(['user_id']);
+      });
+      console.log('✅ Tabla "liquidations" creada con éxito');
+    } else {
+      console.log('📝 Tabla "liquidations" ya existe');
     }
 
     // Tabla de configuración del sistema
@@ -169,6 +260,28 @@ async function setupDatabase() {
       console.log('✅ Tabla "system_config" creada con configuraciones por defecto');
     } else {
       console.log('📝 Tabla "system_config" ya existe');
+    }
+
+    // Seed básico para entornos de desarrollo
+    if ((process.env.NODE_ENV || 'development') === 'development') {
+      const samplePositions = await db('vault_positions').count({ count: '*' }).first();
+      if (samplePositions && samplePositions.count === 0) {
+        await db('vault_positions').insert([
+          {
+            id: uuidv4(),
+            user_id: null,
+            asset: 'BTC',
+            amount: 0.5,
+            value_usd: 30000,
+            health_factor: 1.1,
+            status: 'open',
+            metadata: JSON.stringify({ note: 'Sample position' }),
+            created_at: new Date(),
+            updated_at: new Date(),
+          },
+        ]);
+        console.log('✅ Datos de ejemplo insertados en vault_positions');
+      }
     }
 
     console.log('\n🎯 ¡Búnker de Datos Persistente construido exitosamente!');

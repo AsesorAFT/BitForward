@@ -55,6 +55,7 @@ export default defineConfig({
         lending: resolve(__dirname, 'lending.html'),
         diagnostico: resolve(__dirname, 'diagnostico.html'),
         enterprise: resolve(__dirname, 'enterprise.html'),
+        'mission-control': resolve(__dirname, 'mission-control.html'),
         'test-suite': resolve(__dirname, 'test-suite.html'),
         'test-auth': resolve(__dirname, 'test-auth.html'),
         // Phoenix pages

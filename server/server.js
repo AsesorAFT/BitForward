@@ -14,12 +14,18 @@ const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
 const path = require('path');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
 
 // Importar rutas y middleware
 const contractRoutes = require('./routes/contracts');
 const statsRoutes = require('./routes/stats');
 const authRoutes = require('./routes/auth');
 const lendingRoutes = require('./routes/lending');
+const defiRoutes = require('./routes/defi');
+const priceRoutes = require('./routes/prices');
+const configRoutes = require('./routes/config');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 const { rateLimitMiddleware } = require('./middleware/rateLimiter');
 const validationService = require('./validators/validationService');
@@ -31,7 +37,6 @@ const { setupSecurity, verifyOrigin, blockMaliciousBots } = require('./middlewar
 // Configuración
 const config = require('./config/config');
 const database = require('./database/database');
-const { closeConnection } = require('./database/config');
 
 // Servicios blockchain
 const BlockchainService = require('./services/BlockchainService');
@@ -55,6 +60,7 @@ class BitForwardServer {
       console.log('🔗 Inicializando servicio blockchain...');
       this.blockchainService = new BlockchainService();
       await this.blockchainService.initialize();
+      this.app.locals.blockchainService = this.blockchainService;
       console.log('✅ Servicio blockchain inicializado');
       return true;
     } catch (error) {
@@ -158,6 +164,9 @@ class BitForwardServer {
     this.app.use('/api/contracts', contractRoutes);
     this.app.use('/api/stats', statsRoutes);
     this.app.use('/api/lending', lendingRoutes);
+    this.app.use('/api/defi', defiRoutes);
+    this.app.use('/api/prices', priceRoutes);
+    this.app.use('/api/config', configRoutes);
 
     // Información de la API
     this.app.get('/api', (req, res) => {
@@ -381,9 +390,39 @@ class BitForwardServer {
       // Inicializar servicio blockchain
       const blockchainConnected = await this.initializeBlockchainService();
 
-      // Iniciar servidor
-      this.server = this.app.listen(this.port, () => {
-        console.log(`
+      // Iniciar servidor (HTTP o HTTPS)
+      const useTLS = process.env.ENABLE_TLS === 'true';
+      const protocol = useTLS ? 'https' : 'http';
+
+      const onListen = () => this.printBootBanner(blockchainConnected, dbConnected, protocol);
+
+      if (useTLS) {
+        if (!process.env.TLS_KEY_PATH || !process.env.TLS_CERT_PATH) {
+          throw new Error('ENABLE_TLS=true requiere TLS_KEY_PATH y TLS_CERT_PATH');
+        }
+        const credentials = {
+          key: fs.readFileSync(process.env.TLS_KEY_PATH),
+          cert: fs.readFileSync(process.env.TLS_CERT_PATH),
+        };
+        this.server = https.createServer(credentials, this.app).listen(this.port, onListen);
+        console.log(`🔐 TLS habilitado en puerto ${this.port}`);
+      } else {
+        this.server = http.createServer(this.app).listen(this.port, onListen);
+      }
+
+      // Graceful shutdown
+      this.setupGracefulShutdown();
+    } catch (error) {
+      console.error('❌ Error al iniciar el servidor:', error);
+      process.exit(1);
+    }
+  }
+
+  /**
+   * Imprime un banner informativo de arranque
+   */
+  printBootBanner(blockchainConnected, dbConnected, protocol) {
+    console.log(`
 🏛️  BÚNKER DE DATOS PERSISTENTE + PROTOCOLO DeFi ACTIVADO
 
 🚀 BitForward Server v2.0 - Persistencia SQLite + Blockchain Protocol
@@ -391,9 +430,9 @@ class BitForwardServer {
    Ambiente: ${process.env.NODE_ENV || 'development'}
    
 🌐 URLs disponibles:
-   Frontend: http://localhost:${this.port}
-   API Health: http://localhost:${this.port}/api/health
-   API Info: http://localhost:${this.port}/api
+   Frontend: ${protocol}://localhost:${this.port}
+   API Health: ${protocol}://localhost:${this.port}/api/health
+   API Info: ${protocol}://localhost:${this.port}/api
 
 💾 Características del Búnker:
    ✅ Base de datos SQLite persistente
@@ -415,14 +454,6 @@ class BitForwardServer {
 ${dbConnected ? '✅ Base de datos conectada y operativa' : '⚠️  Ejecuta "npm run db:setup" para inicializar la BD'}
 ${blockchainConnected ? '✅ Protocolo DeFi conectado y operativo' : '⚠️  Protocolo DeFi desconectado (revisa configuración blockchain)'}
                 `);
-      });
-
-      // Graceful shutdown
-      this.setupGracefulShutdown();
-    } catch (error) {
-      console.error('❌ Error al iniciar el servidor:', error);
-      process.exit(1);
-    }
   }
 
   /**
@@ -437,7 +468,7 @@ ${blockchainConnected ? '✅ Protocolo DeFi conectado y operativo' : '⚠️  Pr
           console.log('✅ Servidor HTTP cerrado');
 
           try {
-            await closeConnection();
+            await database.closeConnection();
             console.log('✅ Conexión a base de datos cerrada');
             console.log('🏛️  Búnker de Datos desactivado de forma segura');
             process.exit(0);

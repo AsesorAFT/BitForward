@@ -27,6 +27,7 @@ class BitForwardLogger {
    * Crea el logger principal de Winston
    */
   createLogger() {
+    const dateSlug = new Date().toISOString().slice(0, 10);
     const customFormat = winston.format.combine(
       winston.format.timestamp({
         format: 'YYYY-MM-DD HH:mm:ss',
@@ -54,7 +55,7 @@ class BitForwardLogger {
 
         // Archivo para todos los logs
         new winston.transports.File({
-          filename: path.join(this.logsDir, 'bitforward.log'),
+          filename: path.join(this.logsDir, `bitforward-${dateSlug}.log`),
           maxsize: 5242880, // 5MB
           maxFiles: 5,
           format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
@@ -62,7 +63,7 @@ class BitForwardLogger {
 
         // Archivo específico para errores
         new winston.transports.File({
-          filename: path.join(this.logsDir, 'error.log'),
+          filename: path.join(this.logsDir, `error-${dateSlug}.log`),
           level: 'error',
           maxsize: 5242880, // 5MB
           maxFiles: 5,
@@ -71,7 +72,7 @@ class BitForwardLogger {
 
         // Archivo para eventos de seguridad
         new winston.transports.File({
-          filename: path.join(this.logsDir, 'security.log'),
+          filename: path.join(this.logsDir, `security-${dateSlug}.log`),
           level: 'warn',
           maxsize: 5242880, // 5MB
           maxFiles: 10,
