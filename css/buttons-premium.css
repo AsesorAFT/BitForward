@@ -1,0 +1,361 @@
+/**
+ * 🎯 Premium Buttons - BitForward
+ * Botones modernos con efectos premium
+ */
+
+/* Base button reset */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Button container para ripple effect */
+.btn-primary,
+.btn-secondary,
+.cta-button-primary,
+.cta-button-secondary,
+.btn-gradient,
+.btn-glass,
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradiente animado premium */
+.btn-gradient {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  background: var(--gradient-main);
+  background-size: 200% 200%;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 4px 16px rgba(6, 182, 212, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  animation: gradientShift 8s ease infinite;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    0 8px 32px rgba(6, 182, 212, 0.5),
+    0 4px 16px rgba(139, 92, 246, 0.3);
+}
+
+.btn-gradient:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Botón glass */
+.btn-glass {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--glass-border);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+  background: var(--glass-bg-hover);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Botón con glow pulsante */
+.btn-glow {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, var(--cyan-500), var(--purple-500));
+  border-radius: 12px;
+  box-shadow: 0 0 20px var(--cyan-500);
+  animation: glowPulse 2s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.btn-glow:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 30px var(--cyan-500),
+    0 0 20px var(--purple-500);
+  animation: none;
+}
+
+/* Loading state */
+.btn-loading {
+  pointer-events: none;
+  opacity: 0.7;
+  position: relative;
+}
+
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.btn-loading span {
+  opacity: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Success state */
+.btn-success {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  animation: successPulse 0.6s ease;
+}
+
+@keyframes successPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Botón con icono */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: var(--gradient-main);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+.btn-icon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+}
+
+.btn-icon svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.btn-icon:hover svg {
+  transform: translateX(4px);
+}
+
+/* Botones pequeños */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 8px;
+}
+
+/* Botones grandes */
+.btn-lg {
+  padding: 1.25rem 2.5rem;
+  font-size: 1.125rem;
+  border-radius: 16px;
+}
+
+/* Botón outline */
+.btn-outline {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cyan-500);
+  background: transparent;
+  border: 2px solid var(--cyan-500);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  color: white;
+  background: var(--cyan-500);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.4);
+}
+
+/* Botón con shimmer effect */
+.btn-shimmer {
+  position: relative;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  background: var(--gradient-main);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.btn-shimmer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: translateX(-100%) rotate(45deg);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+/* Grupo de botones */
+.btn-group {
+  display: inline-flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-group-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Botón disabled */
+button:disabled,
+.btn-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Botón con badge */
+.btn-with-badge {
+  position: relative;
+}
+
+.btn-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  background: var(--pink-500);
+  border: 2px solid var(--glass-bg);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(236, 72, 153, 0.4);
+}
+
+/* Botón con tooltip */
+.btn-tooltip {
+  position: relative;
+}
+
+.btn-tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.btn-tooltip:hover::after {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-secondary,
+  .btn-gradient,
+  .btn-glass,
+  .btn-glow,
+  .btn-icon {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-group {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  button {
+    -webkit-tap-highlight-color: rgba(6, 182, 212, 0.2);
+  }
+
+  button:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Accessibility */
+button:focus-visible {
+  outline: 2px solid var(--cyan-500);
+  outline-offset: 2px;
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  button,
+  .btn-gradient,
+  .btn-glass,
+  .btn-glow,
+  .btn-shimmer {
+    animation: none !important;
+    transition: none !important;
+  }
+}

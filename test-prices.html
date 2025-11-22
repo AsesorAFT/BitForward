@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Sistema de Precios | BitForward</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/price-display.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 min-h-screen text-white">
+    
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">🚀 Sistema de Precios en Tiempo Real</h1>
+                    <p class="text-gray-400">BitForward Price Feed System - Testing</p>
+                </div>
+                <div id="statusIndicator" class="flex items-center gap-2">
+                    <span class="price-status loading"></span>
+                    <span id="statusText" class="text-sm">Inicializando...</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- System Status -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-gray-800/50 backdrop-blur rounded-lg p-4 border border-gray-700">
+                <div class="text-sm text-gray-400 mb-1">Estado del Sistema</div>
+                <div id="systemStatus" class="text-xl font-bold">Cargando...</div>
+            </div>
+            <div class="bg-gray-800/50 backdrop-blur rounded-lg p-4 border border-gray-700">
+                <div class="text-sm text-gray-400 mb-1">Precios Cargados</div>
+                <div id="pricesLoaded" class="text-xl font-bold">0</div>
+            </div>
+            <div class="bg-gray-800/50 backdrop-blur rounded-lg p-4 border border-gray-700">
+                <div class="text-sm text-gray-400 mb-1">WebSocket</div>
+                <div id="wsStatus" class="text-xl font-bold">Desconectado</div>
+            </div>
+            <div class="bg-gray-800/50 backdrop-blur rounded-lg p-4 border border-gray-700">
+                <div class="text-sm text-gray-400 mb-1">Última Actualización</div>
+                <div id="lastUpdate" class="text-xl font-bold">N/A</div>
+            </div>
+        </div>
+        
+        <!-- Mini Ticker -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">📊 Mini Ticker</h2>
+            <div id="miniTickerContainer" class="bg-gray-800/30 backdrop-blur rounded-lg p-4"></div>
+        </div>
+        
+        <!-- Price Widgets Grid -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">💰 Widgets de Precio</h2>
+            <div id="priceWidgetsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+        
+        <!-- Manual Price Display -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">🎯 Displays con Data Attributes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-gray-800/50 backdrop-blur rounded-lg p-4 border border-gray-700">
+                    <div class="text-sm text-gray-400 mb-2">Bitcoin (BTC)</div>
+                    <div class="text-3xl font-bold mb-2" data-price-symbol="BTC" data-price-type="price">Cargando...</div>
+                    <div class="text-sm" data-price-symbol="BTC" data-price-type="change">--</div>
+                </div>
+                
+                <div class="bg-gray-800/50 backdrop-blur rounded-lg p-4 border border-gray-700">
+                    <div class="text-sm text-gray-400 mb-2">Ethereum (ETH)</div>
+                    <div class="text-3xl font-bold mb-2" data-price-symbol="ETH" data-price-type="price">Cargando...</div>
+                    <div class="text-sm" data-price-symbol="ETH" data-price-type="change">--</div>
+                </div>
+                
+                <div class="bg-gray-800/50 backdrop-blur rounded-lg p-4 border border-gray-700">
+                    <div class="text-sm text-gray-400 mb-2">Solana (SOL)</div>
+                    <div class="text-3xl font-bold mb-2" data-price-symbol="SOL" data-price-type="price">Cargando...</div>
+                    <div class="text-sm" data-price-symbol="SOL" data-price-type="change">--</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Price Updates Log -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold">📝 Log de Actualizaciones</h2>
+                <button id="clearLog" class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg text-sm">
+                    Limpiar Log
+                </button>
+            </div>
+            <div id="updateLog" class="bg-gray-800/50 backdrop-blur rounded-lg p-4 border border-gray-700 max-h-96 overflow-y-auto font-mono text-sm">
+                <!-- Log entries will appear here -->
+            </div>
+        </div>
+        
+        <!-- API Test Controls -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">🧪 Controles de Prueba</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button id="refreshPrices" class="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg font-bold transition">
+                    🔄 Actualizar Precios
+                </button>
+                <button id="testWebSocket" class="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg font-bold transition">
+                    🔌 Reconectar WebSocket
+                </button>
+                <button id="showAllPrices" class="px-6 py-3 bg-purple-500 hover:bg-purple-600 rounded-lg font-bold transition">
+                    📊 Ver Todos los Precios
+                </button>
+            </div>
+        </div>
+        
+        <!-- All Prices Table -->
+        <div id="allPricesSection" class="hidden mb-8">
+            <h2 class="text-2xl font-bold mb-4">📋 Tabla de Precios Completa</h2>
+            <div class="bg-gray-800/50 backdrop-blur rounded-lg overflow-hidden">
+                <table class="w-full">
+                    <thead class="bg-gray-900">
+                        <tr>
+                            <th class="px-4 py-3 text-left">Símbolo</th>
+                            <th class="px-4 py-3 text-right">Precio</th>
+                            <th class="px-4 py-3 text-right">Cambio 24h</th>
+                            <th class="px-4 py-3 text-right">Volumen 24h</th>
+                            <th class="px-4 py-3 text-right">Market Cap</th>
+                            <th class="px-4 py-3 text-center">Fuente</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allPricesTable" class="divide-y divide-gray-700">
+                        <!-- Rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/price-feeds.js"></script>
+    <script src="js/price-display.js"></script>
+    
+    <script>
+        // Referencias DOM
+        const statusIndicator = document.getElementById('statusIndicator');
+        const statusText = document.getElementById('statusText');
+        const systemStatus = document.getElementById('systemStatus');
+        const pricesLoaded = document.getElementById('pricesLoaded');
+        const wsStatus = document.getElementById('wsStatus');
+        const lastUpdate = document.getElementById('lastUpdate');
+        const updateLog = document.getElementById('updateLog');
+        const miniTickerContainer = document.getElementById('miniTickerContainer');
+        const priceWidgetsContainer = document.getElementById('priceWidgetsContainer');
+        const allPricesSection = document.getElementById('allPricesSection');
+        const allPricesTable = document.getElementById('allPricesTable');
+        
+        // Función para agregar entrada al log
+        function logUpdate(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                info: 'text-blue-400',
+                success: 'text-green-400',
+                warning: 'text-yellow-400',
+                error: 'text-red-400'
+            };
+            
+            const entry = document.createElement('div');
+            entry.className = `mb-1 ${colors[type]}`;
+            entry.textContent = `[${timestamp}] ${message}`;
+            
+            updateLog.insertBefore(entry, updateLog.firstChild);
+            
+            // Mantener solo las últimas 50 entradas
+            while (updateLog.children.length > 50) {
+                updateLog.removeChild(updateLog.lastChild);
+            }
+        }
+        
+        // Actualizar indicadores de estado
+        function updateStatusIndicators() {
+            const status = window.priceFeedManager.getStatus();
+            
+            // Status general
+            systemStatus.textContent = status.isInitialized ? '✅ Activo' : '❌ Inactivo';
+            pricesLoaded.textContent = status.pricesLoaded;
+            wsStatus.textContent = status.websocketsConnected > 0 ? '✅ Conectado' : '❌ Desconectado';
+            
+            if (status.lastUpdate) {
+                const lastUpdateDate = new Date(status.lastUpdate);
+                lastUpdate.textContent = lastUpdateDate.toLocaleTimeString();
+            }
+            
+            // Status indicator
+            const indicator = statusIndicator.querySelector('.price-status');
+            if (status.isInitialized) {
+                indicator.classList.remove('loading', 'disconnected');
+                indicator.classList.add('connected');
+                statusText.textContent = 'Sistema Activo';
+            }
+        }
+        
+        // Listeners de eventos del price manager
+        window.priceFeedManager.on('initialized', (data) => {
+            logUpdate(`✅ Sistema inicializado - ${data.pricesLoaded} precios cargados`, 'success');
+            updateStatusIndicators();
+            
+            // Crear widgets
+            createPriceWidgets();
+            createMiniTicker();
+        });
+        
+        window.priceFeedManager.on('websocket:connected', () => {
+            logUpdate('🔌 WebSocket conectado a Binance', 'success');
+            updateStatusIndicators();
+        });
+        
+        window.priceFeedManager.on('websocket:disconnected', () => {
+            logUpdate('⚠️ WebSocket desconectado', 'warning');
+            updateStatusIndicators();
+        });
+        
+        window.priceFeedManager.on('price:update', ({ symbol, data }) => {
+            const trend = data.trend === 'up' ? '📈' : data.trend === 'down' ? '📉' : '➡️';
+            logUpdate(`${trend} ${symbol}: ${window.priceFeedManager.formatPrice(data.price)} (${window.priceFeedManager.formatPercentage(data.change24h)})`, 'info');
+            updateStatusIndicators();
+        });
+        
+        // Crear widgets de precio
+        function createPriceWidgets() {
+            const symbols = ['BTC', 'ETH', 'SOL', 'MATIC', 'BNB', 'ADA'];
+            priceWidgetsContainer.innerHTML = '';
+            
+            symbols.forEach(symbol => {
+                window.priceDisplayManager.createPriceWidget(symbol, priceWidgetsContainer);
+            });
+        }
+        
+        // Crear mini ticker
+        function createMiniTicker() {
+            const symbols = ['BTC', 'ETH', 'SOL', 'MATIC', 'BNB', 'ADA', 'AVAX', 'USDT', 'USDC', 'DAI'];
+            miniTickerContainer.innerHTML = '';
+            window.priceDisplayManager.createMiniTicker(symbols, miniTickerContainer);
+        }
+        
+        // Botón de actualizar precios
+        document.getElementById('refreshPrices').addEventListener('click', async () => {
+            logUpdate('🔄 Actualizando precios manualmente...', 'info');
+            try {
+                await window.priceFeedManager.fetchInitialPrices();
+                logUpdate('✅ Precios actualizados exitosamente', 'success');
+            } catch (error) {
+                logUpdate(`❌ Error actualizando precios: ${error.message}`, 'error');
+            }
+        });
+        
+        // Botón de reconectar WebSocket
+        document.getElementById('testWebSocket').addEventListener('click', () => {
+            logUpdate('🔌 Reconectando WebSocket...', 'info');
+            window.priceFeedManager.startWebSocketFeeds();
+        });
+        
+        // Botón de mostrar todos los precios
+        document.getElementById('showAllPrices').addEventListener('click', () => {
+            const isHidden = allPricesSection.classList.contains('hidden');
+            
+            if (isHidden) {
+                allPricesSection.classList.remove('hidden');
+                updateAllPricesTable();
+            } else {
+                allPricesSection.classList.add('hidden');
+            }
+        });
+        
+        // Actualizar tabla de precios
+        function updateAllPricesTable() {
+            const allPrices = window.priceFeedManager.getAllPrices();
+            allPricesTable.innerHTML = '';
+            
+            for (const [symbol, data] of Object.entries(allPrices)) {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-700/50 transition';
+                
+                const changeClass = data.change24h >= 0 ? 'text-green-400' : 'text-red-400';
+                
+                row.innerHTML = `
+                    <td class="px-4 py-3 font-bold">${symbol}</td>
+                    <td class="px-4 py-3 text-right">${window.priceFeedManager.formatPrice(data.price)}</td>
+                    <td class="px-4 py-3 text-right ${changeClass}">${window.priceFeedManager.formatPercentage(data.change24h)}</td>
+                    <td class="px-4 py-3 text-right">${window.priceFeedManager.formatVolume(data.volume24h)}</td>
+                    <td class="px-4 py-3 text-right">${window.priceFeedManager.formatVolume(data.marketCap)}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">${data.source}</span>
+                    </td>
+                `;
+                
+                allPricesTable.appendChild(row);
+            }
+        }
+        
+        // Botón de limpiar log
+        document.getElementById('clearLog').addEventListener('click', () => {
+            updateLog.innerHTML = '';
+            logUpdate('Log limpiado', 'info');
+        });
+        
+        // Log inicial
+        logUpdate('🚀 Sistema de precios inicializado', 'success');
+        logUpdate('📡 Conectando a APIs...', 'info');
+        
+        // Actualizar indicadores cada 5 segundos
+        setInterval(updateStatusIndicators, 5000);
+    </script>
+</body>
+</html>

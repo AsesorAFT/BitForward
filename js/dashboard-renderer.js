@@ -4,27 +4,27 @@
  */
 
 class BitForwardDashboardRenderer {
-    constructor() {
-        this.defiClient = window.bitForwardDeFi;
-        this.currentUser = null;
-        this.refreshInterval = null;
-    }
+  constructor() {
+    this.defiClient = window.bitForwardDeFi;
+    this.currentUser = null;
+    this.refreshInterval = null;
+  }
 
-    // ============ MAIN DASHBOARD RENDERING ============
-    renderDashboard(username) {
-        this.currentUser = username;
-        const dashboard = document.getElementById('main-dashboard');
-        
-        dashboard.innerHTML = this.getDashboardHTML(username);
-        
-        // Initialize components
-        this.initializeEventListeners();
-        this.startDataRefresh();
-        this.loadInitialData();
-    }
+  // ============ MAIN DASHBOARD RENDERING ============
+  renderDashboard(username) {
+    this.currentUser = username;
+    const dashboard = document.getElementById('main-dashboard');
 
-    getDashboardHTML(username) {
-        return `
+    dashboard.innerHTML = this.getDashboardHTML(username);
+
+    // Initialize components
+    this.initializeEventListeners();
+    this.startDataRefresh();
+    this.loadInitialData();
+  }
+
+  getDashboardHTML(username) {
+    return `
             <div class="dashboard-container">
                 <!-- Header -->
                 <header class="dashboard-header">
@@ -133,10 +133,10 @@ class BitForwardDashboardRenderer {
             <!-- Modals -->
             ${this.getModalsHTML()}
         `;
-    }
+  }
 
-    getModalsHTML() {
-        return `
+  getModalsHTML() {
+    return `
             <!-- Hedge Strategy Modal -->
             <div id="hedge-modal" class="defi-modal" style="display: none;">
                 <div class="modal-backdrop"></div>
@@ -241,128 +241,128 @@ class BitForwardDashboardRenderer {
                 </div>
             </div>
         `;
+  }
+
+  // ============ EVENT LISTENERS ============
+  initializeEventListeners() {
+    // Hedge form
+    const hedgeForm = document.getElementById('hedge-form');
+    if (hedgeForm) {
+      hedgeForm.addEventListener('submit', this.handleHedgeSubmit.bind(this));
     }
 
-    // ============ EVENT LISTENERS ============
-    initializeEventListeners() {
-        // Hedge form
-        const hedgeForm = document.getElementById('hedge-form');
-        if (hedgeForm) {
-            hedgeForm.addEventListener('submit', this.handleHedgeSubmit.bind(this));
+    // Loan form
+    const loanForm = document.getElementById('loan-form');
+    if (loanForm) {
+      loanForm.addEventListener('submit', this.handleLoanSubmit.bind(this));
+    }
+
+    // Close modals when clicking backdrop
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('modal-backdrop')) {
+        const modal = e.target.closest('.defi-modal');
+        if (modal) {
+          modal.style.display = 'none';
         }
+      }
+    });
+  }
 
-        // Loan form
-        const loanForm = document.getElementById('loan-form');
-        if (loanForm) {
-            loanForm.addEventListener('submit', this.handleLoanSubmit.bind(this));
-        }
+  // ============ FORM HANDLERS ============
+  async handleHedgeSubmit(event) {
+    event.preventDefault();
 
-        // Close modals when clicking backdrop
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal-backdrop')) {
-                const modal = e.target.closest('.defi-modal');
-                if (modal) {
-                    modal.style.display = 'none';
-                }
-            }
-        });
+    const assetIn = document.getElementById('hedge-asset-in').value;
+    const assetOut = document.getElementById('hedge-asset-out').value;
+    const amount = document.getElementById('hedge-amount').value;
+    const minAmountOut = document.getElementById('hedge-min-amount').value;
+
+    try {
+      await this.defiClient.executeHedge(assetIn, assetOut, amount, minAmountOut);
+      this.closeModal('hedge-modal');
+      document.getElementById('hedge-form').reset();
+    } catch (error) {
+      console.error('Error executing hedge:', error);
     }
+  }
 
-    // ============ FORM HANDLERS ============
-    async handleHedgeSubmit(event) {
-        event.preventDefault();
-        
-        const assetIn = document.getElementById('hedge-asset-in').value;
-        const assetOut = document.getElementById('hedge-asset-out').value;
-        const amount = document.getElementById('hedge-amount').value;
-        const minAmountOut = document.getElementById('hedge-min-amount').value;
+  async handleLoanSubmit(event) {
+    event.preventDefault();
 
-        try {
-            await this.defiClient.executeHedge(assetIn, assetOut, amount, minAmountOut);
-            this.closeModal('hedge-modal');
-            document.getElementById('hedge-form').reset();
-        } catch (error) {
-            console.error('Error executing hedge:', error);
-        }
+    const collateralAsset = document.getElementById('loan-collateral-asset').value;
+    const debtAsset = document.getElementById('loan-debt-asset').value;
+    const collateralAmount = document.getElementById('loan-collateral-amount').value;
+    const debtAmount = document.getElementById('loan-debt-amount').value;
+
+    try {
+      await this.defiClient.openLoan(collateralAsset, debtAsset, collateralAmount, debtAmount);
+      this.closeModal('loan-modal');
+      document.getElementById('loan-form').reset();
+    } catch (error) {
+      console.error('Error opening loan:', error);
     }
+  }
 
-    async handleLoanSubmit(event) {
-        event.preventDefault();
-        
-        const collateralAsset = document.getElementById('loan-collateral-asset').value;
-        const debtAsset = document.getElementById('loan-debt-asset').value;
-        const collateralAmount = document.getElementById('loan-collateral-amount').value;
-        const debtAmount = document.getElementById('loan-debt-amount').value;
+  // ============ MODAL MANAGEMENT ============
+  openHedgeModal() {
+    document.getElementById('hedge-modal').style.display = 'flex';
+  }
 
-        try {
-            await this.defiClient.openLoan(collateralAsset, debtAsset, collateralAmount, debtAmount);
-            this.closeModal('loan-modal');
-            document.getElementById('loan-form').reset();
-        } catch (error) {
-            console.error('Error opening loan:', error);
-        }
+  openLoanModal() {
+    document.getElementById('loan-modal').style.display = 'flex';
+  }
+
+  openDepositModal() {
+    // TODO: Implement deposit modal
+    this.defiClient.showNotification('Deposit functionality coming soon!', 'info');
+  }
+
+  openWithdrawModal() {
+    // TODO: Implement withdraw modal
+    this.defiClient.showNotification('Withdraw functionality coming soon!', 'info');
+  }
+
+  closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+  }
+
+  // ============ DATA MANAGEMENT ============
+  async loadInitialData() {
+    try {
+      await this.defiClient.refreshProtocolData();
+    } catch (error) {
+      console.error('Error loading initial data:', error);
     }
+  }
 
-    // ============ MODAL MANAGEMENT ============
-    openHedgeModal() {
-        document.getElementById('hedge-modal').style.display = 'flex';
+  async refreshVaultData() {
+    try {
+      await this.defiClient.refreshVaultData();
+      this.defiClient.showSuccess('Vault data refreshed');
+    } catch (error) {
+      console.error('Error refreshing vault data:', error);
+      this.defiClient.showError('Error refreshing vault data');
     }
+  }
 
-    openLoanModal() {
-        document.getElementById('loan-modal').style.display = 'flex';
-    }
+  startDataRefresh() {
+    // Refresh data every 30 seconds
+    this.refreshInterval = setInterval(() => {
+      this.defiClient.refreshProtocolData();
+    }, 30000);
+  }
 
-    openDepositModal() {
-        // TODO: Implement deposit modal
-        this.defiClient.showNotification('Deposit functionality coming soon!', 'info');
+  stopDataRefresh() {
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+      this.refreshInterval = null;
     }
+  }
 
-    openWithdrawModal() {
-        // TODO: Implement withdraw modal
-        this.defiClient.showNotification('Withdraw functionality coming soon!', 'info');
-    }
-
-    closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
-    }
-
-    // ============ DATA MANAGEMENT ============
-    async loadInitialData() {
-        try {
-            await this.defiClient.refreshProtocolData();
-        } catch (error) {
-            console.error('Error loading initial data:', error);
-        }
-    }
-
-    async refreshVaultData() {
-        try {
-            await this.defiClient.refreshVaultData();
-            this.defiClient.showSuccess('Vault data refreshed');
-        } catch (error) {
-            console.error('Error refreshing vault data:', error);
-            this.defiClient.showError('Error refreshing vault data');
-        }
-    }
-
-    startDataRefresh() {
-        // Refresh data every 30 seconds
-        this.refreshInterval = setInterval(() => {
-            this.defiClient.refreshProtocolData();
-        }, 30000);
-    }
-
-    stopDataRefresh() {
-        if (this.refreshInterval) {
-            clearInterval(this.refreshInterval);
-            this.refreshInterval = null;
-        }
-    }
-
-    // ============ CLEANUP ============
-    destroy() {
-        this.stopDataRefresh();
-    }
+  // ============ CLEANUP ============
+  destroy() {
+    this.stopDataRefresh();
+  }
 }
 
 // Global instance
@@ -370,5 +370,5 @@ window.dashboardRenderer = new BitForwardDashboardRenderer();
 
 // Export for module use
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = BitForwardDashboardRenderer;
+  module.exports = BitForwardDashboardRenderer;
 }

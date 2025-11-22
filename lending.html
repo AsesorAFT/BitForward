@@ -1,431 +1,428 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BitForward Lending | Préstamos con Colateral</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/typography.css">
-    <link rel="stylesheet" href="css/corporate.css">
-    <link rel="stylesheet" href="css/enterprise-dashboard.css">
-    <link rel="stylesheet" href="css/lending.css">
-    <link rel="stylesheet" href="css/auth.css">
-</head>
-<body>
-    <!-- Header -->
-    <header class="bf-header">
-        <div class="bf-container">
-            <div class="bf-header-content">
-                <div class="bf-brand">
-                    <a href="enterprise.html" class="bf-logo">
-                        <div class="bf-logo-icon">
-                            <img src="assets/logo.svg" alt="BitForward" class="logo-icon" style="width: 32px; height: 32px;">
-                        </div>
-                        <div class="bf-logo-text">
-                            <div class="bf-logo-primary">BitForward</div>
-                            <div class="bf-logo-tagline">Lending Platform</div>
-                        </div>
-                    </a>
-                </div>
-                
-                <nav class="bf-nav">
-                    <a href="enterprise.html" class="bf-nav-link">
-                        <i class="fas fa-chart-area"></i>
-                        Dashboard
-                    </a>
-                    <a href="#lending" class="bf-nav-link active">
-                        <i class="fas fa-coins"></i>
-                        Préstamos
-                    </a>
-                    <a href="#collateral" class="bf-nav-link">
-                        <i class="fas fa-shield-alt"></i>
-                        Mi Colateral
-                    </a>
-                    <a href="#history" class="bf-nav-link">
-                        <i class="fas fa-history"></i>
-                        Historial
-                    </a>
-                </nav>
-                
-                <!-- User Menu -->
-                <div class="bf-user-menu" id="authenticated-menu" style="display: none;">
-                    <div class="bf-user-balance">
-                        <span class="bf-balance-label">Disponible</span>
-                        <span class="bf-balance-value" id="user-balance">$0.00</span>
-                    </div>
-                    <div class="bf-user-info">
-                        <span class="bf-user-name" id="user-name">Usuario</span>
-                        <button class="bf-btn-logout" id="logout-btn">
-                            <i class="fas fa-sign-out-alt"></i>
-                            Salir
-                        </button>
-                    </div>
-                    <div class="bf-user-avatar">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User" id="user-avatar">
-                        <div class="bf-user-status"></div>
-                    </div>
-                </div>
-                
-                <!-- Auth Buttons (cuando no está autenticado) -->
-                <div class="bf-auth-buttons" id="auth-buttons">
-                    <button class="bf-btn bf-btn-secondary" id="login-btn">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Iniciar Sesión
-                    </button>
-                    <button class="bf-btn bf-btn-primary" id="register-btn">
-                        <i class="fas fa-user-plus"></i>
-                        Registrarse
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Space Theme Loader -->
+    <script type="module" src="js/space-theme-loader.js"></script>
+
+    <!-- Page Styles (deben ir primero) -->
+    <link rel="stylesheet" href="css/typography.css" />
+    <link rel="stylesheet" href="css/corporate.css" />
+    <link rel="stylesheet" href="css/enterprise-dashboard.css" />
+    <link rel="stylesheet" href="css/lending.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+    <link rel="stylesheet" href="css/executive-icons.css" />
+  </head>
+  <body>
+    <!-- Universal Navigation Container -->
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
+      <a class="cta" href="enterprise.html">Enterprise</a>
+    </bf-header>
 
     <!-- Main Content -->
-    <main class="bf-main">
-        <div class="bf-container">
-            
-            <!-- Lending Hero -->
-            <section class="bf-lending-hero">
-                <div class="bf-hero-content">
-                    <h1>Préstamos con Colateral</h1>
-                    <p>Obtén liquidez inmediata usando tus criptoactivos como garantía. Sin vender, sin perder exposición al mercado.</p>
-                    
-                    <div class="bf-lending-stats">
-                        <div class="bf-stat">
-                            <div class="bf-stat-value">3.5%</div>
-                            <div class="bf-stat-label">APR Desde</div>
-                        </div>
-                        <div class="bf-stat">
-                            <div class="bf-stat-value">$500M</div>
-                            <div class="bf-stat-label">Prestado</div>
-                        </div>
-                        <div class="bf-stat">
-                            <div class="bf-stat-value">24h</div>
-                            <div class="bf-stat-label">Aprobación</div>
-                        </div>
-                        <div class="bf-stat">
-                            <div class="bf-stat-value">15+</div>
-                            <div class="bf-stat-label">Colaterales</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <main class="bf-main" style="padding-top: 80px">
+      <div class="bf-container">
+        <!-- Lending Hero -->
+        <section class="bf-lending-hero">
+          <div class="bf-hero-content">
+            <h1>Préstamos con Colateral</h1>
+            <p>
+              Obtén liquidez inmediata usando tus criptoactivos como garantía. Sin vender, sin
+              perder exposición al mercado.
+            </p>
 
-            <!-- Calculadora de Préstamo -->
-            <section class="bf-loan-calculator">
-                <div class="bf-section-header">
-                    <h2>Calculadora de Préstamo</h2>
-                    <p>Calcula tu capacidad de préstamo en tiempo real</p>
-                </div>
-                
-                <div class="bf-calculator-container">
-                    <div class="bf-calculator-form">
-                        
-                        <!-- Selección de Colateral -->
-                        <div class="bf-form-section">
-                            <h3>Seleccionar Colateral</h3>
-                            <div class="bf-collateral-grid">
-                                <div class="bf-collateral-option" data-asset="BTC">
-                                    <div class="bf-asset-icon btc">₿</div>
-                                    <div class="bf-asset-info">
-                                        <div class="bf-asset-name">Bitcoin</div>
-                                        <div class="bf-asset-balance">2.45 BTC</div>
-                                        <div class="bf-asset-ltv">LTV: 80%</div>
-                                    </div>
-                                    <div class="bf-asset-value">$164,825.00</div>
-                                </div>
-                                
-                                <div class="bf-collateral-option" data-asset="ETH">
-                                    <div class="bf-asset-icon eth">Ξ</div>
-                                    <div class="bf-asset-info">
-                                        <div class="bf-asset-name">Ethereum</div>
-                                        <div class="bf-asset-balance">15.8 ETH</div>
-                                        <div class="bf-asset-ltv">LTV: 75%</div>
-                                    </div>
-                                    <div class="bf-asset-value">$54,617.24</div>
-                                </div>
-                                
-                                <div class="bf-collateral-option" data-asset="SOL">
-                                    <div class="bf-asset-icon sol">◎</div>
-                                    <div class="bf-asset-info">
-                                        <div class="bf-asset-name">Solana</div>
-                                        <div class="bf-asset-balance">125.5 SOL</div>
-                                        <div class="bf-asset-ltv">LTV: 70%</div>
-                                    </div>
-                                    <div class="bf-asset-value">$19,684.90</div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="bf-lending-stats">
+              <div class="bf-stat">
+                <div class="bf-stat-value">3.5%</div>
+                <div class="bf-stat-label">APR Desde</div>
+              </div>
+              <div class="bf-stat">
+                <div class="bf-stat-value">$500M</div>
+                <div class="bf-stat-label">Prestado</div>
+              </div>
+              <div class="bf-stat">
+                <div class="bf-stat-value">24h</div>
+                <div class="bf-stat-label">Aprobación</div>
+              </div>
+              <div class="bf-stat">
+                <div class="bf-stat-value">15+</div>
+                <div class="bf-stat-label">Colaterales</div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                        <!-- Monto del Préstamo -->
-                        <div class="bf-form-section">
-                            <h3>Monto del Préstamo</h3>
-                            <div class="bf-loan-input-group">
-                                <div class="bf-input-field">
-                                    <label for="loanAmount">Cantidad a Solicitar</label>
-                                    <div class="bf-input-with-currency">
-                                        <input type="number" id="loanAmount" placeholder="0.00" min="0" step="0.01">
-                                        <select id="loanCurrency">
-                                            <option value="USDT">USDT</option>
-                                            <option value="USDC">USDC</option>
-                                            <option value="DAI">DAI</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="bf-loan-slider">
-                                    <label>Porcentaje del Colateral</label>
-                                    <input type="range" id="ltvSlider" min="0" max="80" value="0" step="1">
-                                    <div class="bf-slider-labels">
-                                        <span>0%</span>
-                                        <span id="currentLTV">0%</span>
-                                        <span>80%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Calculadora de Préstamo -->
+        <section class="bf-loan-calculator">
+          <div class="bf-section-header">
+            <h2>Calculadora de Préstamo</h2>
+            <p>Calcula tu capacidad de préstamo en tiempo real</p>
+          </div>
 
-                        <!-- Términos del Préstamo -->
-                        <div class="bf-form-section">
-                            <h3>Términos del Préstamo</h3>
-                            <div class="bf-loan-terms">
-                                <div class="bf-term-option" data-duration="30">
-                                    <div class="bf-term-duration">30 días</div>
-                                    <div class="bf-term-apr">APR: 3.5%</div>
-                                </div>
-                                <div class="bf-term-option" data-duration="90">
-                                    <div class="bf-term-duration">90 días</div>
-                                    <div class="bf-term-apr">APR: 4.2%</div>
-                                </div>
-                                <div class="bf-term-option" data-duration="180">
-                                    <div class="bf-term-duration">6 meses</div>
-                                    <div class="bf-term-apr">APR: 5.8%</div>
-                                </div>
-                                <div class="bf-term-option" data-duration="365">
-                                    <div class="bf-term-duration">1 año</div>
-                                    <div class="bf-term-apr">APR: 7.5%</div>
-                                </div>
-                            </div>
-                        </div>
+          <div class="bf-calculator-container">
+            <div class="bf-calculator-form">
+              <!-- Selección de Colateral -->
+              <div class="bf-form-section">
+                <h3>Seleccionar Colateral</h3>
+                <div class="bf-collateral-grid">
+                  <div class="bf-collateral-option" data-asset="BTC">
+                    <div class="bf-asset-icon btc">₿</div>
+                    <div class="bf-asset-info">
+                      <div class="bf-asset-name">Bitcoin</div>
+                      <div class="bf-asset-balance">2.45 BTC</div>
+                      <div class="bf-asset-ltv">LTV: 80%</div>
                     </div>
+                    <div class="bf-asset-value">$164,825.00</div>
+                  </div>
 
-                    <!-- Resumen del Préstamo -->
-                    <div class="bf-loan-summary">
-                        <div class="bf-summary-card">
-                            <h3>Resumen del Préstamo</h3>
-                            
-                            <div class="bf-summary-row">
-                                <span>Colateral Seleccionado:</span>
-                                <span id="selectedCollateral">-</span>
-                            </div>
-                            
-                            <div class="bf-summary-row">
-                                <span>Valor del Colateral:</span>
-                                <span id="collateralValue">$0.00</span>
-                            </div>
-                            
-                            <div class="bf-summary-row">
-                                <span>Monto del Préstamo:</span>
-                                <span id="loanAmountSummary">$0.00</span>
-                            </div>
-                            
-                            <div class="bf-summary-row">
-                                <span>LTV Ratio:</span>
-                                <span id="ltvRatio">0%</span>
-                            </div>
-                            
-                            <div class="bf-summary-row">
-                                <span>Tasa de Interés:</span>
-                                <span id="interestRate">0%</span>
-                            </div>
-                            
-                            <div class="bf-summary-row">
-                                <span>Duración:</span>
-                                <span id="loanDuration">-</span>
-                            </div>
-                            
-                            <div class="bf-summary-divider"></div>
-                            
-                            <div class="bf-summary-row bf-summary-total">
-                                <span>Total a Repagar:</span>
-                                <span id="totalRepayment">$0.00</span>
-                            </div>
-                            
-                            <div class="bf-summary-row">
-                                <span>Interés Total:</span>
-                                <span id="totalInterest">$0.00</span>
-                            </div>
-                            
-                            <div class="bf-loan-health">
-                                <div class="bf-health-bar">
-                                    <div class="bf-health-fill" id="healthBar"></div>
-                                </div>
-                                <div class="bf-health-label">Salud del Préstamo: <span id="healthStatus">Seguro</span></div>
-                            </div>
-                            
-                            <div class="bf-summary-actions">
-                                <button class="bf-btn bf-btn-primary bf-btn-block" id="requestLoanBtn" disabled>
-                                    <i class="fas fa-money-bill-wave"></i>
-                                    Solicitar Préstamo
-                                </button>
-                                
-                                <div class="bf-loan-terms-agreement">
-                                    <label class="bf-checkbox-label">
-                                        <input type="checkbox" id="agreeTerms">
-                                        <span class="bf-checkbox"></span>
-                                        Acepto los <a href="#" class="bf-link">términos y condiciones</a>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                  <div class="bf-collateral-option" data-asset="ETH">
+                    <div class="bf-asset-icon eth">Ξ</div>
+                    <div class="bf-asset-info">
+                      <div class="bf-asset-name">Ethereum</div>
+                      <div class="bf-asset-balance">15.8 ETH</div>
+                      <div class="bf-asset-ltv">LTV: 75%</div>
                     </div>
-                </div>
-            </section>
+                    <div class="bf-asset-value">$54,617.24</div>
+                  </div>
 
-            <!-- Tasas de Mercado -->
-            <section class="bf-market-rates">
-                <div class="bf-section-header">
-                    <h2>Tasas de Mercado</h2>
-                    <p>Compara nuestras tasas competitivas con el mercado</p>
+                  <div class="bf-collateral-option" data-asset="SOL">
+                    <div class="bf-asset-icon sol">◎</div>
+                    <div class="bf-asset-info">
+                      <div class="bf-asset-name">Solana</div>
+                      <div class="bf-asset-balance">125.5 SOL</div>
+                      <div class="bf-asset-ltv">LTV: 70%</div>
+                    </div>
+                    <div class="bf-asset-value">$19,684.90</div>
+                  </div>
                 </div>
-                
-                <div class="bf-rates-grid">
-                    <div class="bf-rate-card">
-                        <div class="bf-rate-header">
-                            <h4>Préstamos USDT</h4>
-                            <span class="bf-badge bf-badge-success">Activo</span>
-                        </div>
-                        <div class="bf-rate-body">
-                            <div class="bf-rate-apr">3.5% - 7.5%</div>
-                            <div class="bf-rate-label">APR</div>
-                            <div class="bf-rate-features">
-                                <div class="bf-feature">✓ Sin comisiones ocultas</div>
-                                <div class="bf-feature">✓ Prepago sin penalización</div>
-                                <div class="bf-feature">✓ Liquidación automática</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bf-rate-card">
-                        <div class="bf-rate-header">
-                            <h4>Préstamos USDC</h4>
-                            <span class="bf-badge bf-badge-success">Activo</span>
-                        </div>
-                        <div class="bf-rate-body">
-                            <div class="bf-rate-apr">3.2% - 7.2%</div>
-                            <div class="bf-rate-label">APR</div>
-                            <div class="bf-rate-features">
-                                <div class="bf-feature">✓ Respaldado por Circle</div>
-                                <div class="bf-feature">✓ Auditorías regulares</div>
-                                <div class="bf-feature">✓ Mayor liquidez</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bf-rate-card">
-                        <div class="bf-rate-header">
-                            <h4>Préstamos DAI</h4>
-                            <span class="bf-badge bf-badge-success">Activo</span>
-                        </div>
-                        <div class="bf-rate-body">
-                            <div class="bf-rate-apr">4.1% - 8.1%</div>
-                            <div class="bf-rate-label">APR</div>
-                            <div class="bf-rate-features">
-                                <div class="bf-feature">✓ Descentralizado</div>
-                                <div class="bf-feature">✓ Sobre-colateralizado</div>
-                                <div class="bf-feature">✓ Transparente</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+              </div>
 
-            <!-- Colaterales Aceptados -->
-            <section class="bf-supported-collaterals">
-                <div class="bf-section-header">
-                    <h2>Colaterales Aceptados</h2>
-                    <p>Utiliza los principales activos digitales como garantía</p>
+              <!-- Monto del Préstamo -->
+              <div class="bf-form-section">
+                <h3>Monto del Préstamo</h3>
+                <div class="bf-loan-input-group">
+                  <div class="bf-input-field">
+                    <label for="loanAmount">Cantidad a Solicitar</label>
+                    <div class="bf-input-with-currency">
+                      <input type="number" id="loanAmount" placeholder="0.00" min="0" step="0.01" />
+                      <select id="loanCurrency">
+                        <option value="USDT">USDT</option>
+                        <option value="USDC">USDC</option>
+                        <option value="DAI">DAI</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="bf-loan-slider">
+                    <label>Porcentaje del Colateral</label>
+                    <input type="range" id="ltvSlider" min="0" max="80" value="0" step="1" />
+                    <div class="bf-slider-labels">
+                      <span>0%</span>
+                      <span id="currentLTV">0%</span>
+                      <span>80%</span>
+                    </div>
+                  </div>
                 </div>
-                
-                <div class="bf-collaterals-table">
-                    <table class="bf-table">
-                        <thead>
-                            <tr>
-                                <th>Activo</th>
-                                <th>LTV Máximo</th>
-                                <th>Precio Liquidación</th>
-                                <th>Volatilidad 24h</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="bf-asset-row">
-                                        <div class="bf-asset-icon btc">₿</div>
-                                        <div>
-                                            <div class="bf-asset-name">Bitcoin</div>
-                                            <div class="bf-asset-symbol">BTC</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><span class="bf-ltv-high">80%</span></td>
-                                <td>$53,787.65</td>
-                                <td><span class="bf-volatility positive">+2.34%</span></td>
-                                <td><span class="bf-badge bf-badge-success">Activo</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="bf-asset-row">
-                                        <div class="bf-asset-icon eth">Ξ</div>
-                                        <div>
-                                            <div class="bf-asset-name">Ethereum</div>
-                                            <div class="bf-asset-symbol">ETH</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><span class="bf-ltv-medium">75%</span></td>
-                                <td>$2,592.59</td>
-                                <td><span class="bf-volatility positive">+1.23%</span></td>
-                                <td><span class="bf-badge bf-badge-success">Activo</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="bf-asset-row">
-                                        <div class="bf-asset-icon sol">◎</div>
-                                        <div>
-                                            <div class="bf-asset-name">Solana</div>
-                                            <div class="bf-asset-symbol">SOL</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><span class="bf-ltv-medium">70%</span></td>
-                                <td>$109.75</td>
-                                <td><span class="bf-volatility negative">-0.45%</span></td>
-                                <td><span class="bf-badge bf-badge-success">Activo</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+              </div>
+
+              <!-- Términos del Préstamo -->
+              <div class="bf-form-section">
+                <h3>Términos del Préstamo</h3>
+                <div class="bf-loan-terms">
+                  <div class="bf-term-option" data-duration="30">
+                    <div class="bf-term-duration">30 días</div>
+                    <div class="bf-term-apr">APR: 3.5%</div>
+                  </div>
+                  <div class="bf-term-option" data-duration="90">
+                    <div class="bf-term-duration">90 días</div>
+                    <div class="bf-term-apr">APR: 4.2%</div>
+                  </div>
+                  <div class="bf-term-option" data-duration="180">
+                    <div class="bf-term-duration">6 meses</div>
+                    <div class="bf-term-apr">APR: 5.8%</div>
+                  </div>
+                  <div class="bf-term-option" data-duration="365">
+                    <div class="bf-term-duration">1 año</div>
+                    <div class="bf-term-apr">APR: 7.5%</div>
+                  </div>
                 </div>
-            </section>
-        </div>
+              </div>
+            </div>
+
+            <!-- Resumen del Préstamo -->
+            <div class="bf-loan-summary">
+              <div class="bf-summary-card">
+                <h3>Resumen del Préstamo</h3>
+
+                <div class="bf-summary-row">
+                  <span>Colateral Seleccionado:</span>
+                  <span id="selectedCollateral">-</span>
+                </div>
+
+                <div class="bf-summary-row">
+                  <span>Valor del Colateral:</span>
+                  <span id="collateralValue">$0.00</span>
+                </div>
+
+                <div class="bf-summary-row">
+                  <span>Monto del Préstamo:</span>
+                  <span id="loanAmountSummary">$0.00</span>
+                </div>
+
+                <div class="bf-summary-row">
+                  <span>LTV Ratio:</span>
+                  <span id="ltvRatio">0%</span>
+                </div>
+
+                <div class="bf-summary-row">
+                  <span>Tasa de Interés:</span>
+                  <span id="interestRate">0%</span>
+                </div>
+
+                <div class="bf-summary-row">
+                  <span>Duración:</span>
+                  <span id="loanDuration">-</span>
+                </div>
+
+                <div class="bf-summary-divider"></div>
+
+                <div class="bf-summary-row bf-summary-total">
+                  <span>Total a Repagar:</span>
+                  <span id="totalRepayment">$0.00</span>
+                </div>
+
+                <div class="bf-summary-row">
+                  <span>Interés Total:</span>
+                  <span id="totalInterest">$0.00</span>
+                </div>
+
+                <div class="bf-loan-health">
+                  <div class="bf-health-bar">
+                    <div class="bf-health-fill" id="healthBar"></div>
+                  </div>
+                  <div class="bf-health-label">
+                    Salud del Préstamo: <span id="healthStatus">Seguro</span>
+                  </div>
+                </div>
+
+                <div class="bf-summary-actions">
+                  <button class="bf-btn bf-btn-primary bf-btn-block" id="requestLoanBtn" disabled>
+                    <i class="fas fa-money-bill-wave"></i>
+                    Solicitar Préstamo
+                  </button>
+
+                  <div class="bf-loan-terms-agreement">
+                    <label class="bf-checkbox-label">
+                      <input type="checkbox" id="agreeTerms" />
+                      <span class="bf-checkbox"></span>
+                      Acepto los <a href="#" class="bf-link">términos y condiciones</a>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tasas de Mercado -->
+        <section class="bf-market-rates">
+          <div class="bf-section-header">
+            <h2>Tasas de Mercado</h2>
+            <p>Compara nuestras tasas competitivas con el mercado</p>
+          </div>
+
+          <div class="bf-rates-grid">
+            <div class="bf-rate-card">
+              <div class="bf-rate-header">
+                <h4>Préstamos USDT</h4>
+                <span class="bf-badge bf-badge-success">Activo</span>
+              </div>
+              <div class="bf-rate-body">
+                <div class="bf-rate-apr">3.5% - 7.5%</div>
+                <div class="bf-rate-label">APR</div>
+                <div class="bf-rate-features">
+                  <div class="bf-feature">✓ Sin comisiones ocultas</div>
+                  <div class="bf-feature">✓ Prepago sin penalización</div>
+                  <div class="bf-feature">✓ Liquidación automática</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bf-rate-card">
+              <div class="bf-rate-header">
+                <h4>Préstamos USDC</h4>
+                <span class="bf-badge bf-badge-success">Activo</span>
+              </div>
+              <div class="bf-rate-body">
+                <div class="bf-rate-apr">3.2% - 7.2%</div>
+                <div class="bf-rate-label">APR</div>
+                <div class="bf-rate-features">
+                  <div class="bf-feature">✓ Respaldado por Circle</div>
+                  <div class="bf-feature">✓ Auditorías regulares</div>
+                  <div class="bf-feature">✓ Mayor liquidez</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bf-rate-card">
+              <div class="bf-rate-header">
+                <h4>Préstamos DAI</h4>
+                <span class="bf-badge bf-badge-success">Activo</span>
+              </div>
+              <div class="bf-rate-body">
+                <div class="bf-rate-apr">4.1% - 8.1%</div>
+                <div class="bf-rate-label">APR</div>
+                <div class="bf-rate-features">
+                  <div class="bf-feature">✓ Descentralizado</div>
+                  <div class="bf-feature">✓ Sobre-colateralizado</div>
+                  <div class="bf-feature">✓ Transparente</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Colaterales Aceptados -->
+        <section class="bf-supported-collaterals">
+          <div class="bf-section-header">
+            <h2>Colaterales Aceptados</h2>
+            <p>Utiliza los principales activos digitales como garantía</p>
+          </div>
+
+          <div class="bf-collaterals-table">
+            <table class="bf-table">
+              <thead>
+                <tr>
+                  <th>Activo</th>
+                  <th>LTV Máximo</th>
+                  <th>Precio Liquidación</th>
+                  <th>Volatilidad 24h</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="bf-asset-row">
+                      <div class="bf-asset-icon btc">₿</div>
+                      <div>
+                        <div class="bf-asset-name">Bitcoin</div>
+                        <div class="bf-asset-symbol">BTC</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="bf-ltv-high">80%</span></td>
+                  <td>$53,787.65</td>
+                  <td><span class="bf-volatility positive">+2.34%</span></td>
+                  <td><span class="bf-badge bf-badge-success">Activo</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="bf-asset-row">
+                      <div class="bf-asset-icon eth">Ξ</div>
+                      <div>
+                        <div class="bf-asset-name">Ethereum</div>
+                        <div class="bf-asset-symbol">ETH</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="bf-ltv-medium">75%</span></td>
+                  <td>$2,592.59</td>
+                  <td><span class="bf-volatility positive">+1.23%</span></td>
+                  <td><span class="bf-badge bf-badge-success">Activo</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="bf-asset-row">
+                      <div class="bf-asset-icon sol">◎</div>
+                      <div>
+                        <div class="bf-asset-name">Solana</div>
+                        <div class="bf-asset-symbol">SOL</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="bf-ltv-medium">70%</span></td>
+                  <td>$109.75</td>
+                  <td><span class="bf-volatility negative">-0.45%</span></td>
+                  <td><span class="bf-badge bf-badge-success">Activo</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
     </main>
 
+    <bf-footer></bf-footer>
+
     <!-- Scripts -->
-    <script src="js/logo-manager.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/lending.js"></script>
-    <script src="js/auth.js"></script>
-</body>
+    <script type="module" src="js/logo-manager.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+    <script type="module" src="js/lending.js"></script>
+    <script type="module" src="js/auth.js"></script>
+
+    <!-- Script para activar cohetes en la sección de préstamos -->
+    <script>
+      document.addEventListener('spaceThemeLoaded', function () {
+        console.log('🚀 BitForward Lending: Tema espacial cargado');
+
+        // Añadir efectos especiales para secciones de préstamos
+        if (window.BitForwardTheme) {
+          // Aplicar tema a elementos específicos de préstamos
+          document.querySelectorAll('.bf-lending-card').forEach(card => {
+            card.classList.add('space-dashboard-card');
+          });
+
+          document.querySelectorAll('.bf-lending-stats .bf-stat').forEach(stat => {
+            stat.classList.add('space-indicator');
+
+            // Determinar si es positivo o negativo
+            if (stat.classList.contains('positive')) {
+              stat.classList.add('space-indicator-up');
+            } else if (stat.classList.contains('negative')) {
+              stat.classList.add('space-indicator-down');
+            } else {
+              stat.classList.add('space-indicator-neutral');
+            }
+          });
+        }
+
+        // Lanzar un cohete cuando se aprueba un préstamo
+        document.querySelectorAll('.bf-btn-primary').forEach(button => {
+          button.addEventListener('click', function () {
+            if (window.BitForwardSpace) {
+              window.BitForwardSpace.addFlyingRocket({
+                size: 35,
+                duration: 4,
+                startPosition: { x: 50, y: 100 },
+                endPosition: { x: Math.random() * 50 + 25, y: -10 },
+              });
+            }
+          });
+        });
+      });
+    </script>
+
+    <!-- Universal Navigation & Footer Scripts -->
+    <script type="module" src="js/components/bf-header.js"></script>
+    <script type="module" src="js/components/bf-footer.js"></script>
+  </body>
 </html>

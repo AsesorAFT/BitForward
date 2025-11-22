@@ -1,0 +1,370 @@
+/**
+ * BitForward - Executive Icons System
+ * Sistema de iconos profesional estilo Zcash
+ */
+
+:root {
+  --icon-primary: #3b82f6;
+  --icon-secondary: #06b6d4;
+  --icon-accent: #f59e0b;
+  --icon-success: #10b981;
+  --icon-danger: #ef4444;
+  --icon-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);
+}
+
+/* Base Icon Styles */
+.bf-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+.bf-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.bf-icon-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.bf-icon-md {
+  width: 24px;
+  height: 24px;
+}
+
+.bf-icon-lg {
+  width: 32px;
+  height: 32px;
+}
+
+.bf-icon-xl {
+  width: 48px;
+  height: 48px;
+}
+
+/* Icon Container with Gradient Background */
+.bf-icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border-radius: 12px;
+  background: var(--icon-gradient);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.bf-icon-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+  pointer-events: none;
+}
+
+.bf-icon-container.icon-home {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.bf-icon-container.icon-dashboard {
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+
+.bf-icon-container.icon-trading {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.bf-icon-container.icon-lending {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.bf-icon-container.icon-analytics {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.bf-icon-container.icon-community {
+  background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+.bf-icon-container.icon-enterprise {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.bf-icon-container.icon-wallet {
+  background: linear-gradient(135deg, #14b8a6, #0d9488);
+}
+
+/* Animated Icon Effects */
+.bf-icon-animated {
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+.bf-icon-animated:hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* Icon with Badge */
+.bf-icon-badge {
+  position: relative;
+}
+
+.bf-icon-badge::after {
+  content: attr(data-badge);
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--icon-danger);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+}
+
+/* Icon Symbols Library */
+.icon-home-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-dashboard-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-trading-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-lending-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-analytics-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-community-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-enterprise-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-wallet-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-search-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-notification-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-settings-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-security-symbol {
+  width: 100%;
+  height: 100%;
+}
+
+/* Executive Style Icons - Minimal & Geometric */
+.executive-icon {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.executive-icon-filled {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Glowing Icon Effect */
+.icon-glow {
+  filter: drop-shadow(0 0 8px currentColor);
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px currentColor);
+    opacity: 1;
+  }
+  50% {
+    filter: drop-shadow(0 0 16px currentColor);
+    opacity: 0.8;
+  }
+}
+
+/* Icon Text Labels */
+.bf-icon-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+/* Navigation Icon Styles */
+.bf-nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+}
+
+.bf-nav-link:hover .bf-nav-icon {
+  transform: translateY(-2px);
+}
+
+.bf-nav-link.active .bf-nav-icon {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* Responsive Icon Sizes */
+@media (max-width: 768px) {
+  .bf-icon-container {
+    padding: 0.5rem;
+  }
+
+  .bf-icon-xl {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Icon Grid for Feature Lists */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.icon-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.icon-grid-item:hover {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+}
+
+.icon-grid-item .bf-icon-container {
+  margin-bottom: 0.5rem;
+}
+
+/* Status Icons */
+.icon-status {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.icon-status.online {
+  color: var(--icon-success);
+  box-shadow: 0 0 8px var(--icon-success);
+}
+
+.icon-status.offline {
+  color: var(--icon-danger);
+}
+
+.icon-status.away {
+  color: var(--icon-accent);
+}
+
+/* Crypto Asset Icons */
+.crypto-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.crypto-icon.btc {
+  background: linear-gradient(135deg, #f7931a, #e87e0c);
+}
+
+.crypto-icon.eth {
+  background: linear-gradient(135deg, #627eea, #4e6bd8);
+}
+
+.crypto-icon.sol {
+  background: linear-gradient(135deg, #00ffa3, #dc1fff);
+}
+
+.crypto-icon.avax {
+  background: linear-gradient(135deg, #e84142, #d32f2f);
+}
+
+.crypto-icon.bnb {
+  background: linear-gradient(135deg, #f3ba2f, #d4a428);
+}
+
+.crypto-icon.ada {
+  background: linear-gradient(135deg, #0033ad, #002080);
+}
+
+/* Loading Spinner Icon */
+.icon-loading {
+  animation: iconSpin 1s linear infinite;
+}
+
+@keyframes iconSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

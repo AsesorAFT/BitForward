@@ -1,0 +1,708 @@
+/**
+ * BitForward - Modern Navigation System
+ * Menú de navegación profesional, responsive y con excelentes efectos
+ */
+
+/* Import Executive Icons */
+@import url('executive-icons.css');
+
+:root {
+  --nav-bg: rgba(15, 23, 42, 0.95);
+  --nav-border: rgba(59, 130, 246, 0.2);
+  --nav-hover-bg: rgba(6, 182, 212, 0.1);
+  --nav-active-bg: rgba(6, 182, 212, 0.2);
+  --nav-text: #cbd5e1;
+  --nav-text-hover: #06b6d4;
+  --nav-text-active: #3b82f6;
+  --nav-height: 70px;
+  --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== MAIN NAVIGATION ==================== */
+.bf-modern-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: var(--nav-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bf-modern-nav.scrolled {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-bottom-color: rgba(6, 182, 212, 0.3);
+}
+
+.bf-nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* ==================== LOGO SECTION ==================== */
+.bf-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.bf-nav-logo:hover {
+  transform: scale(1.02);
+}
+
+.bf-nav-logo-icon {
+  width: 45px;
+  height: 45px;
+  filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.6));
+  transition: filter 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+.bf-nav-logo:hover .bf-nav-logo-icon {
+  filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.9));
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.bf-nav-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.bf-nav-brand-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.bf-nav-brand-subtitle {
+  font-size: 0.7rem;
+  color: #64748b;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.bf-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  justify-content: center;
+}
+
+.bf-brand-name {
+  color: var(--dark-text-primary, #f8fafc);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.bf-brand-tagline {
+  color: var(--dark-text-tertiary, #94a3b8);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* ==================== NAVIGATION LINKS ==================== */
+.bf-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bf-nav-item {
+  position: relative;
+}
+
+.bf-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  color: var(--nav-text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.bf-nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.bf-nav-link:hover::before {
+  opacity: 1;
+}
+
+.bf-nav-link:hover {
+  color: var(--nav-text-hover);
+  background: var(--nav-hover-bg);
+  transform: translateY(-2px);
+}
+
+.bf-nav-link.active {
+  color: var(--nav-text-active);
+  background: var(--nav-active-bg);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+.bf-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  border-radius: 3px 3px 0 0;
+}
+
+.bf-nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+}
+
+.bf-nav-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bf-nav-link:hover .bf-nav-icon {
+  transform: translateY(-2px) scale(1.1);
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.bf-nav-link.active .bf-nav-icon {
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* ==================== WALLET & USER SECTION ==================== */
+.bf-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Search Container */
+.bf-search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.bf-search-input {
+  width: 200px;
+  padding: 0.65rem 1rem 0.65rem 2.5rem;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 25px;
+  color: white;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.bf-search-input:focus {
+  outline: none;
+  border-color: rgba(6, 182, 212, 0.5);
+  background: rgba(30, 41, 59, 0.8);
+  width: 250px;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.bf-search-input::placeholder {
+  color: #64748b;
+}
+
+.bf-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bf-search-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+
+/* Notification Button */
+.bf-notification-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bf-notification-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(6, 182, 212, 0.5);
+  transform: translateY(-2px);
+}
+
+.bf-notification-btn > span:first-child {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--nav-text);
+}
+
+.bf-notification-btn > span:first-child svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+
+.bf-notification-btn:hover > span:first-child {
+  color: var(--nav-text-hover);
+}
+
+/* Wallet Button */
+.bf-wallet-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+}
+
+.bf-wallet-btn > span:first-child {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bf-wallet-btn > span:first-child svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+
+.bf-wallet-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(6, 182, 212, 0.5);
+}
+
+.bf-wallet-btn:active {
+  transform: translateY(0);
+}
+
+.bf-wallet-btn.connected {
+  background: rgba(16, 185, 129, 0.2);
+  border: 2px solid #10b981;
+  color: #10b981;
+}
+
+.bf-user-menu {
+  position: relative;
+}
+
+.bf-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(6, 182, 212, 0.3);
+}
+
+.bf-user-avatar:hover {
+  transform: scale(1.1);
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+/* ==================== MOBILE MENU TOGGLE ==================== */
+.bf-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 10001;
+}
+
+.bf-mobile-toggle span {
+  width: 28px;
+  height: 3px;
+  background: var(--nav-text-hover);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.bf-mobile-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.bf-mobile-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.bf-mobile-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* ==================== SEARCH BAR ==================== */
+.bf-nav-search {
+  position: relative;
+  margin: 0 1rem;
+}
+
+.bf-search-input {
+  width: 250px;
+  padding: 0.65rem 1rem 0.65rem 2.5rem;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 25px;
+  color: white;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.bf-search-input:focus {
+  outline: none;
+  border-color: rgba(6, 182, 212, 0.5);
+  background: rgba(30, 41, 59, 0.8);
+  width: 300px;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.bf-search-input::placeholder {
+  color: #64748b;
+}
+
+.bf-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+}
+
+/* ==================== DROPDOWN MENU ==================== */
+.bf-nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: rgba(15, 23, 42, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 220px;
+  overflow: hidden;
+  z-index: 10000;
+}
+
+.bf-nav-item:hover .bf-nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.bf-dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  color: var(--nav-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.bf-dropdown-link:hover {
+  background: var(--nav-hover-bg);
+  color: var(--nav-text-hover);
+  border-left-color: #06b6d4;
+  padding-left: 1.5rem;
+}
+
+.bf-dropdown-link.active {
+  background: var(--nav-active-bg);
+  color: var(--nav-text-active);
+  border-left-color: #3b82f6;
+}
+
+.bf-dropdown-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.bf-dropdown-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bf-dropdown-link:hover .bf-dropdown-icon {
+  transform: translateX(3px);
+  color: var(--nav-text-hover);
+}
+
+.bf-dropdown-arrow {
+  font-size: 0.7rem;
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.bf-nav-item:hover .bf-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.bf-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  color: var(--nav-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.bf-dropdown-item:hover {
+  background: var(--nav-hover-bg);
+  color: var(--nav-text-hover);
+  border-left-color: #06b6d4;
+  padding-left: 1.5rem;
+}
+
+.bf-dropdown-divider {
+  height: 1px;
+  background: rgba(59, 130, 246, 0.1);
+  margin: 0.5rem 0;
+}
+
+/* ==================== NOTIFICATION BADGE ==================== */
+.bf-nav-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ef4444;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+  border: 2px solid var(--nav-bg);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 1024px) {
+  .bf-nav-search {
+    display: none;
+  }
+
+  .bf-nav-links {
+    gap: 0.25rem;
+  }
+
+  .bf-nav-link {
+    padding: 0.65rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .bf-mobile-toggle {
+    display: flex;
+  }
+
+  .bf-nav-links {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    gap: 0.5rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    align-items: stretch;
+  }
+
+  .bf-nav-links.active {
+    transform: translateX(0);
+  }
+
+  .bf-nav-link {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .bf-nav-actions {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    right: 2rem;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .bf-nav-links.active ~ .bf-nav-actions {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .bf-wallet-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .bf-nav-dropdown {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    margin: 0.5rem 0 0 1rem;
+    border-left: 2px solid rgba(6, 182, 212, 0.3);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+/* ==================== THEME VARIANTS ==================== */
+.bf-modern-nav.light {
+  --nav-bg: rgba(255, 255, 255, 0.95);
+  --nav-border: rgba(0, 0, 0, 0.1);
+  --nav-text: #334155;
+  --nav-text-hover: #0284c7;
+  color: #0f172a;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.bf-modern-nav {
+  animation: slideInFromTop 0.5s ease-out;
+}
