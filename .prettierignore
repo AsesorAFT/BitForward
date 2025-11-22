@@ -1,0 +1,8 @@
+dist
+node_modules
+coverage
+*.config.js
+*.config.cjs
+package-lock.json
+.husky
+public/assets

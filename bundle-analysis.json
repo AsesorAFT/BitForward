@@ -1,0 +1,313 @@
+{
+  "timestamp": "2025-10-19T17:45:26.048Z",
+  "summary": {
+    "totalSize": "1.05 MB",
+    "totalGzipSize": "246.03 KB",
+    "compressionRatio": "77.11%",
+    "totalSizeBytes": 1100423,
+    "totalGzipSizeBytes": 251939
+  },
+  "byDirectory": [
+    {
+      "directory": "css",
+      "fileCount": 22,
+      "size": "218.19 KB",
+      "gzipSize": "47.91 KB",
+      "sizeBytes": 223426,
+      "gzipSizeBytes": 49055
+    },
+    {
+      "directory": "js",
+      "fileCount": 42,
+      "size": "710.36 KB",
+      "gzipSize": "158.27 KB",
+      "sizeBytes": 727407,
+      "gzipSizeBytes": 162068
+    },
+    {
+      "directory": "assets",
+      "fileCount": 11,
+      "size": "49.73 KB",
+      "gzipSize": "13.57 KB",
+      "sizeBytes": 50920,
+      "gzipSizeBytes": 13893
+    },
+    {
+      "directory": "contracts",
+      "fileCount": 14,
+      "size": "96.36 KB",
+      "gzipSize": "26.29 KB",
+      "sizeBytes": 98670,
+      "gzipSizeBytes": 26923
+    }
+  ],
+  "byType": [
+    {
+      "extension": ".css",
+      "fileCount": 22,
+      "size": "218.19 KB",
+      "gzipSize": "47.91 KB",
+      "sizeBytes": 223426,
+      "gzipSizeBytes": 49055,
+      "files": [
+        "admin.css",
+        "animations.css",
+        "auth.css",
+        "corporate.css",
+        "crypto-theme.css",
+        "dashboard-simple.css",
+        "dashboard.css",
+        "enterprise-dashboard.css",
+        "icon-fixes.css",
+        "lending.css",
+        "main.css",
+        "news-feed.css",
+        "premium-components.css",
+        "price-display.css",
+        "rocket-mobile.css",
+        "rocket-theme.css",
+        "space-background.css",
+        "style.css",
+        "tailwind-compiled.css",
+        "themes.css",
+        "typography.css",
+        "wallet.css"
+      ]
+    },
+    {
+      "extension": ".js",
+      "fileCount": 44,
+      "size": "722.58 KB",
+      "gzipSize": "162.31 KB",
+      "sizeBytes": 739924,
+      "gzipSizeBytes": 166205,
+      "files": [
+        "admin.js",
+        "api.js",
+        "app.js",
+        "auth.js",
+        "bitforward-web3.js",
+        "blockchain.js",
+        "component-loader.js",
+        "dashboard-customizer.js",
+        "dashboard-renderer.js",
+        "dashboard-web3.js",
+        "dashboard.js",
+        "defi-client.js",
+        "enhancements.js",
+        "i18n.js",
+        "init.js",
+        "lending.js",
+        "logo-manager.js",
+        "main.js",
+        "news-feed.js",
+        "notification-system.js",
+        "page-transitions.js",
+        "price-display.js",
+        "price-feeds.js",
+        "responsive-design.js",
+        "rocket-animations.js",
+        "rocket-mobile.js",
+        "rocket-space-theme.js",
+        "rocket-theme.js",
+        "space-animations.js",
+        "space-theme-config.js",
+        "space-theme-loader.js",
+        "store.js",
+        "svg-animations.js",
+        "sw-register.js",
+        "tax-calculator.js",
+        "theme-switcher.js",
+        "transitions.js",
+        "wallet-auth-client.js",
+        "wallet-manager-real.js",
+        "wallet-manager.js",
+        "wallet-ui.js",
+        "wallet.js",
+        "hardhat.config.js",
+        "deploy.js"
+      ]
+    },
+    {
+      "extension": ".svg",
+      "fileCount": 10,
+      "size": "41.02 KB",
+      "gzipSize": "11.67 KB",
+      "sizeBytes": 42009,
+      "gzipSizeBytes": 11950,
+      "files": [
+        "favicon.svg",
+        "logo-bitforward-official.svg",
+        "logo-embedded.svg",
+        "logo-official-v2.svg",
+        "logo-official.svg",
+        "logo-rocket-animated.svg",
+        "logo-rocket-official.svg",
+        "logo-rocket.svg",
+        "logo.svg",
+        "rocket-small.svg"
+      ]
+    },
+    {
+      "extension": ".bak",
+      "fileCount": 1,
+      "size": "8.7 KB",
+      "gzipSize": "1.9 KB",
+      "sizeBytes": 8911,
+      "gzipSizeBytes": 1943,
+      "files": ["logo.svg.bak"]
+    },
+    {
+      "extension": ".sol",
+      "fileCount": 11,
+      "size": "81.94 KB",
+      "gzipSize": "21.45 KB",
+      "sizeBytes": 83909,
+      "gzipSizeBytes": 21966,
+      "files": [
+        "Adapters.sol",
+        "BitForwardContract.sol",
+        "ForwardEngine.sol",
+        "MockERC20.sol",
+        "MockOracle.sol",
+        "StrategyExecutor.sol",
+        "Vault.sol",
+        "IAdapter.sol",
+        "IForwardEngine.sol",
+        "IOracle.sol",
+        "IVault.sol"
+      ]
+    },
+    {
+      "extension": ".json",
+      "fileCount": 1,
+      "size": "2.19 KB",
+      "gzipSize": "820 Bytes",
+      "sizeBytes": 2244,
+      "gzipSizeBytes": 820,
+      "files": ["package.json"]
+    }
+  ],
+  "largestFiles": [
+    {
+      "path": "/js/app.js",
+      "size": 71748,
+      "gzipSize": 12164,
+      "compression": "83.05%"
+    },
+    {
+      "path": "/js/dashboard-customizer.js",
+      "size": 44812,
+      "gzipSize": 8646,
+      "compression": "80.71%"
+    },
+    {
+      "path": "/js/dashboard.js",
+      "size": 44235,
+      "gzipSize": 9939,
+      "compression": "77.53%"
+    },
+    {
+      "path": "/js/admin.js",
+      "size": 44063,
+      "gzipSize": 8737,
+      "compression": "80.17%"
+    },
+    {
+      "path": "/js/notification-system.js",
+      "size": 35729,
+      "gzipSize": 6584,
+      "compression": "81.57%"
+    },
+    {
+      "path": "/css/enterprise-dashboard.css",
+      "size": 34088,
+      "gzipSize": 5390,
+      "compression": "84.19%"
+    },
+    {
+      "path": "/js/main.js",
+      "size": 25511,
+      "gzipSize": 6166,
+      "compression": "75.83%"
+    },
+    {
+      "path": "/js/responsive-design.js",
+      "size": 23961,
+      "gzipSize": 4405,
+      "compression": "81.62%"
+    },
+    {
+      "path": "/css/admin.css",
+      "size": 23821,
+      "gzipSize": 4299,
+      "compression": "81.95%"
+    },
+    {
+      "path": "/js/tax-calculator.js",
+      "size": 20643,
+      "gzipSize": 4357,
+      "compression": "78.89%"
+    },
+    {
+      "path": "/js/lending.js",
+      "size": 20481,
+      "gzipSize": 4447,
+      "compression": "78.29%"
+    },
+    {
+      "path": "/contracts/ForwardEngine.sol",
+      "size": 20197,
+      "gzipSize": 4491,
+      "compression": "77.76%"
+    },
+    {
+      "path": "/js/i18n.js",
+      "size": 19869,
+      "gzipSize": 4245,
+      "compression": "78.64%"
+    },
+    {
+      "path": "/js/init.js",
+      "size": 19180,
+      "gzipSize": 4481,
+      "compression": "76.64%"
+    },
+    {
+      "path": "/js/rocket-space-theme.js",
+      "size": 17973,
+      "gzipSize": 4893,
+      "compression": "72.78%"
+    },
+    {
+      "path": "/js/blockchain.js",
+      "size": 17665,
+      "gzipSize": 3635,
+      "compression": "79.42%"
+    },
+    {
+      "path": "/js/auth.js",
+      "size": 17494,
+      "gzipSize": 3901,
+      "compression": "77.70%"
+    },
+    {
+      "path": "/js/dashboard-web3.js",
+      "size": 17183,
+      "gzipSize": 3782,
+      "compression": "77.99%"
+    },
+    {
+      "path": "/js/dashboard-renderer.js",
+      "size": 16816,
+      "gzipSize": 2910,
+      "compression": "82.70%"
+    },
+    {
+      "path": "/js/wallet-manager-real.js",
+      "size": 16603,
+      "gzipSize": 3998,
+      "compression": "75.92%"
+    }
+  ]
+}

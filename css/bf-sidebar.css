@@ -1,0 +1,107 @@
+/* bf-sidebar.css - Sidebar universal BitForward */
+
+.bf-sidebar {
+  width: 240px;
+  background: var(--bf-glass-bg, rgba(30, 41, 59, 0.7));
+  border-right: 1.5px solid var(--bf-glass-border, rgba(59, 130, 246, 0.25));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.1);
+  backdrop-filter: var(--bf-glass-backdrop-filter, blur(16px) saturate(180%));
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+}
+
+.bf-sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--bf-text-primary, #f8fafc);
+}
+.bf-sidebar-logo img {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.bf-sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+}
+.bf-sidebar-menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  color: var(--bf-text-secondary, #e2e8f0);
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.bf-sidebar-menu a.active,
+.bf-sidebar-menu a:hover {
+  background: var(--bf-accent-secondary, #06b6d4);
+  color: #fff;
+}
+
+.bf-sidebar-footer {
+  margin-top: auto;
+  padding: 1.5rem;
+  border-top: 1px solid var(--bf-glass-border, rgba(59, 130, 246, 0.15));
+}
+.bf-sidebar-footer a {
+  color: var(--bf-text-tertiary, #94a3b8);
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: color 0.2s;
+}
+.bf-sidebar-footer a:hover {
+  color: var(--bf-accent-primary, #3b82f6);
+}
+
+/* Iconos (puedes usar icon fonts o SVGs reales en producción) */
+.icon-dashboard::before {
+  content: '📊';
+}
+.icon-trading::before {
+  content: '💹';
+}
+.icon-lending::before {
+  content: '🏦';
+}
+.icon-analytics::before {
+  content: '📈';
+}
+.icon-community::before {
+  content: '💬';
+}
+.icon-settings::before {
+  content: '⚙️';
+}
+
+@media (max-width: 900px) {
+  .bf-sidebar {
+    position: fixed;
+    left: -260px;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 120;
+  }
+  .bf-sidebar.open {
+    left: 0;
+  }
+}

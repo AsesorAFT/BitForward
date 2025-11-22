@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Institucional | BitForward Enterprise</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    
+    <!-- Space Theme Loader -->
+    <script src="../js/space-theme-loader.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/corporate.css">
+    <link rel="stylesheet" href="../css/enterprise-dashboard.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/premium-components.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            min-height: 100vh;
+        }
+        
+        .portfolio-hero {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            padding: 3rem 0;
+            color: white;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+        }
+        
+        .portfolio-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .portfolio-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        
+        .portfolio-overview {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.1), 0 0 40px rgba(59, 130, 246, 0.05);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+            pointer-events: none;
+        }
+        
+        .portfolio-main-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-container {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1);
+            position: relative;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .allocation-legend {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1);
+        }
+        
+        .legend-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .legend-item:hover {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: rgba(6, 182, 212, 0.3);
+            transform: translateX(8px);
+            box-shadow: 0 4px 16px rgba(6, 182, 212, 0.2);
+        }
+        
+        .legend-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .legend-name {
+            font-weight: 600;
+            color: #E2E8F0;
+        }
+        
+        .legend-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .legend-amount {
+            font-weight: 800;
+            font-size: 1.125rem;
+            color: #FFFFFF;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+        
+        .legend-percentage {
+            font-size: 0.875rem;
+            color: #94A3B8;
+            font-weight: 600;
+        }
+        
+        /* Risk Metrics Grid */
+        .risk-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .metric-card {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(6, 182, 212, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+        
+        .metric-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            flex-shrink: 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .metric-info {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .metric-card .metric-label {
+            font-size: 0.875rem;
+            color: #94A3B8;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .metric-card .metric-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #FFFFFF;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        }
+        
+        .metric-change {
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .metric-change.positive {
+            color: #00b894;
+        }
+        
+        .metric-change.neutral {
+            color: var(--bf-gray-600);
+        }
+        
+        /* Period Buttons */
+        .period-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(6, 182, 212, 0.05);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #94A3B8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .period-btn:hover {
+            border-color: #06B6D4;
+            color: #06B6D4;
+            background: rgba(6, 182, 212, 0.1);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+        
+        .period-btn.active {
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+            color: white;
+            border-color: #06B6D4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+        
+        /* Filter Buttons */
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(6, 182, 212, 0.05);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #94A3B8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            border-color: #06B6D4;
+            color: #06B6D4;
+            background: rgba(6, 182, 212, 0.1);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+            color: white;
+            border-color: #06B6D4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+        
+        /* Transaction Types */
+        .tx-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .tx-type.transfer {
+            background: rgba(0, 102, 255, 0.1);
+            color: #0066ff;
+        }
+        
+        .tx-type.trade {
+            background: rgba(0, 184, 148, 0.1);
+            color: #00b894;
+        }
+        
+        .tx-type.deposit {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+        
+        .status-badge.completed {
+            background: rgba(0, 212, 170, 0.15);
+            color: #00b894;
+        }
+        
+        .status-badge.pending {
+            background: rgba(253, 203, 110, 0.15);
+            color: #d4940f;
+        }
+        
+        /* Transaction Row Hover */
+        .transaction-row {
+            border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .transaction-row:hover {
+            background: linear-gradient(90deg, rgba(6, 182, 212, 0.08) 0%, transparent 100%);
+            border-bottom-color: rgba(6, 182, 212, 0.3);
+        }
+        
+        .transactions-container {
+            background: rgba(15, 23, 42, 0.7) !important;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1) !important;
+        }
+        
+        .transactions-container table th {
+            color: #94A3B8 !important;
+        }
+        
+        .transactions-container table td {
+            color: #E2E8F0 !important;
+        }
+        
+        .assets-table {
+            background: rgba(15, 23, 42, 0.7) !important;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1) !important;
+        }
+        
+        .assets-table h2 {
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .assets-table table th {
+            color: #94A3B8 !important;
+            border-bottom-color: rgba(6, 182, 212, 0.2) !important;
+        }
+        
+        .assets-table table td {
+            color: #E2E8F0 !important;
+            border-bottom-color: rgba(6, 182, 212, 0.1) !important;
+        }
+        
+        .assets-table tr:hover {
+            background: rgba(6, 182, 212, 0.05);
+        }
+        
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .overview-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .overview-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .overview-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3), 0 0 60px rgba(59, 130, 246, 0.2);
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+        
+        .overview-card:hover::before {
+            opacity: 1;
+        }
+        
+        .overview-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.25rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .overview-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        
+        .overview-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+        }
+        
+        .overview-label {
+            font-size: 0.875rem;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+        
+        .subaccounts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .subaccount-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(6, 182, 212, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subaccount-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .subaccount-card:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            transform: translateY(-12px);
+            box-shadow: 0 24px 48px rgba(6, 182, 212, 0.2), 0 0 80px rgba(59, 130, 246, 0.15);
+        }
+        
+        .subaccount-card:hover::before {
+            opacity: 1;
+        }
+        
+        .subaccount-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .subaccount-info h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+        }
+        
+        .subaccount-id {
+            font-size: 0.875rem;
+            color: #06B6D4;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        }
+        
+        .subaccount-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .subaccount-badge.active {
+            background: rgba(0, 212, 170, 0.15);
+            color: #00b894;
+        }
+        
+        .subaccount-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+        }
+        
+        .metric {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .metric-label {
+            font-size: 0.75rem;
+            color: #94A3B8;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+        
+        .permissions-list {
+            margin-bottom: 1.5rem;
+        }
+        
+        .permission-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--bf-gray-100);
+        }
+        
+        .permission-item:last-child {
+            border-bottom: none;
+        }
+        
+        .permission-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 102, 255, 0.1);
+            color: #0066ff;
+        }
+        
+        .permission-text {
+            flex: 1;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--bf-gray-700);
+        }
+        
+        .permission-status {
+            color: #00b894;
+            font-size: 1.125rem;
+        }
+        
+        .assets-table {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .table-header h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--bf-gray-900);
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            text-align: left;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--bf-gray-200);
+            color: var(--bf-gray-600);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        td {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--bf-gray-100);
+        }
+        
+        .asset-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .asset-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0066ff 0%, #00b894 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+        }
+        
+        .allocation-bar {
+            height: 8px;
+            background: var(--bf-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .allocation-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0066ff 0%, #00b894 100%);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bf-header">
+        <div class="bf-container">
+            <div class="bf-header-content">
+                <div class="bf-brand">
+                    <a href="../index.html" class="bf-logo">
+                        <div class="bf-logo-icon">
+                            <img src="../assets/logo-astronaut-rocket.svg" alt="BitForward" class="logo-icon" style="width: 32px; height: 32px;">
+                        </div>
+                        <div class="bf-logo-text">
+                            <div class="bf-logo-primary">
+                                <span class="bitforward-brand animated size-md">BitForward</span>
+                            </div>
+                            <div class="bf-logo-tagline">Financial Technologies</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <nav class="bf-nav">
+                    <a href="dashboard.html" class="bf-nav-link">
+                        <i class="fas fa-chart-area"></i>
+                        Dashboard
+                    </a>
+                    <a href="contratos.html" class="bf-nav-link">
+                        <i class="fas fa-file-contract"></i>
+                        Contratos
+                    </a>
+                    <a href="prestamos.html" class="bf-nav-link">
+                        <i class="fas fa-coins"></i>
+                        Préstamos
+                    </a>
+                    <a href="coberturas.html" class="bf-nav-link">
+                        <i class="fas fa-shield-alt"></i>
+                        Coberturas
+                    </a>
+                    <a href="analytics.html" class="bf-nav-link">
+                        <i class="fas fa-analytics"></i>
+                        Analytics
+                    </a>
+                    <a href="portafolio.html" class="bf-nav-link active">
+                        <i class="fas fa-briefcase"></i>
+                        Portafolio
+                    </a>
+                </nav>
+                
+                <div class="bf-user-menu" style="display: flex;">
+                    <div class="bf-user-balance">
+                        <span class="bf-balance-label">Portfolio</span>
+                        <span class="bf-balance-value">$2,458,920.00</span>
+                    </div>
+                    <div class="bf-user-info">
+                        <span class="bf-user-name">AFORTU Holdings</span>
+                        <button class="bf-btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Salir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Portfolio Hero -->
+    <section class="portfolio-hero">
+        <div class="bf-container">
+            <div class="hero-header">
+                <div>
+                    <h1>Portafolio Institucional</h1>
+                    <p>Gestiona tu tesorería corporativa con subcuentas segregadas de Binance Institutional</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Overview -->
+    <section class="bf-container">
+        <div class="portfolio-overview">
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <div class="overview-icon" style="background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%); color: white;">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="overview-value">$2.45M</div>
+                    <div class="overview-label">Balance Total</div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon" style="background: linear-gradient(135deg, #00d4aa 0%, #00b894 100%); color: white;">
+                        <i class="fas fa-building-columns"></i>
+                    </div>
+                    <div class="overview-value">5</div>
+                    <div class="overview-label">Subcuentas Activas</div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon" style="background: linear-gradient(135deg, #f5a623 0%, #d4940f 100%); color: white;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="overview-value">+18.4%</div>
+                    <div class="overview-label">Rendimiento Mensual</div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon" style="background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%); color: white;">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <div class="overview-value">$2.5M</div>
+                    <div class="overview-label">Límite Diario</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Chart Section -->
+        <div class="performance-section animate-fadeInUp delay-4" style="margin-bottom: 2rem;">
+            <div style="background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 24px; padding: 2.5rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(6, 182, 212, 0.1);">
+                <div class="chart-header" style="margin-bottom: 2rem;">
+                    <h2 class="chart-title">Performance Histórica</h2>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="period-btn active" data-period="7D">7D</button>
+                        <button class="period-btn" data-period="1M">1M</button>
+                        <button class="period-btn" data-period="3M">3M</button>
+                        <button class="period-btn" data-period="1Y">1Y</button>
+                        <button class="period-btn" data-period="ALL">Todo</button>
+                    </div>
+                </div>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Metrics Grid -->
+        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 40px rgba(6, 182, 212, 0.4);">Métricas de Riesgo</h2>
+        <div class="risk-metrics-grid animate-fadeInUp delay-5" style="margin-bottom: 2rem;">
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%); color: white;">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Volatilidad 30D</div>
+                    <div class="metric-value">18.5%</div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-arrow-down"></i> -2.3%
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #00b894 0%, #00d4aa 100%); color: white;">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Sharpe Ratio</div>
+                    <div class="metric-value">2.14</div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-arrow-up"></i> +0.18
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #f5a623 0%, #d4940f 100%); color: white;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">VaR (95%)</div>
+                    <div class="metric-value">$127K</div>
+                    <div class="metric-change neutral">
+                        <i class="fas fa-minus"></i> 5.2%
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%); color: white;">
+                    <i class="fas fa-chart-area"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Max Drawdown</div>
+                    <div class="metric-value">-8.4%</div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-arrow-up"></i> Mejorado
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #e84393 0%, #d63031 100%); color: white;">
+                    <i class="fas fa-crosshairs"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Beta del Portfolio</div>
+                    <div class="metric-value">0.82</div>
+                    <div class="metric-change neutral">
+                        <i class="fas fa-circle"></i> vs BTC
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card premium-card hover-lift">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); color: white;">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="metric-info">
+                    <div class="metric-label">Health Factor</div>
+                    <div class="metric-value">4.2</div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-check-circle"></i> Saludable
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 40px rgba(6, 182, 212, 0.4);">Transacciones Recientes</h2>
+        <div class="transactions-container animate-fadeInUp delay-6" style="background: white; border-radius: 24px; padding: 2.5rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); margin-bottom: 2rem;">
+            <div class="transactions-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div style="display: flex; gap: 1rem;">
+                    <button class="filter-btn active">Todas</button>
+                    <button class="filter-btn">Transferencias</button>
+                    <button class="filter-btn">Trades</button>
+                    <button class="filter-btn">Depósitos</button>
+                </div>
+                <button class="btn-premium btn-primary-premium" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                    <i class="fas fa-download"></i> Exportar
+                </button>
+            </div>
+
+            <div class="transactions-table">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--bf-gray-200);">
+                            <th style="text-align: left; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Fecha</th>
+                            <th style="text-align: left; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Tipo</th>
+                            <th style="text-align: left; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Desde / Hacia</th>
+                            <th style="text-align: left; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Asset</th>
+                            <th style="text-align: right; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Monto</th>
+                            <th style="text-align: center; padding: 1rem 0; color: var(--bf-gray-600); font-size: 0.875rem; font-weight: 600;">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">17 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">14:23 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <span class="tx-type transfer">
+                                    <i class="fas fa-arrow-right-arrow-left"></i> Transferencia
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">Trading Desk</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">→ Treasury</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #f7931a 0%, #d67400 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">₿</div>
+                                    <span style="font-weight: 600;">BTC</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right;">
+                                <div style="font-weight: 800; font-size: 1.125rem;">2.5 BTC</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">$171,050</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center;">
+                                <span class="status-badge completed">
+                                    <i class="fas fa-check-circle"></i> Completada
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">17 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">12:15 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <span class="tx-type trade">
+                                    <i class="fas fa-exchange-alt"></i> Trade
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">Hedge Fund A</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">BTC/USDT</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #26a69a 0%, #00796b 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">₮</div>
+                                    <span style="font-weight: 600;">USDT</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right;">
+                                <div style="font-weight: 800; font-size: 1.125rem; color: #00b894;">+$85,000</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">Compra</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center;">
+                                <span class="status-badge completed">
+                                    <i class="fas fa-check-circle"></i> Completada
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">16 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">18:47 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <span class="tx-type deposit">
+                                    <i class="fas fa-arrow-down"></i> Depósito
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">Binance</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">→ Liquidity Pool</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #627eea 0%, #5a67d8 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">Ξ</div>
+                                    <span style="font-weight: 600;">ETH</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right;">
+                                <div style="font-weight: 800; font-size: 1.125rem;">15.8 ETH</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">$54,115</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center;">
+                                <span class="status-badge completed">
+                                    <i class="fas fa-check-circle"></i> Completada
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">16 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">09:32 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <span class="tx-type transfer">
+                                    <i class="fas fa-arrow-right-arrow-left"></i> Transferencia
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="font-weight: 600;">Treasury</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">→ OTC Desk</div>
+                            </td>
+                            <td style="padding: 1.25rem 0;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #26a69a 0%, #00796b 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">$</div>
+                                    <span style="font-weight: 600;">USDC</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right;">
+                                <div style="font-weight: 800; font-size: 1.125rem;">$25,000</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">25,000 USDC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center;">
+                                <span class="status-badge pending">
+                                    <i class="fas fa-clock"></i> Pendiente
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr class="transaction-row">
+                            <td style="padding: 1.25rem 0; border-bottom: none;">
+                                <div style="font-weight: 600;">15 Oct 2025</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">22:18 UTC</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; border-bottom: none;">
+                                <span class="tx-type trade">
+                                    <i class="fas fa-exchange-alt"></i> Trade
+                                </span>
+                            </td>
+                            <td style="padding: 1.25rem 0; border-bottom: none;">
+                                <div style="font-weight: 600;">Trading Desk</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">SOL/USDT</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; border-bottom: none;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #9945ff 0%, #14f195 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700;">◎</div>
+                                    <span style="font-weight: 600;">SOL</span>
+                                </div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: right; border-bottom: none;">
+                                <div style="font-weight: 800; font-size: 1.125rem; color: #e84393;">-$42,500</div>
+                                <div style="font-size: 0.875rem; color: var(--bf-gray-600);">Venta</div>
+                            </td>
+                            <td style="padding: 1.25rem 0; text-align: center; border-bottom: none;">
+                                <span class="status-badge completed">
+                                    <i class="fas fa-check-circle"></i> Completada
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Portfolio Main Grid: Chart + Allocation -->
+        <div class="portfolio-main-grid">
+            <!-- Asset Allocation Chart -->
+            <div class="chart-container animate-fadeInUp delay-2">
+                <div class="chart-header">
+                    <h2 class="chart-title">Distribución de Activos</h2>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn-premium btn-primary-premium" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="portfolioChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Allocation Legend -->
+            <div class="allocation-legend animate-fadeInUp delay-3">
+                <h3 class="legend-title">Activos por Subcuenta</h3>
+                
+                <div class="legend-item hover-lift" data-index="0">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #0066ff;"></div>
+                        <span class="legend-name">Trading Desk</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$850K</span>
+                        <span class="legend-percentage">34.7%</span>
+                    </div>
+                </div>
+                
+                <div class="legend-item hover-lift" data-index="1">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #00b894;"></div>
+                        <span class="legend-name">Treasury</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$1.2M</span>
+                        <span class="legend-percentage">49.0%</span>
+                    </div>
+                </div>
+                
+                <div class="legend-item hover-lift" data-index="2">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #f5a623;"></div>
+                        <span class="legend-name">Hedge Fund A</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$280K</span>
+                        <span class="legend-percentage">11.4%</span>
+                    </div>
+                </div>
+                
+                <div class="legend-item hover-lift" data-index="3">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #a855f7;"></div>
+                        <span class="legend-name">Liquidity Pool</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$95K</span>
+                        <span class="legend-percentage">3.9%</span>
+                    </div>
+                </div>
+                
+                <div class="legend-item hover-lift" data-index="4">
+                    <div class="legend-left">
+                        <div class="legend-color" style="background: #ef4444;"></div>
+                        <span class="legend-name">OTC Desk</span>
+                    </div>
+                    <div class="legend-right">
+                        <span class="legend-amount">$25K</span>
+                        <span class="legend-percentage">1.0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subaccounts Grid -->
+        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 40px rgba(6, 182, 212, 0.4);">Subcuentas Segregadas</h2>
+        
+        <div class="subaccounts-grid">
+            <!-- Subaccount 1: Trading Desk -->
+            <div class="subaccount-card animate-fadeInUp delay-4 hover-lift">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>Trading Desk</h3>
+                        <div class="subaccount-id">SUB-TD-001</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$850,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$127,500</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$500K</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">8</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <span class="permission-text">Trading Spot</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon">
+                            <i class="fas fa-chart-candlestick"></i>
+                        </div>
+                        <span class="permission-text">Futuros</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon">
+                            <i class="fas fa-arrow-right-arrow-left"></i>
+                        </div>
+                        <span class="permission-text">Transferencias</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subaccount 2: Treasury -->
+            <div class="subaccount-card animate-fadeInUp delay-5 hover-lift">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>Treasury</h3>
+                        <div class="subaccount-id">SUB-TR-002</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$1,200,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$48,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$1M</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">3</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 212, 170, 0.1); color: #00b894;">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <span class="permission-text">Lending</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 212, 170, 0.1); color: #00b894;">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <span class="permission-text">Staking</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 212, 170, 0.1); color: #00b894;">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <span class="permission-text">Solo Lectura</span>
+                        <span class="permission-status" style="color: var(--bf-gray-400);">
+                            <i class="fas fa-times-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subaccount 3: Hedge Fund A -->
+            <div class="subaccount-card animate-fadeInUp delay-6 hover-lift">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>Hedge Fund A</h3>
+                        <div class="subaccount-id">SUB-HF-003</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$280,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$42,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$200K</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">2</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <span class="permission-text">Trading Spot</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <span class="permission-text">Opciones</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(245, 166, 35, 0.1); color: #f5a623;">
+                            <i class="fas fa-arrow-right-arrow-left"></i>
+                        </div>
+                        <span class="permission-text">Transferencias</span>
+                        <span class="permission-status" style="color: var(--bf-gray-400);">
+                            <i class="fas fa-times-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subaccount 4: Liquidity Pool -->
+            <div class="subaccount-card">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>Liquidity Pool</h3>
+                        <div class="subaccount-id">SUB-LP-004</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$95,000</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$11,400</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$100K</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">1</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <span class="permission-text">Liquidity Mining</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <span class="permission-text">Swaps</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <span class="permission-text">Farming</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subaccount 5: OTC Desk -->
+            <div class="subaccount-card">
+                <div class="subaccount-header">
+                    <div class="subaccount-info">
+                        <h3>OTC Desk</h3>
+                        <div class="subaccount-id">SUB-OTC-005</div>
+                    </div>
+                    <span class="subaccount-badge active">
+                        <i class="fas fa-circle"></i> Activa
+                    </span>
+                </div>
+                
+                <div class="subaccount-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Balance</span>
+                        <span class="metric-value">$33,920</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">P&L 30D</span>
+                        <span class="metric-value" style="color: #00b894;">+$5,088</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Límite Diario</span>
+                        <span class="metric-value">$50K</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Usuarios</span>
+                        <span class="metric-value">2</span>
+                    </div>
+                </div>
+                
+                <div class="permissions-list">
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <span class="permission-text">OTC Trading</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <span class="permission-text">Contratos Forward</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: rgba(0, 102, 255, 0.1); color: #0066ff;">
+                            <i class="fas fa-arrow-right-arrow-left"></i>
+                        </div>
+                        <span class="permission-text">Transferencias</span>
+                        <span class="permission-status">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Asset Allocation Table -->
+        <div class="assets-table">
+            <div class="table-header">
+                <h2>Distribución de Activos</h2>
+            </div>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Activo</th>
+                            <th>Balance</th>
+                            <th>Precio</th>
+                            <th>Valor USD</th>
+                            <th>Asignación</th>
+                            <th>24h Cambio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo" style="background: linear-gradient(135deg, #f7931a 0%, #e17055 100%);">₿</div>
+                                    <div>
+                                        <div style="font-weight: 700;">Bitcoin</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">BTC</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">12.45 BTC</td>
+                            <td>$68,420.00</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$851,829.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 34.7%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">34.7%</span>
+                                </div>
+                            </td>
+                            <td style="color: #00b894; font-weight: 700;">+2.4%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo" style="background: linear-gradient(135deg, #627eea 0%, #a855f7 100%);">Ξ</div>
+                                    <div>
+                                        <div style="font-weight: 700;">Ethereum</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">ETH</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">145.8 ETH</td>
+                            <td>$3,425.00</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$499,365.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 20.3%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">20.3%</span>
+                                </div>
+                            </td>
+                            <td style="color: #00b894; font-weight: 700;">+1.8%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo">₮</div>
+                                    <div>
+                                        <div style="font-weight: 700;">Tether USD</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">USDT</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">685,250 USDT</td>
+                            <td>$1.00</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$685,250.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 27.9%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">27.9%</span>
+                                </div>
+                            </td>
+                            <td style="color: var(--bf-gray-600); font-weight: 700;">0.0%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo" style="background: linear-gradient(135deg, #14f195 0%, #9945ff 100%);">◎</div>
+                                    <div>
+                                        <div style="font-weight: 700;">Solana</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">SOL</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">2,180 SOL</td>
+                            <td>$142.50</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$310,650.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 12.6%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">12.6%</span>
+                                </div>
+                            </td>
+                            <td style="color: #00b894; font-weight: 700;">+4.2%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset-info">
+                                    <div class="asset-logo" style="background: linear-gradient(135deg, #2775ca 0%, #00b894 100%);">◎</div>
+                                    <div>
+                                        <div style="font-weight: 700;">USD Coin</div>
+                                        <div style="font-size: 0.875rem; color: var(--bf-gray-600);">USDC</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700;">111,826 USDC</td>
+                            <td>$1.00</td>
+                            <td style="font-weight: 700; font-size: 1.125rem;">$111,826.00</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="allocation-bar">
+                                        <div class="allocation-fill" style="width: 4.5%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600;">4.5%</span>
+                                </div>
+                            </td>
+                            <td style="color: var(--bf-gray-600); font-weight: 700;">+0.0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Portfolio Pie Chart
+        const ctx = document.getElementById('portfolioChart').getContext('2d');
+        
+        const gradients = [
+            createGradient('#0066ff', '#0052cc'),
+            createGradient('#00b894', '#00d4aa'),
+            createGradient('#f5a623', '#d4940f'),
+            createGradient('#a855f7', '#7c3aed'),
+            createGradient('#ef4444', '#dc2626')
+        ];
+        
+        function createGradient(color1, color2) {
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, color1);
+            gradient.addColorStop(1, color2);
+            return gradient;
+        }
+        
+        const portfolioChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Trading Desk', 'Treasury', 'Hedge Fund A', 'Liquidity Pool', 'OTC Desk'],
+                datasets: [{
+                    data: [850000, 1200000, 280000, 95000, 25000],
+                    backgroundColor: [
+                        '#0066ff',
+                        '#00b894',
+                        '#f5a623',
+                        '#a855f7',
+                        '#ef4444'
+                    ],
+                    borderColor: 'white',
+                    borderWidth: 4,
+                    hoverOffset: 20,
+                    hoverBorderWidth: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                        padding: 16,
+                        titleColor: '#fff',
+                        titleFont: {
+                            size: 14,
+                            weight: '700'
+                        },
+                        bodyColor: '#fff',
+                        bodyFont: {
+                            size: 16,
+                            weight: '800'
+                        },
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.parsed;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return ` $${(value / 1000).toFixed(0)}K (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '65%',
+                animation: {
+                    animateRotate: true,
+                    animateScale: true,
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+        
+        // Legend item hover effect
+        document.querySelectorAll('.legend-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                const index = parseInt(this.dataset.index);
+                portfolioChart.setActiveElements([{datasetIndex: 0, index: index}]);
+                portfolioChart.update();
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                portfolioChart.setActiveElements([]);
+                portfolioChart.update();
+            });
+            
+            item.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                portfolioChart.toggleDataVisibility(index);
+                portfolioChart.update();
+            });
+        });
+        
+        // Performance Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        
+        // Generar datos de ejemplo para 30 días
+        const generatePerformanceData = () => {
+            const data = [];
+            const labels = [];
+            let value = 2000000; // $2M inicial
+            
+            for (let i = 30; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                labels.push(date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }));
+                
+                // Simular volatilidad con tendencia alcista
+                value += (Math.random() - 0.45) * 50000;
+                data.push(value);
+            }
+            
+            return { labels, data };
+        };
+        
+        const performanceData = generatePerformanceData();
+        
+        const gradientPerf = performanceCtx.createLinearGradient(0, 0, 0, 300);
+        gradientPerf.addColorStop(0, 'rgba(168, 85, 247, 0.3)');
+        gradientPerf.addColorStop(1, 'rgba(168, 85, 247, 0.0)');
+        
+        const performanceChart = new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: performanceData.labels,
+                datasets: [{
+                    label: 'Valor Total',
+                    data: performanceData.data,
+                    borderColor: '#a855f7',
+                    backgroundColor: gradientPerf,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#a855f7',
+                    pointHoverBorderColor: 'white',
+                    pointHoverBorderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                        padding: 12,
+                        titleColor: '#fff',
+                        titleFont: {
+                            size: 12,
+                            weight: '600'
+                        },
+                        bodyColor: '#fff',
+                        bodyFont: {
+                            size: 14,
+                            weight: '800'
+                        },
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                return ` $${(context.parsed.y / 1000000).toFixed(2)}M`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + (value / 1000000).toFixed(1) + 'M';
+                            },
+                            color: '#64748b',
+                            font: {
+                                size: 11,
+                                weight: '600'
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#64748b',
+                            font: {
+                                size: 11,
+                                weight: '600'
+                            },
+                            maxRotation: 0,
+                            autoSkip: true,
+                            maxTicksLimit: 8
+                        }
+                    }
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+        
+        // Period buttons functionality
+        document.querySelectorAll('.period-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Aquí se cargarían nuevos datos según el período
+                console.log('Período seleccionado:', this.dataset.period);
+            });
+        });
+        
+        // Filter buttons functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Aquí se filtrarían las transacciones
+                console.log('Filtro seleccionado:', this.textContent);
+            });
+        });
+    </script>
+</body>
+</html>

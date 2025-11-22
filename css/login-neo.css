@@ -1,0 +1,165 @@
+.login-body {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(98, 208, 255, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 10%, rgba(86, 115, 255, 0.12), transparent 28%),
+    radial-gradient(circle at 10% 80%, rgba(52, 211, 153, 0.08), transparent 34%), #090f1b;
+  color: #e7edf7;
+  min-height: 100vh;
+  font-family:
+    'Inter',
+    'Space Grotesk',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.login-shell {
+  max-width: 1100px;
+  margin: 32px auto 64px;
+  padding: 0 20px;
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.35);
+}
+
+.login-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.login-hero h1 {
+  font-size: 36px;
+  margin: 8px 0 12px;
+}
+
+.muted {
+  color: #b8c5d8;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  margin-top: 12px;
+}
+
+.hero-actions .btn {
+  text-decoration: none;
+}
+
+.login-card {
+  padding: 22px;
+}
+
+.login-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(98, 208, 255, 0.16);
+  color: #9bdcff;
+  font-weight: 700;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #c8d5e8;
+}
+
+.field input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px;
+  color: #e7edf7;
+}
+
+.password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#toggle-password {
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: #9bdcff;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #c8d5e8;
+  font-size: 14px;
+}
+
+.link {
+  color: #9bdcff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(120deg, #62d0ff 0%, #5673ff 80%);
+  color: #0c111b;
+}
+
+.btn.outline {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e7edf7;
+}
+
+.btn.ghost {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e7edf7;
+}
+
+.hint {
+  color: #9bdcff;
+  font-size: 13px;
+  min-height: 18px;
+}
+
+@media (max-width: 960px) {
+  .login-hero {
+    grid-template-columns: 1fr;
+  }
+}
