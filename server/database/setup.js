@@ -1,4 +1,5 @@
 const { db, testConnection, closeConnection } = require('./config');
+const { v4: uuidv4 } = require('uuid');
 
 async function setupDatabase() {
   console.log('🏗️  Iniciando construcción del Búnker de Datos Persistente...\n');
@@ -263,6 +264,7 @@ async function setupDatabase() {
     }
 
     // Seed básico para entornos de desarrollo
+    // Seed solo en desarrollo
     if ((process.env.NODE_ENV || 'development') === 'development') {
       const samplePositions = await db('vault_positions').count({ count: '*' }).first();
       if (samplePositions && samplePositions.count === 0) {
@@ -296,7 +298,10 @@ async function setupDatabase() {
     console.error('🔧 Detalles técnicos:', error);
     process.exit(1);
   } finally {
-    await closeConnection();
+    const keepOpen = process.env.KEEP_DB_OPEN === 'true';
+    if (!keepOpen) {
+      await closeConnection();
+    }
   }
 }
 

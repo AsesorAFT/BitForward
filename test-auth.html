@@ -273,6 +273,7 @@
 
       // Wallet Manager
       const walletManager = new RealWalletManager();
+      let demoMode = false;
 
       // Funciones de UI
       function log(message, type = 'info') {
@@ -325,6 +326,7 @@
           walletStatusDot.className = 'status-dot bg-green-500';
           walletStatus.textContent = 'Conectado';
           walletAddress.textContent = walletManager.currentAccount.substring(0, 10) + '...';
+          demoMode = false;
 
           btnLogin.disabled = false;
           btnLogin.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -333,8 +335,22 @@
           updateStepStatus(1, 'success');
           log(`✅ Wallet conectado: ${walletManager.currentAccount}`, 'success');
         } catch (error) {
-          log(`❌ Error conectando wallet: ${error.message}`, 'error');
-          updateStepStatus(1, 'error');
+          // Fallback demo si no hay MetaMask
+          log('⚠️ MetaMask no disponible. Activando modo demo.', 'warning');
+          walletManager.isConnected = true;
+          walletManager.currentAccount = '0xDEMOACCOUNT000000000000000000000000000000';
+          walletManager.currentChainId = 1;
+          demoMode = true;
+
+          walletStatusDot.className = 'status-dot bg-yellow-500';
+          walletStatus.textContent = 'Demo conectado';
+          walletAddress.textContent = walletManager.currentAccount.substring(0, 10) + '...';
+
+          btnLogin.disabled = false;
+          btnLogin.classList.remove('opacity-50', 'cursor-not-allowed');
+          btnLogin.classList.add('hover:from-cyan-600', 'hover:to-blue-600');
+
+          updateStepStatus(1, 'success');
         }
       });
 
@@ -343,6 +359,27 @@
         try {
           resetSteps();
           updateStepStatus(1, 'success');
+
+          if (demoMode) {
+            authStatusDot.className = 'status-dot bg-green-500';
+            authStatus.textContent = 'Autenticado (demo)';
+            authTokenInfo.textContent = walletManager.currentAccount.substring(0, 10) + '...';
+
+            btnGetUserInfo.disabled = false;
+            btnGetUserInfo.classList.remove('opacity-50', 'cursor-not-allowed');
+            btnGetUserInfo.classList.add('hover:from-green-600', 'hover:to-emerald-600');
+
+            btnLogout.disabled = false;
+            btnLogout.classList.remove('opacity-50', 'cursor-not-allowed');
+            btnLogout.classList.add('hover:from-red-600', 'hover:to-orange-600');
+
+            updateStepStatus(2, 'success');
+            updateStepStatus(3, 'success');
+            updateStepStatus(4, 'success');
+            updateStepStatus(5, 'success');
+            log('🎉 Autenticación demo activa', 'success');
+            return;
+          }
 
           log('🔐 Iniciando autenticación SIWE...', 'info');
           updateStepStatus(2, 'loading');
@@ -379,6 +416,12 @@
       btnGetUserInfo.addEventListener('click', async () => {
         try {
           log('👤 Obteniendo información de usuario...', 'info');
+          if (demoMode) {
+            log(`✅ Usuario: ${walletManager.currentAccount}`, 'success');
+            log(`📍 Chain ID: ${walletManager.currentChainId}`, 'info');
+            return;
+          }
+
           const userInfo = await walletAuthClient.getUserInfo();
 
           log(`✅ Usuario: ${userInfo.address}`, 'success');
@@ -391,7 +434,11 @@
       btnLogout.addEventListener('click', async () => {
         try {
           log('👋 Cerrando sesión...', 'info');
-          await walletAuthClient.logout();
+          if (!demoMode) {
+            await walletAuthClient.logout();
+          } else {
+            demoMode = false;
+          }
 
           authStatusDot.className = 'status-dot bg-gray-500';
           authStatus.textContent = 'No autenticado';

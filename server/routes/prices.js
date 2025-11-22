@@ -11,7 +11,7 @@ const router = express.Router();
 router.get('/', optionalAuth, async (req, res) => {
   try {
     const assets = (req.query.assets || 'bitcoin,ethereum,solana').split(',');
-    const vs = req.query.vs || 'usd';
+    const vs = (req.query.vs || require('../config/config').BASE_CURRENCY || 'usd').toLowerCase();
 
     const result = await priceService.getPrices(assets, vs);
     if (!result.success) {

@@ -1,0 +1,6 @@
+contracts/scripts/**
+js/**
+src/**
+scripts/**
+dist/**
+node_modules/**

@@ -93,6 +93,16 @@ const config = {
     cacheTtlMs: parseInt(process.env.PRICE_CACHE_TTL_MS || '60000', 10), // 60s por defecto
     coingeckoUrl: 'https://api.coingecko.com/api/v3/simple/price',
   },
+
+  // Moneda base
+  BASE_CURRENCY: (process.env.BASE_CURRENCY || 'usdt').toLowerCase(),
+
+  // Riesgo y límites
+  RISK: {
+    MAX_LTV: parseFloat(process.env.MAX_LTV || '85'), // % máximo LTV en lending
+    MIN_HEALTH_FACTOR: parseFloat(process.env.MIN_HEALTH_FACTOR || '60'), // health factor mínimo para alertar
+    MAX_FORWARD_NOTIONAL: parseFloat(process.env.MAX_FORWARD_NOTIONAL || '500000'), // USD
+  },
 };
 
 // Validar configuración crítica

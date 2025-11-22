@@ -1,0 +1,121 @@
+/* bf-deposit-modal.css - Modal de depósito BitForward */
+
+.bf-deposit-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2100;
+}
+.bf-deposit-overlay.open {
+  display: flex;
+}
+
+.bf-deposit-modal {
+  background: linear-gradient(135deg, #23293a 60%, #2d3146 100%);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.25);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 370px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: modalIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.bf-deposit-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 10;
+}
+.bf-deposit-close:hover {
+  color: #fff;
+}
+
+.bf-deposit-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #c7d2fe;
+  margin-bottom: 0.7rem;
+  text-align: center;
+}
+.bf-deposit-network {
+  color: #a5b4fc;
+  font-size: 1rem;
+  margin-bottom: 1.1rem;
+  text-align: center;
+}
+.bf-deposit-qr {
+  background: #181e2a;
+  border-radius: 1rem;
+  padding: 1.2rem;
+  margin-bottom: 1.1rem;
+  box-shadow: 0 2px 8px 0 #0002;
+}
+.bf-deposit-qr img {
+  width: 140px;
+  height: 140px;
+}
+.bf-deposit-address {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: #23293a;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 1.1rem;
+  box-shadow: 0 2px 8px 0 #0002;
+}
+.bf-deposit-address button {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.97rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.bf-deposit-address button:hover {
+  background: #2563eb;
+}
+.bf-deposit-warning {
+  color: #fbbf24;
+  background: #23293a;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.97rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.bf-deposit-warning strong {
+  color: #fbbf24;
+}
+.bf-deposit-warning .min {
+  color: #f59e42;
+  font-size: 0.93rem;
+}

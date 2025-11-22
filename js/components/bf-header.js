@@ -10,9 +10,8 @@ class BFHeader extends HTMLElement {
   }
 
   connectedCallback() {
-    this.shadowRoot
-      .querySelector('.bf-wallet-btn')
-      .addEventListener('click', () => this.toggleWallet());
+    const walletBtn = this.shadowRoot.querySelector('.bf-wallet-btn');
+    if (walletBtn) walletBtn.addEventListener('click', () => this.toggleWallet());
     this.shadowRoot
       .querySelector('.bf-menu-toggle')
       .addEventListener('click', () => this.toggleMenu());
@@ -20,9 +19,8 @@ class BFHeader extends HTMLElement {
   }
 
   disconnectedCallback() {
-    this.shadowRoot
-      .querySelector('.bf-wallet-btn')
-      .removeEventListener('click', () => this.toggleWallet());
+    const walletBtn = this.shadowRoot.querySelector('.bf-wallet-btn');
+    if (walletBtn) walletBtn.removeEventListener('click', () => this.toggleWallet());
     this.shadowRoot
       .querySelector('.bf-menu-toggle')
       .removeEventListener('click', () => this.toggleMenu());
@@ -51,13 +49,19 @@ class BFHeader extends HTMLElement {
     const walletStatus = this.walletConnected ? 'Conectado' : 'Conectar Wallet';
     const walletClass = this.walletConnected ? 'connected' : '';
     const menuClass = this.menuOpen ? 'open' : '';
+    const hideLogo = this.hasAttribute('hide-logo');
+    const hideWallet = this.hasAttribute('hide-wallet');
     this.shadowRoot.innerHTML = `
       <style>${styles}</style>
       <header>
-        <div class="bf-logo">
+        ${
+          hideLogo
+            ? ''
+            : `<div class="bf-logo">
           <img src="${logoSrc}" alt="BitForward logo" />
           <span>BitForward</span>
-        </div>
+        </div>`
+        }
         <button class="bf-menu-toggle" aria-label="Abrir menú">
           <span></span><span></span><span></span>
         </button>
@@ -68,7 +72,7 @@ class BFHeader extends HTMLElement {
           <a href="community.html">Comunidad</a>
           <slot></slot>
         </nav>
-        <button class="bf-wallet-btn ${walletClass}">${walletStatus}</button>
+        ${hideWallet ? '' : `<button class="bf-wallet-btn ${walletClass}">${walletStatus}</button>`}
       </header>
     `;
   }

@@ -10,6 +10,10 @@
     <title>Dashboard | BitForward</title>
 
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
+    />
 
     <!-- Sistema de Diseño y Estilos Universales -->
     <link rel="stylesheet" href="css/design-system.css" />
@@ -20,205 +24,283 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
   <body>
-    <!-- Contenedor para la Navegación Universal -->
-
-    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg" hide-logo>
       <a class="cta" href="enterprise.html">Enterprise</a>
     </bf-header>
     <bf-sidebar></bf-sidebar>
 
-    <main class="dashboard-main" style="margin-left: 240px; min-height: 100vh">
-      <div class="dashboard-header">
-        <h1 class="dashboard-title">Tu Panel de Control</h1>
-        <p class="dashboard-subtitle">
-          Gestiona tus activos y estrategias de trading en un solo lugar.
-        </p>
-      </div>
-
-      <!-- Sección de Métricas Principales -->
-      <section class="stats-grid">
-        <div class="card stat-card">
-          <div class="stat-icon" style="--icon-color: #22c55e">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
-              />
-            </svg>
-          </div>
-          <div class="stat-content">
-            <span class="stat-label">Valor del Portfolio</span>
-            <span class="stat-value" id="portfolio-value">$125,847.32</span>
-          </div>
-          <div class="stat-change positive">+12.5%</div>
-        </div>
-        <div class="card stat-card">
-          <div class="stat-icon" style="--icon-color: #3b82f6">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-          </div>
-          <div class="stat-content">
-            <span class="stat-label">Fondos Disponibles</span>
-            <span class="stat-value" id="portfolio-balance">$45,230.18</span>
+    <main class="dashboard-main">
+      <section class="hero card glass">
+        <div class="hero-copy">
+          <p class="eyebrow">Panel Pro</p>
+          <h1 class="dashboard-title">Tu Panel de Control</h1>
+          <p class="dashboard-subtitle">
+            Gestiona tus activos y estrategias de trading en un solo lugar con datos en vivo.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="bf-new-order">Nueva orden</button>
+            <button class="btn btn-ghost" id="bf-export-report">Descargar reporte</button>
           </div>
         </div>
-        <div class="card stat-card">
-          <div class="stat-icon" style="--icon-color: #f97316">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-              />
-            </svg>
-          </div>
-          <div class="stat-content">
-            <span class="stat-label">P/L (24h)</span>
-            <span class="stat-value" id="portfolio-profit">+$2,847.52</span>
-          </div>
-          <div class="stat-change positive">+2.31%</div>
-        </div>
-        <div class="card stat-card">
-          <div class="stat-icon" style="--icon-color: #a855f7">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-              />
-            </svg>
-          </div>
-          <div class="stat-content">
-            <span class="stat-label">Contratos Activos</span>
-            <span class="stat-value">8</span>
-          </div>
+        <div class="hero-kpis">
+          <article class="kpi-card positive">
+            <header>
+              <span class="stat-label">P/L (24h)</span>
+              <span class="badge trend positive">+2.31%</span>
+            </header>
+            <div class="kpi-value" id="portfolio-profit">+$2,847.52</div>
+            <p class="kpi-sub">vs. día anterior</p>
+          </article>
+          <article class="kpi-card">
+            <header>
+              <span class="stat-label">Equity total</span>
+              <span class="badge ghost">USD</span>
+            </header>
+            <div class="kpi-value">$158,904.31</div>
+            <p class="kpi-sub">Incluye saldo spot y contratos</p>
+          </article>
+          <article class="kpi-card">
+            <header>
+              <span class="stat-label">Margen cross</span>
+              <span class="badge ghost">Activa</span>
+            </header>
+            <div class="kpi-value">32%</div>
+            <p class="kpi-sub">Utilización actual</p>
+          </article>
+          <article class="kpi-card">
+            <header>
+              <span class="stat-label">Contratos activos</span>
+              <span class="badge ghost">Perps</span>
+            </header>
+            <div class="kpi-value">8</div>
+            <p class="kpi-sub">Incluye órdenes limit y market</p>
+          </article>
         </div>
       </section>
 
-      <!-- Gráfico Principal -->
-      <section class="card chart-card">
+      <section class="trading-grid">
+        <aside class="card glass markets-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Mercados</p>
+              <h2 class="panel-title">Top tokens</h2>
+            </div>
+            <span class="badge ghost">En vivo</span>
+          </div>
+          <bf-market-list></bf-market-list>
+        </aside>
+
+        <section class="center-stack">
+          <article class="card glass trading-card">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow" id="bf-active-market">BTC-USD</p>
+                <h2 class="panel-title">Gráfico en tiempo real</h2>
+              </div>
+              <div class="timeframe-group" aria-label="Selecciona timeframe">
+                <button class="chip active" data-timeframe="15m">15m</button>
+                <button class="chip" data-timeframe="1H">1H</button>
+                <button class="chip" data-timeframe="4H">4H</button>
+                <button class="chip" data-timeframe="1D">1D</button>
+              </div>
+            </div>
+            <div class="chart-shell skeleton" data-skeleton="chart">
+              <div id="bf-trading-chart"></div>
+            </div>
+          </article>
+
+          <article class="card glass orderbook-card">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Libro de órdenes</p>
+                <h2 class="panel-title">Profundidad del mercado</h2>
+              </div>
+              <div class="orderbook-legend">
+                <span class="legend-bid">Bids</span>
+                <span class="legend-ask">Asks</span>
+              </div>
+            </div>
+            <div id="bf-orderbook" class="orderbook-table skeleton" data-skeleton="orderbook"></div>
+          </article>
+        </section>
+
+        <aside class="card glass trade-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Trading</p>
+              <h2 class="panel-title">Perpetuos</h2>
+            </div>
+            <span class="badge ghost">Demo</span>
+          </div>
+          <form id="bf-trade-form" novalidate>
+            <label for="bf-market-select">Par</label>
+            <select id="bf-market-select" class="input">
+              <option>BTC-USD</option>
+              <option>ETH-USD</option>
+              <option>SOL-USD</option>
+              <option>AVAX-USD</option>
+              <option>MATIC-USD</option>
+            </select>
+
+            <div class="form-row">
+              <div>
+                <label>Margen</label>
+                <div class="toggle" id="bf-margin-toggle" role="group" aria-label="Modo de margen">
+                  <button type="button" class="toggle-btn active" data-mode="cross">Cross</button>
+                  <button type="button" class="toggle-btn" data-mode="isolated">Isolated</button>
+                </div>
+              </div>
+              <div>
+                <label for="bf-leverage">Apalancamiento</label>
+                <div class="input-with-addon">
+                  <input id="bf-leverage" class="input" type="number" min="1" max="50" value="10" />
+                  <span class="addon">x</span>
+                </div>
+              </div>
+            </div>
+
+            <label for="bf-size">Cantidad</label>
+            <div class="input-with-quick">
+              <input
+                id="bf-size"
+                class="input"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+                inputmode="decimal"
+              />
+              <div class="quick-size" aria-label="Usar porcentaje del balance">
+                <button type="button" data-percent="25">25%</button>
+                <button type="button" data-percent="50">50%</button>
+                <button type="button" data-percent="75">75%</button>
+                <button type="button" data-percent="100">100%</button>
+              </div>
+            </div>
+
+            <div class="trade-summary" id="bf-trade-summary" role="status" aria-live="polite">
+              Este trade usa margin <strong>cross</strong> a <strong>10x</strong>.
+            </div>
+
+            <div class="trade-actions">
+              <button type="submit" class="btn btn-success full-width">Comprar / Long</button>
+              <button type="button" id="bf-short-btn" class="btn btn-danger full-width">
+                Vender / Short
+              </button>
+            </div>
+          </form>
+
+          <div class="rfq-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">RFQ</p>
+                <h3 class="panel-title">Quotes</h3>
+              </div>
+              <span class="badge ghost">Intents</span>
+            </div>
+            <div id="bf-rfq-quotes" class="rfq-list skeleton" data-skeleton="rfq">
+              Cargando quotes…
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="portfolio-grid">
+        <article class="card glass positions-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Posiciones</p>
+              <h2 class="panel-title">Abiertas</h2>
+            </div>
+            <span class="badge ghost">En vivo</span>
+          </div>
+          <div id="bf-open-positions" class="table-list skeleton" data-skeleton="positions"></div>
+        </article>
+        <article class="card glass history-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Órdenes</p>
+              <h2 class="panel-title">Historial</h2>
+            </div>
+            <span class="badge ghost">Últimas 24h</span>
+          </div>
+          <div id="bf-order-history" class="table-list skeleton" data-skeleton="history"></div>
+        </article>
+      </section>
+
+      <section class="card chart-card glass">
         <div class="chart-header">
           <h2 class="chart-title">Evolución del Portfolio</h2>
           <div class="chart-legend">
             <span class="legend-item">Valor Total</span>
           </div>
         </div>
-        <div id="market-overview-container">
-          <!-- El gráfico de ApexCharts se renderizará aquí -->
-        </div>
+        <div id="market-overview-container"></div>
       </section>
 
-      <!-- Acciones Rápidas y Tabla de Activos -->
       <div class="dashboard-columns">
         <div class="column-main">
-          <section class="card assets-table-card">
-            <h2 class="card-header-title">Tus Activos</h2>
+          <section class="card assets-table-card glass">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Cartera</p>
+                <h2 class="panel-title">Tus Activos</h2>
+              </div>
+              <input
+                type="search"
+                id="assets-search"
+                class="input search-input"
+                placeholder="Buscar activo…"
+                aria-label="Buscar activo"
+              />
+            </div>
             <div class="table-responsive">
               <table class="assets-table">
                 <thead>
                   <tr>
-                    <th>Activo</th>
-                    <th>Balance</th>
-                    <th>Precio</th>
-                    <th>Valor</th>
-                    <th>Cambio (24h)</th>
+                    <th data-sort="name">Activo</th>
+                    <th data-sort="balance">Balance</th>
+                    <th data-sort="price">Precio</th>
+                    <th data-sort="value">Valor</th>
+                    <th data-sort="change">Cambio (24h)</th>
                   </tr>
                 </thead>
-                <tbody id="assets-container">
-                  <!-- Los activos se cargarán aquí dinámicamente -->
-                  <tr>
-                    <td>
-                      <div class="asset-info">
-                        <img
-                          src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=029"
-                          alt="BTC"
-                          class="asset-logo"
-                        />
-                        <div>
-                          <span class="asset-name">Bitcoin</span>
-                          <span class="asset-symbol">BTC</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>1.25 BTC</td>
-                    <td>$67,123.45</td>
-                    <td>$83,904.31</td>
-                    <td class="positive">+1.5%</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="asset-info">
-                        <img
-                          src="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=029"
-                          alt="ETH"
-                          class="asset-logo"
-                        />
-                        <div>
-                          <span class="asset-name">Ethereum</span>
-                          <span class="asset-symbol">ETH</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>15.2 ETH</td>
-                    <td>$3,540.12</td>
-                    <td>$53,810.00</td>
-                    <td class="negative">-0.8%</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="asset-info">
-                        <img
-                          src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=029"
-                          alt="SOL"
-                          class="asset-logo"
-                        />
-                        <div>
-                          <span class="asset-name">Solana</span>
-                          <span class="asset-symbol">SOL</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>120 SOL</td>
-                    <td>$172.50</td>
-                    <td>$20,700.00</td>
-                    <td class="positive">+4.2%</td>
-                  </tr>
-                </tbody>
+                <tbody id="assets-container"></tbody>
               </table>
             </div>
           </section>
         </div>
         <div class="column-side">
-          <section class="card quick-actions-card">
+          <section class="card quick-actions-card glass">
             <h2 class="card-header-title">Acciones Rápidas</h2>
             <div class="actions-list">
-              <button class="btn btn-primary full-width">Crear Contrato</button>
-              <button class="btn btn-secondary full-width">Depositar Fondos</button>
-              <button class="btn btn-secondary full-width">Retirar Fondos</button>
-              <button class="btn btn-secondary full-width">Ver Análisis</button>
+              <button class="btn btn-primary full-width" data-action="create-contract">
+                Crear Contrato
+              </button>
+              <button class="btn btn-secondary full-width" data-action="deposit">
+                Depositar Fondos
+              </button>
+              <button class="btn btn-secondary full-width" data-action="withdraw">
+                Retirar Fondos
+              </button>
+              <button class="btn btn-secondary full-width" data-action="analysis">
+                Ver Análisis
+              </button>
             </div>
           </section>
         </div>
       </div>
     </main>
 
-    <!-- Contenedor para el Footer Universal -->
     <bf-footer></bf-footer>
 
-    <!-- Scripts Universales y de la Página -->
     <script type="module" src="js/components/bf-header.js"></script>
     <script type="module" src="js/components/bf-sidebar.js"></script>
     <script type="module" src="js/components/bf-footer.js"></script>
     <script type="module" src="js/dashboard-charts.js"></script>
+    <script type="module" src="js/components/bf-market-list.js"></script>
+    <script type="module" src="js/components/bf-toast.js"></script>
+    <script type="module" src="js/dashboard-market-sync.js"></script>
+    <bf-toast id="bf-toast"></bf-toast>
   </body>
 </html>

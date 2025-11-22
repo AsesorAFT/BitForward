@@ -2,18 +2,72 @@
 /* Estilos para la nueva interfaz de Spot Trading */
 
 :root {
-  --exchange-bg: #0f172a;
+  --exchange-bg: #0b111d;
+  --panel-bg: rgba(22, 29, 43, 0.9);
+  --border: #1f2a3c;
   --grid-border: #1e293b;
-  --green: #10b981;
-  --red: #ef4444;
-  --green-transparent: rgba(16, 185, 129, 0.1);
-  --red-transparent: rgba(239, 68, 68, 0.1);
+  --green: #19c37d;
+  --red: #f75555;
+  --yellow: #f0b90b;
+  --green-transparent: rgba(25, 195, 125, 0.1);
+  --red-transparent: rgba(247, 85, 85, 0.1);
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.3);
 }
 
 body {
-  background-color: var(--exchange-bg);
+  background:
+    radial-gradient(120% 120% at 0% 0%, rgba(25, 195, 125, 0.08), transparent 40%),
+    radial-gradient(120% 120% at 100% 0%, rgba(240, 185, 11, 0.08), transparent 45%),
+    var(--exchange-bg);
   color: var(--bf-text-secondary);
   padding-top: 60px; /* Altura de la navegación universal */
+}
+
+.live-strip {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.strip-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.strip-price {
+  font-weight: 700;
+  color: var(--bf-text-primary);
+}
+
+.wallet-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: linear-gradient(120deg, rgba(59, 130, 246, 0.16), rgba(16, 185, 129, 0.16));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.wallet-status {
+  font-weight: 600;
+  color: var(--bf-text-primary);
+}
+
+.wallet-network {
+  color: var(--bf-text-tertiary);
+  font-size: 0.75rem;
+}
+
+.wallet-cta .btn {
+  width: 100%;
 }
 
 .exchange-container {
@@ -25,8 +79,8 @@ body {
     'orders chart history'
     'positions positions positions';
   height: calc(100vh - 60px);
-  gap: 8px;
-  padding: 8px;
+  gap: 12px;
+  padding: 16px 18px 12px;
   font-family: 'Inter', sans-serif;
 }
 
@@ -49,12 +103,13 @@ body {
 
 /* --- Componentes con Glassmorphism --- */
 .exchange-module {
-  background: var(--bf-glass-bg);
-  border: 1px solid var(--bf-glass-border);
-  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(20, 27, 40, 0.95), rgba(13, 18, 30, 0.95));
+  border: 1px solid var(--border);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
 .exchange-module-header {
@@ -71,6 +126,7 @@ body {
   align-items: center;
   gap: 24px;
   padding: 16px;
+  border-bottom: 1px solid var(--border);
 }
 
 .market-selector {
@@ -88,6 +144,11 @@ body {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--bf-text-primary);
+}
+
+.market-price {
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .market-stat {
@@ -117,6 +178,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  border-bottom: 1px solid var(--border);
 }
 
 .order-tabs {
@@ -137,8 +199,8 @@ body {
 }
 
 .order-tab.active {
-  color: var(--bf-accent-primary);
-  border-bottom-color: var(--bf-accent-primary);
+  color: var(--yellow);
+  border-bottom-color: var(--yellow);
 }
 
 .input-group {
@@ -155,9 +217,9 @@ body {
 .input-group input {
   width: 100%;
   padding: 10px;
-  background: #0a101e;
+  background: rgba(8, 12, 20, 0.9);
   border: 1px solid var(--grid-border);
-  border-radius: 4px;
+  border-radius: 8px;
   color: var(--bf-text-primary);
   font-size: 0.875rem;
 }
@@ -165,6 +227,28 @@ body {
 .order-form-container .btn {
   font-size: 0.875rem;
   padding: 12px;
+}
+
+.btn-long {
+  background: linear-gradient(135deg, #1ddc8d, #0fb776);
+  border: 1px solid rgba(29, 220, 141, 0.4);
+  color: #04120d;
+  font-weight: 700;
+}
+
+.btn-short {
+  background: linear-gradient(135deg, #f97373, #e24545);
+  border: 1px solid rgba(249, 115, 115, 0.4);
+  color: #fff;
+  font-weight: 700;
+}
+
+.depth-select {
+  background: rgba(8, 12, 20, 0.9);
+  border: 1px solid var(--border);
+  color: var(--bf-text-primary);
+  border-radius: 8px;
+  padding: 8px 10px;
 }
 
 /* --- Order Book y Trade History --- */
@@ -179,7 +263,7 @@ body {
 .data-table-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 4px 16px;
+  padding: 6px 16px;
 }
 
 .data-table-header {
@@ -210,12 +294,12 @@ body {
 
 .order-book-row.ask::before {
   right: 0;
-  background-color: var(--red-transparent);
+  background: linear-gradient(90deg, transparent, rgba(247, 85, 85, 0.24));
 }
 
 .order-book-row.bid::before {
   left: 0;
-  background-color: var(--green-transparent);
+  background: linear-gradient(90deg, rgba(25, 195, 125, 0.24), transparent);
 }
 
 .order-book-spread {
@@ -233,11 +317,28 @@ body {
 /* --- Chart --- */
 .exchange-chart {
   padding: 0;
+  min-height: 520px;
 }
 
 #chart-container {
   width: 100%;
   height: 100%;
+}
+
+.exchange-trade-history .data-table-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.user-positions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-positions-table th,
+.user-positions-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  text-align: left;
 }
 
 /* --- Posiciones del Usuario --- */

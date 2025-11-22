@@ -3,7 +3,6 @@
  * Sistema robusto con logging, categorización y respuestas estandarizadas
  */
 
-const { AppError } = require('../errors/AppError');
 const config = require('../config/config');
 
 class ErrorHandler {
@@ -15,7 +14,7 @@ class ErrorHandler {
   /**
    * Middleware principal de manejo de errores
    */
-  handle = (error, req, res, next) => {
+  handle = (error, req, res) => {
     // Registrar error para análisis
     this.logError(error, req);
 

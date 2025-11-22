@@ -3,7 +3,6 @@
  * Sistema robusto con JWT, rate limiting y gestión de sesiones
  */
 
-const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 const database = require('../database/database');
 const rateLimit = require('express-rate-limit');

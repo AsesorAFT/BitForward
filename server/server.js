@@ -26,6 +26,7 @@ const lendingRoutes = require('./routes/lending');
 const defiRoutes = require('./routes/defi');
 const priceRoutes = require('./routes/prices');
 const configRoutes = require('./routes/config');
+const riskRoutes = require('./routes/risk');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 const { rateLimitMiddleware } = require('./middleware/rateLimiter');
 const validationService = require('./validators/validationService');
@@ -167,6 +168,7 @@ class BitForwardServer {
     this.app.use('/api/defi', defiRoutes);
     this.app.use('/api/prices', priceRoutes);
     this.app.use('/api/config', configRoutes);
+    this.app.use('/api/risk', riskRoutes);
 
     // Información de la API
     this.app.get('/api', (req, res) => {
