@@ -3,17 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BitForward - Mission Control DeFi</title>
-
+    <title>BitForward | DeFi Launch by AFORTU Holdings</title>
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="manifest" href="manifest.json" />
-
     <link rel="stylesheet" href="css/design-system.css" />
     <link rel="stylesheet" href="css/landing-mission.css" />
-
     <script type="module" src="js/landing.js"></script>
   </head>
-
   <body class="landing-body">
     <bf-header logo-src="assets/logo-astronaut-rocket.svg">
       <a class="cta" href="enterprise.html">Enterprise</a>
@@ -22,32 +18,33 @@
     <main class="landing-shell">
       <section class="hero card">
         <div class="hero-copy">
-          <p class="eyebrow">BitForward Mission Control</p>
-          <h1>Contratos, préstamos y coberturas en una sola plataforma.</h1>
+          <p class="eyebrow">BitForward • AFORTU Holdings</p>
+          <h1>Despegando en el mundo DeFi.</h1>
           <p class="lead">
-            Plataforma DeFi empresarial: contratos forward, préstamos colateralizados, vault seguro
-            y hedges automáticos. Multi-chain y listo para producción con CSP, JWT y TLS.
+            Fondea proyectos, opera tu exchange cripto y ejecuta forwards/perpetuos con
+            apalancamiento. Todo en un panel con riesgo controlado y liquidez multi-chain.
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="mission-control.html">Ir a Mission Control</a>
-            <a class="btn ghost" href="#stack">Ver el stack</a>
+            <a class="btn primary" href="mission-control.html">Abrir Mission Control</a>
+            <a class="btn ghost" href="#demo">Probar demo</a>
           </div>
           <div class="trust">
-            <span class="pill">Auditoría continua</span>
-            <span class="pill">Rate limit + CSP</span>
-            <span class="pill">Multi-chain ready</span>
+            <span class="pill">Perps & Forwards</span>
+            <span class="pill">Préstamos colateralizados</span>
+            <span class="pill">Exchange cripto</span>
+            <span class="pill">Fondeo de proyectos</span>
           </div>
         </div>
         <div class="hero-kpis">
           <div class="kpi">
             <div class="label">TVL estimado</div>
             <div class="value" id="kpi-tvl">$--</div>
-            <div class="hint">Precios en vivo</div>
+            <div class="hint">Precios cacheados</div>
           </div>
           <div class="kpi">
-            <div class="label">Contratos activos</div>
+            <div class="label">Contratos abiertos</div>
             <div class="value" id="kpi-contracts">--</div>
-            <div class="hint">Forwards + hedges</div>
+            <div class="hint">Perps + forwards</div>
           </div>
           <div class="kpi">
             <div class="label">Préstamos</div>
@@ -59,125 +56,88 @@
 
       <section class="stats">
         <div class="stat">
-          <div class="label">Redes soportadas</div>
+          <div class="label">Redes</div>
           <div class="value" id="kpi-networks">--</div>
-          <div class="hint">Ethereum, Polygon, BSC, Solana</div>
+          <div class="hint">ETH, Polygon, BSC, Solana</div>
         </div>
         <div class="stat">
           <div class="label">Disponibilidad</div>
           <div class="value">99.99%</div>
-          <div class="hint">TLS + rate limiting</div>
+          <div class="hint">TLS + CSP + JWT</div>
         </div>
         <div class="stat">
-          <div class="label">Seguridad</div>
-          <div class="value">CSP + JWT</div>
-          <div class="hint">Nonce, sin inline scripts</div>
+          <div class="label">Coberturas</div>
+          <div class="value">RFQ</div>
+          <div class="hint">Cross-chain</div>
         </div>
         <div class="stat">
-          <div class="label">Soporte</div>
-          <div class="value">24/7</div>
-          <div class="hint">Enterprise</div>
+          <div class="label">Fondeo</div>
+          <div class="value">Proyectos</div>
+          <div class="hint">Launch & Lending</div>
         </div>
       </section>
 
-      <section class="stack card" id="stack">
+      <section class="strip card" id="demo">
+        <div class="strip-prices" id="live-prices"></div>
+        <div class="strip-cta">
+          <p class="eyebrow">Demo</p>
+          <h3>Prueba el flujo completo</h3>
+          <p class="muted">
+            Login, crea un contrato/hedge y mira alertas de riesgo en tiempo real.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="login.html">Iniciar sesión</a>
+            <a class="btn ghost" href="mission-control.html">Ir al panel</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="stack card">
         <div class="stack-header">
           <p class="eyebrow">Stack DeFi</p>
-          <h2>Todo lo que necesitas para operar</h2>
-          <p class="muted">Contratos forward, préstamos, vault y hedges, listos para producción.</p>
+          <h2>BitForward Forward Suite</h2>
+          <p class="muted">
+            Perps y forwards con apalancamiento, lending colateralizado, RFQ cross-chain y fondeo de
+            proyectos.
+          </p>
         </div>
         <div class="stack-grid">
           <div class="stack-card">
             <div class="icon">⇅</div>
-            <h3>Contratos Forward</h3>
+            <h3>Forward / Perps</h3>
             <p>
-              Creación y gestión con métricas de P&L y expiraciones. Persistencia con SQLite/knex.
+              Sin custodia, funding y P&L en vivo. Control de riesgo, caps y apalancamiento
+              responsable.
             </p>
-            <a class="link" href="mission-control.html">Explorar</a>
           </div>
           <div class="stack-card">
             <div class="icon">💰</div>
-            <h3>Préstamos</h3>
+            <h3>Lending</h3>
             <p>
-              Solicita, aprueba, paga y liquida colaterales. Historial de transacciones y ownership.
+              LTV dinámico, health factor y liquidaciones auditables. Pools permisionados para
+              fondeo institucional.
             </p>
-            <a class="link" href="mission-control.html#loans">Ver préstamos</a>
+          </div>
+          <div class="stack-card">
+            <div class="icon">⚡</div>
+            <h3>RFQ & Hedges</h3>
+            <p>
+              Routing cross-chain con quotes firmadas. Fallback AMM: cobertura rápida, sin fricción.
+            </p>
           </div>
           <div class="stack-card">
             <div class="icon">🛡️</div>
-            <h3>Vault & Hedges</h3>
-            <p>
-              Posiciones de vault, hedges ejecutados vía BlockchainService y liquidaciones
-              auditables.
-            </p>
-            <a class="link" href="mission-control.html#hedges">Coberturas</a>
+            <h3>Opciones/Vaults</h3>
+            <p>Covered calls/puts y estrategias estructuradas para yield y protección.</p>
           </div>
           <div class="stack-card">
-            <div class="icon">🌐</div>
-            <h3>Multi-chain</h3>
-            <p>Selector de red con RPC configurables y precios en vivo cacheados.</p>
-            <a class="link" href="#networks">Redes</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="live">
-        <div class="card live-left">
-          <div class="stack-header">
-            <p class="eyebrow">Mercado en vivo</p>
-            <h2>Precios y liquidez</h2>
-            <p class="muted">
-              Cache de precios con CoinGecko y fallback. Datos listos para dashboards.
+            <div class="icon">🚀</div>
+            <h3>Fondeo de proyectos</h3>
+            <p>
+              Apoya lanzamientos y growth con pools dedicados AFORTU. Transparencia y auditoría
+              en-chain.
             </p>
           </div>
-          <div class="price-list" id="live-prices"></div>
-        </div>
-        <div class="card live-right" id="networks">
-          <p class="eyebrow">Redes</p>
-          <h3>Soporte multi-chain</h3>
-          <ul id="network-list" class="network-list"></ul>
-        </div>
-      </section>
-
-      <section class="flow card">
-        <div class="stack-header">
-          <p class="eyebrow">Flujo</p>
-          <h2>Operar es simple</h2>
-          <p class="muted">Onboarding, simulación de riesgo y ejecución en un mismo lugar.</p>
-        </div>
-        <div class="flow-grid">
-          <div class="flow-step">
-            <span class="badge">1</span>
-            <h4>Onboard seguro</h4>
-            <p>Auth JWT + wallet; verificación por rol y origen.</p>
-          </div>
-          <div class="flow-step">
-            <span class="badge">2</span>
-            <h4>Simula riesgo</h4>
-            <p>Calcula LTV, P&L y stress tests antes de ejecutar.</p>
-          </div>
-          <div class="flow-step">
-            <span class="badge">3</span>
-            <h4>Ejecuta</h4>
-            <p>Contratos forward, préstamos y hedges desde Mission Control.</p>
-          </div>
-          <div class="flow-step">
-            <span class="badge">4</span>
-            <h4>Monitorea</h4>
-            <p>Alertas, health y liquidaciones auditables en API.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="cta card">
-        <div>
-          <p class="eyebrow">Listo para despegar</p>
-          <h2>Activa tu cuenta BitForward</h2>
-          <p class="muted">Dashboard unificado, seguridad enterprise y soporte 24/7.</p>
-        </div>
-        <div class="cta-actions">
-          <a class="btn primary" href="mission-control.html">Abrir Mission Control</a>
-          <a class="btn ghost" href="enterprise.html">Hablar con ventas</a>
         </div>
       </section>
     </main>

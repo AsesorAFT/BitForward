@@ -3,6 +3,7 @@ const state = {
   prices: {},
   networks: [],
   defaultNetwork: 'ethereum',
+  alerts: [],
 };
 
 const headers = () => {
@@ -29,14 +30,16 @@ async function loadNetworks() {
     state.networks = data.networks || [];
     state.defaultNetwork = data.default || 'ethereum';
     const select = document.getElementById('network-picker');
-    select.innerHTML = '';
-    state.networks.forEach(net => {
-      const opt = document.createElement('option');
-      opt.value = net.key;
-      opt.textContent = `${net.name} (${net.nativeSymbol})`;
-      if (net.key === state.defaultNetwork) opt.selected = true;
-      select.appendChild(opt);
-    });
+    if (select) {
+      select.innerHTML = '';
+      state.networks.forEach(net => {
+        const opt = document.createElement('option');
+        opt.value = net.key;
+        opt.textContent = `${net.name} (${net.nativeSymbol})`;
+        if (net.key === state.defaultNetwork) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
   } catch (error) {
     console.warn('Networks fetch failed', error);
   }
@@ -53,7 +56,7 @@ async function loadPrices() {
 }
 
 async function loadData() {
-  const alerts = [];
+  const localAlerts = [];
   let contracts = [];
   let loans = [];
   let positions = [];
@@ -64,27 +67,41 @@ async function loadData() {
     fetchJson('/api/lending/loans').catch(() => null),
     fetchJson('/api/defi/positions').catch(() => null),
     fetchJson('/api/defi/hedges').catch(() => null),
+    fetchJson('/api/risk/alerts').catch(() => null),
   ];
 
-  const [contractsRes, loansRes, positionsRes, hedgesRes] = await Promise.all(requests);
+  const [contractsRes, loansRes, positionsRes, hedgesRes, alertsRes] = await Promise.all(requests);
   contracts = safeArray(contractsRes?.contracts);
   loans = safeArray(loansRes?.loans);
   positions = safeArray(positionsRes?.positions);
   hedges = safeArray(hedgesRes?.hedges);
+  state.alerts = safeArray(alertsRes?.alerts);
 
   // Simple derived alerts
   positions
     .filter(p => (p.healthFactor || 1) < 60)
     .forEach(p =>
-      alerts.push({ type: 'Riesgo', msg: `Posición ${p.asset} riesgo alto (HF ${p.healthFactor})` })
+      localAlerts.push({
+        type: 'Riesgo',
+        msg: `Posición ${p.asset} riesgo alto (HF ${p.healthFactor})`,
+      })
     );
   hedges
     .filter(h => h.status === 'failed')
-    .forEach(h => alerts.push({ type: 'Hedge', msg: `Hedge ${h.id} falló` }));
+    .forEach(h => localAlerts.push({ type: 'Hedge', msg: `Hedge ${h.id} falló` }));
 
   renderStats({ contracts, loans, positions, hedges });
   renderTables({ contracts, hedges, loans, positions });
-  renderAlerts(alerts);
+  const mergedAlerts = localAlerts.concat(
+    state.alerts.map(a => ({
+      type: 'Riesgo',
+      msg:
+        a.data?.message || a.data?.healthFactor
+          ? `HF ${a.data.healthFactor}`
+          : JSON.stringify(a.data),
+    }))
+  );
+  renderAlerts(mergedAlerts);
   renderChart({ contracts, loans, positions });
 }
 
@@ -101,7 +118,7 @@ function renderPrices() {
     const card = document.createElement('div');
     card.className = 'price-card';
     card.innerHTML = `
-      <div class="pair">${label}/USD</div>
+      <div class="pair">${label}/USDT</div>
       <div class="value">${price ? `$${price.toLocaleString()}` : '--'}</div>
     `;
     container.appendChild(card);
@@ -166,9 +183,7 @@ function renderTables({ contracts, hedges, loans, positions }) {
 
 function renderAlerts(alerts) {
   const list = document.getElementById('alert-list');
-  const counter = document.getElementById('alert-count');
   list.innerHTML = '';
-  counter.textContent = alerts.length;
   if (!alerts.length) {
     const li = document.createElement('li');
     li.textContent = 'Sin alertas críticas';

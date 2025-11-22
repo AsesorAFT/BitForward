@@ -19,6 +19,8 @@ describe('🔗 DeFi API Integration', () => {
   let userId;
 
   beforeAll(async () => {
+    process.env.JWT_ACCESS_SECRET = 'test-access-secret';
+    process.env.JWT_REFRESH_SECRET = 'test-refresh-secret';
     // Aislar BD de pruebas
     testDbFile = path.join(
       __dirname,

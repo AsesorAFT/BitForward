@@ -54,7 +54,7 @@ function renderPrices() {
     const card = document.createElement('div');
     card.className = 'price-card';
     card.innerHTML = `
-      <div class="pair">${label}/USD</div>
+      <div class="pair">${label}/USDT</div>
       <div class="value">${price ? `$${price.toLocaleString()}` : '--'}</div>
     `;
     container.appendChild(card);

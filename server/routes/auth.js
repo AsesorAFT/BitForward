@@ -16,7 +16,6 @@ const validationService = require('../validators/validationService');
 const { ErrorFactory } = require('../errors/AppError');
 const { asyncHandler } = require('../middleware/errorHandler');
 const {
-  authenticateToken,
   authMiddleware,
   loginLimiter,
   recordFailedAttempt,
@@ -110,7 +109,8 @@ router.post('/register', async (req, res) => {
       password_hash: hashedPassword,
       email_verified: false,
       profile: JSON.stringify({
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+        avatar:
+          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
         portfolio: {
           totalValue: 0,
           contracts: 0,
@@ -260,7 +260,8 @@ router.get('/verify', authMiddleware, async (req, res) => {
     const profile = user.profile
       ? JSON.parse(user.profile)
       : {
-          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+          avatar:
+            'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
           portfolio: { totalValue: 0, contracts: 0, loans: 0 },
         };
 
