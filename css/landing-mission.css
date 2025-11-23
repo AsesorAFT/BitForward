@@ -1,12 +1,21 @@
+:root {
+  --surface: rgba(255, 255, 255, 0.04);
+  --stroke: rgba(255, 255, 255, 0.08);
+  --accent: #62d0ff;
+  --accent-2: #6c7bff;
+  --text: #e8edf5;
+  --muted: #b9c5d8;
+  --headline: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
 .landing-body {
   background:
     radial-gradient(circle at 20% 20%, rgba(98, 208, 255, 0.12), transparent 30%),
     radial-gradient(circle at 80% 10%, rgba(86, 115, 255, 0.12), transparent 28%),
     radial-gradient(circle at 90% 80%, rgba(52, 211, 153, 0.08), transparent 32%), #090f1c;
-  color: #e8edf5;
+  color: var(--text);
   font-family:
     'Inter',
-    'Space Grotesk',
     system-ui,
     -apple-system,
     sans-serif;
@@ -23,7 +32,7 @@
 
 .card {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--stroke);
   border-radius: 20px;
   padding: 22px;
   box-shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
@@ -37,13 +46,16 @@
 }
 
 .hero h1 {
-  font-size: 36px;
+  font-family: var(--headline);
+  font-size: 42px;
   margin: 8px 0 12px;
+  letter-spacing: -0.5px;
 }
 
 .lead {
-  color: #b9c5d8;
+  color: var(--muted);
   line-height: 1.6;
+  font-size: 17px;
 }
 
 .hero-actions {
@@ -63,13 +75,14 @@
 }
 
 .btn.primary {
-  background: linear-gradient(120deg, #62d0ff 0%, #5673ff 80%);
+  background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 80%);
   color: #0c111b;
+  box-shadow: 0 10px 40px rgba(108, 123, 255, 0.25);
 }
 
 .btn.ghost {
   background: rgba(255, 255, 255, 0.06);
-  color: #e8edf5;
+  color: var(--text);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -94,13 +107,15 @@
 .hero-kpis {
   display: grid;
   gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .kpi {
   padding: 14px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--stroke);
+  background: var(--surface);
+  backdrop-filter: blur(10px);
 }
 
 .kpi .label {
@@ -117,16 +132,21 @@
   font-size: 12px;
 }
 
+.kpi.accent {
+  border-color: rgba(98, 208, 255, 0.4);
+  background: linear-gradient(135deg, rgba(98, 208, 255, 0.15), rgba(108, 123, 255, 0.1));
+}
+
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
 }
 .stat {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--stroke);
   border-radius: 14px;
   padding: 14px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface);
 }
 .stat .label {
   color: #9ab0ce;
@@ -149,7 +169,7 @@
   margin: 6px 0;
 }
 .muted {
-  color: #b9c5d8;
+  color: var(--muted);
 }
 
 .stack-grid {
@@ -159,9 +179,9 @@
 }
 .stack-card {
   padding: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--stroke);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface);
 }
 .stack-card .icon {
   width: 42px;
@@ -198,10 +218,10 @@
   gap: 10px;
 }
 .price-card {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--stroke);
   border-radius: 12px;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface);
 }
 .price-card .pair {
   font-weight: 700;
@@ -219,8 +239,8 @@
 .network-list li {
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--stroke);
+  background: var(--surface);
   display: flex;
   justify-content: space-between;
   color: #dfe7f5;
@@ -237,10 +257,10 @@
   margin-top: 10px;
 }
 .flow-step {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--stroke);
   border-radius: 12px;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface);
 }
 .badge {
   display: inline-flex;
@@ -267,11 +287,126 @@
   flex-wrap: wrap;
 }
 
+.trust-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.trust-band .logo-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.trust-band .logo-row span {
+  border: 1px dashed var(--stroke);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-align: center;
+  color: #c9d5eb;
+  font-weight: 600;
+}
+
+.pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.pillar {
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 16px;
+  background: linear-gradient(145deg, rgba(98, 208, 255, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+.pillar h3 {
+  margin: 4px 0 8px;
+  font-family: var(--headline);
+}
+
+.pillar p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.pillar ul {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: grid;
+  gap: 6px;
+}
+
+.pillar li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #d7e2f5;
+}
+
+.pillar li::before {
+  content: '•';
+  color: var(--accent);
+}
+
+.cta-band {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 18px;
+  align-items: center;
+  background: linear-gradient(125deg, rgba(98, 208, 255, 0.16), rgba(108, 123, 255, 0.08));
+  border: 1px solid rgba(98, 208, 255, 0.3);
+}
+
+.cta-band h2 {
+  margin: 6px 0 10px;
+  font-family: var(--headline);
+}
+
+.cta-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.metric {
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.metric .label {
+  color: #9ab0ce;
+  font-size: 13px;
+}
+
+.metric .value {
+  display: block;
+  margin-top: 4px;
+  font-weight: 700;
+  color: var(--text);
+}
+
 @media (max-width: 960px) {
   .hero {
     grid-template-columns: 1fr;
   }
   .live {
+    grid-template-columns: 1fr;
+  }
+  .cta-band {
     grid-template-columns: 1fr;
   }
 }
