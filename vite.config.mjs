@@ -56,34 +56,35 @@ export default defineConfig({
         dashboard: resolve(__dirname, 'dashboard.html'),
         lending: resolve(__dirname, 'lending.html'),
         enterprise: resolve(__dirname, 'enterprise.html'),
+        about: resolve(__dirname, 'about.html'),
       },
       output: {
         // Manual chunk splitting para optimización
         manualChunks(id) {
-          // Vendor chunks (librerías externas)
+          // 1) Vendors pesados
           if (id.includes('node_modules')) {
-            if (id.includes('ethers')) {
+            if (
+              id.includes('ethers') ||
+              id.includes('@solana/web3.js') ||
+              id.includes('bitcoinjs-lib') ||
+              id.includes('web3')
+            ) {
               return 'vendor-web3';
             }
-            if (id.includes('react')) {
+            if (id.includes('apexcharts') || id.includes('chart.js')) {
+              return 'vendor-charts';
+            }
+            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
               return 'vendor-react';
             }
-            return 'vendor';
+            return 'vendor-utils';
           }
-          
-          // App chunks por funcionalidad
-          if (id.includes('/js/wallet')) {
-            return 'wallet';
-          }
-          if (id.includes('/js/price')) {
-            return 'prices';
-          }
-          if (id.includes('/js/dashboard')) {
-            return 'dashboard';
-          }
-          if (id.includes('/js/auth') || id.includes('/js/siwe')) {
-            return 'auth';
-          }
+
+          // 2) Chunks por funcionalidad de la app
+          if (id.includes('/js/wallet')) return 'wallet';
+          if (id.includes('/js/price')) return 'prices';
+          if (id.includes('/js/dashboard')) return 'dashboard-core';
+          if (id.includes('/js/auth') || id.includes('/js/siwe')) return 'auth';
         },
         
         // Naming de chunks
@@ -105,7 +106,7 @@ export default defineConfig({
     },
     
     // Tamaño de chunk warning
-    chunkSizeWarningLimit: 500, // 500kb
+    chunkSizeWarningLimit: 600, // 600kb (librerías crypto/chart pueden ser pesadas)
     
     // Reportar tamaño de chunks
     reportCompressedSize: true,
@@ -119,6 +120,7 @@ export default defineConfig({
     include: [
       'ethers',
       'sortablejs',
+      'apexcharts',
     ],
     exclude: [
       '@vite/client',
