@@ -9,7 +9,10 @@ const baseUrl = process.env.SMOKE_BASE_URL || 'http://localhost:4173';
 const pages = [
   { path: '/', tokens: ['BitForward'] },
   { path: '/trading.html', tokens: ['Exchange | BitForward'] },
-  { path: '/mission-control.html', tokens: ['Mission Control'] },
+  { path: '/mission-control.html', tokens: ['Mission Control | BitForward'] },
+  { path: '/enterprise.html', tokens: ['Enterprise DeFi Platform'] },
+  { path: '/dashboard.html', tokens: ['Dashboard | BitForward'] },
+  { path: '/login.html', tokens: ['BitForward | Acceso'] },
 ];
 
 function buildUrl(path) {
