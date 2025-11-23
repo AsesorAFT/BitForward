@@ -35,11 +35,18 @@
             <div class="badge">v2.0</div>
           </div>
           <form id="login-form" novalidate>
-            <label class="field">
+            <label class="field" for="username">
               <span>Email o usuario</span>
-              <input type="text" name="username" id="username" autocomplete="username" required />
+              <input
+                type="text"
+                name="username"
+                id="username"
+                autocomplete="username"
+                required
+                aria-required="true"
+              />
             </label>
-            <label class="field">
+            <label class="field" for="password">
               <span>Contraseña</span>
               <div class="password-wrap">
                 <input
@@ -48,23 +55,33 @@
                   id="password"
                   autocomplete="current-password"
                   required
+                  aria-required="true"
+                  aria-describedby="password-hint"
                 />
-                <button type="button" id="toggle-password" aria-label="Mostrar contraseña">
+                <button
+                  type="button"
+                  id="toggle-password"
+                  aria-label="Mostrar u ocultar contraseña"
+                  aria-pressed="false"
+                >
                   👁
                 </button>
               </div>
+              <small id="password-hint" class="muted">Mínimo 8 caracteres.</small>
             </label>
             <div class="actions">
               <label class="remember">
-                <input type="checkbox" id="remember" />
+                <input type="checkbox" id="remember" aria-label="Recordar sesión" />
                 <span>Recordar sesión</span>
               </label>
-              <a class="link" href="#">¿Olvidaste tu contraseña?</a>
+              <a class="link" href="#" aria-label="Recuperar contraseña"
+                >¿Olvidaste tu contraseña?</a
+              >
             </div>
             <button class="btn primary" type="submit">Ingresar</button>
             <button class="btn outline" type="button" id="wallet-login">Conectar wallet</button>
           </form>
-          <p class="hint" id="login-status"></p>
+          <p class="hint" id="login-status" role="alert" aria-live="polite"></p>
         </div>
       </section>
     </main>
