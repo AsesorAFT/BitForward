@@ -4,29 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BitForward | DeFi Launch by AFORTU Holdings</title>
+    <meta
+      name="description"
+      content="BitForward unifica trading, perps, lending y fondeo de proyectos con control de riesgo y liquidez multi-chain."
+    />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="css/design-system.css" />
     <link rel="stylesheet" href="css/landing-mission.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <script type="module" src="js/landing.js"></script>
   </head>
   <body class="landing-body">
     <bf-header logo-src="assets/logo-astronaut-rocket.svg">
-      <a class="cta" href="enterprise.html">Enterprise</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#casos">Casos</a>
+      <a href="#contacto" class="cta">Hablar</a>
     </bf-header>
 
     <main class="landing-shell">
-      <section class="hero card">
+      <section class="hero card" id="hero">
         <div class="hero-copy">
           <p class="eyebrow">BitForward • AFORTU Holdings</p>
-          <h1>Despegando en el mundo DeFi.</h1>
+          <h1>Infraestructura DeFi lista para negocio.</h1>
           <p class="lead">
-            Fondea proyectos, opera tu exchange cripto y ejecuta forwards/perpetuos con
-            apalancamiento. Todo en un panel con riesgo controlado y liquidez multi-chain.
+            Lanzamos tu exchange, perps, lending y fondeo de proyectos con control de riesgo,
+            liquidez multi-chain y seguridad corporativa.
           </p>
           <div class="hero-actions">
             <a class="btn primary" href="mission-control.html">Abrir Mission Control</a>
-            <a class="btn ghost" href="#demo">Probar demo</a>
+            <a class="btn ghost" href="#contacto">Solicitar demo</a>
           </div>
           <div class="trust">
             <span class="pill">Perps & Forwards</span>
@@ -51,6 +63,22 @@
             <div class="value" id="kpi-loans">--</div>
             <div class="hint">Colateralizados</div>
           </div>
+          <div class="kpi accent">
+            <div class="label">SLA</div>
+            <div class="value">99.99%</div>
+            <div class="hint">TLS • CSP • WAF</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-band card" aria-label="Clientes y partners">
+        <div class="pill ghost">Confianza</div>
+        <div class="logo-row">
+          <span>Custodia auditada</span>
+          <span>Infra AWS</span>
+          <span>On-chain proofs</span>
+          <span>KYC/AML ready</span>
+          <span>Smart monitoring</span>
         </div>
       </section>
 
@@ -92,7 +120,7 @@
         </div>
       </section>
 
-      <section class="stack card">
+      <section class="stack card" id="servicios">
         <div class="stack-header">
           <p class="eyebrow">Stack DeFi</p>
           <h2>BitForward Forward Suite</h2>
@@ -137,6 +165,76 @@
               Apoya lanzamientos y growth con pools dedicados AFORTU. Transparencia y auditoría
               en-chain.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pillars card" id="casos">
+        <div class="stack-header">
+          <p class="eyebrow">Casos y confianza</p>
+          <h2>Operación, riesgo y cumplimiento</h2>
+          <p class="muted">
+            Arquitectura segura con monitoreo activo y controles listos para auditoría y listas
+            blancas.
+          </p>
+        </div>
+        <div class="pillars-grid">
+          <article class="pillar">
+            <h3>Security by default</h3>
+            <p>WAF, rate limiting, headers CSP/HSTS y sanitización en API y front.</p>
+            <ul>
+              <li>Zero trust en endpoints</li>
+              <li>Protección XSS/CSRF</li>
+              <li>Logs auditables</li>
+            </ul>
+          </article>
+          <article class="pillar">
+            <h3>Riesgo & monitoreo</h3>
+            <p>Health factor, límites de posición y alertas de liquidez en tiempo real.</p>
+            <ul>
+              <li>Alertas 24/7</li>
+              <li>Caps por cliente</li>
+              <li>Score de riesgo dinámico</li>
+            </ul>
+          </article>
+          <article class="pillar">
+            <h3>Onboarding guiado</h3>
+            <p>KYC/AML ready, wallets permitidas y rutas para RFQ/perps con UX simplificada.</p>
+            <ul>
+              <li>Flujos por rol</li>
+              <li>UI mobile-first</li>
+              <li>Soporte multi-red</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta-band card" id="contacto">
+        <div>
+          <p class="eyebrow">Listo para mostrarte</p>
+          <h2>Agenda una demo y lanza en semanas.</h2>
+          <p class="muted">
+            Integramos tu stack, configuramos riesgos y personalizamos la UI para tu marca.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="mission-control.html">Ver Mission Control</a>
+            <a class="btn ghost" href="mailto:asesoraft@bitforward.financial"
+              >Hablar con el equipo</a
+            >
+          </div>
+        </div>
+        <div class="cta-metrics">
+          <div class="metric">
+            <span class="label">Time-to-market</span>
+            <span class="value">4-6 semanas</span>
+          </div>
+          <div class="metric">
+            <span class="label">Soporte</span>
+            <span class="value">24/7 NOC</span>
+          </div>
+          <div class="metric">
+            <span class="label">Integraciones</span>
+            <span class="value">KYC • Custodia • Oracle</span>
           </div>
         </div>
       </section>
