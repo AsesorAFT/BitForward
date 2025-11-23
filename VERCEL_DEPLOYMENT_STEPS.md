@@ -41,6 +41,7 @@ https://vercel.com/login
 3. Vercel detectará automáticamente tus repos
 
 **Screenshot de referencia:**
+
 ```
 ┌─────────────────────────────────────────┐
 │  Welcome to Vercel                      │
@@ -60,11 +61,13 @@ https://vercel.com/login
 3. Click en **"Import"**
 
 **O desde la URL directa:**
+
 ```
 https://vercel.com/new/git
 ```
 
 **Screenshot de referencia:**
+
 ```
 ┌─────────────────────────────────────────┐
 │  Import Git Repository                  │
@@ -95,6 +98,7 @@ Install Command:     npm install
 ```
 
 **Screenshot de referencia:**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  Configure Project                                      │
@@ -137,6 +141,7 @@ Install Command:     npm install
    - ✓ Deploy a CDN global
 
 **Progreso esperado:**
+
 ```
 Building...
 ├─ Cloning repository...                    ✓
@@ -174,6 +179,7 @@ Una vez completado, verás:
 ```
 
 **URLs generadas:**
+
 - **Production:** `https://bitforward.vercel.app`
 - **Preview:** `https://bitforward-git-main-asesoraft.vercel.app`
 
@@ -253,6 +259,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
 Esto genera algo como:
+
 ```
 a7f3b9c2d8e1f4a6b7c9d0e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2
 ```
@@ -308,6 +315,7 @@ git push origin main
 ```
 
 **Vercel automáticamente:**
+
 1. Detecta el push
 2. Ejecuta build
 3. Corre tests
@@ -315,6 +323,7 @@ git push origin main
 5. Te notifica por email
 
 **Preview Deployments:**
+
 - Cada PR genera una URL de preview
 - Test features antes de merge
 - Perfecto para desarrollo en equipo
@@ -334,6 +343,7 @@ Si tienes un dominio:
 5. SSL automático incluido ✅
 
 **Configuración DNS:**
+
 ```
 Type    Name    Value
 A       @       76.76.21.21
@@ -343,6 +353,7 @@ CNAME   www     cname.vercel-dns.com
 ### **2. Redirects (Opcional)**
 
 Ya configurado en `vercel.json`:
+
 ```json
 {
   "routes": [
@@ -355,6 +366,7 @@ Ya configurado en `vercel.json`:
 ### **3. Headers de Seguridad**
 
 Ya configurados en el backend (`server/middleware/security.js`):
+
 - ✅ Helmet.js activo
 - ✅ CSP configurado
 - ✅ Rate limiting
@@ -363,6 +375,7 @@ Ya configurados en el backend (`server/middleware/security.js`):
 ### **4. Performance Monitoring**
 
 Vercel incluye:
+
 - ✅ Analytics automático
 - ✅ Real User Monitoring (RUM)
 - ✅ Performance insights
@@ -470,11 +483,10 @@ inject();
 ### **Edge Functions (Serverless):**
 
 Ya configurado en `vercel.json`:
+
 ```json
 {
-  "builds": [
-    { "src": "server/server.js", "use": "@vercel/node" }
-  ]
+  "builds": [{ "src": "server/server.js", "use": "@vercel/node" }]
 }
 ```
 
@@ -483,15 +495,18 @@ Ya configurado en `vercel.json`:
 ## 📞 Soporte y Recursos
 
 ### **Vercel Documentation:**
+
 - https://vercel.com/docs
 - https://vercel.com/docs/concepts/deployments/overview
 
 ### **Vercel Support:**
+
 - Email: support@vercel.com
 - Twitter: @vercel
 - Discord: https://vercel.com/discord
 
 ### **BitForward Resources:**
+
 - GitHub: https://github.com/AsesorAFT/BitForward
 - Docs: Ver `DEPLOYMENT_GUIDE.md`
 - Issues: https://github.com/AsesorAFT/BitForward/issues

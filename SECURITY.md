@@ -34,6 +34,7 @@
 **Implementación:** `server/middleware/security.js`
 
 #### Headers configurados:
+
 ```javascript
 ✓ Content-Security-Policy (CSP)
 ✓ X-Frame-Options: DENY
@@ -45,22 +46,20 @@
 ```
 
 #### Content Security Policy (CSP):
+
 ```javascript
-defaultSrc: ["'self'"]
-scriptSrc: [
-  "'self'",
-  "https://cdn.jsdelivr.net",
-  "https://cdn.ethers.io"
-]
+defaultSrc: ["'self'"];
+scriptSrc: ["'self'", 'https://cdn.jsdelivr.net', 'https://cdn.ethers.io'];
 connectSrc: [
   "'self'",
-  "https://api.coingecko.com",
-  "wss://stream.binance.com",
-  "https://mainnet.infura.io"
-]
+  'https://api.coingecko.com',
+  'wss://stream.binance.com',
+  'https://mainnet.infura.io',
+];
 ```
 
 **Protección contra:**
+
 - ❌ Clickjacking
 - ❌ MIME Sniffing
 - ❌ XSS Reflection
@@ -75,6 +74,7 @@ connectSrc: [
 #### Limiters configurados:
 
 ##### **General API Limiter**
+
 ```javascript
 Window: 15 minutos
 Max: 100 requests por IP
@@ -82,6 +82,7 @@ Response: 429 Too Many Requests
 ```
 
 ##### **Auth Limiter (Estricto)**
+
 ```javascript
 Window: 15 minutos
 Max: 5 intentos de login
@@ -90,6 +91,7 @@ Response: 429 + retryAfter
 ```
 
 ##### **API Prices Limiter**
+
 ```javascript
 Window: 1 minuto
 Max: 60 requests
@@ -97,6 +99,7 @@ Purpose: Proteger APIs externas
 ```
 
 **Protección contra:**
+
 - ❌ DDoS attacks
 - ❌ Brute force login
 - ❌ API abuse
@@ -109,6 +112,7 @@ Purpose: Proteger APIs externas
 **Implementación:** `js/input-sanitizer.js`
 
 #### DOMPurify Integration:
+
 ```javascript
 inputSanitizer.sanitizeText(input)
   → Elimina <script>, <iframe>, event handlers
@@ -127,6 +131,7 @@ inputSanitizer.validateInput(input)
 ```
 
 #### Funciones especializadas:
+
 ```javascript
 ✓ sanitizeURL(url)           - URLs seguras
 ✓ sanitizeEmail(email)       - Emails válidos
@@ -138,6 +143,7 @@ inputSanitizer.validateInput(input)
 ```
 
 **Protección contra:**
+
 - ❌ XSS (Stored, Reflected, DOM-based)
 - ❌ HTML Injection
 - ❌ Script Injection
@@ -150,6 +156,7 @@ inputSanitizer.validateInput(input)
 **Implementación:** `server/middleware/security.js`
 
 #### Sanitización automática:
+
 ```javascript
 // Todos los requests sanitizados:
 req.body   → sanitizeObject(req.body)
@@ -158,6 +165,7 @@ req.params → sanitizeObject(req.params)
 ```
 
 #### Detección de patterns maliciosos:
+
 ```javascript
 ✓ SQL Injection: /(\%27)|(\')|(\-\-)/
 ✓ XSS: /<script|javascript:|onerror=/
@@ -166,6 +174,7 @@ req.params → sanitizeObject(req.params)
 ```
 
 **Protección contra:**
+
 - ❌ SQL Injection
 - ❌ NoSQL Injection
 - ❌ Command Injection
@@ -182,16 +191,18 @@ mongoSanitize({
   replaceWith: '_',
   onSanitize: (req, key) => {
     console.warn(`Sanitized: ${key} from ${req.ip}`);
-  }
-})
+  },
+});
 ```
 
 **Bloquea operadores:**
+
 ```javascript
-$ne, $gt, $lt, $regex, $where, $expr
+($ne, $gt, $lt, $regex, $where, $expr);
 ```
 
 **Protección contra:**
+
 - ❌ NoSQL Injection
 - ❌ Query manipulation
 - ❌ Operator injection
@@ -204,17 +215,12 @@ $ne, $gt, $lt, $regex, $where, $expr
 
 ```javascript
 hpp({
-  whitelist: [
-    'sort',
-    'fields',
-    'page',
-    'limit',
-    'filter'
-  ]
-})
+  whitelist: ['sort', 'fields', 'page', 'limit', 'filter'],
+});
 ```
 
 **Protección contra:**
+
 - ❌ Duplicate parameters
 - ❌ Array injection
 - ❌ Query confusion
@@ -226,6 +232,7 @@ hpp({
 **Implementación:** `server/middleware/security.js`
 
 #### Origin Verification:
+
 ```javascript
 verifyOrigin(req, res, next)
   → Verifica header Origin
@@ -234,6 +241,7 @@ verifyOrigin(req, res, next)
 ```
 
 #### Allowed Origins:
+
 ```javascript
 http://localhost:3000
 http://localhost:5173
@@ -243,6 +251,7 @@ https://www.bitforward.io
 ```
 
 **Protección contra:**
+
 - ❌ CSRF attacks
 - ❌ Cross-origin requests maliciosos
 - ❌ Session hijacking
@@ -254,6 +263,7 @@ https://www.bitforward.io
 **Implementación:** `server/middleware/security.js`
 
 #### Blocked User-Agents:
+
 ```javascript
 sqlmap    - SQL injection scanner
 nikto     - Web server scanner
@@ -263,6 +273,7 @@ acunetix  - Vulnerability scanner
 ```
 
 **Protección contra:**
+
 - ❌ Automated scanners
 - ❌ Vulnerability probes
 - ❌ Bot attacks
@@ -274,6 +285,7 @@ acunetix  - Vulnerability scanner
 **Implementación:** `server/middleware/security.js`
 
 #### Logged Information:
+
 ```javascript
 {
   timestamp: ISO 8601
@@ -286,6 +298,7 @@ acunetix  - Vulnerability scanner
 ```
 
 **Alertas automáticas para:**
+
 - ⚠️ Suspicious patterns detected
 - ⚠️ Rate limit exceeded
 - ⚠️ XSS attempts blocked
@@ -305,6 +318,7 @@ constantTimeCompare(a, b)
 ```
 
 **Protección contra:**
+
 - ❌ Timing attacks
 - ❌ Side-channel attacks
 
@@ -314,18 +328,18 @@ constantTimeCompare(a, b)
 
 ### **OWASP Top 10 Coverage:**
 
-| Amenaza | Estado | Protección |
-|---------|--------|------------|
-| A01:2021 – Broken Access Control | ✅ | JWT + Origin verification |
-| A02:2021 – Cryptographic Failures | ✅ | HTTPS + Secure headers |
-| A03:2021 – Injection | ✅ | Input sanitization + NoSQL protection |
-| A04:2021 – Insecure Design | ✅ | Security by design |
-| A05:2021 – Security Misconfiguration | ✅ | Helmet.js + CSP |
-| A06:2021 – Vulnerable Components | ✅ | npm audit + updates |
-| A07:2021 – Identification Failures | ✅ | JWT + Rate limiting |
-| A08:2021 – Software & Data Integrity | ✅ | Hash verification |
-| A09:2021 – Logging Failures | ✅ | Comprehensive logging |
-| A10:2021 – SSRF | ✅ | URL validation |
+| Amenaza                              | Estado | Protección                            |
+| ------------------------------------ | ------ | ------------------------------------- |
+| A01:2021 – Broken Access Control     | ✅     | JWT + Origin verification             |
+| A02:2021 – Cryptographic Failures    | ✅     | HTTPS + Secure headers                |
+| A03:2021 – Injection                 | ✅     | Input sanitization + NoSQL protection |
+| A04:2021 – Insecure Design           | ✅     | Security by design                    |
+| A05:2021 – Security Misconfiguration | ✅     | Helmet.js + CSP                       |
+| A06:2021 – Vulnerable Components     | ✅     | npm audit + updates                   |
+| A07:2021 – Identification Failures   | ✅     | JWT + Rate limiting                   |
+| A08:2021 – Software & Data Integrity | ✅     | Hash verification                     |
+| A09:2021 – Logging Failures          | ✅     | Comprehensive logging                 |
+| A10:2021 – SSRF                      | ✅     | URL validation                        |
 
 **Score: 10/10 ✅**
 
@@ -343,6 +357,7 @@ Expected Score: A+
 ```
 
 **Headers que deberías ver:**
+
 ```
 ✓ Strict-Transport-Security
 ✓ Content-Security-Policy
@@ -357,6 +372,7 @@ Expected Score: A+
 ### 2. **Test de XSS**
 
 Intenta estos payloads en inputs:
+
 ```javascript
 <script>alert('XSS')</script>
 <img src=x onerror=alert('XSS')>
@@ -371,6 +387,7 @@ javascript:alert('XSS')
 ### 3. **Test de SQL Injection**
 
 Intenta estos payloads:
+
 ```sql
 ' OR '1'='1
 '; DROP TABLE users--
@@ -459,22 +476,22 @@ ALLOWED_ORIGINS=https://bitforward.io,https://www.bitforward.io
 server {
     listen 443 ssl http2;
     server_name bitforward.io;
-    
+
     # SSL Configuration
     ssl_certificate /path/to/cert.pem;
     ssl_certificate_key /path/to/key.pem;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
-    
+
     # Security Headers (adicionales a Helmet)
     add_header X-Frame-Options "DENY" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
-    
+
     # Rate Limiting (adicional a Express)
     limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;
     limit_req zone=api burst=20 nodelay;
-    
+
     # Proxy to Node.js
     location / {
         proxy_pass http://localhost:5000;
@@ -491,21 +508,25 @@ server {
 ## 📚 **Best Practices Implementadas**
 
 ### ✅ **Defense in Depth**
+
 - Múltiples capas de seguridad
 - Frontend + Backend validation
 - Rate limiting + WAF
 
 ### ✅ **Least Privilege**
+
 - Permisos mínimos necesarios
 - JWT con expiración corta
 - Refresh tokens seguros
 
 ### ✅ **Fail Secure**
+
 - Errores no revelan info sensible
 - Fallback a deny por defecto
 - Logging de intentos fallidos
 
 ### ✅ **Keep it Simple**
+
 - Código legible y mantenible
 - Dependencias auditadas
 - Actualizaciones regulares
@@ -546,6 +567,7 @@ server {
 ## 📊 **Security Checklist**
 
 ### **Pre-Production:**
+
 - [ ] Todas las dependencias actualizadas
 - [ ] npm audit sin vulnerabilidades críticas
 - [ ] Security headers configurados
@@ -558,6 +580,7 @@ server {
 - [ ] Incident response plan documentado
 
 ### **Post-Deployment:**
+
 - [ ] Security headers verificados (securityheaders.com)
 - [ ] SSL Labs test (A+ rating)
 - [ ] OWASP ZAP scan realizado
@@ -612,6 +635,7 @@ Tu aplicación ahora tiene:
 ## 🌟 **Ready for Launch!**
 
 Tu aplicación BitForward está lista para:
+
 - ✅ Deployment a producción
 - ✅ Testing con usuarios reales
 - ✅ Auditoría de seguridad

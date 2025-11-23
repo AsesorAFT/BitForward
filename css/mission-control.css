@@ -1,0 +1,213 @@
+.mc-body {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(110, 195, 255, 0.08), transparent 35%),
+    radial-gradient(circle at 90% 10%, rgba(140, 120, 255, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 80%, rgba(30, 255, 195, 0.08), transparent 40%), #0c111b;
+  color: #e7edf7;
+  font-family:
+    'Inter',
+    'Space Grotesk',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.mc-shell {
+  max-width: 1280px;
+  margin: 32px auto 64px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tb-left h1 {
+  margin: 4px 0;
+  font-size: 28px;
+}
+.tb-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: #8ac9ff;
+  margin: 0;
+}
+
+.chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: #e7edf7;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn.primary {
+  background: linear-gradient(120deg, #62d0ff 0%, #5673ff 80%);
+  color: #0c111b;
+}
+.btn.outline {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e7edf7;
+}
+.btn.ghost {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e7edf7;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(98, 208, 255, 0.12);
+  color: #8ac9ff;
+  font-weight: 600;
+}
+.pill.secondary {
+  background: rgba(86, 115, 255, 0.12);
+  color: #c9ceff;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+}
+.tab {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e7edf7;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.tab.active {
+  border-color: rgba(98, 208, 255, 0.6);
+  box-shadow: 0 0 20px rgba(98, 208, 255, 0.2);
+}
+
+.mc-panels {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+.panel .panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.panel h2 {
+  margin: 4px 0 0;
+}
+
+.order-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.order-form input,
+.order-form select {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e7edf7;
+  padding: 10px;
+  border-radius: 10px;
+}
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+.order-form .hint {
+  color: #9ab0ce;
+  font-size: 13px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #dfe7f5;
+}
+.table-wrap th,
+.table-wrap td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.table-wrap tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+#tvl-chart {
+  min-height: 280px;
+}
+
+.alert-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.alert-list li {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.alert-list .tag {
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgba(255, 153, 102, 0.16);
+  color: #ffb48a;
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .mc-panels {
+    grid-template-columns: 1fr;
+  }
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

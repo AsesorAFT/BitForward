@@ -51,16 +51,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        'mission-control': resolve(__dirname, 'mission-control.html'),
+        login: resolve(__dirname, 'login.html'),
         dashboard: resolve(__dirname, 'dashboard.html'),
         lending: resolve(__dirname, 'lending.html'),
-        diagnostico: resolve(__dirname, 'diagnostico.html'),
         enterprise: resolve(__dirname, 'enterprise.html'),
-        'test-suite': resolve(__dirname, 'test-suite.html'),
-        'test-auth': resolve(__dirname, 'test-auth.html'),
-        // Phoenix pages
-        login: resolve(__dirname, 'phoenix/login.html'),
-        contracts: resolve(__dirname, 'phoenix/guardian-contracts.html'),
-        'phoenix-lending': resolve(__dirname, 'phoenix/lending.html'),
       },
       output: {
         // Manual chunk splitting para optimización
@@ -117,9 +112,6 @@ export default defineConfig({
     
     // CSS code splitting
     cssCodeSplit: true,
-    
-    // Target para navegadores modernos
-    target: 'es2015',
   },
   
   // Optimización de dependencias
@@ -204,5 +196,6 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '3.0.0'),
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
   },
 });

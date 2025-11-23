@@ -25,66 +25,62 @@ const hpp = require('hpp');
 function setupSecurity(app) {
   console.log('🔒 Setting up security middleware...');
 
-  // 1. Helmet - Security Headers (Quick Win #3: CSP Mejorado)
-  app.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: [
-            "'self'",
-            "'unsafe-inline'", // TODO: Eliminar en producción, usar nonce
-            'https://cdn.jsdelivr.net',
-            'https://cdn.ethers.io',
-            'https://unpkg.com',
-            'https://www.googletagmanager.com', // Google Analytics
-          ],
-          styleSrc: [
-            "'self'",
-            "'unsafe-inline'", // Necesario para estilos inline
-            'https://fonts.googleapis.com',
-          ],
-          fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
-          imgSrc: [
-            "'self'",
-            'data:',
-            'https:',
-            'blob:',
-            'https://www.googletagmanager.com', // GA tracking pixel
-          ],
-          connectSrc: [
-            "'self'",
-            'https://api.coingecko.com',
-            'wss://stream.binance.com',
-            'https://mainnet.infura.io',
-            'https://polygon-rpc.com',
-            'https://bsc-dataseed.binance.org',
-            'https://api.avax.network',
-            'https://arb1.arbitrum.io',
-            'https://mainnet.optimism.io',
-            'https://www.google-analytics.com', // GA
-            'https://analytics.google.com', // GA4
-          ],
-          frameSrc: ["'none'"],
-          objectSrc: ["'none'"],
-          baseUri: ["'self'"],
-          formAction: ["'self'"],
-          frameAncestors: ["'none'"],
-          upgradeInsecureRequests: [],
-        },
-      },
+  // 0. Generar nonce por request y guardarlo en res.locals
+  app.use(addCSPNonce);
+
+  // 1. Helmet - Security Headers con CSP basado en nonce (sin 'unsafe-inline')
+  app.use((req, res, next) => {
+    const nonce = res.locals.cspNonce;
+    const cspDirectives = {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        `'nonce-${nonce}'`,
+        'https://cdn.jsdelivr.net',
+        'https://cdn.ethers.io',
+        'https://unpkg.com',
+        'https://www.googletagmanager.com',
+      ],
+      styleSrc: ["'self'", `'nonce-${nonce}'`, 'https://fonts.googleapis.com'],
+      fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+      imgSrc: ["'self'", 'data:', 'https:', 'blob:', 'https://www.googletagmanager.com'],
+      connectSrc: [
+        "'self'",
+        'https://api.coingecko.com',
+        'wss://stream.binance.com',
+        'https://mainnet.infura.io',
+        'https://polygon-rpc.com',
+        'https://bsc-dataseed.binance.org',
+        'https://api.avax.network',
+        'https://arb1.arbitrum.io',
+        'https://mainnet.optimism.io',
+        'https://www.google-analytics.com',
+        'https://analytics.google.com',
+      ],
+      frameSrc: ["'none'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
+      frameAncestors: ["'none'"],
+      upgradeInsecureRequests: [],
+    };
+
+    const cspMiddleware = helmet({
+      contentSecurityPolicy: { directives: cspDirectives },
       crossOriginEmbedderPolicy: false,
       crossOriginResourcePolicy: { policy: 'cross-origin' },
       hsts: {
-        maxAge: 31536000, // 1 año
+        maxAge: 31536000,
         includeSubDomains: true,
         preload: true,
       },
       noSniff: true,
       referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
       xssFilter: true,
-    })
-  );
+    });
+
+    cspMiddleware(req, res, next);
+  });
 
   console.log('✅ CSP Headers mejorados - Quick Win #3 (+15% security score)');
 

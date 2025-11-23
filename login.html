@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BitForward | Acceso</title>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/design-system.css" />
+    <link rel="stylesheet" href="css/login-neo.css" />
+    <script type="module" src="js/login.js"></script>
+  </head>
+  <body class="login-body">
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
+      <a class="cta" href="enterprise.html">Enterprise</a>
+    </bf-header>
+
+    <main class="login-shell">
+      <section class="login-hero card">
+        <div>
+          <p class="eyebrow">Acceso seguro</p>
+          <h1>Inicia sesión en BitForward</h1>
+          <p class="muted">
+            Accede con email y contraseña o conecta tu wallet para entrar al panel.
+          </p>
+          <div class="hero-actions">
+            <a class="btn ghost" href="mission-control.html">Ver Mission Control</a>
+          </div>
+        </div>
+        <div class="login-card card">
+          <div class="login-header">
+            <div>
+              <p class="eyebrow">Dashboard DeFi</p>
+              <h2>Autenticación</h2>
+            </div>
+            <div class="badge">v2.0</div>
+          </div>
+          <form id="login-form" novalidate>
+            <label class="field">
+              <span>Email o usuario</span>
+              <input type="text" name="username" id="username" autocomplete="username" required />
+            </label>
+            <label class="field">
+              <span>Contraseña</span>
+              <div class="password-wrap">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  autocomplete="current-password"
+                  required
+                />
+                <button type="button" id="toggle-password" aria-label="Mostrar contraseña">
+                  👁
+                </button>
+              </div>
+            </label>
+            <div class="actions">
+              <label class="remember">
+                <input type="checkbox" id="remember" />
+                <span>Recordar sesión</span>
+              </label>
+              <a class="link" href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+            <button class="btn primary" type="submit">Ingresar</button>
+            <button class="btn outline" type="button" id="wallet-login">Conectar wallet</button>
+          </form>
+          <p class="hint" id="login-status"></p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

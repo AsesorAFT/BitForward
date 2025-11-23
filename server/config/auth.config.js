@@ -8,13 +8,35 @@
 
 require('dotenv').config();
 
+const DEFAULT_ACCESS_SECRET = 'bitforward-access-secret-change-in-production';
+const DEFAULT_REFRESH_SECRET = 'bitforward-refresh-secret-change-in-production';
+const isProd = process.env.NODE_ENV === 'production';
+
+if (
+  isProd &&
+  (!process.env.JWT_ACCESS_SECRET ||
+    !process.env.JWT_REFRESH_SECRET ||
+    process.env.JWT_ACCESS_SECRET === DEFAULT_ACCESS_SECRET ||
+    process.env.JWT_REFRESH_SECRET === DEFAULT_REFRESH_SECRET)
+) {
+  throw new Error('JWT secrets must be set via environment variables in production.');
+}
+
+if (!isProd && (!process.env.JWT_ACCESS_SECRET || process.env.JWT_ACCESS_SECRET === DEFAULT_ACCESS_SECRET)) {
+  console.warn('⚠️ Using default JWT access secret. Set JWT_ACCESS_SECRET for higher security.');
+}
+
+if (!isProd && (!process.env.JWT_REFRESH_SECRET || process.env.JWT_REFRESH_SECRET === DEFAULT_REFRESH_SECRET)) {
+  console.warn('⚠️ Using default JWT refresh secret. Set JWT_REFRESH_SECRET for higher security.');
+}
+
 module.exports = {
     jwt: {
         // Secret para access tokens (debe estar en .env en producción)
-        accessTokenSecret: process.env.JWT_ACCESS_SECRET || 'bitforward-access-secret-change-in-production',
+        accessTokenSecret: process.env.JWT_ACCESS_SECRET || DEFAULT_ACCESS_SECRET,
         
         // Secret para refresh tokens
-        refreshTokenSecret: process.env.JWT_REFRESH_SECRET || 'bitforward-refresh-secret-change-in-production',
+        refreshTokenSecret: process.env.JWT_REFRESH_SECRET || DEFAULT_REFRESH_SECRET,
         
         // Duración de tokens
         accessTokenExpiry: '15m',      // 15 minutos

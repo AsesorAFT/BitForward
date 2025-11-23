@@ -155,9 +155,7 @@
       "gzipSize": "1.9 KB",
       "sizeBytes": 8911,
       "gzipSizeBytes": 1943,
-      "files": [
-        "logo.svg.bak"
-      ]
+      "files": ["logo.svg.bak"]
     },
     {
       "extension": ".sol",
@@ -187,9 +185,7 @@
       "gzipSize": "820 Bytes",
       "sizeBytes": 2244,
       "gzipSizeBytes": 820,
-      "files": [
-        "package.json"
-      ]
+      "files": ["package.json"]
     }
   ],
   "largestFiles": [

@@ -1,180 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitForward - El Futuro del Trading Descentralizado</title>
-    
-    <!-- Favicon y Manifest -->
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Estilos Principales -->
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    
-    <!-- Estilos del Sistema de Diseño y Componentes Universales -->
-    <link rel="stylesheet" href="css/design-system.css">
-    <link rel="stylesheet" href="css/hero-revamp.css">
-    <link rel="stylesheet" href="css/universal-nav.css">
-    <link rel="stylesheet" href="css/universal-footer.css">
-    
-    <!-- Scripts Críticos (Carga temprana) -->
-    <script src="js/landing-fix.js"></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BitForward | DeFi Launch by AFORTU Holdings</title>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="css/design-system.css" />
+    <link rel="stylesheet" href="css/landing-mission.css" />
+    <script type="module" src="js/landing.js"></script>
+  </head>
+  <body class="landing-body">
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
+      <a class="cta" href="enterprise.html">Enterprise</a>
+    </bf-header>
 
-<body>
-    <div id="bf-universal-nav-container"></div>
+    <main class="landing-shell">
+      <section class="hero card">
+        <div class="hero-copy">
+          <p class="eyebrow">BitForward • AFORTU Holdings</p>
+          <h1>Despegando en el mundo DeFi.</h1>
+          <p class="lead">
+            Fondea proyectos, opera tu exchange cripto y ejecuta forwards/perpetuos con
+            apalancamiento. Todo en un panel con riesgo controlado y liquidez multi-chain.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="mission-control.html">Abrir Mission Control</a>
+            <a class="btn ghost" href="#demo">Probar demo</a>
+          </div>
+          <div class="trust">
+            <span class="pill">Perps & Forwards</span>
+            <span class="pill">Préstamos colateralizados</span>
+            <span class="pill">Exchange cripto</span>
+            <span class="pill">Fondeo de proyectos</span>
+          </div>
+        </div>
+        <div class="hero-kpis">
+          <div class="kpi">
+            <div class="label">TVL estimado</div>
+            <div class="value" id="kpi-tvl">$--</div>
+            <div class="hint">Precios cacheados</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Contratos abiertos</div>
+            <div class="value" id="kpi-contracts">--</div>
+            <div class="hint">Perps + forwards</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Préstamos</div>
+            <div class="value" id="kpi-loans">--</div>
+            <div class="hint">Colateralizados</div>
+          </div>
+        </div>
+      </section>
 
-    <div class="landing-page">
-        <!-- ================================================================== -->
-        <!-- NUEVA SECCIÓN DE HÉROE                                             -->
-        <!-- Utiliza los estilos de hero-revamp.css y design-system.css         -->
-        <!-- ================================================================== -->
-        <section class="hero-section" id="inicio">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    El Futuro del Trading es <span class="highlight">Descentralizado</span>
-                </h1>
-                <p class="hero-subtitle">
-                    BitForward te ofrece las herramientas para operar con contratos forward y futuros directamente en la blockchain. Seguro, transparente y sin intermediarios.
-                </p>
-                <div class="hero-cta">
-                    <a href="trading.html" class="btn btn-primary">Empezar a Operar</a>
-                    <a href="#features" class="btn btn-secondary">Conocer Más</a>
-                </div>
-            </div>
-        </section>
+      <section class="stats">
+        <div class="stat">
+          <div class="label">Redes</div>
+          <div class="value" id="kpi-networks">--</div>
+          <div class="hint">ETH, Polygon, BSC, Solana</div>
+        </div>
+        <div class="stat">
+          <div class="label">Disponibilidad</div>
+          <div class="value">99.99%</div>
+          <div class="hint">TLS + CSP + JWT</div>
+        </div>
+        <div class="stat">
+          <div class="label">Coberturas</div>
+          <div class="value">RFQ</div>
+          <div class="hint">Cross-chain</div>
+        </div>
+        <div class="stat">
+          <div class="label">Fondeo</div>
+          <div class="value">Proyectos</div>
+          <div class="hint">Launch & Lending</div>
+        </div>
+      </section>
 
-        <!-- ================================================================== -->
-        <!-- SECCIÓN DE CARACTERÍSTICAS (Refactorizada)                         -->
-        <!-- Utiliza la clase .card del nuevo sistema de diseño                 -->
-        <!-- ================================================================== -->
-        <section class="features-section reveal" id="features">
-            <h2 class="section-title">Nuestros Productos</h2>
-            <div class="features-grid">
-                <div class="card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                    </div>
-                    <h3 class="feature-title">Contratos a Futuro</h3>
-                    <p class="feature-description">
-                        Crea contratos a futuro sobre BTC, ETH, SOL y más. Protege tu inversión contra la volatilidad del mercado.
-                    </p>
-                </div>
-                <div class="card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                    </div>
-                    <h3 class="feature-title">Fondo de Préstamos</h3>
-                    <p class="feature-description">
-                        Deposita tus activos y genera rendimientos del 8-15% anual. Liquidez garantizada y seguridad empresarial.
-                    </p>
-                </div>
-                <div class="card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                    </div>
-                    <h3 class="feature-title">Seguridad Empresarial</h3>
-                    <p class="feature-description">
-                        Auditorías de seguridad, contratos verificados y custodia institucional para proteger tus activos.
-                    </p>
-                </div>
-                <div class="card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    </div>
-                    <h3 class="feature-title">Análisis Avanzado</h3>
-                    <p class="feature-description">
-                        Panel de control en tiempo real con métricas de riesgo, ganancias y pérdidas, y análisis predictivo impulsado por IA.
-                    </p>
-                </div>
-                <div class="card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                    </div>
-                    <h3 class="feature-title">Integración Multi-Chain</h3>
-                    <p class="feature-description">
-                        Soporte para Ethereum, Polygon, BSC, Solana y más. Una plataforma, múltiples blockchains.
-                    </p>
-                </div>
-                <div class="card">
-                    <div class="feature-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    </div>
-                    <h3 class="feature-title">Soporte Empresarial</h3>
-                    <p class="feature-description">
-                        Equipo dedicado 24/7, onboarding personalizado y soluciones a medida para tu empresa.
-                    </p>
-                </div>
-            </div>
-        </section>
+      <section class="strip card" id="demo">
+        <div class="strip-prices" id="live-prices"></div>
+        <div class="strip-cta">
+          <p class="eyebrow">Demo</p>
+          <h3>Prueba el flujo completo</h3>
+          <p class="muted">
+            Login, crea un contrato/hedge y mira alertas de riesgo en tiempo real.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="login.html">Iniciar sesión</a>
+            <a class="btn ghost" href="mission-control.html">Ir al panel</a>
+          </div>
+        </div>
+      </section>
 
-        <!-- ================================================================== -->
-        <!-- SECCIÓN DE ESTADÍSTICAS (Simplificada)                             -->
-        <!-- ================================================================== -->
-        <section class="stats-section">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">$5.2M+</div>
-                    <div class="stat-label">Valor Total Bloqueado</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">1,800+</div>
-                    <div class="stat-label">Contratos Activos</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">99.9%</div>
-                    <div class="stat-label">Uptime Garantizado</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">24/7</div>
-                    <div class="stat-label">Soporte Disponible</div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Footer Universal -->
-    <div id="bf-universal-footer-container"></div>
-
-    <!-- Contenedores de Dashboard y otros elementos (ocultos por defecto) -->
-    <div id="dashboard-container" style="display: none;"></div>
-    <div id="loading-screen" class="loading-spinner" style="display: none;">
-        <svg fill="none" viewBox="0 0 24 24">
-            <circle style="opacity: 0.25;" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path style="opacity: 0.75;" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-    </div>
-    
-    <!-- ================================================================== -->
-    <!-- SCRIPTS (Centralizados y optimizados)                              -->
-    <!-- ================================================================== -->
-    <script src="js/analytics.js" defer></script>
-    <script src="js/scroll-animations.js" defer></script>
-    
-    <!-- Componentes Universales -->
-    <script src="js/universal-nav.js"></script>
-    <script src="js/universal-footer.js"></script>
-
-    <!-- Lógica principal de la aplicación -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('🚀 BitForward Landing Page Revamped Initialized');
-
-            // Manejo de scroll suave para anclas
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if(targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-        });
-    </script>
-</body>
+      <section class="stack card">
+        <div class="stack-header">
+          <p class="eyebrow">Stack DeFi</p>
+          <h2>BitForward Forward Suite</h2>
+          <p class="muted">
+            Perps y forwards con apalancamiento, lending colateralizado, RFQ cross-chain y fondeo de
+            proyectos.
+          </p>
+        </div>
+        <div class="stack-grid">
+          <div class="stack-card">
+            <div class="icon">⇅</div>
+            <h3>Forward / Perps</h3>
+            <p>
+              Sin custodia, funding y P&L en vivo. Control de riesgo, caps y apalancamiento
+              responsable.
+            </p>
+          </div>
+          <div class="stack-card">
+            <div class="icon">💰</div>
+            <h3>Lending</h3>
+            <p>
+              LTV dinámico, health factor y liquidaciones auditables. Pools permisionados para
+              fondeo institucional.
+            </p>
+          </div>
+          <div class="stack-card">
+            <div class="icon">⚡</div>
+            <h3>RFQ & Hedges</h3>
+            <p>
+              Routing cross-chain con quotes firmadas. Fallback AMM: cobertura rápida, sin fricción.
+            </p>
+          </div>
+          <div class="stack-card">
+            <div class="icon">🛡️</div>
+            <h3>Opciones/Vaults</h3>
+            <p>Covered calls/puts y estrategias estructuradas para yield y protección.</p>
+          </div>
+          <div class="stack-card">
+            <div class="icon">🚀</div>
+            <h3>Fondeo de proyectos</h3>
+            <p>
+              Apoya lanzamientos y growth con pools dedicados AFORTU. Transparencia y auditoría
+              en-chain.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>

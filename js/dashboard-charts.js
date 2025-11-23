@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
       zoom: {
         enabled: false,
       },
-      fontFamily: 'Inter, sans-serif',
+      fontFamily: 'JetBrains Mono, Inter, sans-serif',
     },
     series: [
       {

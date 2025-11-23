@@ -1,1 +1,73 @@
-.responsive {  /* General Responsive Styles */  } /* Include mobile and tablet optimization styles */ @media (max-width: 1024px) { .container { padding: 15px; } /* Adjust padding for tablets */ .navigation { gap: 20px; } /* Navigation gap changes */ } @media (max-width: 767px) { /* Mobile Styles */ .typography { font-size: 14px; line-height: 20px; } /* Typography adjustments */ .hamburger { /* Hamburger menu toggle animation */ } .dropdown { display: none; } /* Dropdown menus for mobile */ .button { min-height: 48px; } /* Button optimizations */ .card { /* Card adjustments */ } .grid { display: grid; grid-template-columns: 1fr; } /* Single column grids */ table { display: block; /* Responsive tables with stack mode */ } } @media (max-width: 480px) { /* Small Mobile Styles */ .typography { font-size: 12px; } /* Reduced typography */ } @media print { /* Print Media Styles */ } /* Form optimizations */ .form { font-size: 16px; } /* Prevent iOS zoom */ /* Modal adjustments */ .modal { /* Styles for modals */ } /* Footer layout */ .footer { display: flex; flex-direction: column; } /* Utility classes for mobile */ .mobile-only { display: block; } .desktop-only { display: none; } /* Landscape orientation support */ @media (orientation: landscape) { .landscape { /* Styles for landscape orientation */ } } /* Touch device optimizations */ .touch-target { min-height: 44px; } .active-state { /* Styles for active states instead of hover */ }
+.responsive {
+  /* General Responsive Styles */
+} /* Include mobile and tablet optimization styles */
+@media (max-width: 1024px) {
+  .container {
+    padding: 15px;
+  } /* Adjust padding for tablets */
+  .navigation {
+    gap: 20px;
+  } /* Navigation gap changes */
+}
+@media (max-width: 767px) {
+  /* Mobile Styles */
+  .typography {
+    font-size: 14px;
+    line-height: 20px;
+  } /* Typography adjustments */
+  .hamburger {
+    /* Hamburger menu toggle animation */
+  }
+  .dropdown {
+    display: none;
+  } /* Dropdown menus for mobile */
+  .button {
+    min-height: 48px;
+  } /* Button optimizations */
+  .card {
+    /* Card adjustments */
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  } /* Single column grids */
+  table {
+    display: block; /* Responsive tables with stack mode */
+  }
+}
+@media (max-width: 480px) {
+  /* Small Mobile Styles */
+  .typography {
+    font-size: 12px;
+  } /* Reduced typography */
+}
+@media print {
+  /* Print Media Styles */
+} /* Form optimizations */
+.form {
+  font-size: 16px;
+} /* Prevent iOS zoom */ /* Modal adjustments */
+.modal {
+  /* Styles for modals */
+} /* Footer layout */
+.footer {
+  display: flex;
+  flex-direction: column;
+} /* Utility classes for mobile */
+.mobile-only {
+  display: block;
+}
+.desktop-only {
+  display: none;
+} /* Landscape orientation support */
+@media (orientation: landscape) {
+  .landscape {
+    /* Styles for landscape orientation */
+  }
+} /* Touch device optimizations */
+.touch-target {
+  min-height: 44px;
+}
+.active-state {
+  /* Styles for active states instead of hover */
+}
