@@ -1,10 +1,10 @@
 :root {
-  --surface: rgba(255, 255, 255, 0.04);
-  --stroke: rgba(255, 255, 255, 0.08);
-  --accent: #62d0ff;
-  --accent-2: #6c7bff;
-  --text: #e8edf5;
-  --muted: #b9c5d8;
+  --surface: var(--bf-surface-3, rgba(255, 255, 255, 0.04));
+  --stroke: var(--bf-border, rgba(255, 255, 255, 0.08));
+  --accent: var(--bf-color-primary, #62d0ff);
+  --accent-2: var(--bf-color-accent, #6c7bff);
+  --text: var(--bf-text-primary, #e8edf5);
+  --muted: var(--bf-text-tertiary, #b9c5d8);
   --headline: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -14,11 +14,7 @@
     radial-gradient(circle at 80% 10%, rgba(86, 115, 255, 0.12), transparent 28%),
     radial-gradient(circle at 90% 80%, rgba(52, 211, 153, 0.08), transparent 32%), #090f1c;
   color: var(--text);
-  font-family:
-    'Inter',
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-family: var(--bf-font-base, 'Inter', system-ui, -apple-system, sans-serif);
 }
 
 .landing-shell {
@@ -33,9 +29,9 @@
 .card {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
   border: 1px solid var(--stroke);
-  border-radius: 20px;
+  border-radius: var(--bf-radius-lg, 20px);
   padding: 22px;
-  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--bf-shadow-lg, 0 20px 80px rgba(0, 0, 0, 0.45));
 }
 
 .hero {
@@ -67,23 +63,35 @@
 
 .btn {
   border: none;
-  border-radius: 12px;
+  border-radius: var(--bf-radius-md, 12px);
   padding: 10px 16px;
   font-weight: 700;
   cursor: pointer;
   text-decoration: none;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
 .btn.primary {
   background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 80%);
   color: #0c111b;
-  box-shadow: 0 10px 40px rgba(108, 123, 255, 0.25);
+  box-shadow: var(--bf-shadow-md, 0 10px 40px rgba(108, 123, 255, 0.25));
 }
 
 .btn.ghost {
   background: rgba(255, 255, 255, 0.06);
   color: var(--text);
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--bf-shadow-lg, 0 10px 40px rgba(108, 123, 255, 0.25));
+}
+.btn:focus-visible {
+  outline: 2px solid var(--bf-color-secondary, #f59e0b);
+  outline-offset: 2px;
 }
 
 .pill {
@@ -146,7 +154,7 @@
   border: 1px solid var(--stroke);
   border-radius: 14px;
   padding: 14px;
-  background: var(--surface);
+  background: var(--bf-surface-2, var(--surface));
 }
 .stat .label {
   color: #9ab0ce;
@@ -181,7 +189,8 @@
   padding: 14px;
   border: 1px solid var(--stroke);
   border-radius: 14px;
-  background: var(--surface);
+  background: var(--bf-surface-2, var(--surface));
+  box-shadow: var(--bf-shadow-sm, none);
 }
 .stack-card .icon {
   width: 42px;
@@ -221,7 +230,7 @@
   border: 1px solid var(--stroke);
   border-radius: 12px;
   padding: 12px;
-  background: var(--surface);
+  background: var(--bf-surface-2, var(--surface));
 }
 .price-card .pair {
   font-weight: 700;
@@ -240,7 +249,7 @@
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid var(--stroke);
-  background: var(--surface);
+  background: var(--bf-surface-2, var(--surface));
   display: flex;
   justify-content: space-between;
   color: #dfe7f5;
@@ -260,7 +269,7 @@
   border: 1px solid var(--stroke);
   border-radius: 12px;
   padding: 12px;
-  background: var(--surface);
+  background: var(--bf-surface-2, var(--surface));
 }
 .badge {
   display: inline-flex;
@@ -309,6 +318,11 @@
   text-align: center;
   color: #c9d5eb;
   font-weight: 600;
+  filter: grayscale(0.7);
+  transition: filter 0.2s ease;
+}
+.trust-band .logo-row span:hover {
+  filter: grayscale(0);
 }
 
 .pillars {
@@ -328,6 +342,7 @@
   border-radius: 16px;
   padding: 16px;
   background: linear-gradient(145deg, rgba(98, 208, 255, 0.08), rgba(255, 255, 255, 0.02));
+  box-shadow: var(--bf-shadow-sm, none);
 }
 
 .pillar h3 {
@@ -367,6 +382,7 @@
   align-items: center;
   background: linear-gradient(125deg, rgba(98, 208, 255, 0.16), rgba(108, 123, 255, 0.08));
   border: 1px solid rgba(98, 208, 255, 0.3);
+  box-shadow: var(--bf-shadow-md, none);
 }
 
 .cta-band h2 {
