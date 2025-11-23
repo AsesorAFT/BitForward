@@ -18,6 +18,9 @@
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 350ms ease;
+
+  /* Fallback for design system variables */
+  --bf-radius-md: 12px;
 }
 
 .landing-body {
