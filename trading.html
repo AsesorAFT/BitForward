@@ -64,11 +64,11 @@
             />
             <span class="pair-name">BTC/USDT</span>
           </div>
-          <div class="market-stat">
+          <div class="market-stat" aria-live="polite">
             <span class="label">Precio</span>
             <span class="value market-price" id="current-price">$0.00</span>
           </div>
-          <div class="market-stat">
+          <div class="market-stat" aria-live="polite">
             <span class="label">Cambio 24h</span>
             <span class="value positive" id="price-change">+0.00 (0.00%)</span>
           </div>
@@ -78,7 +78,11 @@
           </div>
           <div class="market-stat">
             <span class="label">Profundidad</span>
-            <select id="depth-select" class="depth-select">
+            <select
+              id="depth-select"
+              class="depth-select"
+              aria-label="Profundidad del libro de órdenes"
+            >
               <option value="5">5</option>
               <option value="10" selected>10</option>
               <option value="25">25</option>
