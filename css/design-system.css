@@ -223,3 +223,6 @@ a:focus-visible {
   border: 1px solid var(--bf-border);
   border-radius: var(--bf-radius-md);
 }
+
+/* Responsive overrides */
+@import url('./responsive.css');
