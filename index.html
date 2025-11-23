@@ -21,33 +21,41 @@
     <script type="module" src="js/landing.js"></script>
   </head>
   <body class="landing-body">
+    <a href="#hero" class="skip-to-content">Saltar al contenido principal</a>
     <bf-header logo-src="assets/logo-astronaut-rocket.svg">
       <a href="#servicios">Servicios</a>
       <a href="#casos">Casos</a>
       <a href="#contacto" class="cta">Hablar</a>
     </bf-header>
 
-    <main class="landing-shell">
-      <section class="hero card" id="hero">
+    <main class="landing-shell" role="main" aria-label="Contenido principal">
+      <section class="hero card" id="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">BitForward • AFORTU Holdings</p>
-          <h1>Infraestructura DeFi lista para negocio.</h1>
+          <p class="eyebrow" aria-label="Marca">BitForward • AFORTU Holdings</p>
+          <h1 id="hero-title">Infraestructura DeFi lista para negocio.</h1>
           <p class="lead">
             Lanzamos tu exchange, perps, lending y fondeo de proyectos con control de riesgo,
             liquidez multi-chain y seguridad corporativa.
           </p>
-          <div class="hero-actions">
-            <a class="btn primary" href="mission-control.html">Abrir Mission Control</a>
-            <a class="btn ghost" href="#contacto">Solicitar demo</a>
+          <div class="hero-actions" role="group" aria-label="Acciones principales">
+            <a
+              class="btn primary"
+              href="mission-control.html"
+              aria-label="Abrir Mission Control Dashboard"
+              >Abrir Mission Control</a
+            >
+            <a class="btn ghost" href="#contacto" aria-label="Solicitar una demostración"
+              >Solicitar demo</a
+            >
           </div>
-          <div class="trust">
-            <span class="pill">Perps & Forwards</span>
-            <span class="pill">Préstamos colateralizados</span>
-            <span class="pill">Exchange cripto</span>
-            <span class="pill">Fondeo de proyectos</span>
+          <div class="trust" role="list" aria-label="Servicios principales">
+            <span class="pill" role="listitem">Perps & Forwards</span>
+            <span class="pill" role="listitem">Préstamos colateralizados</span>
+            <span class="pill" role="listitem">Exchange cripto</span>
+            <span class="pill" role="listitem">Fondeo de proyectos</span>
           </div>
         </div>
-        <div class="hero-kpis">
+        <div class="hero-kpis" role="region" aria-label="Indicadores clave de rendimiento">
           <div class="kpi">
             <div class="label">TVL estimado</div>
             <div class="value" id="kpi-tvl">$--</div>
