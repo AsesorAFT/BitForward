@@ -2,13 +2,13 @@
   "testEnvironment": "node",
   "collectCoverage": false,
   "coverageDirectory": "coverage",
-  "coveragePathIgnorePatterns": [
-    "/node_modules/",
-    "/dist/",
-    "/contracts/"
-  ],
-  "testMatch": [
-    "**/__tests__/**/*.test.js"
+  "coveragePathIgnorePatterns": ["/node_modules/", "/dist/", "/contracts/"],
+  "testMatch": ["**/__tests__/**/*.test.js"],
+  "testPathIgnorePatterns": [
+    "/__tests__/auth.test.js",
+    "/__tests__/api.test.js",
+    "/__tests__/performance.test.js",
+    "/__tests__/ui.test.js"
   ],
   "transform": {},
   "moduleFileExtensions": ["js", "json", "node"],

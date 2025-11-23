@@ -15,30 +15,35 @@ Se ha implementado un **sistema completo de autenticación basado en wallets** u
 ### Características Principales:
 
 ✅ **Sign-In with Ethereum (SIWE)**
+
 - Autenticación sin contraseña usando firma de wallet
 - Nonces únicos de un solo uso
 - Verificación criptográfica de firma
 - Sin costo de gas (off-chain signing)
 
 ✅ **JWT con Refresh Tokens**
+
 - Access tokens (15 minutos)
 - Refresh tokens (7 días)
 - Rotación automática de tokens
 - Revocación individual y masiva
 
 ✅ **Seguridad Enterprise-Grade**
+
 - Rate limiting por IP y dirección
 - Almacenamiento seguro en memoria (Redis-ready)
 - Protección contra replay attacks
 - Logging de seguridad
 
 ✅ **Frontend Completo**
+
 - Cliente JavaScript con auto-refresh
 - Persistencia en localStorage
 - Sistema de eventos
 - Interceptor HTTP con auth automática
 
 ✅ **Backend Robusto**
+
 - Express.js + JWT
 - Middleware de protección de rutas
 - Endpoints REST completos
@@ -51,6 +56,7 @@ Se ha implementado un **sistema completo de autenticación basado en wallets** u
 ### Stack Tecnológico:
 
 **Backend:**
+
 - Node.js + Express.js
 - jsonwebtoken (JWT generation/verification)
 - ethers.js v6 (signature verification)
@@ -58,6 +64,7 @@ Se ha implementado un **sistema completo de autenticación basado en wallets** u
 - crypto (nonce generation)
 
 **Frontend:**
+
 - Vanilla JavaScript (ES6+)
 - ethers.js v5 (wallet integration)
 - localStorage (token persistence)
@@ -101,9 +108,11 @@ test-auth.html                  # Página de prueba completa
 ## 🔌 API Endpoints
 
 ### 1. POST `/api/auth/wallet/nonce`
+
 **Generar nonce para firma**
 
 **Request:**
+
 ```json
 {
   "address": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
@@ -112,6 +121,7 @@ test-auth.html                  # Página de prueba completa
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -129,9 +139,11 @@ test-auth.html                  # Página de prueba completa
 ---
 
 ### 2. POST `/api/auth/wallet/verify`
+
 **Verificar firma y obtener tokens**
 
 **Request:**
+
 ```json
 {
   "address": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
@@ -142,6 +154,7 @@ test-auth.html                  # Página de prueba completa
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -156,6 +169,7 @@ test-auth.html                  # Página de prueba completa
 ```
 
 **Errors:**
+
 - `401 VERIFICATION_FAILED` - Firma inválida
 - `400` - Campos faltantes
 - `429` - Rate limit excedido
@@ -163,9 +177,11 @@ test-auth.html                  # Página de prueba completa
 ---
 
 ### 3. POST `/api/auth/wallet/refresh`
+
 **Refrescar access token**
 
 **Request:**
+
 ```json
 {
   "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
@@ -173,6 +189,7 @@ test-auth.html                  # Página de prueba completa
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -184,19 +201,23 @@ test-auth.html                  # Página de prueba completa
 ```
 
 **Errors:**
+
 - `401 REFRESH_FAILED` - Token inválido/expirado
 
 ---
 
 ### 4. POST `/api/auth/wallet/logout`
+
 **Cerrar sesión (revocar tokens)**
 
 **Headers:**
+
 ```
 Authorization: Bearer <accessToken>
 ```
 
 **Request:**
+
 ```json
 {
   "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -205,6 +226,7 @@ Authorization: Bearer <accessToken>
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -213,20 +235,24 @@ Authorization: Bearer <accessToken>
 ```
 
 **Options:**
+
 - `logoutAll: false` - Revocar solo el refresh token proporcionado
 - `logoutAll: true` - Revocar TODOS los refresh tokens del usuario
 
 ---
 
 ### 5. GET `/api/auth/wallet/me`
+
 **Obtener información del usuario autenticado**
 
 **Headers:**
+
 ```
 Authorization: Bearer <accessToken>
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -241,9 +267,11 @@ Authorization: Bearer <accessToken>
 ---
 
 ### 6. GET `/api/auth/wallet/stats`
+
 **Estadísticas del sistema de auth (debug)**
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -260,61 +288,62 @@ Authorization: Bearer <accessToken>
 ## 🛡️ Middleware de Protección
 
 ### 1. `requireWalletAuth`
+
 **Requiere autenticación con wallet**
 
 ```javascript
 const { requireWalletAuth } = require('./middleware/walletAuth');
 
 router.get('/protected', requireWalletAuth, (req, res) => {
-    // req.wallet contiene { address, chainId }
-    res.json({ address: req.wallet.address });
+  // req.wallet contiene { address, chainId }
+  res.json({ address: req.wallet.address });
 });
 ```
 
 ### 2. `optionalWalletAuth`
+
 **Autenticación opcional**
 
 ```javascript
 const { optionalWalletAuth } = require('./middleware/walletAuth');
 
 router.get('/public', optionalWalletAuth, (req, res) => {
-    // req.wallet existe si está autenticado, undefined si no
-    if (req.wallet) {
-        res.json({ message: 'Authenticated', address: req.wallet.address });
-    } else {
-        res.json({ message: 'Anonymous' });
-    }
+  // req.wallet existe si está autenticado, undefined si no
+  if (req.wallet) {
+    res.json({ message: 'Authenticated', address: req.wallet.address });
+  } else {
+    res.json({ message: 'Anonymous' });
+  }
 });
 ```
 
 ### 3. `requireOwnWallet`
+
 **Verificar que accede a sus propios datos**
 
 ```javascript
 const { requireWalletAuth, requireOwnWallet } = require('./middleware/walletAuth');
 
-router.get('/wallet/:address/data', 
-    requireWalletAuth, 
-    requireOwnWallet, 
-    (req, res) => {
-        // Solo puede acceder si req.wallet.address === req.params.address
-        res.json({ data: 'Your private data' });
-    }
-);
+router.get('/wallet/:address/data', requireWalletAuth, requireOwnWallet, (req, res) => {
+  // Solo puede acceder si req.wallet.address === req.params.address
+  res.json({ data: 'Your private data' });
+});
 ```
 
 ### 4. `requireChainId`
+
 **Validar chain soportada**
 
 ```javascript
 const { requireWalletAuth, requireChainId } = require('./middleware/walletAuth');
 
-router.post('/contract/deploy',
-    requireWalletAuth,
-    requireChainId([1, 137, 56]), // Solo Ethereum, Polygon, BSC
-    (req, res) => {
-        res.json({ message: 'Contract deployed' });
-    }
+router.post(
+  '/contract/deploy',
+  requireWalletAuth,
+  requireChainId([1, 137, 56]), // Solo Ethereum, Polygon, BSC
+  (req, res) => {
+    res.json({ message: 'Contract deployed' });
+  }
 );
 ```
 
@@ -339,17 +368,16 @@ const authClient = new WalletAuthClient('http://localhost:3000/api');
 const walletManager = window.walletManager;
 
 try {
-    // 1. Conectar wallet primero
-    await walletManager.connectMetaMask();
-    
-    // 2. Login con SIWE
-    const result = await authClient.login(walletManager);
-    
-    console.log('Autenticado:', result.address);
-    // Tokens guardados automáticamente en localStorage
-    
+  // 1. Conectar wallet primero
+  await walletManager.connectMetaMask();
+
+  // 2. Login con SIWE
+  const result = await authClient.login(walletManager);
+
+  console.log('Autenticado:', result.address);
+  // Tokens guardados automáticamente en localStorage
 } catch (error) {
-    console.error('Error en login:', error.message);
+  console.error('Error en login:', error.message);
 }
 ```
 
@@ -358,10 +386,10 @@ try {
 ```javascript
 // Método 1: usando authenticatedFetch (auto-refresh incluido)
 const response = await authClient.authenticatedFetch(
-    'http://localhost:3000/api/contracts/my-contracts',
-    {
-        method: 'GET'
-    }
+  'http://localhost:3000/api/contracts/my-contracts',
+  {
+    method: 'GET',
+  }
 );
 
 const data = await response.json();
@@ -369,9 +397,9 @@ const data = await response.json();
 // Método 2: manual con token
 const token = authClient.getAccessToken();
 const response = await fetch('http://localhost:3000/api/contracts', {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 });
 ```
 
@@ -389,23 +417,23 @@ await authClient.logout(true);
 
 ```javascript
 // Escuchar eventos de autenticación
-authClient.on('login', (data) => {
-    console.log('Usuario autenticado:', data.address);
-    updateUI(data);
+authClient.on('login', data => {
+  console.log('Usuario autenticado:', data.address);
+  updateUI(data);
 });
 
 authClient.on('logout', () => {
-    console.log('Sesión cerrada');
-    redirectToLogin();
+  console.log('Sesión cerrada');
+  redirectToLogin();
 });
 
 authClient.on('tokenRefreshed', () => {
-    console.log('Token refrescado automáticamente');
+  console.log('Token refrescado automáticamente');
 });
 
-authClient.on('error', (error) => {
-    console.error('Error de autenticación:', error);
-    showErrorNotification(error.message);
+authClient.on('error', error => {
+  console.error('Error de autenticación:', error);
+  showErrorNotification(error.message);
 });
 ```
 
@@ -414,12 +442,12 @@ authClient.on('error', (error) => {
 ```javascript
 // Verificar si está autenticado
 if (authClient.isAuthenticated()) {
-    console.log('Usuario autenticado');
-    
-    // Obtener información del usuario
-    const userInfo = await authClient.getUserInfo();
-    console.log('Address:', userInfo.address);
-    console.log('Chain:', userInfo.chainId);
+  console.log('Usuario autenticado');
+
+  // Obtener información del usuario
+  const userInfo = await authClient.getUserInfo();
+  console.log('Address:', userInfo.address);
+  console.log('Chain:', userInfo.chainId);
 }
 ```
 
@@ -453,17 +481,17 @@ Editar `/server/config/auth.config.js`:
 
 ```javascript
 module.exports = {
-    jwt: {
-        accessTokenSecret: process.env.JWT_ACCESS_SECRET,
-        refreshTokenSecret: process.env.JWT_REFRESH_SECRET,
-        accessTokenExpiry: '15m',
-        refreshTokenExpiry: '7d'
-    },
-    auth: {
-        nonceExpiry: 5 * 60 * 1000,  // 5 minutos
-        maxLoginAttempts: 5,
-        loginAttemptWindow: 15 * 60 * 1000
-    }
+  jwt: {
+    accessTokenSecret: process.env.JWT_ACCESS_SECRET,
+    refreshTokenSecret: process.env.JWT_REFRESH_SECRET,
+    accessTokenExpiry: '15m',
+    refreshTokenExpiry: '7d',
+  },
+  auth: {
+    nonceExpiry: 5 * 60 * 1000, // 5 minutos
+    maxLoginAttempts: 5,
+    loginAttemptWindow: 15 * 60 * 1000,
+  },
 };
 ```
 
@@ -474,6 +502,7 @@ module.exports = {
 ### Página de Prueba: `test-auth.html`
 
 **Características:**
+
 - ✅ Conexión de MetaMask
 - ✅ Flujo completo de SIWE
 - ✅ Visualización de 5 pasos del flujo
@@ -485,12 +514,14 @@ module.exports = {
 **Para probar:**
 
 1. Iniciar servidor backend:
+
 ```bash
 cd server
 npm start
 ```
 
 2. Abrir en navegador:
+
 ```
 http://localhost:8080/test-auth.html
 ```
@@ -617,6 +648,7 @@ http://localhost:8080/test-auth.html
 ## 📝 Checklist de Implementación
 
 ### Backend:
+
 - [x] AuthService con SIWE
 - [x] Generación de nonces
 - [x] Verificación de firmas (ethers.js)
@@ -629,6 +661,7 @@ http://localhost:8080/test-auth.html
 - [x] Logging de seguridad
 
 ### Frontend:
+
 - [x] WalletAuthClient
 - [x] Login con SIWE
 - [x] Auto-refresh de tokens
@@ -639,12 +672,14 @@ http://localhost:8080/test-auth.html
 - [x] Integración con wallet manager
 
 ### Testing:
+
 - [x] Página de prueba completa
 - [x] Visualización de flujo
 - [x] Console log
 - [x] Status indicators
 
 ### Documentación:
+
 - [x] README completo
 - [x] Ejemplos de uso
 - [x] API reference
@@ -660,6 +695,7 @@ http://localhost:8080/test-auth.html
 **Ahora:** Sistema profesional de autenticación basado en wallets
 
 **Mejoras al MVP:**
+
 - ✅ Autenticación sin contraseñas
 - ✅ Seguridad enterprise-grade
 - ✅ Sesiones persistentes
@@ -668,6 +704,7 @@ http://localhost:8080/test-auth.html
 - ✅ Estándar SIWE
 
 **Progreso de Madurez del MVP:**
+
 - Web3 Integration: ✅ 100%
 - Price Feeds: ✅ 100%
 - JWT Auth: ✅ 100%

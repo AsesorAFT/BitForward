@@ -1,447 +1,521 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Analytics - BitForward | Análisis de Mercado y Noticias Cripto</title>
-    
+
     <!-- Space Theme Loader -->
     <script src="js/space-theme-loader.js"></script>
-    
+
     <!-- Page Styles -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/typography.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="css/wallet.css">
-    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/typography.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/wallet.css" />
+
     <!-- Universal Navigation Styles (al final para sobrescribir) -->
-    <link rel="stylesheet" href="css/modern-navigation.css">
-    <link rel="stylesheet" href="css/executive-icons.css">
-    <link rel="stylesheet" href="css/universal-footer.css">
-    
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    
+    <link rel="stylesheet" href="css/executive-icons.css" />
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
     <!-- TradingView Widget -->
     <script src="https://s3.tradingview.com/tv.js"></script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https/fonts.gstatic.com" crossorigin>
-</head>
-<body class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen text-white">
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https/fonts.gstatic.com" crossorigin />
+  </head>
+  <body class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen text-white">
     <!-- Universal Navigation Container -->
-    <div id="bf-nav-container"></div>
-    
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
+      <a class="cta" href="enterprise.html">Enterprise</a>
+    </bf-header>
+
     <!-- Analytics Container -->
-    <div class="dashboard-container relative overflow-hidden" style="margin-top: 80px;">
-        <!-- Background decorations -->
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    <div class="dashboard-container relative overflow-hidden" style="margin-top: 80px">
+      <!-- Background decorations -->
+      <div
+        class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%239C92AC&quot; fill-opacity=&quot;0.1&quot;%3E%3Ccircle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;1&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"
+      ></div>
 
-        <!-- Main Analytics Content -->
-        <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            
-            <!-- Page Header -->
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-white mb-2">Análisis de Mercado</h2>
-                <p class="text-blue-200">Datos en tiempo real, análisis técnico y tendencias del mercado cripto</p>
+      <!-- Main Analytics Content -->
+      <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-white mb-2">Análisis de Mercado</h2>
+          <p class="text-blue-200">
+            Datos en tiempo real, análisis técnico y tendencias del mercado cripto
+          </p>
+        </div>
+
+        <!-- Market Sentiment -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div class="glass-effect rounded-xl p-4 border border-green-500/30">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-blue-200 text-sm">Sentimiento Global</span>
+              <span class="text-2xl">😊</span>
             </div>
+            <p class="text-2xl font-bold text-green-400">Alcista</p>
+            <p class="text-sm text-blue-300">Fear & Greed: 72</p>
+          </div>
 
-            <!-- Market Sentiment -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <div class="glass-effect rounded-xl p-4 border border-green-500/30">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-blue-200 text-sm">Sentimiento Global</span>
-                        <span class="text-2xl">😊</span>
-                    </div>
-                    <p class="text-2xl font-bold text-green-400">Alcista</p>
-                    <p class="text-sm text-blue-300">Fear & Greed: 72</p>
-                </div>
-                
-                <div class="glass-effect rounded-xl p-4 border border-blue-500/30">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-blue-200 text-sm">Dominancia BTC</span>
-                        <svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/>
-                        </svg>
-                    </div>
-                    <p class="text-2xl font-bold text-white">54.2%</p>
-                    <p class="text-sm text-green-400">+1.3% (24h)</p>
-                </div>
-                
-                <div class="glass-effect rounded-xl p-4 border border-purple-500/30">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-blue-200 text-sm">Market Cap Total</span>
-                        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                        </svg>
-                    </div>
-                    <p class="text-2xl font-bold text-white">$2.4T</p>
-                    <p class="text-sm text-green-400">+5.2% (24h)</p>
-                </div>
-                
-                <div class="glass-effect rounded-xl p-4 border border-yellow-500/30">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-blue-200 text-sm">Vol. 24h</span>
-                        <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                        </svg>
-                    </div>
-                    <p class="text-2xl font-bold text-white">$125B</p>
-                    <p class="text-sm text-yellow-400">Alto volumen</p>
-                </div>
+          <div class="glass-effect rounded-xl p-4 border border-blue-500/30">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-blue-200 text-sm">Dominancia BTC</span>
+              <svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"
+                />
+              </svg>
             </div>
+            <p class="text-2xl font-bold text-white">54.2%</p>
+            <p class="text-sm text-green-400">+1.3% (24h)</p>
+          </div>
 
-            <!-- TradingView Chart & News Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                
-                <!-- TradingView Chart (2/3 width) -->
-                <div class="lg:col-span-2">
-                    <div class="glass-effect rounded-xl p-6 border border-white/20">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-bold text-white">Gráfico de Precios</h3>
-                            <div class="flex gap-2">
-                                <select id="chart-symbol" class="px-3 py-1 bg-black/20 border border-white/20 rounded text-white text-sm">
-                                    <option value="BINANCE:BTCUSDT">BTC/USDT</option>
-                                    <option value="BINANCE:ETHUSDT">ETH/USDT</option>
-                                    <option value="BINANCE:SOLUSDT">SOL/USDT</option>
-                                    <option value="BINANCE:AVAXUSDT">AVAX/USDT</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <!-- TradingView Widget -->
-                        <div id="tradingview-chart" style="height: 500px;"></div>
-                    </div>
-                </div>
-
-                <!-- Market News (1/3 width) -->
-                <div class="lg:col-span-1">
-                    <div class="glass-effect rounded-xl p-6 border border-white/20 h-full">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-bold text-white">Noticias Cripto</h3>
-                            <button class="text-blue-400 hover:text-blue-300">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                                </svg>
-                            </button>
-                        </div>
-                        
-                        <div class="space-y-4 max-h-[450px] overflow-y-auto">
-                            <!-- News Item -->
-                            <div class="bg-black/20 rounded-lg p-3 border border-white/10 hover:border-bf-secondary/50 transition-all cursor-pointer">
-                                <div class="flex items-start gap-3">
-                                    <div class="bg-green-500/20 p-2 rounded-lg flex-shrink-0">
-                                        <span class="text-green-400 text-xl">📈</span>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="text-white font-medium text-sm mb-1">Bitcoin alcanza nuevo máximo mensual</h4>
-                                        <p class="text-blue-200 text-xs mb-2">El precio de BTC supera los $67,000 impulsado por flujos institucionales...</p>
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-xs text-blue-300">hace 15 min</span>
-                                            <span class="inline-flex px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded-full">
-                                                Alcista 📊
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-black/20 rounded-lg p-3 border border-white/10 hover:border-bf-secondary/50 transition-all cursor-pointer">
-                                <div class="flex items-start gap-3">
-                                    <div class="bg-blue-500/20 p-2 rounded-lg flex-shrink-0">
-                                        <span class="text-blue-400 text-xl">🔗</span>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="text-white font-medium text-sm mb-1">Ethereum prepara actualización Dencun</h4>
-                                        <p class="text-blue-200 text-xs mb-2">La red se prepara para reducir costos de gas con EIP-4844...</p>
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-xs text-blue-300">hace 1 hora</span>
-                                            <span class="inline-flex px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded-full">
-                                                Neutral 📰
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-black/20 rounded-lg p-3 border border-white/10 hover:border-bf-secondary/50 transition-all cursor-pointer">
-                                <div class="flex items-start gap-3">
-                                    <div class="bg-purple-500/20 p-2 rounded-lg flex-shrink-0">
-                                        <span class="text-purple-400 text-xl">🏦</span>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="text-white font-medium text-sm mb-1">BlackRock aumenta holdings en BTC</h4>
-                                        <p class="text-blue-200 text-xs mb-2">El gigante financiero añade $500M en su ETF spot...</p>
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-xs text-blue-300">hace 2 horas</span>
-                                            <span class="inline-flex px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded-full">
-                                                Muy Alcista 🚀
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-black/20 rounded-lg p-3 border border-white/10 hover:border-bf-secondary/50 transition-all cursor-pointer">
-                                <div class="flex items-start gap-3">
-                                    <div class="bg-yellow-500/20 p-2 rounded-lg flex-shrink-0">
-                                        <span class="text-yellow-400 text-xl">⚠️</span>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="text-white font-medium text-sm mb-1">Alerta: volatilidad esperada</h4>
-                                        <p class="text-blue-200 text-xs mb-2">Datos de empleo USA podrían generar movimientos bruscos...</p>
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-xs text-blue-300">hace 3 horas</span>
-                                            <span class="inline-flex px-2 py-0.5 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">
-                                                Precaución ⚡
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div class="glass-effect rounded-xl p-4 border border-purple-500/30">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-blue-200 text-sm">Market Cap Total</span>
+              <svg
+                class="w-5 h-5 text-purple-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                />
+              </svg>
             </div>
+            <p class="text-2xl font-bold text-white">$2.4T</p>
+            <p class="text-sm text-green-400">+5.2% (24h)</p>
+          </div>
 
-            <!-- Technical Indicators -->
-            <div class="glass-effect rounded-xl p-6 border border-white/20 mb-8">
-                <h3 class="text-xl font-bold text-white mb-6">Indicadores Técnicos</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- RSI -->
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-blue-200 text-sm">RSI (14)</span>
-                            <span class="text-white font-bold">58.3</span>
-                        </div>
-                        <div class="w-full bg-blue-900/30 rounded-full h-2 mb-1">
-                            <div class="bg-gradient-to-r from-green-500 to-yellow-400 h-2 rounded-full" style="width: 58%"></div>
-                        </div>
-                        <div class="flex justify-between text-xs text-blue-300">
-                            <span>Sobrev. (30)</span>
-                            <span>Neutral</span>
-                            <span>Sobrec. (70)</span>
-                        </div>
-                    </div>
-
-                    <!-- MACD -->
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-blue-200 text-sm">MACD</span>
-                            <span class="text-green-400 font-bold">Alcista</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="flex-1 bg-green-500/20 rounded p-2 text-center">
-                                <p class="text-xs text-green-400">MACD: 245.3</p>
-                            </div>
-                            <div class="flex-1 bg-blue-500/20 rounded p-2 text-center">
-                                <p class="text-xs text-blue-400">Signal: 189.7</p>
-                            </div>
-                        </div>
-                        <p class="text-xs text-green-300 mt-2">✓ Cruce alcista confirmado</p>
-                    </div>
-
-                    <!-- Bollinger Bands -->
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-blue-200 text-sm">Bollinger Bands</span>
-                            <span class="text-blue-400 font-bold">Medio</span>
-                        </div>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-blue-300">Superior:</span>
-                                <span class="text-white">$68,450</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-300">Media:</span>
-                                <span class="text-bf-secondary font-medium">$67,234</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-blue-300">Inferior:</span>
-                                <span class="text-white">$66,018</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div class="glass-effect rounded-xl p-4 border border-yellow-500/30">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-blue-200 text-sm">Vol. 24h</span>
+              <svg
+                class="w-5 h-5 text-yellow-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                />
+              </svg>
             </div>
+            <p class="text-2xl font-bold text-white">$125B</p>
+            <p class="text-sm text-yellow-400">Alto volumen</p>
+          </div>
+        </div>
 
-            <!-- Trending Topics -->
-            <div class="glass-effect rounded-xl p-6 border border-white/20 mb-8">
-                <h3 class="text-xl font-bold text-white mb-6">Tendencias y Sentimiento</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Trending Hashtags -->
-                    <div>
-                        <h4 class="text-lg font-semibold text-white mb-4">🔥 Trending en Cripto</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-2 bg-gradient-to-r from-bf-secondary/20 to-purple-500/20 border border-bf-secondary/30 rounded-full text-sm text-white hover:border-bf-secondary transition-all cursor-pointer">
-                                #Bitcoin
-                            </span>
-                            <span class="px-3 py-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-full text-sm text-white hover:border-green-500 transition-all cursor-pointer">
-                                #ETF
-                            </span>
-                            <span class="px-3 py-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30 rounded-full text-sm text-white hover:border-blue-500 transition-all cursor-pointer">
-                                #DeFi
-                            </span>
-                            <span class="px-3 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full text-sm text-white hover:border-purple-500 transition-all cursor-pointer">
-                                #Layer2
-                            </span>
-                            <span class="px-3 py-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 rounded-full text-sm text-white hover:border-yellow-500 transition-all cursor-pointer">
-                                #Halving
-                            </span>
-                            <span class="px-3 py-2 bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30 rounded-full text-sm text-white hover:border-red-500 transition-all cursor-pointer">
-                                #Altcoins
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Sentiment Analysis -->
-                    <div>
-                        <h4 class="text-lg font-semibold text-white mb-4">💭 Análisis de Sentimiento</h4>
-                        <div class="space-y-3">
-                            <div>
-                                <div class="flex items-center justify-between mb-1">
-                                    <span class="text-sm text-blue-200">Positivo</span>
-                                    <span class="text-sm text-green-400 font-medium">62%</span>
-                                </div>
-                                <div class="w-full bg-blue-900/30 rounded-full h-2">
-                                    <div class="bg-green-500 h-2 rounded-full" style="width: 62%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex items-center justify-between mb-1">
-                                    <span class="text-sm text-blue-200">Neutral</span>
-                                    <span class="text-sm text-blue-400 font-medium">28%</span>
-                                </div>
-                                <div class="w-full bg-blue-900/30 rounded-full h-2">
-                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 28%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex items-center justify-between mb-1">
-                                    <span class="text-sm text-blue-200">Negativo</span>
-                                    <span class="text-sm text-red-400 font-medium">10%</span>
-                                </div>
-                                <div class="w-full bg-blue-900/30 rounded-full h-2">
-                                    <div class="bg-red-500 h-2 rounded-full" style="width: 10%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- On-Chain Metrics -->
+        <!-- TradingView Chart & News Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <!-- TradingView Chart (2/3 width) -->
+          <div class="lg:col-span-2">
             <div class="glass-effect rounded-xl p-6 border border-white/20">
-                <h3 class="text-xl font-bold text-white mb-6">Métricas On-Chain</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="bg-black/20 rounded-lg p-4">
-                        <div class="flex items-center gap-2 mb-2">
-                            <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-                            <span class="text-blue-200 text-sm">Active Addresses</span>
-                        </div>
-                        <p class="text-2xl font-bold text-white">1.2M</p>
-                        <p class="text-xs text-green-400 mt-1">+8.4% (7d)</p>
-                    </div>
-
-                    <div class="bg-black/20 rounded-lg p-4">
-                        <div class="flex items-center gap-2 mb-2">
-                            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-                            <span class="text-blue-200 text-sm">Hash Rate</span>
-                        </div>
-                        <p class="text-2xl font-bold text-white">425 EH/s</p>
-                        <p class="text-xs text-blue-400 mt-1">ATH histórico</p>
-                    </div>
-
-                    <div class="bg-black/20 rounded-lg p-4">
-                        <div class="flex items-center gap-2 mb-2">
-                            <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
-                            <span class="text-blue-200 text-sm">Exchange Netflow</span>
-                        </div>
-                        <p class="text-2xl font-bold text-green-400">-15.2K</p>
-                        <p class="text-xs text-green-400 mt-1">Salidas netas</p>
-                    </div>
-
-                    <div class="bg-black/20 rounded-lg p-4">
-                        <div class="flex items-center gap-2 mb-2">
-                            <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                            <span class="text-blue-200 text-sm">Stablecoin Supply</span>
-                        </div>
-                        <p class="text-2xl font-bold text-white">$145B</p>
-                        <p class="text-xs text-yellow-400 mt-1">Liquidez alta</p>
-                    </div>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-white">Gráfico de Precios</h3>
+                <div class="flex gap-2">
+                  <select
+                    id="chart-symbol"
+                    class="px-3 py-1 bg-black/20 border border-white/20 rounded text-white text-sm"
+                  >
+                    <option value="BINANCE:BTCUSDT">BTC/USDT</option>
+                    <option value="BINANCE:ETHUSDT">ETH/USDT</option>
+                    <option value="BINANCE:SOLUSDT">SOL/USDT</option>
+                    <option value="BINANCE:AVAXUSDT">AVAX/USDT</option>
+                  </select>
                 </div>
-            </div>
-        </main>
+              </div>
 
-        <!-- Universal Footer Container -->
-        <div id="bf-universal-footer-container"></div>
+              <!-- TradingView Widget -->
+              <div id="tradingview-chart" style="height: 500px"></div>
+            </div>
+          </div>
+
+          <!-- Market News (1/3 width) -->
+          <div class="lg:col-span-1">
+            <div class="glass-effect rounded-xl p-6 border border-white/20 h-full">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-white">Noticias Cripto</h3>
+                <button class="text-blue-400 hover:text-blue-300">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="space-y-4 max-h-[450px] overflow-y-auto">
+                <!-- News Item -->
+                <div
+                  class="bg-black/20 rounded-lg p-3 border border-white/10 hover:border-bf-secondary/50 transition-all cursor-pointer"
+                >
+                  <div class="flex items-start gap-3">
+                    <div class="bg-green-500/20 p-2 rounded-lg flex-shrink-0">
+                      <span class="text-green-400 text-xl">📈</span>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="text-white font-medium text-sm mb-1">
+                        Bitcoin alcanza nuevo máximo mensual
+                      </h4>
+                      <p class="text-blue-200 text-xs mb-2">
+                        El precio de BTC supera los $67,000 impulsado por flujos institucionales...
+                      </p>
+                      <div class="flex items-center justify-between">
+                        <span class="text-xs text-blue-300">hace 15 min</span>
+                        <span
+                          class="inline-flex px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded-full"
+                        >
+                          Alcista 📊
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-black/20 rounded-lg p-3 border border-white/10 hover:border-bf-secondary/50 transition-all cursor-pointer"
+                >
+                  <div class="flex items-start gap-3">
+                    <div class="bg-blue-500/20 p-2 rounded-lg flex-shrink-0">
+                      <span class="text-blue-400 text-xl">🔗</span>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="text-white font-medium text-sm mb-1">
+                        Ethereum prepara actualización Dencun
+                      </h4>
+                      <p class="text-blue-200 text-xs mb-2">
+                        La red se prepara para reducir costos de gas con EIP-4844...
+                      </p>
+                      <div class="flex items-center justify-between">
+                        <span class="text-xs text-blue-300">hace 1 hora</span>
+                        <span
+                          class="inline-flex px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded-full"
+                        >
+                          Neutral 📰
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-black/20 rounded-lg p-3 border border-white/10 hover:border-bf-secondary/50 transition-all cursor-pointer"
+                >
+                  <div class="flex items-start gap-3">
+                    <div class="bg-purple-500/20 p-2 rounded-lg flex-shrink-0">
+                      <span class="text-purple-400 text-xl">🏦</span>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="text-white font-medium text-sm mb-1">
+                        BlackRock aumenta holdings en BTC
+                      </h4>
+                      <p class="text-blue-200 text-xs mb-2">
+                        El gigante financiero añade $500M en su ETF spot...
+                      </p>
+                      <div class="flex items-center justify-between">
+                        <span class="text-xs text-blue-300">hace 2 horas</span>
+                        <span
+                          class="inline-flex px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded-full"
+                        >
+                          Muy Alcista 🚀
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-black/20 rounded-lg p-3 border border-white/10 hover:border-bf-secondary/50 transition-all cursor-pointer"
+                >
+                  <div class="flex items-start gap-3">
+                    <div class="bg-yellow-500/20 p-2 rounded-lg flex-shrink-0">
+                      <span class="text-yellow-400 text-xl">⚠️</span>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="text-white font-medium text-sm mb-1">
+                        Alerta: volatilidad esperada
+                      </h4>
+                      <p class="text-blue-200 text-xs mb-2">
+                        Datos de empleo USA podrían generar movimientos bruscos...
+                      </p>
+                      <div class="flex items-center justify-between">
+                        <span class="text-xs text-blue-300">hace 3 horas</span>
+                        <span
+                          class="inline-flex px-2 py-0.5 bg-yellow-500/20 text-yellow-400 text-xs rounded-full"
+                        >
+                          Precaución ⚡
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Indicators -->
+        <div class="glass-effect rounded-xl p-6 border border-white/20 mb-8">
+          <h3 class="text-xl font-bold text-white mb-6">Indicadores Técnicos</h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- RSI -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-blue-200 text-sm">RSI (14)</span>
+                <span class="text-white font-bold">58.3</span>
+              </div>
+              <div class="w-full bg-blue-900/30 rounded-full h-2 mb-1">
+                <div
+                  class="bg-gradient-to-r from-green-500 to-yellow-400 h-2 rounded-full"
+                  style="width: 58%"
+                ></div>
+              </div>
+              <div class="flex justify-between text-xs text-blue-300">
+                <span>Sobrev. (30)</span>
+                <span>Neutral</span>
+                <span>Sobrec. (70)</span>
+              </div>
+            </div>
+
+            <!-- MACD -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-blue-200 text-sm">MACD</span>
+                <span class="text-green-400 font-bold">Alcista</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="flex-1 bg-green-500/20 rounded p-2 text-center">
+                  <p class="text-xs text-green-400">MACD: 245.3</p>
+                </div>
+                <div class="flex-1 bg-blue-500/20 rounded p-2 text-center">
+                  <p class="text-xs text-blue-400">Signal: 189.7</p>
+                </div>
+              </div>
+              <p class="text-xs text-green-300 mt-2">✓ Cruce alcista confirmado</p>
+            </div>
+
+            <!-- Bollinger Bands -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-blue-200 text-sm">Bollinger Bands</span>
+                <span class="text-blue-400 font-bold">Medio</span>
+              </div>
+              <div class="space-y-1 text-xs">
+                <div class="flex justify-between">
+                  <span class="text-blue-300">Superior:</span>
+                  <span class="text-white">$68,450</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-blue-300">Media:</span>
+                  <span class="text-bf-secondary font-medium">$67,234</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-blue-300">Inferior:</span>
+                  <span class="text-white">$66,018</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trending Topics -->
+        <div class="glass-effect rounded-xl p-6 border border-white/20 mb-8">
+          <h3 class="text-xl font-bold text-white mb-6">Tendencias y Sentimiento</h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Trending Hashtags -->
+            <div>
+              <h4 class="text-lg font-semibold text-white mb-4">🔥 Trending en Cripto</h4>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="px-3 py-2 bg-gradient-to-r from-bf-secondary/20 to-purple-500/20 border border-bf-secondary/30 rounded-full text-sm text-white hover:border-bf-secondary transition-all cursor-pointer"
+                >
+                  #Bitcoin
+                </span>
+                <span
+                  class="px-3 py-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-full text-sm text-white hover:border-green-500 transition-all cursor-pointer"
+                >
+                  #ETF
+                </span>
+                <span
+                  class="px-3 py-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30 rounded-full text-sm text-white hover:border-blue-500 transition-all cursor-pointer"
+                >
+                  #DeFi
+                </span>
+                <span
+                  class="px-3 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full text-sm text-white hover:border-purple-500 transition-all cursor-pointer"
+                >
+                  #Layer2
+                </span>
+                <span
+                  class="px-3 py-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 rounded-full text-sm text-white hover:border-yellow-500 transition-all cursor-pointer"
+                >
+                  #Halving
+                </span>
+                <span
+                  class="px-3 py-2 bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30 rounded-full text-sm text-white hover:border-red-500 transition-all cursor-pointer"
+                >
+                  #Altcoins
+                </span>
+              </div>
+            </div>
+
+            <!-- Sentiment Analysis -->
+            <div>
+              <h4 class="text-lg font-semibold text-white mb-4">💭 Análisis de Sentimiento</h4>
+              <div class="space-y-3">
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-sm text-blue-200">Positivo</span>
+                    <span class="text-sm text-green-400 font-medium">62%</span>
+                  </div>
+                  <div class="w-full bg-blue-900/30 rounded-full h-2">
+                    <div class="bg-green-500 h-2 rounded-full" style="width: 62%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-sm text-blue-200">Neutral</span>
+                    <span class="text-sm text-blue-400 font-medium">28%</span>
+                  </div>
+                  <div class="w-full bg-blue-900/30 rounded-full h-2">
+                    <div class="bg-blue-500 h-2 rounded-full" style="width: 28%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-sm text-blue-200">Negativo</span>
+                    <span class="text-sm text-red-400 font-medium">10%</span>
+                  </div>
+                  <div class="w-full bg-blue-900/30 rounded-full h-2">
+                    <div class="bg-red-500 h-2 rounded-full" style="width: 10%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- On-Chain Metrics -->
+        <div class="glass-effect rounded-xl p-6 border border-white/20">
+          <h3 class="text-xl font-bold text-white mb-6">Métricas On-Chain</h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-black/20 rounded-lg p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                <span class="text-blue-200 text-sm">Active Addresses</span>
+              </div>
+              <p class="text-2xl font-bold text-white">1.2M</p>
+              <p class="text-xs text-green-400 mt-1">+8.4% (7d)</p>
+            </div>
+
+            <div class="bg-black/20 rounded-lg p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+                <span class="text-blue-200 text-sm">Hash Rate</span>
+              </div>
+              <p class="text-2xl font-bold text-white">425 EH/s</p>
+              <p class="text-xs text-blue-400 mt-1">ATH histórico</p>
+            </div>
+
+            <div class="bg-black/20 rounded-lg p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                <span class="text-blue-200 text-sm">Exchange Netflow</span>
+              </div>
+              <p class="text-2xl font-bold text-green-400">-15.2K</p>
+              <p class="text-xs text-green-400 mt-1">Salidas netas</p>
+            </div>
+
+            <div class="bg-black/20 rounded-lg p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                <span class="text-blue-200 text-sm">Stablecoin Supply</span>
+              </div>
+              <p class="text-2xl font-bold text-white">$145B</p>
+              <p class="text-xs text-yellow-400 mt-1">Liquidez alta</p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Universal Footer Container -->
+      <bf-footer></bf-footer>
     </div>
 
     <!-- Scripts -->
     <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
     <script src="js/logo-manager.js"></script>
     <script src="js/wallet-manager.js"></script>
-    
+
     <script>
-        // TradingView Chart initialization
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('📊 BitForward Analytics inicializado');
-            
-            // Initialize TradingView widget
-            function initTradingView(symbol = 'BINANCE:BTCUSDT') {
-                new TradingView.widget({
-                    "container_id": "tradingview-chart",
-                    "width": "100%",
-                    "height": "100%",
-                    "symbol": symbol,
-                    "interval": "60",
-                    "timezone": "America/Mexico_City",
-                    "theme": "dark",
-                    "style": "1",
-                    "locale": "es",
-                    "toolbar_bg": "#0F172A",
-                    "enable_publishing": false,
-                    "hide_top_toolbar": false,
-                    "hide_legend": false,
-                    "save_image": false,
-                    "backgroundColor": "rgba(15, 23, 42, 0.5)",
-                    "gridColor": "rgba(59, 130, 246, 0.1)",
-                    "studies": [
-                        "MASimple@tv-basicstudies",
-                        "RSI@tv-basicstudies",
-                        "MACD@tv-basicstudies"
-                    ],
-                    "allow_symbol_change": true,
-                    "details": true,
-                    "hotlist": true,
-                    "calendar": true
-                });
-            }
-            
-            // Initialize chart
-            initTradingView();
-            
-            // Chart symbol selector
-            document.getElementById('chart-symbol').addEventListener('change', (e) => {
-                const container = document.getElementById('tradingview-chart');
-                container.innerHTML = ''; // Clear previous chart
-                initTradingView(e.target.value);
-            });
-            
-            // Auto-refresh news every 5 minutes
-            setInterval(() => {
-                console.log('🔄 Actualizando noticias...');
-                // In production, this would fetch real news
-            }, 300000);
+      // TradingView Chart initialization
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('📊 BitForward Analytics inicializado');
+
+        // Initialize TradingView widget
+        function initTradingView(symbol = 'BINANCE:BTCUSDT') {
+          new TradingView.widget({
+            container_id: 'tradingview-chart',
+            width: '100%',
+            height: '100%',
+            symbol: symbol,
+            interval: '60',
+            timezone: 'America/Mexico_City',
+            theme: 'dark',
+            style: '1',
+            locale: 'es',
+            toolbar_bg: '#0F172A',
+            enable_publishing: false,
+            hide_top_toolbar: false,
+            hide_legend: false,
+            save_image: false,
+            backgroundColor: 'rgba(15, 23, 42, 0.5)',
+            gridColor: 'rgba(59, 130, 246, 0.1)',
+            studies: ['MASimple@tv-basicstudies', 'RSI@tv-basicstudies', 'MACD@tv-basicstudies'],
+            allow_symbol_change: true,
+            details: true,
+            hotlist: true,
+            calendar: true,
+          });
+        }
+
+        // Initialize chart
+        initTradingView();
+
+        // Chart symbol selector
+        document.getElementById('chart-symbol').addEventListener('change', e => {
+          const container = document.getElementById('tradingview-chart');
+          container.innerHTML = ''; // Clear previous chart
+          initTradingView(e.target.value);
         });
+
+        // Auto-refresh news every 5 minutes
+        setInterval(() => {
+          console.log('🔄 Actualizando noticias...');
+          // In production, this would fetch real news
+        }, 300000);
+      });
     </script>
-    
+
     <!-- Universal Navigation & Footer Scripts -->
-    <script src="js/universal-nav.js"></script>
-    <script src="js/universal-footer.js"></script>
-</body>
+    <script type="module" src="js/components/bf-header.js"></script>
+    <script type="module" src="js/components/bf-footer.js"></script>
+  </body>
 </html>

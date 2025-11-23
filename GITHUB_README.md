@@ -2,13 +2,14 @@
 
 [![BitForward](https://img.shields.io/badge/BitForward-Despegando%20en%20DeFi-blue?style=for-the-badge&logo=ethereum)](https://asesoraft.github.io/BitForward/)
 
-## 🚀 BitForward: Despegando en el Mundo DeFi 
+## 🚀 BitForward: Despegando en el Mundo DeFi
 
 Plataforma descentralizada de contratos forward para empresas. Gestiona riesgos, optimiza liquidez y genera rendimientos de forma segura.
 
 ### 💼 Solución DeFi Empresarial
 
 BitForward ofrece:
+
 - Contratos a Futuro sobre múltiples criptomonedas
 - Fondo de Préstamos con rendimientos del 8-15% anual
 - Seguridad empresarial con auditorías y contratos verificados

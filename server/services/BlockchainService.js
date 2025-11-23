@@ -25,18 +25,37 @@ class BlockchainService {
     });
   }
 
+  validateConfig() {
+    const issues = [];
+    const rpcUrl = process.env.ETHEREUM_RPC_URL;
+    const privateKey = process.env.PRIVATE_KEY;
+
+    if (!rpcUrl || rpcUrl.includes('your-api-key')) {
+      issues.push('ETHEREUM_RPC_URL is missing or still using the placeholder');
+    }
+
+    const sanitizedKey = (privateKey || '').replace(/^0x/, '');
+    if (!sanitizedKey || /^0+$/.test(sanitizedKey)) {
+      issues.push('PRIVATE_KEY is missing or still using the placeholder');
+    }
+
+    return issues;
+  }
+
   async initialize() {
     try {
+      const configIssues = this.validateConfig();
+      if (configIssues.length) {
+        throw new Error(`Blockchain configuration invalid: ${configIssues.join('; ')}`);
+      }
+
       // Conectar al provider (Ethereum mainnet/testnet)
       this.provider = new ethers.JsonRpcProvider(
         process.env.ETHEREUM_RPC_URL || 'https://eth-mainnet.alchemyapi.io/v2/your-api-key'
       );
 
       // Configurar wallet (en producción usar HSM/KMS)
-      this.wallet = new ethers.Wallet(
-        process.env.PRIVATE_KEY || '0x' + '0'.repeat(64), // Placeholder
-        this.provider
-      );
+      this.wallet = new ethers.Wallet(process.env.PRIVATE_KEY, this.provider);
 
       // Inicializar contratos
       await this.initializeContracts();
@@ -45,7 +64,13 @@ class BlockchainService {
       await this.setupEventListeners();
 
       // Inicializar WebSocket server
-      this.initializeWebSocket();
+      if (process.env.BLOCKCHAIN_WS_ENABLED === 'true') {
+        this.initializeWebSocket();
+      } else {
+        this.logger.info(
+          'Blockchain WebSocket server disabled (set BLOCKCHAIN_WS_ENABLED=true to enable)'
+        );
+      }
 
       this.logger.info('BlockchainService initialized successfully');
     } catch (error) {
@@ -157,9 +182,29 @@ class BlockchainService {
   }
 
   initializeWebSocket() {
-    this.wsServer = new WebSocket.Server({ port: process.env.WS_PORT || 8080 });
+    const wsPort = process.env.WS_PORT || 8080;
+    const requiredToken = process.env.BLOCKCHAIN_WS_TOKEN;
+    this.wsServer = new WebSocket.Server({ port: wsPort });
 
-    this.wsServer.on('connection', ws => {
+    this.wsServer.on('connection', (ws, request) => {
+      // Autenticación simple por token en la primer conexión (querystring ?token=)
+      try {
+        const url = request?.url || '';
+        const parsedToken = new URL(`http://localhost${url}`).searchParams.get('token');
+
+        if (!requiredToken || parsedToken !== requiredToken) {
+          this.logger.warn('WebSocket connection rejected: missing/invalid token');
+          ws.close(4401, 'Unauthorized');
+          return;
+        }
+      } catch (error) {
+        this.logger.warn('WebSocket connection rejected (token parse failed)', {
+          error: error.message,
+        });
+        ws.close(4401, 'Unauthorized');
+        return;
+      }
+
       this.logger.info('Client connected to WebSocket');
 
       ws.on('message', message => {
@@ -176,7 +221,7 @@ class BlockchainService {
       });
     });
 
-    this.logger.info(`WebSocket server started on port ${process.env.WS_PORT || 8080}`);
+    this.logger.info(`WebSocket server started on port ${wsPort} (token protected)`);
   }
 
   handleWebSocketMessage(ws, data) {

@@ -306,7 +306,7 @@ router.get('/volume', async (req, res, next) => {
  * GET /api/stats/health
  * Obtiene el estado de salud del sistema
  */
-router.get('/health', async (req, res, next) => {
+router.get('/health', async (req, res) => {
   try {
     const dbConnected = database.isConnected();
 

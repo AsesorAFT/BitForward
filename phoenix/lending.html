@@ -1,467 +1,501 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plataforma de Préstamos | BitForward Phoenix</title>
-    
+
     <!-- Space Theme Loader - Debe ir antes que otros scripts -->
-    <script src="../js/space-theme-loader.js"></script>
-    
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="icon" type="image/svg+xml" href="/icons/bitforward.svg">
-</head>
-<body class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen">
-    
-    <!-- Navigation -->
-    <nav class="bg-black/20 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="/" class="flex items-center">
-                        <div class="bg-gradient-to-r from-bf-secondary to-yellow-400 p-2 rounded-lg mr-3">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                            </svg>
-                        </div>
-                        <span class="text-xl font-bold text-white">BitForward</span>
-                    </a>
-                </div>
+    <script type="module" src="../js/space-theme-loader.js"></script>
 
-                <!-- Navigation Links -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="/phoenix/guardian-contracts.html" class="text-blue-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Contratos
-                        </a>
-                        <a href="/phoenix/lending.html" class="bg-bf-primary/30 text-white px-3 py-2 rounded-md text-sm font-medium">
-                            Préstamos
-                        </a>
-                        <a href="/phoenix/login.html" class="text-blue-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Portal
-                        </a>
-                    </div>
-                </div>
-
-                <!-- User Menu -->
-                <div class="flex items-center space-x-4">
-                    <div class="text-right">
-                        <div class="text-sm text-white">DeFi Analyst</div>
-                        <div class="text-xs text-blue-200">Lending Platform</div>
-                    </div>
-                    <div class="bg-bf-secondary p-2 rounded-full">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  </head>
+  <body
+    class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen flex flex-col"
+  >
+    <bf-nav>
+      <a href="guardian-contracts.html">Contratos</a>
+      <a href="lending.html">Préstamos</a>
+      <a href="login.html">Portal</a>
+    </bf-nav>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
+    <main class="flex-1">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
         <!-- Header -->
         <div class="mb-8">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold text-white mb-2">Plataforma de Préstamos DeFi</h1>
-                    <p class="text-blue-200">Gestión inteligente de liquidez • Proyecto Fénix</p>
-                </div>
-                <div class="flex space-x-3">
-                    <button class="btn-secondary" id="lendBtn">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                        </svg>
-                        Prestar
-                    </button>
-                    <button class="btn-primary" id="borrowBtn">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                        </svg>
-                        Solicitar Préstamo
-                    </button>
-                </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-3xl font-bold text-white mb-2">Plataforma de Préstamos DeFi</h1>
+              <p class="text-blue-200">Gestión inteligente de liquidez • Proyecto Fénix</p>
             </div>
+            <div class="flex space-x-3">
+              <button class="btn-secondary" id="lendBtn">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+                Prestar
+              </button>
+              <button class="btn-primary" id="borrowBtn">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                  />
+                </svg>
+                Solicitar Préstamo
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- Portfolio Overview -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-            
-            <!-- Portfolio Stats -->
-            <div class="lg:col-span-2">
-                <div class="glass-effect rounded-xl p-6 border border-white/20 mb-6">
-                    <h3 class="text-lg font-semibold text-white mb-4">Resumen del Portfolio</h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-white mb-1">$425,000</div>
-                            <div class="text-sm text-blue-200">Valor Total Prestado</div>
-                            <div class="text-xs text-green-400 mt-1">↗ +12.5% este mes</div>
-                        </div>
-                        
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-white mb-1">$85,500</div>
-                            <div class="text-sm text-blue-200">Préstamos Activos</div>
-                            <div class="text-xs text-blue-400 mt-1">8 posiciones abiertas</div>
-                        </div>
-                        
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-white mb-1">14.2%</div>
-                            <div class="text-sm text-blue-200">APY Promedio</div>
-                            <div class="text-xs text-green-400 mt-1">↗ +2.1% vs último mes</div>
-                        </div>
-                    </div>
+          <!-- Portfolio Stats -->
+          <div class="lg:col-span-2">
+            <div class="glass-effect rounded-xl p-6 border border-white/20 mb-6">
+              <h3 class="text-lg font-semibold text-white mb-4">Resumen del Portfolio</h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-white mb-1">$425,000</div>
+                  <div class="text-sm text-blue-200">Valor Total Prestado</div>
+                  <div class="text-xs text-green-400 mt-1">↗ +12.5% este mes</div>
                 </div>
 
-                <!-- Risk Metrics -->
-                <div class="glass-effect rounded-xl p-6 border border-white/20">
-                    <h3 class="text-lg font-semibold text-white mb-4">Métricas de Riesgo</h3>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <span class="text-blue-200">Índice de Liquidación</span>
-                            <div class="flex items-center">
-                                <div class="w-32 bg-gray-700 rounded-full h-2 mr-3">
-                                    <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
-                                </div>
-                                <span class="text-white text-sm">75%</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <span class="text-blue-200">Diversificación</span>
-                            <div class="flex items-center">
-                                <div class="w-32 bg-gray-700 rounded-full h-2 mr-3">
-                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 60%"></div>
-                                </div>
-                                <span class="text-white text-sm">60%</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <span class="text-blue-200">Health Factor</span>
-                            <div class="flex items-center">
-                                <div class="w-32 bg-gray-700 rounded-full h-2 mr-3">
-                                    <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
-                                </div>
-                                <span class="text-white text-sm">2.4</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-white mb-1">$85,500</div>
+                  <div class="text-sm text-blue-200">Préstamos Activos</div>
+                  <div class="text-xs text-blue-400 mt-1">8 posiciones abiertas</div>
                 </div>
+
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-white mb-1">14.2%</div>
+                  <div class="text-sm text-blue-200">APY Promedio</div>
+                  <div class="text-xs text-green-400 mt-1">↗ +2.1% vs último mes</div>
+                </div>
+              </div>
             </div>
 
-            <!-- Quick Actions -->
-            <div class="space-y-6">
-                
-                <!-- Market Rates -->
-                <div class="glass-effect rounded-xl p-6 border border-white/20">
-                    <h3 class="text-lg font-semibold text-white mb-4">Tasas de Mercado</h3>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center">
-                                <div class="crypto-btc w-8 h-8 rounded-full mr-3 flex items-center justify-center text-white text-xs font-bold">
-                                    BTC
-                                </div>
-                                <span class="text-white">Bitcoin</span>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-white font-semibold">8.5%</div>
-                                <div class="text-xs text-green-400">APY</div>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center">
-                                <div class="crypto-eth w-8 h-8 rounded-full mr-3 flex items-center justify-center text-white text-xs font-bold">
-                                    ETH
-                                </div>
-                                <span class="text-white">Ethereum</span>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-white font-semibold">12.3%</div>
-                                <div class="text-xs text-green-400">APY</div>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center">
-                                <div class="crypto-sol w-8 h-8 rounded-full mr-3 flex items-center justify-center text-white text-xs font-bold">
-                                    SOL
-                                </div>
-                                <span class="text-white">Solana</span>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-white font-semibold">15.7%</div>
-                                <div class="text-xs text-green-400">APY</div>
-                            </div>
-                        </div>
+            <!-- Risk Metrics -->
+            <div class="glass-effect rounded-xl p-6 border border-white/20">
+              <h3 class="text-lg font-semibold text-white mb-4">Métricas de Riesgo</h3>
+
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="text-blue-200">Índice de Liquidación</span>
+                  <div class="flex items-center">
+                    <div class="w-32 bg-gray-700 rounded-full h-2 mr-3">
+                      <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
                     </div>
+                    <span class="text-white text-sm">75%</span>
+                  </div>
                 </div>
 
-                <!-- Protocol Status -->
-                <div class="glass-effect rounded-xl p-6 border border-white/20">
-                    <h3 class="text-lg font-semibold text-white mb-4">Estado del Protocolo</h3>
-                    
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-blue-200 text-sm">TVL Total</span>
-                            <span class="text-white font-semibold">$2.4B</span>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <span class="text-blue-200 text-sm">Utilización</span>
-                            <span class="text-white font-semibold">78.5%</span>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <span class="text-blue-200 text-sm">Usuarios Activos</span>
-                            <span class="text-white font-semibold">15,432</span>
-                        </div>
-                        
-                        <div class="mt-4 pt-4 border-t border-white/10">
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-                                <span class="text-green-400 text-sm">Sistema Operativo</span>
-                            </div>
-                        </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-blue-200">Diversificación</span>
+                  <div class="flex items-center">
+                    <div class="w-32 bg-gray-700 rounded-full h-2 mr-3">
+                      <div class="bg-yellow-500 h-2 rounded-full" style="width: 60%"></div>
                     </div>
+                    <span class="text-white text-sm">60%</span>
+                  </div>
                 </div>
 
+                <div class="flex items-center justify-between">
+                  <span class="text-blue-200">Health Factor</span>
+                  <div class="flex items-center">
+                    <div class="w-32 bg-gray-700 rounded-full h-2 mr-3">
+                      <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                    </div>
+                    <span class="text-white text-sm">2.4</span>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="space-y-6">
+            <!-- Market Rates -->
+            <div class="glass-effect rounded-xl p-6 border border-white/20">
+              <h3 class="text-lg font-semibold text-white mb-4">Tasas de Mercado</h3>
+
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <div
+                      class="crypto-btc w-8 h-8 rounded-full mr-3 flex items-center justify-center text-white text-xs font-bold"
+                    >
+                      BTC
+                    </div>
+                    <span class="text-white">Bitcoin</span>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-white font-semibold">8.5%</div>
+                    <div class="text-xs text-green-400">APY</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <div
+                      class="crypto-eth w-8 h-8 rounded-full mr-3 flex items-center justify-center text-white text-xs font-bold"
+                    >
+                      ETH
+                    </div>
+                    <span class="text-white">Ethereum</span>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-white font-semibold">12.3%</div>
+                    <div class="text-xs text-green-400">APY</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <div
+                      class="crypto-sol w-8 h-8 rounded-full mr-3 flex items-center justify-center text-white text-xs font-bold"
+                    >
+                      SOL
+                    </div>
+                    <span class="text-white">Solana</span>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-white font-semibold">15.7%</div>
+                    <div class="text-xs text-green-400">APY</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Protocol Status -->
+            <div class="glass-effect rounded-xl p-6 border border-white/20">
+              <h3 class="text-lg font-semibold text-white mb-4">Estado del Protocolo</h3>
+
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-blue-200 text-sm">TVL Total</span>
+                  <span class="text-white font-semibold">$2.4B</span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <span class="text-blue-200 text-sm">Utilización</span>
+                  <span class="text-white font-semibold">78.5%</span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <span class="text-blue-200 text-sm">Usuarios Activos</span>
+                  <span class="text-white font-semibold">15,432</span>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-white/10">
+                  <div class="flex items-center">
+                    <div class="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                    <span class="text-green-400 text-sm">Sistema Operativo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Active Positions -->
         <div class="glass-effect rounded-xl border border-white/20 overflow-hidden mb-8">
-            <div class="px-6 py-4 border-b border-white/10">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-white">Posiciones Activas</h3>
-                    <div class="flex space-x-2">
-                        <button class="text-blue-400 hover:text-blue-300 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                            </svg>
-                        </button>
-                        <button class="text-blue-400 hover:text-blue-300 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+          <div class="px-6 py-4 border-b border-white/10">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-white">Posiciones Activas</h3>
+              <div class="flex space-x-2">
+                <button class="text-blue-400 hover:text-blue-300 transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                </button>
+                <button class="text-blue-400 hover:text-blue-300 transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
-            
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-white/10">
-                    <thead class="bg-black/20">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Activo</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Tipo</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Cantidad</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">APY</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Ganancia</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Duración</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Estado</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-white/10" id="positionsTableBody">
-                        <!-- Positions will be inserted here -->
-                    </tbody>
-                </table>
-            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-white/10">
+              <thead class="bg-black/20">
+                <tr>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Activo
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Tipo
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Cantidad
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    APY
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Ganancia
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Duración
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Estado
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/10" id="positionsTableBody">
+                <!-- Positions will be inserted here -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- Available Opportunities -->
         <div class="glass-effect rounded-xl border border-white/20 overflow-hidden">
-            <div class="px-6 py-4 border-b border-white/10">
-                <h3 class="text-lg font-semibold text-white">Oportunidades Disponibles</h3>
+          <div class="px-6 py-4 border-b border-white/10">
+            <h3 class="text-lg font-semibold text-white">Oportunidades Disponibles</h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+            <!-- BTC Lending Pool -->
+            <div
+              class="glass-effect rounded-lg p-6 border border-white/10 hover:border-bf-secondary/50 transition-all duration-300 group"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                  <div
+                    class="crypto-btc w-10 h-10 rounded-full mr-3 flex items-center justify-center text-white font-bold"
+                  >
+                    BTC
+                  </div>
+                  <div>
+                    <div class="text-white font-semibold">Bitcoin Pool</div>
+                    <div class="text-blue-200 text-sm">High Yield</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="text-bf-secondary font-bold text-lg">8.5%</div>
+                  <div class="text-blue-200 text-xs">APY</div>
+                </div>
+              </div>
+
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                  <span class="text-blue-200">TVL:</span>
+                  <span class="text-white">$450M</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-blue-200">Utilización:</span>
+                  <span class="text-white">85%</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-blue-200">Min. Depósito:</span>
+                  <span class="text-white">0.01 BTC</span>
+                </div>
+              </div>
+
+              <button
+                class="btn-primary w-full group-hover:shadow-bf-glow transition-all duration-300"
+              >
+                Depositar
+              </button>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-                
-                <!-- BTC Lending Pool -->
-                <div class="glass-effect rounded-lg p-6 border border-white/10 hover:border-bf-secondary/50 transition-all duration-300 group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center">
-                            <div class="crypto-btc w-10 h-10 rounded-full mr-3 flex items-center justify-center text-white font-bold">
-                                BTC
-                            </div>
-                            <div>
-                                <div class="text-white font-semibold">Bitcoin Pool</div>
-                                <div class="text-blue-200 text-sm">High Yield</div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-bf-secondary font-bold text-lg">8.5%</div>
-                            <div class="text-blue-200 text-xs">APY</div>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-2 mb-4">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-blue-200">TVL:</span>
-                            <span class="text-white">$450M</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-blue-200">Utilización:</span>
-                            <span class="text-white">85%</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-blue-200">Min. Depósito:</span>
-                            <span class="text-white">0.01 BTC</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn-primary w-full group-hover:shadow-bf-glow transition-all duration-300">
-                        Depositar
-                    </button>
-                </div>
 
-                <!-- ETH Lending Pool -->
-                <div class="glass-effect rounded-lg p-6 border border-white/10 hover:border-bf-secondary/50 transition-all duration-300 group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center">
-                            <div class="crypto-eth w-10 h-10 rounded-full mr-3 flex items-center justify-center text-white font-bold">
-                                ETH
-                            </div>
-                            <div>
-                                <div class="text-white font-semibold">Ethereum Pool</div>
-                                <div class="text-blue-200 text-sm">Stable APY</div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-bf-secondary font-bold text-lg">12.3%</div>
-                            <div class="text-blue-200 text-xs">APY</div>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-2 mb-4">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-blue-200">TVL:</span>
-                            <span class="text-white">$320M</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-blue-200">Utilización:</span>
-                            <span class="text-white">72%</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-blue-200">Min. Depósito:</span>
-                            <span class="text-white">0.1 ETH</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn-primary w-full group-hover:shadow-bf-glow transition-all duration-300">
-                        Depositar
-                    </button>
+            <!-- ETH Lending Pool -->
+            <div
+              class="glass-effect rounded-lg p-6 border border-white/10 hover:border-bf-secondary/50 transition-all duration-300 group"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                  <div
+                    class="crypto-eth w-10 h-10 rounded-full mr-3 flex items-center justify-center text-white font-bold"
+                  >
+                    ETH
+                  </div>
+                  <div>
+                    <div class="text-white font-semibold">Ethereum Pool</div>
+                    <div class="text-blue-200 text-sm">Stable APY</div>
+                  </div>
                 </div>
-
-                <!-- SOL Lending Pool -->
-                <div class="glass-effect rounded-lg p-6 border border-white/10 hover:border-bf-secondary/50 transition-all duration-300 group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center">
-                            <div class="crypto-sol w-10 h-10 rounded-full mr-3 flex items-center justify-center text-white font-bold">
-                                SOL
-                            </div>
-                            <div>
-                                <div class="text-white font-semibold">Solana Pool</div>
-                                <div class="text-blue-200 text-sm">Ultra High Yield</div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-bf-secondary font-bold text-lg">15.7%</div>
-                            <div class="text-blue-200 text-xs">APY</div>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-2 mb-4">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-blue-200">TVL:</span>
-                            <span class="text-white">$85M</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-blue-200">Utilización:</span>
-                            <span class="text-white">65%</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-blue-200">Min. Depósito:</span>
-                            <span class="text-white">1 SOL</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn-primary w-full group-hover:shadow-bf-glow transition-all duration-300">
-                        Depositar
-                    </button>
+                <div class="text-right">
+                  <div class="text-bf-secondary font-bold text-lg">12.3%</div>
+                  <div class="text-blue-200 text-xs">APY</div>
                 </div>
+              </div>
 
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                  <span class="text-blue-200">TVL:</span>
+                  <span class="text-white">$320M</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-blue-200">Utilización:</span>
+                  <span class="text-white">72%</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-blue-200">Min. Depósito:</span>
+                  <span class="text-white">0.1 ETH</span>
+                </div>
+              </div>
+
+              <button
+                class="btn-primary w-full group-hover:shadow-bf-glow transition-all duration-300"
+              >
+                Depositar
+              </button>
             </div>
+
+            <!-- SOL Lending Pool -->
+            <div
+              class="glass-effect rounded-lg p-6 border border-white/10 hover:border-bf-secondary/50 transition-all duration-300 group"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                  <div
+                    class="crypto-sol w-10 h-10 rounded-full mr-3 flex items-center justify-center text-white font-bold"
+                  >
+                    SOL
+                  </div>
+                  <div>
+                    <div class="text-white font-semibold">Solana Pool</div>
+                    <div class="text-blue-200 text-sm">Ultra High Yield</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="text-bf-secondary font-bold text-lg">15.7%</div>
+                  <div class="text-blue-200 text-xs">APY</div>
+                </div>
+              </div>
+
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                  <span class="text-blue-200">TVL:</span>
+                  <span class="text-white">$85M</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-blue-200">Utilización:</span>
+                  <span class="text-white">65%</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-blue-200">Min. Depósito:</span>
+                  <span class="text-white">1 SOL</span>
+                </div>
+              </div>
+
+              <button
+                class="btn-primary w-full group-hover:shadow-bf-glow transition-all duration-300"
+              >
+                Depositar
+              </button>
+            </div>
+          </div>
         </div>
-
-    </div>
+      </div>
+    </main>
 
     <script type="module">
-        // Phoenix Lending Platform
-        console.log('🔥 Phoenix Lending Platform iniciado');
+      // Phoenix Lending Platform
+      console.log('🔥 Phoenix Lending Platform iniciado');
 
-        // Sample lending positions
-        const samplePositions = [
+      // Sample lending positions
+      const samplePositions = [
+        {
+          asset: 'BTC',
+          type: 'Lend',
+          amount: '2.5 BTC',
+          apy: '8.5%',
+          earnings: '+$1,250',
+          duration: '45 días',
+          status: 'active',
+        },
+        {
+          asset: 'ETH',
+          type: 'Lend',
+          amount: '15 ETH',
+          apy: '12.3%',
+          earnings: '+$890',
+          duration: '32 días',
+          status: 'active',
+        },
+        {
+          asset: 'SOL',
+          type: 'Borrow',
+          amount: '500 SOL',
+          apy: '6.8%',
+          earnings: '-$125',
+          duration: '18 días',
+          status: 'warning',
+        },
+      ];
+
+      // Render positions table
+      function renderPositions(positions) {
+        const tbody = document.getElementById('positionsTableBody');
+        tbody.innerHTML = '';
+
+        positions.forEach(position => {
+          const statusClass =
             {
-                asset: 'BTC',
-                type: 'Lend',
-                amount: '2.5 BTC',
-                apy: '8.5%',
-                earnings: '+$1,250',
-                duration: '45 días',
-                status: 'active'
-            },
+              active: 'badge-success',
+              warning: 'badge-warning',
+              danger: 'badge-danger',
+            }[position.status] || 'badge-secondary';
+
+          const statusText =
             {
-                asset: 'ETH',
-                type: 'Lend',
-                amount: '15 ETH',
-                apy: '12.3%',
-                earnings: '+$890',
-                duration: '32 días',
-                status: 'active'
-            },
-            {
-                asset: 'SOL',
-                type: 'Borrow',
-                amount: '500 SOL',
-                apy: '6.8%',
-                earnings: '-$125',
-                duration: '18 días',
-                status: 'warning'
-            }
-        ];
+              active: 'Activo',
+              warning: 'Atención',
+              danger: 'Riesgo',
+            }[position.status] || position.status;
 
-        // Render positions table
-        function renderPositions(positions) {
-            const tbody = document.getElementById('positionsTableBody');
-            tbody.innerHTML = '';
+          const earningsClass = position.earnings.startsWith('+')
+            ? 'text-green-400'
+            : 'text-red-400';
 
-            positions.forEach(position => {
-                const statusClass = {
-                    'active': 'badge-success',
-                    'warning': 'badge-warning',
-                    'danger': 'badge-danger'
-                }[position.status] || 'badge-secondary';
-
-                const statusText = {
-                    'active': 'Activo',
-                    'warning': 'Atención',
-                    'danger': 'Riesgo'
-                }[position.status] || position.status;
-
-                const earningsClass = position.earnings.startsWith('+') ? 'text-green-400' : 'text-red-400';
-
-                const row = document.createElement('tr');
-                row.className = 'hover:bg-white/5 transition-colors';
-                row.innerHTML = `
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-white/5 transition-colors';
+          row.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="crypto-${position.asset.toLowerCase()} w-8 h-8 rounded-full mr-3 flex items-center justify-center text-white text-sm font-bold">
@@ -509,52 +543,58 @@
                         </div>
                     </td>
                 `;
-                tbody.appendChild(row);
-            });
-        }
+          tbody.appendChild(row);
+        });
+      }
 
-        // Initial render
-        renderPositions(samplePositions);
+      // Initial render
+      renderPositions(samplePositions);
 
-        // Button event handlers
-        const lendBtn = document.getElementById('lendBtn');
-        const borrowBtn = document.getElementById('borrowBtn');
+      // Button event handlers
+      const lendBtn = document.getElementById('lendBtn');
+      const borrowBtn = document.getElementById('borrowBtn');
 
-        lendBtn.addEventListener('click', () => {
-            console.log('🏦 Abriendo modal de préstamo');
-            // Aquí se abriría un modal para crear nueva posición de préstamo
+      lendBtn.addEventListener('click', () => {
+        console.log('🏦 Abriendo modal de préstamo');
+        // Aquí se abriría un modal para crear nueva posición de préstamo
+      });
+
+      borrowBtn.addEventListener('click', () => {
+        console.log('💰 Abriendo modal de solicitud de préstamo');
+        // Aquí se abriría un modal para solicitar préstamo
+      });
+
+      // Simulate real-time updates
+      setInterval(() => {
+        // Update earnings with slight variations
+        const earningsElements = document.querySelectorAll('td .text-green-400, td .text-red-400');
+        earningsElements.forEach(element => {
+          const currentValue = parseFloat(element.textContent.replace(/[+$,-]/g, ''));
+          const variation = (Math.random() - 0.5) * 10; // ±5
+          const newValue = currentValue + variation;
+          const prefix = newValue >= 0 ? '+$' : '-$';
+          element.textContent = `${prefix}${Math.abs(newValue).toFixed(0)}`;
+          element.className =
+            newValue >= 0 ? 'text-green-400 font-semibold' : 'text-red-400 font-semibold';
+        });
+      }, 5000);
+
+      // Add hover effects to opportunity cards
+      const opportunityCards = document.querySelectorAll('.glass-effect.rounded-lg');
+      opportunityCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.transform = 'translateY(-2px)';
         });
 
-        borrowBtn.addEventListener('click', () => {
-            console.log('💰 Abriendo modal de solicitud de préstamo');
-            // Aquí se abriría un modal para solicitar préstamo
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'translateY(0)';
         });
-
-        // Simulate real-time updates
-        setInterval(() => {
-            // Update earnings with slight variations
-            const earningsElements = document.querySelectorAll('td .text-green-400, td .text-red-400');
-            earningsElements.forEach(element => {
-                const currentValue = parseFloat(element.textContent.replace(/[+$,-]/g, ''));
-                const variation = (Math.random() - 0.5) * 10; // ±5
-                const newValue = currentValue + variation;
-                const prefix = newValue >= 0 ? '+$' : '-$';
-                element.textContent = `${prefix}${Math.abs(newValue).toFixed(0)}`;
-                element.className = newValue >= 0 ? 'text-green-400 font-semibold' : 'text-red-400 font-semibold';
-            });
-        }, 5000);
-
-        // Add hover effects to opportunity cards
-        const opportunityCards = document.querySelectorAll('.glass-effect.rounded-lg');
-        opportunityCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-2px)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-            });
-        });
+      });
     </script>
-</body>
+
+    <bf-footer></bf-footer>
+
+    <script type="module" src="../js/components/bf-nav.js"></script>
+    <script type="module" src="../js/components/bf-footer.js"></script>
+  </body>
 </html>

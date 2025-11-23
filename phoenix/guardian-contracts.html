@@ -1,352 +1,417 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guardián de Contratos | BitForward Phoenix</title>
-    
+
     <!-- Space Theme Loader - Debe ir antes que otros scripts -->
-    <script src="../js/space-theme-loader.js"></script>
-    
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="icon" type="image/svg+xml" href="/icons/bitforward.svg">
-</head>
-<body class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen">
-    
-    <!-- Navigation -->
-    <nav class="bg-black/20 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="/" class="flex items-center">
-                        <div class="bg-gradient-to-r from-bf-secondary to-yellow-400 p-2 rounded-lg mr-3">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                            </svg>
-                        </div>
-                        <span class="text-xl font-bold text-white">BitForward</span>
-                    </a>
-                </div>
+    <script type="module" src="../js/space-theme-loader.js"></script>
 
-                <!-- Navigation Links -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="/phoenix/guardian-contracts.html" class="bg-bf-primary/30 text-white px-3 py-2 rounded-md text-sm font-medium">
-                            Contratos
-                        </a>
-                        <a href="/phoenix/lending.html" class="text-blue-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Préstamos
-                        </a>
-                        <a href="/phoenix/login.html" class="text-blue-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Portal
-                        </a>
-                    </div>
-                </div>
-
-                <!-- User Menu -->
-                <div class="flex items-center space-x-4">
-                    <div class="text-right">
-                        <div class="text-sm text-white">Admin Phoenix</div>
-                        <div class="text-xs text-blue-200">Guardián Sistema</div>
-                    </div>
-                    <div class="bg-bf-accent p-2 rounded-full">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  </head>
+  <body
+    class="bg-gradient-to-br from-bf-dark via-blue-900 to-bf-primary min-h-screen flex flex-col"
+  >
+    <bf-nav>
+      <a href="guardian-contracts.html">Contratos</a>
+      <a href="lending.html">Préstamos</a>
+      <a href="login.html">Portal</a>
+    </bf-nav>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
+    <main class="flex-1">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
         <!-- Header -->
         <div class="mb-8">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold text-white mb-2">Guardián de Contratos</h1>
-                    <p class="text-blue-200">Gestión avanzada de contratos forward • Proyecto Fénix</p>
-                </div>
-                <button class="btn-primary" id="newContractBtn">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                    </svg>
-                    Nuevo Contrato
-                </button>
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-3xl font-bold text-white mb-2">Guardián de Contratos</h1>
+              <p class="text-blue-200">Gestión avanzada de contratos forward • Proyecto Fénix</p>
             </div>
+            <button class="btn-primary" id="newContractBtn">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+              Nuevo Contrato
+            </button>
+          </div>
         </div>
 
         <!-- Stats Overview -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="glass-effect rounded-xl p-6 border border-white/20">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-blue-200 text-sm">Contratos Activos</p>
-                        <p class="text-2xl font-bold text-white">24</p>
-                    </div>
-                    <div class="bg-bf-primary p-3 rounded-lg">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <span class="text-green-400 text-sm">↗ +12% este mes</span>
-                </div>
+          <div class="glass-effect rounded-xl p-6 border border-white/20">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-blue-200 text-sm">Contratos Activos</p>
+                <p class="text-2xl font-bold text-white">24</p>
+              </div>
+              <div class="bg-bf-primary p-3 rounded-lg">
+                <svg
+                  class="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+              </div>
             </div>
+            <div class="mt-2">
+              <span class="text-green-400 text-sm">↗ +12% este mes</span>
+            </div>
+          </div>
 
-            <div class="glass-effect rounded-xl p-6 border border-white/20">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-blue-200 text-sm">Valor Total</p>
-                        <p class="text-2xl font-bold text-white">$2.4M</p>
-                    </div>
-                    <div class="bg-bf-secondary p-3 rounded-lg">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <span class="text-green-400 text-sm">↗ +8% este mes</span>
-                </div>
+          <div class="glass-effect rounded-xl p-6 border border-white/20">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-blue-200 text-sm">Valor Total</p>
+                <p class="text-2xl font-bold text-white">$2.4M</p>
+              </div>
+              <div class="bg-bf-secondary p-3 rounded-lg">
+                <svg
+                  class="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                  />
+                </svg>
+              </div>
             </div>
+            <div class="mt-2">
+              <span class="text-green-400 text-sm">↗ +8% este mes</span>
+            </div>
+          </div>
 
-            <div class="glass-effect rounded-xl p-6 border border-white/20">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-blue-200 text-sm">Por Vencer</p>
-                        <p class="text-2xl font-bold text-white">3</p>
-                    </div>
-                    <div class="bg-warning p-3 rounded-lg">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <span class="text-yellow-400 text-sm">En próximos 7 días</span>
-                </div>
+          <div class="glass-effect rounded-xl p-6 border border-white/20">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-blue-200 text-sm">Por Vencer</p>
+                <p class="text-2xl font-bold text-white">3</p>
+              </div>
+              <div class="bg-warning p-3 rounded-lg">
+                <svg
+                  class="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
             </div>
+            <div class="mt-2">
+              <span class="text-yellow-400 text-sm">En próximos 7 días</span>
+            </div>
+          </div>
 
-            <div class="glass-effect rounded-xl p-6 border border-white/20">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-blue-200 text-sm">Rentabilidad</p>
-                        <p class="text-2xl font-bold text-white">15.2%</p>
-                    </div>
-                    <div class="bg-bf-accent p-3 rounded-lg">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <span class="text-green-400 text-sm">APY promedio</span>
-                </div>
+          <div class="glass-effect rounded-xl p-6 border border-white/20">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-blue-200 text-sm">Rentabilidad</p>
+                <p class="text-2xl font-bold text-white">15.2%</p>
+              </div>
+              <div class="bg-bf-accent p-3 rounded-lg">
+                <svg
+                  class="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
+                </svg>
+              </div>
             </div>
+            <div class="mt-2">
+              <span class="text-green-400 text-sm">APY promedio</span>
+            </div>
+          </div>
         </div>
 
         <!-- Filters and Search -->
         <div class="glass-effect rounded-xl p-6 border border-white/20 mb-8">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-                
-                <!-- Search -->
-                <div class="relative flex-1 max-w-md">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                    </div>
-                    <input 
-                        type="text" 
-                        placeholder="Buscar contratos..."
-                        class="input-primary pl-10"
-                        id="searchInput"
-                    >
-                </div>
-
-                <!-- Filters -->
-                <div class="flex space-x-3">
-                    <select class="input-primary min-w-32" id="statusFilter">
-                        <option value="">Todos los estados</option>
-                        <option value="active">Activos</option>
-                        <option value="pending">Pendientes</option>
-                        <option value="expired">Vencidos</option>
-                    </select>
-                    
-                    <select class="input-primary min-w-32" id="assetFilter">
-                        <option value="">Todos los activos</option>
-                        <option value="BTC">Bitcoin</option>
-                        <option value="ETH">Ethereum</option>
-                        <option value="SOL">Solana</option>
-                    </select>
-                </div>
+          <div
+            class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0"
+          >
+            <!-- Search -->
+            <div class="relative flex-1 max-w-md">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg
+                  class="h-5 w-5 text-blue-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                placeholder="Buscar contratos..."
+                class="input-primary pl-10"
+                id="searchInput"
+              />
             </div>
+
+            <!-- Filters -->
+            <div class="flex space-x-3">
+              <select class="input-primary min-w-32" id="statusFilter">
+                <option value="">Todos los estados</option>
+                <option value="active">Activos</option>
+                <option value="pending">Pendientes</option>
+                <option value="expired">Vencidos</option>
+              </select>
+
+              <select class="input-primary min-w-32" id="assetFilter">
+                <option value="">Todos los activos</option>
+                <option value="BTC">Bitcoin</option>
+                <option value="ETH">Ethereum</option>
+                <option value="SOL">Solana</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <!-- Contracts Table -->
         <div class="glass-effect rounded-xl border border-white/20 overflow-hidden">
-            <div class="px-6 py-4 border-b border-white/10">
-                <h3 class="text-lg font-semibold text-white">Contratos Forward</h3>
-            </div>
-            
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-white/10">
-                    <thead class="bg-black/20">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Contrato</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Activo</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Tipo</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Valor</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Vencimiento</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Estado</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-white/10" id="contractsTableBody">
-                        <!-- Contract rows will be inserted here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+          <div class="px-6 py-4 border-b border-white/10">
+            <h3 class="text-lg font-semibold text-white">Contratos Forward</h3>
+          </div>
 
-    </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-white/10">
+              <thead class="bg-black/20">
+                <tr>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Contrato
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Activo
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Tipo
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Valor
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Vencimiento
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Estado
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/10" id="contractsTableBody">
+                <!-- Contract rows will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
 
     <!-- New Contract Modal -->
-    <div id="newContractModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="glass-effect rounded-2xl p-8 border border-white/20 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-white">Nuevo Contrato Forward</h2>
-                <button id="closeModalBtn" class="text-blue-200 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
+    <div
+      id="newContractModal"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4"
+    >
+      <div
+        class="glass-effect rounded-2xl p-8 border border-white/20 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-white">Nuevo Contrato Forward</h2>
+          <button id="closeModalBtn" class="text-blue-200 hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <form id="newContractForm" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-blue-200 mb-2"
+                >Nombre del Contrato</label
+              >
+              <input type="text" class="input-primary" placeholder="Forward BTC-Q1-2024" required />
             </div>
 
-            <form id="newContractForm" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-blue-200 mb-2">Nombre del Contrato</label>
-                        <input type="text" class="input-primary" placeholder="Forward BTC-Q1-2024" required>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-medium text-blue-200 mb-2">Activo Subyacente</label>
-                        <select class="input-primary" required>
-                            <option value="">Seleccionar activo</option>
-                            <option value="BTC">Bitcoin (BTC)</option>
-                            <option value="ETH">Ethereum (ETH)</option>
-                            <option value="SOL">Solana (SOL)</option>
-                        </select>
-                    </div>
+            <div>
+              <label class="block text-sm font-medium text-blue-200 mb-2">Activo Subyacente</label>
+              <select class="input-primary" required>
+                <option value="">Seleccionar activo</option>
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="ETH">Ethereum (ETH)</option>
+                <option value="SOL">Solana (SOL)</option>
+              </select>
+            </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-blue-200 mb-2">Cantidad</label>
-                        <input type="number" step="0.001" class="input-primary" placeholder="1.5" required>
-                    </div>
+            <div>
+              <label class="block text-sm font-medium text-blue-200 mb-2">Cantidad</label>
+              <input type="number" step="0.001" class="input-primary" placeholder="1.5" required />
+            </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-blue-200 mb-2">Precio Forward</label>
-                        <input type="number" step="0.01" class="input-primary" placeholder="45000.00" required>
-                    </div>
+            <div>
+              <label class="block text-sm font-medium text-blue-200 mb-2">Precio Forward</label>
+              <input
+                type="number"
+                step="0.01"
+                class="input-primary"
+                placeholder="45000.00"
+                required
+              />
+            </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-blue-200 mb-2">Fecha de Vencimiento</label>
-                        <input type="date" class="input-primary" required>
-                    </div>
+            <div>
+              <label class="block text-sm font-medium text-blue-200 mb-2"
+                >Fecha de Vencimiento</label
+              >
+              <input type="date" class="input-primary" required />
+            </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-blue-200 mb-2">Tipo de Contrato</label>
-                        <select class="input-primary" required>
-                            <option value="">Seleccionar tipo</option>
-                            <option value="long">Long Position</option>
-                            <option value="short">Short Position</option>
-                        </select>
-                    </div>
-                </div>
+            <div>
+              <label class="block text-sm font-medium text-blue-200 mb-2">Tipo de Contrato</label>
+              <select class="input-primary" required>
+                <option value="">Seleccionar tipo</option>
+                <option value="long">Long Position</option>
+                <option value="short">Short Position</option>
+              </select>
+            </div>
+          </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-blue-200 mb-2">Notas Adicionales</label>
-                    <textarea class="input-primary" rows="3" placeholder="Descripción del contrato..."></textarea>
-                </div>
+          <div>
+            <label class="block text-sm font-medium text-blue-200 mb-2">Notas Adicionales</label>
+            <textarea
+              class="input-primary"
+              rows="3"
+              placeholder="Descripción del contrato..."
+            ></textarea>
+          </div>
 
-                <div class="flex space-x-4">
-                    <button type="button" id="cancelBtn" class="btn-secondary flex-1">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="btn-primary flex-1">
-                        Crear Contrato
-                    </button>
-                </div>
-            </form>
-        </div>
+          <div class="flex space-x-4">
+            <button type="button" id="cancelBtn" class="btn-secondary flex-1">Cancelar</button>
+            <button type="submit" class="btn-primary flex-1">Crear Contrato</button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <script type="module">
-        // Phoenix Guardian Contracts
-        console.log('🔥 Phoenix Guardian Contracts iniciado');
+      // Phoenix Guardian Contracts
+      console.log('🔥 Phoenix Guardian Contracts iniciado');
 
-        // Sample contract data
-        const sampleContracts = [
+      // Sample contract data
+      const sampleContracts = [
+        {
+          id: 'FWD-001',
+          name: 'Forward BTC Q1-2024',
+          asset: 'BTC',
+          type: 'Long',
+          value: '$150,000',
+          expiry: '2024-03-31',
+          status: 'active',
+          daysToExpiry: 45,
+        },
+        {
+          id: 'FWD-002',
+          name: 'Forward ETH Q2-2024',
+          asset: 'ETH',
+          type: 'Short',
+          value: '$85,000',
+          expiry: '2024-06-30',
+          status: 'active',
+          daysToExpiry: 120,
+        },
+        {
+          id: 'FWD-003',
+          name: 'Forward SOL Q1-2024',
+          asset: 'SOL',
+          type: 'Long',
+          value: '$25,000',
+          expiry: '2024-02-15',
+          status: 'expiring',
+          daysToExpiry: 7,
+        },
+      ];
+
+      // Render contracts table
+      function renderContracts(contracts) {
+        const tbody = document.getElementById('contractsTableBody');
+        tbody.innerHTML = '';
+
+        contracts.forEach(contract => {
+          const statusClass =
             {
-                id: 'FWD-001',
-                name: 'Forward BTC Q1-2024',
-                asset: 'BTC',
-                type: 'Long',
-                value: '$150,000',
-                expiry: '2024-03-31',
-                status: 'active',
-                daysToExpiry: 45
-            },
+              active: 'badge-success',
+              expiring: 'badge-warning',
+              expired: 'badge-danger',
+            }[contract.status] || 'badge-secondary';
+
+          const statusText =
             {
-                id: 'FWD-002', 
-                name: 'Forward ETH Q2-2024',
-                asset: 'ETH',
-                type: 'Short',
-                value: '$85,000',
-                expiry: '2024-06-30',
-                status: 'active',
-                daysToExpiry: 120
-            },
-            {
-                id: 'FWD-003',
-                name: 'Forward SOL Q1-2024',
-                asset: 'SOL',
-                type: 'Long',
-                value: '$25,000',
-                expiry: '2024-02-15',
-                status: 'expiring',
-                daysToExpiry: 7
-            }
-        ];
+              active: 'Activo',
+              expiring: 'Por vencer',
+              expired: 'Vencido',
+            }[contract.status] || contract.status;
 
-        // Render contracts table
-        function renderContracts(contracts) {
-            const tbody = document.getElementById('contractsTableBody');
-            tbody.innerHTML = '';
-
-            contracts.forEach(contract => {
-                const statusClass = {
-                    'active': 'badge-success',
-                    'expiring': 'badge-warning', 
-                    'expired': 'badge-danger'
-                }[contract.status] || 'badge-secondary';
-
-                const statusText = {
-                    'active': 'Activo',
-                    'expiring': 'Por vencer',
-                    'expired': 'Vencido'
-                }[contract.status] || contract.status;
-
-                const row = document.createElement('tr');
-                row.className = 'hover:bg-white/5 transition-colors';
-                row.innerHTML = `
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-white/5 transition-colors';
+          row.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm font-medium text-white">${contract.name}</div>
                         <div class="text-sm text-blue-300">${contract.id}</div>
@@ -393,79 +458,85 @@
                         </div>
                     </td>
                 `;
-                tbody.appendChild(row);
-            });
+          tbody.appendChild(row);
+        });
+      }
+
+      // Initial render
+      renderContracts(sampleContracts);
+
+      // Modal controls
+      const newContractBtn = document.getElementById('newContractBtn');
+      const newContractModal = document.getElementById('newContractModal');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const cancelBtn = document.getElementById('cancelBtn');
+
+      newContractBtn.addEventListener('click', () => {
+        newContractModal.classList.remove('hidden');
+      });
+
+      [closeModalBtn, cancelBtn].forEach(btn => {
+        btn.addEventListener('click', () => {
+          newContractModal.classList.add('hidden');
+        });
+      });
+
+      // Close modal on outside click
+      newContractModal.addEventListener('click', e => {
+        if (e.target === newContractModal) {
+          newContractModal.classList.add('hidden');
         }
+      });
 
-        // Initial render
-        renderContracts(sampleContracts);
+      // Search and filter functionality
+      const searchInput = document.getElementById('searchInput');
+      const statusFilter = document.getElementById('statusFilter');
+      const assetFilter = document.getElementById('assetFilter');
 
-        // Modal controls
-        const newContractBtn = document.getElementById('newContractBtn');
-        const newContractModal = document.getElementById('newContractModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
+      function filterContracts() {
+        const search = searchInput.value.toLowerCase();
+        const status = statusFilter.value;
+        const asset = assetFilter.value;
 
-        newContractBtn.addEventListener('click', () => {
-            newContractModal.classList.remove('hidden');
+        const filtered = sampleContracts.filter(contract => {
+          const matchesSearch =
+            contract.name.toLowerCase().includes(search) ||
+            contract.id.toLowerCase().includes(search);
+          const matchesStatus = !status || contract.status === status;
+          const matchesAsset = !asset || contract.asset === asset;
+
+          return matchesSearch && matchesStatus && matchesAsset;
         });
 
-        [closeModalBtn, cancelBtn].forEach(btn => {
-            btn.addEventListener('click', () => {
-                newContractModal.classList.add('hidden');
-            });
-        });
+        renderContracts(filtered);
+      }
 
-        // Close modal on outside click
-        newContractModal.addEventListener('click', (e) => {
-            if (e.target === newContractModal) {
-                newContractModal.classList.add('hidden');
-            }
-        });
+      searchInput.addEventListener('input', filterContracts);
+      statusFilter.addEventListener('change', filterContracts);
+      assetFilter.addEventListener('change', filterContracts);
 
-        // Search and filter functionality
-        const searchInput = document.getElementById('searchInput');
-        const statusFilter = document.getElementById('statusFilter');
-        const assetFilter = document.getElementById('assetFilter');
+      // Form submission
+      const newContractForm = document.getElementById('newContractForm');
+      newContractForm.addEventListener('submit', e => {
+        e.preventDefault();
 
-        function filterContracts() {
-            const search = searchInput.value.toLowerCase();
-            const status = statusFilter.value;
-            const asset = assetFilter.value;
+        // Show success message
+        const formData = new FormData(newContractForm);
 
-            const filtered = sampleContracts.filter(contract => {
-                const matchesSearch = contract.name.toLowerCase().includes(search) || 
-                                    contract.id.toLowerCase().includes(search);
-                const matchesStatus = !status || contract.status === status;
-                const matchesAsset = !asset || contract.asset === asset;
+        // Simulate API call
+        setTimeout(() => {
+          newContractModal.classList.add('hidden');
+          newContractForm.reset();
 
-                return matchesSearch && matchesStatus && matchesAsset;
-            });
-
-            renderContracts(filtered);
-        }
-
-        searchInput.addEventListener('input', filterContracts);
-        statusFilter.addEventListener('change', filterContracts);
-        assetFilter.addEventListener('change', filterContracts);
-
-        // Form submission
-        const newContractForm = document.getElementById('newContractForm');
-        newContractForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Show success message
-            const formData = new FormData(newContractForm);
-            
-            // Simulate API call
-            setTimeout(() => {
-                newContractModal.classList.add('hidden');
-                newContractForm.reset();
-                
-                // Show success notification
-                console.log('✅ Nuevo contrato creado exitosamente');
-            }, 1000);
-        });
+          // Show success notification
+          console.log('✅ Nuevo contrato creado exitosamente');
+        }, 1000);
+      });
     </script>
-</body>
+
+    <bf-footer></bf-footer>
+
+    <script type="module" src="../js/components/bf-nav.js"></script>
+    <script type="module" src="../js/components/bf-footer.js"></script>
+  </body>
 </html>

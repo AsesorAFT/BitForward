@@ -55,6 +55,54 @@ const config = {
     CORS_ENABLED: process.env.CORS_ENABLED !== 'false',
     COMPRESSION_ENABLED: process.env.COMPRESSION_ENABLED !== 'false',
   },
+
+  // Redes DeFi soportadas
+  DEFAULT_CHAIN: process.env.DEFAULT_CHAIN || 'ethereum',
+  CHAINS: {
+    ethereum: {
+      chainId: 1,
+      name: 'Ethereum',
+      rpc: [process.env.ETHEREUM_RPC_URL || 'https://mainnet.infura.io/v3/your-api-key'],
+      explorer: 'https://etherscan.io',
+      nativeSymbol: 'ETH',
+    },
+    polygon: {
+      chainId: 137,
+      name: 'Polygon',
+      rpc: [process.env.POLYGON_RPC_URL || 'https://polygon-rpc.com'],
+      explorer: 'https://polygonscan.com',
+      nativeSymbol: 'MATIC',
+    },
+    bsc: {
+      chainId: 56,
+      name: 'Binance Smart Chain',
+      rpc: [process.env.BSC_RPC_URL || 'https://bsc-dataseed.binance.org'],
+      explorer: 'https://bscscan.com',
+      nativeSymbol: 'BNB',
+    },
+    solana: {
+      chainId: 101,
+      name: 'Solana',
+      rpc: [process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com'],
+      explorer: 'https://explorer.solana.com',
+      nativeSymbol: 'SOL',
+    },
+  },
+
+  PRICE_FEEDS: {
+    cacheTtlMs: parseInt(process.env.PRICE_CACHE_TTL_MS || '60000', 10), // 60s por defecto
+    coingeckoUrl: 'https://api.coingecko.com/api/v3/simple/price',
+  },
+
+  // Moneda base
+  BASE_CURRENCY: (process.env.BASE_CURRENCY || 'usdt').toLowerCase(),
+
+  // Riesgo y límites
+  RISK: {
+    MAX_LTV: parseFloat(process.env.MAX_LTV || '85'), // % máximo LTV en lending
+    MIN_HEALTH_FACTOR: parseFloat(process.env.MIN_HEALTH_FACTOR || '60'), // health factor mínimo para alertar
+    MAX_FORWARD_NOTIONAL: parseFloat(process.env.MAX_FORWARD_NOTIONAL || '500000'), // USD
+  },
 };
 
 // Validar configuración crítica

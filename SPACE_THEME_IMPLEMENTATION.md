@@ -1,9 +1,11 @@
 # BitForward: Implementación del Tema Espacial con Cohetes
 
 ## Descripción
+
 Esta guía explica cómo implementar el tema espacial con cohetes en todas las páginas de BitForward. El tema incluye un fondo espacial animado con estrellas, nebulosas, meteoros y cohetes voladores.
 
 ## Archivos Creados
+
 1. `/css/space-background.css` - Estilos para el fondo espacial y elementos básicos
 2. `/js/space-animations.js` - Animaciones para estrellas y elementos espaciales
 3. `/js/rocket-animations.js` - Animaciones específicas para cohetes
@@ -28,10 +30,10 @@ El tema crea estos elementos automáticamente, pero puedes personalizarlos:
 
 ```html
 <div class="space-background">
-    <div class="space-nebula nebula-1"></div>
-    <div class="space-nebula nebula-2"></div>
-    <div class="stars-layer"></div>
-    <div class="stardust"></div>
+  <div class="space-nebula nebula-1"></div>
+  <div class="space-nebula nebula-2"></div>
+  <div class="stars-layer"></div>
+  <div class="stardust"></div>
 </div>
 <div class="space-overlay"></div>
 ```
@@ -61,34 +63,36 @@ Modifica el archivo `/js/space-theme-config.js` para personalizar:
 ## Elementos específicos de cohetes
 
 ### Botón estilo cohete:
+
 ```html
-<button class="rocket-button">
-    Despegar <i class="rocket-icon"></i>
-</button>
+<button class="rocket-button">Despegar <i class="rocket-icon"></i></button>
 ```
 
 ### Logo animado de cohete:
+
 ```html
-<img src="assets/logo-rocket-animated.svg" alt="BitForward" class="logo-rocket">
+<img src="assets/logo-rocket-animated.svg" alt="BitForward" class="logo-rocket" />
 ```
 
 ### Lanzar cohetes programáticamente:
+
 ```javascript
 // Después de que el tema espacial esté cargado
 if (window.BitForwardSpace) {
-    // Lanzar un cohete que cruza la pantalla
-    window.BitForwardSpace.addFlyingRocket({
-        size: 40,  // tamaño en px
-        duration: 5,  // duración en segundos
-        startPosition: { x: -10, y: 40 },  // posición inicial (%)
-        endPosition: { x: 110, y: 20 }  // posición final (%)
-    });
+  // Lanzar un cohete que cruza la pantalla
+  window.BitForwardSpace.addFlyingRocket({
+    size: 40, // tamaño en px
+    duration: 5, // duración en segundos
+    startPosition: { x: -10, y: 40 }, // posición inicial (%)
+    endPosition: { x: 110, y: 20 }, // posición final (%)
+  });
 }
 ```
 
 ## Configuración por tipo de página
 
 El tema detecta automáticamente el tipo de página y aplica estilos específicos:
+
 - `home` - Página principal con efectos más intensos
 - `dashboard` - Paneles con tarjetas y gráficos estilizados
 - `lending` - Estilos específicos para la sección de préstamos
@@ -97,6 +101,7 @@ El tema detecta automáticamente el tipo de página y aplica estilos específico
 ## Consideraciones de Accesibilidad y Rendimiento
 
 El tema respeta la preferencia `prefers-reduced-motion` del usuario y se ajusta automáticamente para:
+
 - Reducir o eliminar animaciones cuando el usuario lo prefiere
 - Optimizar el rendimiento en dispositivos móviles
 - Proporcionar degradado elegante en navegadores no compatibles
@@ -104,6 +109,7 @@ El tema respeta la preferencia `prefers-reduced-motion` del usuario y se ajusta 
 ## Solución de Problemas
 
 Si los efectos espaciales no aparecen:
+
 1. Verifica que `space-theme-loader.js` esté cargado correctamente
 2. Comprueba la consola del navegador para ver errores
 3. Asegúrate de que la propiedad `enabled` en `space-theme-config.js` esté en `true`

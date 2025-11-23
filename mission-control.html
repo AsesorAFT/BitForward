@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission Control | BitForward</title>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/design-system.css" />
+    <link rel="stylesheet" href="css/mission-control.css" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="module" src="js/mission-control.js"></script>
+  </head>
+  <body class="mc-body">
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
+      <a class="cta" href="enterprise.html">Enterprise</a>
+    </bf-header>
+
+    <main class="mc-shell">
+      <section class="topbar card">
+        <div class="tb-left">
+          <div>
+            <p class="eyebrow">Mission Control</p>
+            <h1>Trading, Lending y Coberturas</h1>
+          </div>
+          <div class="pill">Live</div>
+        </div>
+        <div class="tb-right">
+          <div class="chip">
+            <span>Red</span>
+            <select id="network-picker"></select>
+          </div>
+          <div class="chip">
+            <span>Saldo</span>
+            <strong id="portfolio-balance">$--</strong>
+          </div>
+          <button class="btn primary" id="refresh-dashboard">Refrescar</button>
+        </div>
+      </section>
+
+      <section class="tabs card">
+        <button class="tab active" data-tab="perps">Perps</button>
+        <button class="tab" data-tab="lending">Lending</button>
+        <button class="tab" data-tab="vault">Vault</button>
+        <button class="tab" data-tab="hedges">Hedges</button>
+      </section>
+
+      <section class="mc-panels">
+        <div class="card panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Orden</p>
+              <h2 id="panel-title">Ticket de orden</h2>
+            </div>
+            <span class="pill">Perps</span>
+          </div>
+          <form class="order-form" id="order-form">
+            <label class="field">
+              <span>Par</span>
+              <select id="pair">
+                <option value="BTC-USDT">BTC/USDT</option>
+                <option value="ETH-USDT">ETH/USDT</option>
+                <option value="SOL-USDT">SOL/USDT</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Monto</span>
+              <input type="number" id="amount" min="0" step="0.001" placeholder="0.00" />
+            </label>
+            <label class="field">
+              <span>Precio Límite</span>
+              <input type="number" id="limit-price" min="0" step="0.01" placeholder="0.00" />
+            </label>
+            <label class="field">
+              <span>Leverage</span>
+              <input type="range" id="leverage" min="1" max="20" value="5" />
+              <div class="hint"><span id="lev-display">5x</span> · riesgo moderado</div>
+            </label>
+            <div class="btn-group">
+              <button class="btn primary" type="button" id="btn-long">Long</button>
+              <button class="btn outline" type="button" id="btn-short">Short</button>
+            </div>
+            <p class="hint" id="order-hint">Estimación de fees y funding en vivo</p>
+          </form>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Riesgo</p>
+              <h2>Alertas y health</h2>
+            </div>
+            <button class="btn ghost" id="scan-risk">Escanear</button>
+          </div>
+          <div class="pill secondary" id="risk-indicator">HF: --</div>
+          <ul class="alert-list" id="alert-list"></ul>
+        </div>
+      </section>
+
+      <section class="mc-panels">
+        <div class="card panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Actividad</p>
+              <h2>Contratos y Hedges</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tipo</th>
+                  <th>Activo</th>
+                  <th>Monto</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="contracts-table"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Préstamos y Vault</p>
+              <h2>Loans & Positions</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>Asset</th>
+                  <th>Monto</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="loans-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="card panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Portfolio</p>
+            <h2>Distribución y métricas</h2>
+          </div>
+        </div>
+        <div id="tvl-chart"></div>
+      </section>
+    </main>
+  </body>
+</html>
