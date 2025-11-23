@@ -37,3 +37,21 @@ jobs:
         env:
           NODE_ENV: production
         run: npm run build
+
+      - name: Serve build for smoke tests
+        run: |
+          npx serve -s dist -l 4173 >/tmp/serve.log 2>&1 &
+          echo $! > /tmp/serve.pid
+          sleep 2
+
+      - name: Smoke pages
+        env:
+          SMOKE_BASE_URL: http://localhost:4173
+        run: npm run smoke:pages
+
+      - name: Shutdown preview server
+        if: always()
+        run: |
+          if [ -f /tmp/serve.pid ]; then
+            kill $(cat /tmp/serve.pid) || true
+          fi
