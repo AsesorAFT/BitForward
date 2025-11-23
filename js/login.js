@@ -5,6 +5,7 @@ function showStatus(message, isError = false) {
   if (!el) return;
   el.textContent = message;
   el.style.color = isError ? '#ffb3b3' : '#9bdcff';
+  el.setAttribute('aria-live', 'polite');
 }
 
 function togglePassword() {
@@ -56,6 +57,9 @@ function setupWalletButton() {
 function bindForm() {
   const form = document.getElementById('login-form');
   if (!form) return;
+  // Llevar el foco al primer campo al cargar
+  const usernameInput = document.getElementById('username');
+  usernameInput?.focus();
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
