@@ -2,16 +2,16 @@
 /* Estilos para la nueva interfaz de Spot Trading */
 
 :root {
-  --exchange-bg: #0b111d;
-  --panel-bg: rgba(22, 29, 43, 0.9);
-  --border: #1f2a3c;
+  --exchange-bg: var(--bf-surface-0, #0b111d);
+  --panel-bg: var(--bf-surface-1, rgba(22, 29, 43, 0.9));
+  --border: var(--bf-border, #1f2a3c);
   --grid-border: #1e293b;
-  --green: #19c37d;
-  --red: #f75555;
-  --yellow: #f0b90b;
+  --green: var(--bf-color-success, #19c37d);
+  --red: var(--bf-color-error, #f75555);
+  --yellow: var(--bf-color-warning, #f0b90b);
   --green-transparent: rgba(25, 195, 125, 0.1);
   --red-transparent: rgba(247, 85, 85, 0.1);
-  --shadow: 0 18px 60px rgba(0, 0, 0, 0.3);
+  --shadow: var(--bf-shadow-lg, 0 18px 60px rgba(0, 0, 0, 0.3));
 }
 
 body {
@@ -21,6 +21,7 @@ body {
     var(--exchange-bg);
   color: var(--bf-text-secondary);
   padding-top: 60px; /* Altura de la navegación universal */
+  font-family: var(--bf-font-base, 'Inter', sans-serif);
 }
 
 .live-strip {
@@ -36,8 +37,8 @@ body {
   gap: 8px;
   padding: 8px 10px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--bf-surface-3, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--bf-border, rgba(255, 255, 255, 0.06));
 }
 
 .strip-price {
@@ -110,6 +111,7 @@ body {
   flex-direction: column;
   overflow: hidden;
   box-shadow: var(--shadow);
+  color: var(--bf-text-secondary);
 }
 
 .exchange-module-header {
@@ -144,11 +146,13 @@ body {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--bf-text-primary);
+  font-family: var(--bf-font-display, 'Space Grotesk', sans-serif);
 }
 
 .market-price {
   font-size: 1.8rem;
   font-weight: 700;
+  font-family: var(--bf-font-display, 'Space Grotesk', sans-serif);
 }
 
 .market-stat {
@@ -196,11 +200,17 @@ body {
   cursor: pointer;
   font-weight: 500;
   border-bottom: 2px solid transparent;
+  border-radius: 10px 10px 0 0;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
 }
 
 .order-tab.active {
   color: var(--yellow);
   border-bottom-color: var(--yellow);
+  background: rgba(25, 195, 125, 0.08);
 }
 
 .input-group {
@@ -217,11 +227,15 @@ body {
 .input-group input {
   width: 100%;
   padding: 10px;
-  background: rgba(8, 12, 20, 0.9);
-  border: 1px solid var(--grid-border);
-  border-radius: 8px;
+  background: var(--bf-surface-0, rgba(8, 12, 20, 0.9));
+  border: 1px solid var(--bf-border, var(--grid-border));
+  border-radius: 10px;
   color: var(--bf-text-primary);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
 }
 
 .order-form-container .btn {
@@ -230,25 +244,28 @@ body {
 }
 
 .btn-long {
-  background: linear-gradient(135deg, #1ddc8d, #0fb776);
+  background: linear-gradient(135deg, var(--green), #0fb776);
   border: 1px solid rgba(29, 220, 141, 0.4);
   color: #04120d;
   font-weight: 700;
 }
 
 .btn-short {
-  background: linear-gradient(135deg, #f97373, #e24545);
+  background: linear-gradient(135deg, var(--red), #e24545);
   border: 1px solid rgba(249, 115, 115, 0.4);
   color: #fff;
   font-weight: 700;
 }
 
 .depth-select {
-  background: rgba(8, 12, 20, 0.9);
-  border: 1px solid var(--border);
+  background: var(--bf-surface-0, rgba(8, 12, 20, 0.9));
+  border: 1px solid var(--bf-border);
   color: var(--bf-text-primary);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 8px 10px;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 /* --- Order Book y Trade History --- */
@@ -294,12 +311,12 @@ body {
 
 .order-book-row.ask::before {
   right: 0;
-  background: linear-gradient(90deg, transparent, rgba(247, 85, 85, 0.24));
+  background: linear-gradient(90deg, transparent, var(--red-transparent));
 }
 
 .order-book-row.bid::before {
   left: 0;
-  background: linear-gradient(90deg, rgba(25, 195, 125, 0.24), transparent);
+  background: linear-gradient(90deg, var(--green-transparent), transparent);
 }
 
 .order-book-spread {
@@ -327,11 +344,13 @@ body {
 
 .exchange-trade-history .data-table-row {
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--bf-text-secondary);
 }
 
 .user-positions-table {
   width: 100%;
   border-collapse: collapse;
+  color: var(--bf-text-secondary);
 }
 
 .user-positions-table th,
