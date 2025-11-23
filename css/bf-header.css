@@ -1,11 +1,16 @@
 /* bf-header.css - Estilos para el header universal BitForward */
 
+:root {
+  color-scheme: dark;
+}
+
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(20, 24, 38, 0.85);
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
+  background: var(--bf-surface-1, rgba(20, 24, 38, 0.85));
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.18);
+  border-bottom: 1px solid var(--bf-border, rgba(255, 255, 255, 0.08));
   padding: 0.5rem 2rem;
   position: relative;
   z-index: 100;
@@ -17,7 +22,7 @@ header {
   gap: 0.5rem;
   font-weight: 700;
   font-size: 1.2rem;
-  color: #fff;
+  color: var(--bf-text-primary, #fff);
 }
 .bf-logo img {
   height: 2.2rem;
@@ -31,35 +36,53 @@ header {
   transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .bf-menu a {
-  color: #fff;
+  color: var(--bf-text-secondary, #fff);
   text-decoration: none;
   font-weight: 500;
   font-size: 1rem;
   position: relative;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  transition: background 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 .bf-menu a:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--bf-surface-3, rgba(255, 255, 255, 0.08));
+  color: var(--bf-text-primary, #fff);
 }
 
 .bf-wallet-btn {
-  background: linear-gradient(90deg, #00c6fb 0%, #005bea 100%);
-  color: #fff;
+  background: linear-gradient(
+    120deg,
+    var(--bf-color-primary, #1e40af) 0%,
+    var(--bf-color-primary-hover, #2563eb) 100%
+  );
+  color: var(--bf-text-primary, #fff);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--bf-radius-md, 12px);
   padding: 0.5rem 1.2rem;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 2px 8px 0 rgba(0, 198, 251, 0.08);
+  box-shadow: var(--bf-shadow-md, 0 4px 12px rgba(0, 0, 0, 0.12));
   transition:
     background 0.2s,
     box-shadow 0.2s;
 }
 .bf-wallet-btn.connected {
-  background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+  background: linear-gradient(
+    120deg,
+    var(--bf-color-accent, #10b981) 0%,
+    var(--bf-color-accent-hover, #16a77f) 100%
+  );
+}
+.bf-wallet-btn:focus-visible,
+.bf-menu a:focus-visible,
+.bf-menu-toggle:focus-visible {
+  outline: 2px solid var(--bf-color-secondary, #f59e0b);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 .bf-menu-toggle {
@@ -79,7 +102,7 @@ header {
   display: block;
   width: 1.8rem;
   height: 3px;
-  background: #fff;
+  background: var(--bf-text-primary, #fff);
   border-radius: 2px;
   transition: all 0.3s;
 }
@@ -89,7 +112,7 @@ header {
     position: absolute;
     top: 100%;
     right: -100vw;
-    background: rgba(20, 24, 38, 0.98);
+    background: var(--bf-surface-1, rgba(20, 24, 38, 0.98));
     flex-direction: column;
     width: 220px;
     padding: 1.5rem 1rem;

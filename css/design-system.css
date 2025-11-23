@@ -4,8 +4,10 @@
 :root {
   /* Colores corporativos */
   --bf-color-primary: #1e40af;
+  --bf-color-primary-hover: #2563eb;
   --bf-color-secondary: #f59e0b;
   --bf-color-accent: #10b981;
+  --bf-color-accent-hover: #16a77f;
   --bf-color-dark: #0f172a;
   --bf-color-light: #f8fafc;
   --bf-color-gray: #64748b;
@@ -29,6 +31,7 @@
   --bf-surface-1: #111827; /* panel suave */
   --bf-surface-2: #1e293b; /* tarjeta */
   --bf-surface-3: rgba(255, 255, 255, 0.04); /* glass */
+  --bf-surface-hover: #0b1220;
   --bf-border: rgba(255, 255, 255, 0.08);
   --bf-border-strong: rgba(98, 208, 255, 0.35);
 
