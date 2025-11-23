@@ -5,6 +5,12 @@ const PAIRS = [
   { id: 'ethereum', symbol: 'ETH' },
   { id: 'solana', symbol: 'SOL' },
 ];
+const REFRESH_INTERVAL =
+  typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    ? 20000
+    : 10000;
+const APEX_SRC = 'https://cdn.jsdelivr.net/npm/apexcharts';
+let apexChartsReady;
 
 async function fetchJson(url) {
   const res = await fetch(url);
@@ -26,6 +32,26 @@ const state = {
   meta: { source: 'api/prices', timestamp: null },
   side: 'long',
 };
+let hydrationStarted = false;
+
+function loadApexCharts() {
+  if (typeof window === 'undefined') return Promise.resolve(null);
+  if (window.ApexCharts) return Promise.resolve(window.ApexCharts);
+  if (!apexChartsReady) {
+    apexChartsReady = new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-apexcharts]');
+      if (existing && window.ApexCharts) return resolve(window.ApexCharts);
+      const script = document.createElement('script');
+      script.src = APEX_SRC;
+      script.async = true;
+      script.dataset.apexcharts = 'true';
+      script.onload = () => resolve(window.ApexCharts);
+      script.onerror = () => reject(new Error('No se pudo cargar ApexCharts'));
+      document.head.appendChild(script);
+    });
+  }
+  return apexChartsReady;
+}
 
 async function getPrices() {
   const assets = PAIRS.map(p => p.id).join(',');
@@ -114,9 +140,13 @@ async function fetchCandles(symbol = 'BTCUSDT', interval = '1m', limit = 120) {
   }));
 }
 
-function renderChart(prices, candles) {
+async function renderChart(prices, candles) {
+  const ApexCharts = await loadApexCharts().catch(err => {
+    console.error(err);
+    return null;
+  });
   const container = document.getElementById('chart-container');
-  if (!container) return;
+  if (!container || !ApexCharts) return;
   const mid = prices?.bitcoin?.usdt || prices?.bitcoin?.usd || 0;
   const seriesData =
     candles && candles.length
@@ -280,7 +310,7 @@ async function hydrate() {
     }
     updateStrip(prices);
     updateHeader(prices);
-    renderChart(prices, candles);
+    await renderChart(prices, candles);
 
     const mid = prices?.bitcoin?.usdt || prices?.bitcoin?.usd || 0;
 
@@ -301,7 +331,7 @@ async function hydrate() {
   } catch (error) {
     console.error('Error hydrating exchange view', error);
     // Render mínimo para no perder layout
-    renderChart({}, []);
+    await renderChart({}, []);
   }
 }
 
@@ -333,8 +363,29 @@ function bindControls() {
   }
 }
 
+function startHydrationLoop() {
+  if (hydrationStarted) return;
+  hydrationStarted = true;
+  hydrate();
+  setInterval(hydrate, REFRESH_INTERVAL);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   bindControls();
-  hydrate();
-  setInterval(hydrate, 10000);
+  const chartContainer = document.getElementById('chart-container');
+  if ('IntersectionObserver' in window && chartContainer) {
+    const observer = new IntersectionObserver(
+      entries => {
+        const [entry] = entries;
+        if (entry && entry.isIntersecting) {
+          observer.disconnect();
+          startHydrationLoop();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(chartContainer);
+  } else {
+    startHydrationLoop();
+  }
 });

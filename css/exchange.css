@@ -391,3 +391,13 @@ body {
     min-height: 250px;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  .live-strip {
+    animation: none !important;
+  }
+}
