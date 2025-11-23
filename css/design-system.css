@@ -1,48 +1,84 @@
 /* === Sistema de Diseño de BitForward === */
 
-/* 1. Paleta de Colores (Variables CSS) */
+/* 1. Tokens globales (basados en tailwind.config.js) */
 :root {
-  /* Paleta Principal (Tema Oscuro - "Space") */
-  --bf-bg-primary: #0f172a; /* Azul noche profundo */
-  --bf-bg-secondary: #1e293b; /* Azul pizarra */
-  --bf-bg-tertiary: #334155; /* Gris azulado */
+  /* Colores corporativos */
+  --bf-color-primary: #1e40af;
+  --bf-color-secondary: #f59e0b;
+  --bf-color-accent: #10b981;
+  --bf-color-dark: #0f172a;
+  --bf-color-light: #f8fafc;
+  --bf-color-gray: #64748b;
 
-  --bf-text-primary: #f8fafc; /* Blanco casi puro */
-  --bf-text-secondary: #e2e8f0; /* Gris claro */
-  --bf-text-tertiary: #94a3b8; /* Gris medio */
+  /* Estados */
+  --bf-color-success: #059669;
+  --bf-color-warning: #d97706;
+  --bf-color-error: #dc2626;
+  --bf-color-info: #2563eb;
 
-  --bf-accent-primary: #3b82f6; /* Azul vibrante */
-  --bf-accent-secondary: #06b6d4; /* Cian brillante */
-  --bf-accent-tertiary: #8b5cf6; /* Púrpura */
-  --bf-accent-glow: #f59e0b; /* Amarillo/Naranja para acentos */
+  /* Cripto (identidad de activos) */
+  --bf-crypto-btc: #f7931a;
+  --bf-crypto-eth: #627eea;
+  --bf-crypto-sol: #14f195;
+  --bf-crypto-usdt: #26a17b;
+  --bf-crypto-usdc: #2775ca;
+  --bf-crypto-dai: #f5ac37;
 
-  /* Colores Semánticos */
-  --bf-success: #10b981; /* Verde */
-  --bf-error: #ef4444; /* Rojo */
-  --bf-warning: #f59e0b; /* Naranja */
+  /* Superficies y bordes */
+  --bf-surface-0: #0f172a; /* fondo base */
+  --bf-surface-1: #111827; /* panel suave */
+  --bf-surface-2: #1e293b; /* tarjeta */
+  --bf-surface-3: rgba(255, 255, 255, 0.04); /* glass */
+  --bf-border: rgba(255, 255, 255, 0.08);
+  --bf-border-strong: rgba(98, 208, 255, 0.35);
 
-  /* Bordes y Sombras */
+  /* Tipografía */
+  --bf-font-display: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+  --bf-font-base: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Escalas */
+  --bf-radius-sm: 8px;
+  --bf-radius-md: 12px;
+  --bf-radius-lg: 20px;
+  --bf-space-1: 4px;
+  --bf-space-2: 8px;
+  --bf-space-3: 12px;
+  --bf-space-4: 16px;
+  --bf-space-5: 24px;
+  --bf-space-6: 32px;
+
+  /* Sombras y glass */
+  --bf-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --bf-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --bf-shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.35);
+  --bf-shadow-glow: 0 0 25px rgba(30, 64, 175, 0.45);
+  --bf-glass-bg: rgba(255, 255, 255, 0.04);
+  --bf-glass-border: rgba(255, 255, 255, 0.08);
+  --bf-glass-backdrop-filter: blur(16px) saturate(170%);
+
+  /* Alias de compatibilidad (legacy) */
+  --bf-bg-primary: var(--bf-surface-0);
+  --bf-bg-secondary: var(--bf-surface-2);
+  --bf-bg-tertiary: #334155;
+  --bf-text-primary: #f8fafc;
+  --bf-text-secondary: #e2e8f0;
+  --bf-text-tertiary: #94a3b8;
+  --bf-accent-primary: #3b82f6;
+  --bf-accent-secondary: #06b6d4;
+  --bf-accent-tertiary: #8b5cf6;
+  --bf-accent-glow: var(--bf-color-secondary);
+  --bf-success: #10b981;
+  --bf-error: #ef4444;
+  --bf-warning: #f59e0b;
   --bf-border-color: rgba(59, 130, 246, 0.2);
   --bf-shadow-color: rgba(6, 182, 212, 0.15);
-  --bf-shadow-lg: 0 10px 30px -10px var(--bf-shadow-color);
-
-  /* Glassmorphism */
-  --bf-glass-bg: rgba(30, 41, 59, 0.7);
-  --bf-glass-border: rgba(59, 130, 246, 0.25);
-  --bf-glass-backdrop-filter: blur(16px) saturate(180%);
 }
 
-/* 2. Estilos Base y Tipografía */
+/* 2. Estilos base y tipografía */
 body {
   background-color: var(--bf-bg-primary);
   color: var(--bf-text-secondary);
-  font-family:
-    'Inter',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    sans-serif;
+  font-family: var(--bf-font-base);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -58,17 +94,18 @@ h6 {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.5px;
+  font-family: var(--bf-font-display);
 }
 
 h1 {
   font-size: 2.5rem;
-} /* 40px */
+}
 h2 {
   font-size: 2rem;
-} /* 32px */
+}
 h3 {
   font-size: 1.5rem;
-} /* 24px */
+}
 p {
   margin-bottom: 1rem;
 }
@@ -77,64 +114,76 @@ a {
   text-decoration: none;
   transition: color 0.3s ease;
 }
-a:hover {
+a:hover,
+a:focus-visible {
   color: var(--bf-accent-primary);
 }
 
-/* 3. Componentes Reutilizables */
+/* 3. Componentes reutilizables */
 
 /* Botones */
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  border-radius: var(--bf-radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   border: 1px solid transparent;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--bf-accent-primary), var(--bf-accent-secondary));
+  background: linear-gradient(135deg, var(--bf-color-primary), var(--bf-color-accent));
   color: var(--bf-text-primary);
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  box-shadow: var(--bf-shadow-md), var(--bf-shadow-glow);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+  box-shadow: var(--bf-shadow-lg);
 }
 
 .btn-secondary {
-  background-color: var(--bf-bg-tertiary);
+  background-color: var(--bf-surface-2);
   color: var(--bf-text-primary);
-  border-color: var(--bf-border-color);
+  border-color: var(--bf-border);
 }
 
 .btn-secondary:hover {
-  background-color: var(--bf-bg-secondary);
-  border-color: var(--bf-accent-secondary);
+  background-color: var(--bf-surface-1);
+  border-color: var(--bf-color-accent);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--bf-text-primary);
+  border: 1px solid var(--bf-border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--bf-color-primary);
+  color: var(--bf-text-primary);
 }
 
 /* Tarjetas (Cards) */
 .card {
   background: var(--bf-glass-bg);
   border: 1px solid var(--bf-glass-border);
-  border-radius: 16px;
+  border-radius: var(--bf-radius-lg);
   padding: 2rem;
   backdrop-filter: var(--bf-glass-backdrop-filter);
   -webkit-backdrop-filter: var(--bf-glass-backdrop-filter);
-  box-shadow: var(--bf-shadow-lg);
+  box-shadow: var(--bf-shadow-md);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px -15px var(--bf-shadow-color);
+  transform: translateY(-4px);
+  box-shadow: var(--bf-shadow-lg);
 }
 
 /* Contenedor principal para páginas */
@@ -155,14 +204,19 @@ a:hover {
   color: var(--bf-text-tertiary);
 }
 .text-accent {
-  color: var(--bf-accent-secondary);
+  color: var(--bf-color-accent);
 }
 .text-success {
-  color: var(--bf-success);
+  color: var(--bf-color-success);
 }
 .text-error {
-  color: var(--bf-error);
+  color: var(--bf-color-error);
 }
 .text-warning {
-  color: var(--bf-warning);
+  color: var(--bf-color-warning);
+}
+.surface {
+  background: var(--bf-surface-2);
+  border: 1px solid var(--bf-border);
+  border-radius: var(--bf-radius-md);
 }

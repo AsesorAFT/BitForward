@@ -188,7 +188,35 @@ Frontend → core-integration.js → [Componentes específicos] → Notificacion
   └── init.js              # Inicialización de la aplicación
 ```
 
-## 5. Futuras Mejoras
+## 5. Sistema visual base (tokens y tipografía)
+
+Los tokens globales viven en `css/design-system.css` y están basados en `tailwind.config.js`, para usarse tanto con clases utilitarias como con estilos tradicionales.
+
+### Colores principales
+
+- `--bf-color-primary` `#1e40af`, `--bf-color-secondary` `#f59e0b`, `--bf-color-accent` `#10b981`
+- Superficies: `--bf-surface-0` (fondo), `--bf-surface-1/2/3` (paneles, glass), `--bf-border`, `--bf-border-strong`
+- Texto: `--bf-text-primary`, `--bf-text-secondary`, `--bf-text-tertiary`
+- Estados: `--bf-color-success`, `--bf-color-warning`, `--bf-color-error`, `--bf-color-info`
+- Cripto: `--bf-crypto-btc`, `--bf-crypto-eth`, `--bf-crypto-sol`, `--bf-crypto-usdt`, `--bf-crypto-usdc`, `--bf-crypto-dai`
+
+### Tipografía y escala
+
+- `--bf-font-display`: `'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif`
+- `--bf-font-base`: `'Inter', system-ui, -apple-system, sans-serif`
+- Radii: `--bf-radius-sm` (8px), `--bf-radius-md` (12px), `--bf-radius-lg` (20px)
+- Espacios: `--bf-space-1..6` (4px, 8px, 12px, 16px, 24px, 32px)
+- Sombras: `--bf-shadow-sm`, `--bf-shadow-md`, `--bf-shadow-lg`, `--bf-shadow-glow`
+
+### Componentes base listos
+
+- `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-ghost` usan los tokens de color y radio.
+- `.card` aplica superficie glass, borde y sombra.
+- Utilidades: `.text-primary|secondary|tertiary|accent|success|error|warning`, `.surface` para panel rápido.
+
+Para mantener compatibilidad, existen alias legacy (`--bf-bg-primary`, `--bf-accent-secondary`, etc.) que siguen apuntando a la nueva paleta.
+
+## 6. Futuras Mejoras
 
 Los siguientes son aspectos que pueden mejorarse en futuras iteraciones:
 
