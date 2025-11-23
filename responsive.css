@@ -1,73 +1,115 @@
-.responsive {
-  /* General Responsive Styles */
-} /* Include mobile and tablet optimization styles */
+/* === Responsive overrides for BitForward === */
+/* Usa los tokens globales de css/design-system.css */
+
+:root {
+  color-scheme: dark;
+}
+
+/* Tablet */
 @media (max-width: 1024px) {
-  .container {
-    padding: 15px;
-  } /* Adjust padding for tablets */
-  .navigation {
-    gap: 20px;
-  } /* Navigation gap changes */
-}
-@media (max-width: 767px) {
-  /* Mobile Styles */
-  .typography {
-    font-size: 14px;
-    line-height: 20px;
-  } /* Typography adjustments */
-  .hamburger {
-    /* Hamburger menu toggle animation */
+  .landing-shell {
+    margin: 24px auto 48px;
+    padding: 0 16px;
   }
-  .dropdown {
-    display: none;
-  } /* Dropdown menus for mobile */
-  .button {
-    min-height: 48px;
-  } /* Button optimizations */
-  .card {
-    /* Card adjustments */
-  }
-  .grid {
-    display: grid;
+  .landing-body .hero {
     grid-template-columns: 1fr;
-  } /* Single column grids */
-  table {
-    display: block; /* Responsive tables with stack mode */
+    text-align: left;
+  }
+  .hero-kpis {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .exchange-container {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .dashboard-main {
+    margin: 72px 16px;
+    padding: 16px;
+    margin-left: 0;
+  }
+  .trading-grid {
+    grid-template-columns: 1fr 1.2fr;
+    grid-template-areas:
+      'markets trade'
+      'center center';
   }
 }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 32px;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .trust-band .logo-row {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  .exchange-container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'header'
+      'chart'
+      'orders'
+      'history'
+      'positions';
+    height: auto;
+    padding: 12px 10px;
+  }
+  .exchange-module {
+    min-height: auto;
+  }
+  .order-form-container .btn {
+    width: 100%;
+  }
+  .data-table-container,
+  .orderbook-table,
+  .table-list,
+  .assets-table {
+    overflow-x: auto;
+  }
+
+  .dashboard-main {
+    margin: 64px 12px;
+    padding: 12px;
+    margin-left: 0;
+  }
+  .trading-grid,
+  .portfolio-grid,
+  .dashboard-columns {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .table-row,
+  .assets-table {
+    display: block;
+  }
+  .assets-table th,
+  .assets-table td {
+    white-space: nowrap;
+  }
+}
+
+/* Small Mobile */
 @media (max-width: 480px) {
-  /* Small Mobile Styles */
-  .typography {
-    font-size: 12px;
-  } /* Reduced typography */
-}
-@media print {
-  /* Print Media Styles */
-} /* Form optimizations */
-.form {
-  font-size: 16px;
-} /* Prevent iOS zoom */ /* Modal adjustments */
-.modal {
-  /* Styles for modals */
-} /* Footer layout */
-.footer {
-  display: flex;
-  flex-direction: column;
-} /* Utility classes for mobile */
-.mobile-only {
-  display: block;
-}
-.desktop-only {
-  display: none;
-} /* Landscape orientation support */
-@media (orientation: landscape) {
-  .landscape {
-    /* Styles for landscape orientation */
+  .landing-shell {
+    padding: 0 12px;
   }
-} /* Touch device optimizations */
-.touch-target {
-  min-height: 44px;
-}
-.active-state {
-  /* Styles for active states instead of hover */
+  .btn {
+    width: 100%;
+  }
+  .market-info-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .timeframe-group {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
