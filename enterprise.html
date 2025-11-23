@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -22,6 +22,10 @@
 
     <!-- Space Theme Loader -->
     <script type="module" src="js/space-theme-loader.js"></script>
+
+    <!-- Design System -->
+    <link rel="stylesheet" href="css/design-system.css" />
+    <link rel="stylesheet" href="css/landing-mission.css" />
 
     <!-- Page Styles (deben ir primero) -->
     <link rel="stylesheet" href="css/typography.css" />
@@ -39,173 +43,183 @@
     </bf-header>
 
     <!-- Main Dashboard -->
-    <main class="bf-main" style="padding-top: 80px">
+    <main class="landing-shell" style="padding-top: 80px">
       <div class="bf-container">
         <!-- Hero Section -->
-        <section class="bf-hero">
-          <div class="bf-hero-content">
-            <h1 class="bf-hero-title">
-              Bienvenido a <span class="bitforward-holo">BitForward</span>
-              <span class="bf-hero-subtitle">La plataforma DeFi empresarial del futuro</span>
-            </h1>
-            <p class="bf-hero-description">
-              Gestiona contratos forward, préstamos con colateral y coberturas de riesgo con la
-              seguridad y transparencia de la blockchain.
+        <section class="hero card" id="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">BitForward • Solución Empresarial</p>
+            <h1>Plataforma DeFi empresarial lista para producción</h1>
+            <p class="lead">
+              Lanza tu exchange, trading desk o protocolo DeFi con infraestructura auditada, control
+              de riesgo institucional y liquidez multi-chain en semanas.
             </p>
-            <div class="bf-hero-actions">
-              <button class="bf-btn bf-btn-primary bf-btn-lg">
-                <i class="fas fa-plus"></i>
-                Crear Contrato
-              </button>
-              <button class="bf-btn bf-btn-secondary bf-btn-lg">
-                <i class="fas fa-book"></i>
-                Documentación
-              </button>
+            <div class="hero-actions">
+              <a class="btn primary" href="#contacto">Agendar Demo</a>
+              <a class="btn ghost" href="mission-control.html">Ver Mission Control</a>
+            </div>
+            <div class="trust">
+              <span class="pill">Seguridad Empresarial</span>
+              <span class="pill">99.99% SLA</span>
+              <span class="pill">Multi-Chain</span>
+              <span class="pill">Compliance Ready</span>
             </div>
           </div>
-          <div class="bf-hero-visual">
-            <div class="bf-trading-widget">
-              <div class="bf-widget-header">
-                <h3>Mercados en Vivo</h3>
-                <span class="bf-badge bf-badge-success">
-                  <i class="fas fa-circle"></i>
-                  En línea
-                </span>
-              </div>
-              <div class="bf-price-ticker">
-                <div class="bf-price-item">
-                  <span class="bf-asset">BTC/USD</span>
-                  <span class="bf-price positive">$67,234.56</span>
-                  <span class="bf-change positive">+2.34%</span>
-                </div>
-                <div class="bf-price-item">
-                  <span class="bf-asset">ETH/USD</span>
-                  <span class="bf-price positive">$3,456.78</span>
-                  <span class="bf-change positive">+1.23%</span>
-                </div>
-                <div class="bf-price-item">
-                  <span class="bf-asset">SOL/USD</span>
-                  <span class="bf-price negative">$156.78</span>
-                  <span class="bf-change negative">-0.45%</span>
-                </div>
-              </div>
+          <div class="hero-kpis">
+            <div class="kpi">
+              <div class="label">TVL Procesado</div>
+              <div class="value">$24.5M</div>
+              <div class="hint">Total Value Locked</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Contratos Activos</div>
+              <div class="value">1,247</div>
+              <div class="hint">En múltiples redes</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Clientes Enterprise</div>
+              <div class="value">43</div>
+              <div class="hint">A nivel global</div>
+            </div>
+            <div class="kpi accent">
+              <div class="label">Uptime</div>
+              <div class="value">99.99%</div>
+              <div class="hint">TLS • CSP • WAF</div>
             </div>
           </div>
         </section>
 
-        <!-- KPIs Dashboard -->
-        <section class="bf-kpis">
-          <div class="bf-kpis-grid">
-            <div class="bf-metric">
-              <div class="bf-metric-value">$24.5M</div>
-              <div class="bf-metric-label">Total Value Locked</div>
-              <div class="bf-metric-change positive">
-                <i class="fas fa-arrow-up"></i>
-                +15.2% este mes
+        <!-- Trust Band -->
+        <section class="trust-band card" aria-label="Seguridad y Confianza">
+          <div class="trust-header">
+            <div class="pill ghost">Confianza Empresarial</div>
+            <p class="trust-subtitle">
+              Infraestructura auditada y certificada para operaciones críticas
+            </p>
+          </div>
+          <div class="trust-badges">
+            <div class="trust-badge">
+              <div class="badge-icon">🔒</div>
+              <div class="badge-content">
+                <div class="badge-title">Auditoría Externa</div>
+                <div class="badge-desc">Smart contracts verificados</div>
               </div>
             </div>
-            <div class="bf-metric">
-              <div class="bf-metric-value">1,247</div>
-              <div class="bf-metric-label">Contratos Activos</div>
-              <div class="bf-metric-change positive">
-                <i class="fas fa-arrow-up"></i>
-                +8.7% esta semana
+            <div class="trust-badge">
+              <div class="badge-icon">☁️</div>
+              <div class="badge-content">
+                <div class="badge-title">AWS Enterprise</div>
+                <div class="badge-desc">Infraestructura escalable</div>
               </div>
             </div>
-            <div class="bf-metric">
-              <div class="bf-metric-value">98.9%</div>
-              <div class="bf-metric-label">Uptime</div>
-              <div class="bf-metric-change neutral">
-                <i class="fas fa-check"></i>
-                Operativo
+            <div class="trust-badge">
+              <div class="badge-icon">⛓️</div>
+              <div class="badge-content">
+                <div class="badge-title">Multi-Chain</div>
+                <div class="badge-desc">Ethereum, BSC, Polygon, Solana</div>
               </div>
             </div>
-            <div class="bf-metric">
-              <div class="bf-metric-value">$156K</div>
-              <div class="bf-metric-label">Ingresos Diarios</div>
-              <div class="bf-metric-change positive">
-                <i class="fas fa-arrow-up"></i>
-                +23.1% vs ayer
+            <div class="trust-badge">
+              <div class="badge-icon">✓</div>
+              <div class="badge-content">
+                <div class="badge-title">KYC/AML Ready</div>
+                <div class="badge-desc">Compliance integrado</div>
+              </div>
+            </div>
+            <div class="trust-badge">
+              <div class="badge-icon">📊</div>
+              <div class="badge-content">
+                <div class="badge-title">Monitoring 24/7</div>
+                <div class="badge-desc">NOC dedicado</div>
               </div>
             </div>
           </div>
         </section>
 
         <!-- Productos Principales -->
-        <section class="bf-products">
-          <div class="bf-section-header">
-            <h2>Productos Financieros</h2>
-            <p>Explora nuestra suite completa de herramientas DeFi empresariales</p>
+        <section class="stack card" id="servicios">
+          <div class="stack-header">
+            <p class="eyebrow">Stack DeFi Empresarial</p>
+            <h2>Soluciones Llave en Mano</h2>
+            <p class="muted">
+              Suite completa de herramientas financieras descentralizadas para empresas e
+              instituciones
+            </p>
           </div>
 
-          <div class="bf-products-grid">
+          <div class="stack-grid">
             <!-- Forward Contracts -->
-            <div class="bf-product-card">
-              <div class="bf-product-icon primary">
-                <i class="fas fa-file-contract"></i>
-              </div>
-              <div class="bf-product-content">
-                <h3>Contratos Forward</h3>
-                <p>
-                  Asegura precios futuros para activos digitales con contratos inteligentes
-                  auditados.
-                </p>
-                <ul class="bf-product-features">
-                  <li><i class="fas fa-check"></i> Liquidación automática</li>
-                  <li><i class="fas fa-check"></i> Sin contrapartes centralizadas</li>
-                  <li><i class="fas fa-check"></i> Collateral dinámico</li>
-                </ul>
-              </div>
-              <div class="bf-product-actions">
-                <button class="bf-btn bf-btn-primary">
-                  <i class="fas fa-plus"></i>
-                  Crear Forward
-                </button>
-              </div>
+            <div class="stack-card">
+              <div class="icon">📊</div>
+              <h3>Contratos Forward</h3>
+              <p>
+                Asegura precios futuros para activos digitales con contratos inteligentes auditados
+                y liquidación automática.
+              </p>
+              <ul class="bf-product-features">
+                <li><i class="fas fa-check"></i> Liquidación automática</li>
+                <li><i class="fas fa-check"></i> Sin contrapartes centralizadas</li>
+                <li><i class="fas fa-check"></i> Collateral dinámico</li>
+              </ul>
             </div>
 
             <!-- Lending Platform -->
-            <div class="bf-product-card">
-              <div class="bf-product-icon gold">
-                <i class="fas fa-coins"></i>
-              </div>
-              <div class="bf-product-content">
-                <h3>Préstamos Garantizados</h3>
-                <p>Obtén liquidez instantánea usando tus cripto activos como colateral.</p>
-                <ul class="bf-product-features">
-                  <li><i class="fas fa-check"></i> APR desde 3.5%</li>
-                  <li><i class="fas fa-check"></i> Liquidación en 24h</li>
-                  <li><i class="fas fa-check"></i> Múltiples colaterales</li>
-                </ul>
-              </div>
-              <div class="bf-product-actions">
-                <button class="bf-btn bf-btn-gold">
-                  <i class="fas fa-money-bill-wave"></i>
-                  Solicitar Préstamo
-                </button>
-              </div>
+            <div class="stack-card">
+              <div class="icon">💰</div>
+              <h3>Préstamos Garantizados</h3>
+              <p>
+                Obtén liquidez instantánea usando tus cripto activos como colateral con APR
+                competitivos.
+              </p>
+              <ul class="bf-product-features">
+                <li><i class="fas fa-check"></i> APR desde 3.5%</li>
+                <li><i class="fas fa-check"></i> Liquidación en 24h</li>
+                <li><i class="fas fa-check"></i> Múltiples colaterales</li>
+              </ul>
             </div>
 
             <!-- Insurance Coverage -->
-            <div class="bf-product-card">
-              <div class="bf-product-icon success">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="bf-product-content">
-                <h3>Coberturas DeFi</h3>
-                <p>Protege tus inversiones contra volatilidad y riesgos de smart contracts.</p>
-                <ul class="bf-product-features">
-                  <li><i class="fas fa-check"></i> Cobertura hasta $10M</li>
-                  <li><i class="fas fa-check"></i> Claims automáticos</li>
-                  <li><i class="fas fa-check"></i> Primas competitivas</li>
-                </ul>
-              </div>
-              <div class="bf-product-actions">
-                <button class="bf-btn bf-btn-success">
-                  <i class="fas fa-umbrella"></i>
-                  Asegurar Portfolio
-                </button>
-              </div>
+            <div class="stack-card">
+              <div class="icon">🛡️</div>
+              <h3>Coberturas DeFi</h3>
+              <p>
+                Protege tus inversiones contra volatilidad y riesgos de smart contracts con seguros
+                descentralizados.
+              </p>
+              <ul class="bf-product-features">
+                <li><i class="fas fa-check"></i> Cobertura hasta $10M</li>
+                <li><i class="fas fa-check"></i> Claims automáticos</li>
+                <li><i class="fas fa-check"></i> Primas competitivas</li>
+              </ul>
+            </div>
+
+            <!-- Trading & Exchange -->
+            <div class="stack-card">
+              <div class="icon">⚡</div>
+              <h3>Trading & Exchange</h3>
+              <p>
+                Plataforma de trading institucional con liquidez profunda y ejecución de alta
+                velocidad.
+              </p>
+              <ul class="bf-product-features">
+                <li><i class="fas fa-check"></i> API FIX/REST</li>
+                <li><i class="fas fa-check"></i> OTC & Dark Pools</li>
+                <li><i class="fas fa-check"></i> Custody solutions</li>
+              </ul>
+            </div>
+
+            <!-- Risk Management -->
+            <div class="stack-card">
+              <div class="icon">📈</div>
+              <h3>Risk Management</h3>
+              <p>
+                Suite completa de herramientas para gestión de riesgo y compliance en tiempo real.
+              </p>
+              <ul class="bf-product-features">
+                <li><i class="fas fa-check"></i> Real-time monitoring</li>
+                <li><i class="fas fa-check"></i> Alertas automáticas</li>
+                <li><i class="fas fa-check"></i> Reporting KYC/AML</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -577,6 +591,38 @@
                 <i class="fas fa-calendar-plus"></i>
                 Registrarme
               </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact CTA Section -->
+        <section class="cta-band card" id="contacto">
+          <div>
+            <p class="eyebrow">Listo para Escalar</p>
+            <h2>Agenda una demo y lanza en 4-6 semanas</h2>
+            <p class="muted">
+              Integramos tu infraestructura actual, configuramos controles de riesgo y
+              personalizamos la plataforma para tu marca. Soporte completo incluido.
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="mailto:asesoraft@bitforward.financial"
+                >Hablar con Ventas</a
+              >
+              <a class="btn ghost" href="mission-control.html">Explorar Plataforma</a>
+            </div>
+          </div>
+          <div class="cta-metrics">
+            <div class="metric">
+              <span class="label">Time-to-market</span>
+              <span class="value">4-6 semanas</span>
+            </div>
+            <div class="metric">
+              <span class="label">Soporte</span>
+              <span class="value">24/7 NOC</span>
+            </div>
+            <div class="metric">
+              <span class="label">Integraciones</span>
+              <span class="value">KYC • Custodia • Oracle</span>
             </div>
           </div>
         </section>
