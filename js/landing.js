@@ -1,94 +1,120 @@
-const state = {
-  prices: {},
-  networks: [],
+const assets = [
+  { id: 'bitcoin', symbol: 'btc', label: 'BTC' },
+  { id: 'ethereum', symbol: 'eth', label: 'ETH' },
+  { id: 'solana', symbol: 'sol', label: 'SOL' },
+  { id: 'cardano', symbol: 'ada', label: 'ADA' },
+];
+
+const fallbackPrices = {
+  bitcoin: { usd: 65633, usd_24h_change: 1.96 },
+  ethereum: { usd: 1721.42, usd_24h_change: 2.59 },
+  solana: { usd: 70.84, usd_24h_change: 2.97 },
+  cardano: { usd: 0.180945, usd_24h_change: 5.45 },
 };
-
-const headers = { 'Content-Type': 'application/json' };
-
-async function fetchJson(url) {
-  const res = await fetch(url, { headers });
-  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-  return res.json();
-}
 
 function setText(id, text) {
   const el = document.getElementById(id);
   if (el) el.textContent = text;
 }
 
-async function loadPrices() {
-  try {
-    const data = await fetchJson('/api/prices?assets=bitcoin,ethereum,solana&vs=usd');
-    state.prices = data.prices || {};
-    renderPrices();
-    const btc = state.prices?.bitcoin?.usd || 0;
-    const eth = state.prices?.ethereum?.usd || 0;
-    setText('kpi-tvl', btc && eth ? `$${Math.round((btc + eth) * 1200).toLocaleString()}` : '$--');
-  } catch (error) {
-    console.warn('Price load failed', error);
+function formatUsd(value) {
+  if (!Number.isFinite(value)) return '$--';
+  if (value >= 1000) {
+    return value.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    });
   }
+  if (value >= 1) {
+    return value.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+  return `$${value.toFixed(4)}`;
 }
 
-async function loadNetworks() {
-  try {
-    const data = await fetchJson('/api/config/networks');
-    state.networks = data.networks || [];
-    setText('kpi-networks', state.networks.length || '--');
-    renderNetworks();
-  } catch (error) {
-    console.warn('Network load failed', error);
-  }
+function formatChange(change) {
+  if (!Number.isFinite(change)) return '--';
+  const sign = change >= 0 ? '+' : '';
+  return `${sign}${change.toFixed(2)}% 24h`;
 }
 
-function renderPrices() {
-  const container = document.getElementById('live-prices');
-  if (!container) return;
-  container.innerHTML = '';
-  const pairs = [
-    ['bitcoin', 'BTC'],
-    ['ethereum', 'ETH'],
-    ['solana', 'SOL'],
-  ];
-  pairs.forEach(([key, label]) => {
-    const price = state.prices?.[key]?.usd;
-    const card = document.createElement('div');
-    card.className = 'price-card';
-    card.innerHTML = `
-      <div class="pair">${label}/USDT</div>
-      <div class="value">${price ? `$${price.toLocaleString()}` : '--'}</div>
-    `;
-    container.appendChild(card);
+function updateChangeClass(id, change) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('up', 'down');
+  if (Number.isFinite(change)) el.classList.add(change >= 0 ? 'up' : 'down');
+}
+
+function renderPrices(prices, sourceLabel = 'Mercado') {
+  assets.forEach(asset => {
+    const quote = prices?.[asset.id] || fallbackPrices[asset.id];
+    const price = Number(quote?.usd);
+    const change = Number(quote?.usd_24h_change);
+    setText(`price-${asset.symbol}`, formatUsd(price));
+    setText(`change-${asset.symbol}`, formatChange(change));
+    updateChangeClass(`change-${asset.symbol}`, change);
   });
-}
 
-function renderNetworks() {
-  const list = document.getElementById('network-list');
-  if (!list) return;
-  list.innerHTML = '';
-  state.networks.forEach(net => {
-    const li = document.createElement('li');
-    li.innerHTML = `<span>${net.name}</span><span class="sub">${net.nativeSymbol} · chainId ${net.chainId}</span>`;
-    list.appendChild(li);
+  const now = new Date();
+  const stamp = now.toLocaleString('es-MX', {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
   });
+  setText('market-updated', `${sourceLabel} · ${stamp}`);
 }
 
-async function loadCounts() {
+function readCache() {
   try {
-    const [contractsRes, loansRes] = await Promise.all([
-      fetchJson('/api/contracts').catch(() => null),
-      fetchJson('/api/lending/loans').catch(() => null),
-    ]);
-    const contracts = contractsRes?.contracts || [];
-    const loans = loansRes?.loans || [];
-    setText('kpi-contracts', contracts.length || '0');
-    setText('kpi-loans', loans.length || '0');
-  } catch (error) {
-    console.warn('Counts load failed', error);
+    const raw = localStorage.getItem('bitforward-prices-v1');
+    if (!raw) return null;
+    const cached = JSON.parse(raw);
+    const age = Date.now() - cached.timestamp;
+    if (age > 1000 * 60 * 20) return null;
+    return cached.prices;
+  } catch {
+    return null;
   }
+}
+
+function writeCache(prices) {
+  try {
+    localStorage.setItem(
+      'bitforward-prices-v1',
+      JSON.stringify({ timestamp: Date.now(), prices }),
+    );
+  } catch {
+    // Local storage can be unavailable in private mode.
+  }
+}
+
+async function fetchMarketPrices() {
+  const ids = assets.map(asset => asset.id).join(',');
+  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
+  const response = await fetch(url, { headers: { accept: 'application/json' } });
+  if (!response.ok) throw new Error(`Market data unavailable: ${response.status}`);
+  return response.json();
 }
 
 async function init() {
-  await Promise.all([loadPrices(), loadNetworks(), loadCounts()]);
+  const cached = readCache();
+  if (cached) renderPrices(cached, 'Cache');
+  else renderPrices(fallbackPrices, 'Referencia');
+
+  try {
+    const prices = await fetchMarketPrices();
+    writeCache(prices);
+    renderPrices(prices, 'En vivo');
+  } catch (error) {
+    console.warn('BitForward price feed failed', error);
+    if (!cached) renderPrices(fallbackPrices, 'Referencia');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);
