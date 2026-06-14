@@ -1,39 +1,39 @@
 {
-  "name": "BitForward DeFi Platform",
+  "name": "BitForward Digital Asset Desk",
   "short_name": "BitForward",
-  "description": "Plataforma DeFi con contratos forward, lending y Web3 integration",
-  "start_url": "/",
+  "description": "Centro de inteligencia de activos digitales de AFORTU: mercado, portafolios, riesgo y educación patrimonial.",
+  "start_url": "/BitForward/",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#667eea",
+  "background_color": "#02040a",
+  "theme_color": "#d4af37",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "/BitForward/",
   "lang": "es",
   "dir": "ltr",
-  "categories": ["finance", "productivity"],
+  "categories": ["finance", "business", "productivity"],
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/assets/logo-astronaut-rocket.svg",
+      "src": "assets/logo-astronaut-rocket.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/logo-astronaut-rocket.svg",
+      "src": "assets/logo-astronaut-rocket.svg",
       "sizes": "32x32",
       "type": "image/svg+xml"
     }
   ],
   "screenshots": [
     {
-      "src": "/assets/screenshot-wide.png",
+      "src": "assets/screenshot-wide.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
-      "src": "/assets/screenshot-narrow.png",
+      "src": "assets/screenshot-narrow.png",
       "sizes": "750x1334",
       "type": "image/png",
       "form_factor": "narrow"
@@ -41,25 +41,25 @@
   ],
   "shortcuts": [
     {
-      "name": "Dashboard",
-      "short_name": "Dashboard",
-      "description": "Ver dashboard principal",
-      "url": "/dashboard.html",
+      "name": "Mission Control",
+      "short_name": "Panel",
+      "description": "Ver dashboard principal de BitForward",
+      "url": "/BitForward/mission-control.html",
       "icons": [
         {
-          "src": "/assets/logo-astronaut-rocket.svg",
+          "src": "assets/logo-astronaut-rocket.svg",
           "sizes": "96x96"
         }
       ]
     },
     {
-      "name": "Lending",
-      "short_name": "Lending",
-      "description": "Mercado de préstamos DeFi",
-      "url": "/lending.html",
+      "name": "Acceso Cliente",
+      "short_name": "Acceso",
+      "description": "Entrar al portal de cliente BitForward",
+      "url": "/BitForward/login.html",
       "icons": [
         {
-          "src": "/assets/logo-astronaut-rocket.svg",
+          "src": "assets/logo-astronaut-rocket.svg",
           "sizes": "96x96"
         }
       ]
@@ -67,10 +67,5 @@
   ],
   "related_applications": [],
   "iarc_rating_id": "",
-  "permissions": [],
-  "serviceworker": {
-    "src": "/sw.js",
-    "scope": "/",
-    "use_cache": true
-  }
+  "permissions": []
 }
