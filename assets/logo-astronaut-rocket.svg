@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">BitForward</title>
+  <desc id="desc">Logo circular de BitForward by AFORTU.</desc>
+  <defs>
+    <linearGradient id="gold" x1="44" y1="32" x2="212" y2="224" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f7dc83"/>
+      <stop offset="0.48" stop-color="#d4af37"/>
+      <stop offset="1" stop-color="#8a6b20"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="62" y1="48" x2="194" y2="210" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#12264a"/>
+      <stop offset="1" stop-color="#02040a"/>
+    </linearGradient>
+  </defs>
+  <circle cx="128" cy="128" r="120" fill="#02040a"/>
+  <circle cx="128" cy="128" r="112" fill="url(#blue)" stroke="url(#gold)" stroke-width="8"/>
+  <path d="M64 155c30-58 72-88 128-91-14 28-34 50-60 66 26 3 47 13 64 30-47-12-91-8-132 13v-18Z" fill="url(#gold)" opacity="0.94"/>
+  <path d="M74 177c42-22 82-27 120-16-24 12-53 21-87 25-14 2-25-1-33-9Z" fill="#f8fafc" opacity="0.88"/>
+  <text x="128" y="130" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="900" fill="#ffffff" letter-spacing="-4">BF</text>
+  <text x="128" y="154" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#d4af37" letter-spacing="3">AFORTU</text>
+</svg>
