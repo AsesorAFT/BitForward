@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BitForward | DeFi Launch by AFORTU Holdings</title>
+    <title>BitForward | Digital Asset Desk by AFORTU</title>
     <meta
       name="description"
-      content="BitForward unifica trading, perps, lending y fondeo de proyectos con control de riesgo y liquidez multi-chain."
+      content="BitForward es el centro de inteligencia de activos digitales de AFORTU: mercado, portafolios, riesgo y educación patrimonial."
     />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="manifest" href="manifest.json" />
@@ -22,220 +22,223 @@
   </head>
   <body class="landing-body">
     <bf-header logo-src="assets/logo-astronaut-rocket.svg">
-      <a href="#servicios">Servicios</a>
-      <a href="#casos">Casos</a>
-      <a href="#contacto" class="cta">Hablar</a>
+      <a href="#mercado">Mercado</a>
+      <a href="#estrategia">Estrategia</a>
+      <a href="#riesgo">Riesgo</a>
+      <a href="#contacto" class="cta">Contacto</a>
     </bf-header>
 
     <main class="landing-shell">
       <section class="hero card" id="hero">
         <div class="hero-copy">
-          <p class="eyebrow">BitForward • AFORTU Holdings</p>
-          <h1>Infraestructura DeFi lista para negocio.</h1>
+          <p class="eyebrow">BitForward • AFORTU Asset Management</p>
+          <h1>Inteligencia digital para inversionistas patrimoniales.</h1>
           <p class="lead">
-            Lanzamos tu exchange, perps, lending y fondeo de proyectos con control de riesgo,
-            liquidez multi-chain y seguridad corporativa.
+            Seguimiento de criptoactivos, tesis de mercado, portafolios modelo y control de riesgo
+            bajo una lectura profesional de largo plazo.
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="mission-control.html">Abrir Mission Control</a>
-            <a class="btn ghost" href="#contacto">Solicitar demo</a>
+            <a class="btn primary" href="#mercado">Ver mercado</a>
+            <a class="btn ghost" href="mission-control.html">Abrir Mission Control</a>
           </div>
           <div class="trust">
-            <span class="pill">Perps & Forwards</span>
-            <span class="pill">Préstamos colateralizados</span>
-            <span class="pill">Exchange cripto</span>
-            <span class="pill">Fondeo de proyectos</span>
+            <span class="pill">Bitcoin</span>
+            <span class="pill">Ethereum</span>
+            <span class="pill">Solana</span>
+            <span class="pill">Cardano</span>
+            <span class="pill">Stablecoins</span>
           </div>
         </div>
-        <div class="hero-kpis">
-          <div class="kpi">
-            <div class="label">TVL estimado</div>
-            <div class="value" id="kpi-tvl">$--</div>
-            <div class="hint">Precios cacheados</div>
-          </div>
-          <div class="kpi">
-            <div class="label">Contratos abiertos</div>
-            <div class="value" id="kpi-contracts">--</div>
-            <div class="hint">Perps + forwards</div>
-          </div>
-          <div class="kpi">
-            <div class="label">Préstamos</div>
-            <div class="value" id="kpi-loans">--</div>
-            <div class="hint">Colateralizados</div>
-          </div>
-          <div class="kpi accent">
-            <div class="label">SLA</div>
-            <div class="value">99.99%</div>
-            <div class="hint">TLS • CSP • WAF</div>
+        <div class="hero-panel">
+          <div class="desk-card">
+            <div class="desk-topline">Digital Asset Desk</div>
+            <div class="desk-title">Lectura AFORTU</div>
+            <p>
+              Mercado volátil, adopción institucional y oportunidades selectivas. La prioridad no
+              es perseguir ruido: es administrar exposición con método.
+            </p>
+            <div class="desk-metrics">
+              <div>
+                <span>Actualización</span>
+                <strong id="market-updated">Conectando...</strong>
+              </div>
+              <div>
+                <span>Sesgo</span>
+                <strong id="market-bias">Selectivo</strong>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="trust-band card" aria-label="Clientes y partners">
-        <div class="pill ghost">Confianza</div>
-        <div class="logo-row">
-          <span>Custodia auditada</span>
-          <span>Infra AWS</span>
-          <span>On-chain proofs</span>
-          <span>KYC/AML ready</span>
-          <span>Smart monitoring</span>
-        </div>
+      <section class="market-grid" id="mercado" aria-label="Precios de mercado">
+        <article class="market-card btc">
+          <div class="asset-row">
+            <div>
+              <p class="asset-label">Bitcoin</p>
+              <h2>BTC</h2>
+            </div>
+            <span class="asset-badge">Reserva digital</span>
+          </div>
+          <div class="asset-price" id="price-btc">$--</div>
+          <div class="asset-change" id="change-btc">--</div>
+        </article>
+
+        <article class="market-card eth">
+          <div class="asset-row">
+            <div>
+              <p class="asset-label">Ethereum</p>
+              <h2>ETH</h2>
+            </div>
+            <span class="asset-badge">Infraestructura</span>
+          </div>
+          <div class="asset-price" id="price-eth">$--</div>
+          <div class="asset-change" id="change-eth">--</div>
+        </article>
+
+        <article class="market-card sol">
+          <div class="asset-row">
+            <div>
+              <p class="asset-label">Solana</p>
+              <h2>SOL</h2>
+            </div>
+            <span class="asset-badge">Crecimiento</span>
+          </div>
+          <div class="asset-price" id="price-sol">$--</div>
+          <div class="asset-change" id="change-sol">--</div>
+        </article>
+
+        <article class="market-card ada">
+          <div class="asset-row">
+            <div>
+              <p class="asset-label">Cardano</p>
+              <h2>ADA</h2>
+            </div>
+            <span class="asset-badge">Alto riesgo</span>
+          </div>
+          <div class="asset-price" id="price-ada">$--</div>
+          <div class="asset-change" id="change-ada">--</div>
+        </article>
       </section>
 
-      <section class="stats">
-        <div class="stat">
-          <div class="label">Redes</div>
-          <div class="value" id="kpi-networks">--</div>
-          <div class="hint">ETH, Polygon, BSC, Solana</div>
-        </div>
-        <div class="stat">
-          <div class="label">Disponibilidad</div>
-          <div class="value">99.99%</div>
-          <div class="hint">TLS + CSP + JWT</div>
-        </div>
-        <div class="stat">
-          <div class="label">Coberturas</div>
-          <div class="value">RFQ</div>
-          <div class="hint">Cross-chain</div>
-        </div>
-        <div class="stat">
-          <div class="label">Fondeo</div>
-          <div class="value">Proyectos</div>
-          <div class="hint">Launch & Lending</div>
-        </div>
-      </section>
-
-      <section class="strip card" id="demo">
-        <div class="strip-prices" id="live-prices"></div>
-        <div class="strip-cta">
-          <p class="eyebrow">Demo</p>
-          <h3>Prueba el flujo completo</h3>
+      <section class="insight card">
+        <div>
+          <p class="eyebrow">Resumen ejecutivo</p>
+          <h2>Tecnología financiera con disciplina patrimonial.</h2>
           <p class="muted">
-            Login, crea un contrato/hedge y mira alertas de riesgo en tiempo real.
+            BitForward traduce el mercado digital a decisiones comprensibles: que comprar, cuanto
+            riesgo asumir, cuando rebalancear y que narrativa de largo plazo se mantiene vigente.
           </p>
-          <div class="hero-actions">
-            <a class="btn primary" href="login.html">Iniciar sesión</a>
-            <a class="btn ghost" href="mission-control.html">Ir al panel</a>
+        </div>
+        <div class="insight-list">
+          <div>
+            <span>01</span>
+            <strong>Adopción institucional</strong>
+            <p>Bancos, fondos, ETFs y tokenización empujan a cripto hacia infraestructura financiera.</p>
+          </div>
+          <div>
+            <span>02</span>
+            <strong>Volatilidad estructural</strong>
+            <p>El potencial exige límites claros, horizonte definido y reglas de rebalanceo.</p>
+          </div>
+          <div>
+            <span>03</span>
+            <strong>Asignación selectiva</strong>
+            <p>No todo activo digital merece capital. Se prioriza liquidez, utilidad y resiliencia.</p>
           </div>
         </div>
       </section>
 
-      <section class="stack card" id="servicios">
+      <section class="strategy card" id="estrategia">
         <div class="stack-header">
-          <p class="eyebrow">Stack DeFi</p>
-          <h2>BitForward Forward Suite</h2>
+          <p class="eyebrow">Portafolio modelo</p>
+          <h2>Arquitectura digital diversificada</h2>
           <p class="muted">
-            Perps y forwards con apalancamiento, lending colateralizado, RFQ cross-chain y fondeo de
-            proyectos.
+            Modelo informativo para mostrar criterio de asignación. No sustituye una recomendación
+            personalizada ni el perfilamiento del cliente.
           </p>
         </div>
-        <div class="stack-grid">
-          <div class="stack-card">
-            <div class="icon">⇅</div>
-            <h3>Forward / Perps</h3>
-            <p>
-              Sin custodia, funding y P&L en vivo. Control de riesgo, caps y apalancamiento
-              responsable.
-            </p>
+        <div class="allocation">
+          <div class="allocation-ring" aria-label="Asignacion modelo">
+            <div>
+              <strong>60/20/10/10</strong>
+              <span>Modelo base</span>
+            </div>
           </div>
-          <div class="stack-card">
-            <div class="icon">💰</div>
-            <h3>Lending</h3>
-            <p>
-              LTV dinámico, health factor y liquidaciones auditables. Pools permisionados para
-              fondeo institucional.
-            </p>
-          </div>
-          <div class="stack-card">
-            <div class="icon">⚡</div>
-            <h3>RFQ & Hedges</h3>
-            <p>
-              Routing cross-chain con quotes firmadas. Fallback AMM: cobertura rápida, sin fricción.
-            </p>
-          </div>
-          <div class="stack-card">
-            <div class="icon">🛡️</div>
-            <h3>Opciones/Vaults</h3>
-            <p>Covered calls/puts y estrategias estructuradas para yield y protección.</p>
-          </div>
-          <div class="stack-card">
-            <div class="icon">🚀</div>
-            <h3>Fondeo de proyectos</h3>
-            <p>
-              Apoya lanzamientos y growth con pools dedicados AFORTU. Transparencia y auditoría
-              en-chain.
-            </p>
+          <div class="allocation-list">
+            <div><span class="dot btc-dot"></span><strong>60% Bitcoin</strong><small>Reserva digital y activo principal.</small></div>
+            <div><span class="dot eth-dot"></span><strong>20% Ethereum</strong><small>Infraestructura de contratos y tokenización.</small></div>
+            <div><span class="dot sol-dot"></span><strong>10% Solana</strong><small>Crecimiento, velocidad y ecosistema.</small></div>
+            <div><span class="dot ada-dot"></span><strong>10% Cardano</strong><small>Posición complementaria de alto riesgo.</small></div>
           </div>
         </div>
       </section>
 
-      <section class="pillars card" id="casos">
+      <section class="radar card">
         <div class="stack-header">
-          <p class="eyebrow">Casos y confianza</p>
-          <h2>Operación, riesgo y cumplimiento</h2>
+          <p class="eyebrow">Radar BitForward</p>
+          <h2>Temas que estamos monitoreando</h2>
+        </div>
+        <div class="radar-grid">
+          <article>
+            <span>Tokenización</span>
+            <h3>Activos reales en blockchain</h3>
+            <p>La digitalización de instrumentos financieros puede abrir nuevas rutas de liquidez.</p>
+          </article>
+          <article>
+            <span>Stablecoins</span>
+            <h3>Pagos y liquidez global</h3>
+            <p>Son el puente entre dinero tradicional, mercados 24/7 y tesorería digital.</p>
+          </article>
+          <article>
+            <span>IA + Blockchain</span>
+            <h3>Automatización financiera</h3>
+            <p>Riesgo, monitoreo y ejecución pueden mejorar con sistemas inteligentes.</p>
+          </article>
+          <article>
+            <span>Regulación</span>
+            <h3>Del experimento al estándar</h3>
+            <p>La claridad regulatoria será clave para adopción institucional sostenible.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="risk card" id="riesgo">
+        <div>
+          <p class="eyebrow">Marco de riesgo</p>
+          <h2>Primero protección. Después crecimiento.</h2>
           <p class="muted">
-            Arquitectura segura con monitoreo activo y controles listos para auditoría y listas
-            blancas.
+            La exposición digital debe tener reglas. Sin reglas, el inversionista queda atrapado por
+            emoción, volatilidad y noticias de corto plazo.
           </p>
         </div>
-        <div class="pillars-grid">
-          <article class="pillar">
-            <h3>Security by default</h3>
-            <p>WAF, rate limiting, headers CSP/HSTS y sanitización en API y front.</p>
-            <ul>
-              <li>Zero trust en endpoints</li>
-              <li>Protección XSS/CSRF</li>
-              <li>Logs auditables</li>
-            </ul>
-          </article>
-          <article class="pillar">
-            <h3>Riesgo & monitoreo</h3>
-            <p>Health factor, límites de posición y alertas de liquidez en tiempo real.</p>
-            <ul>
-              <li>Alertas 24/7</li>
-              <li>Caps por cliente</li>
-              <li>Score de riesgo dinámico</li>
-            </ul>
-          </article>
-          <article class="pillar">
-            <h3>Onboarding guiado</h3>
-            <p>KYC/AML ready, wallets permitidas y rutas para RFQ/perps con UX simplificada.</p>
-            <ul>
-              <li>Flujos por rol</li>
-              <li>UI mobile-first</li>
-              <li>Soporte multi-red</li>
-            </ul>
-          </article>
+        <div class="risk-rules">
+          <div><strong>Limite de exposición</strong><span>Asignar solo capital compatible con alta volatilidad.</span></div>
+          <div><strong>Liquidez</strong><span>Mantener efectivo o instrumentos defensivos fuera del portafolio cripto.</span></div>
+          <div><strong>Rebalanceo</strong><span>Tomar utilidades o reducir riesgo cuando el portafolio se desvia del objetivo.</span></div>
+          <div><strong>Custodia</strong><span>Separar acceso, contraseñas, wallets, exchanges y comprobantes.</span></div>
         </div>
       </section>
 
       <section class="cta-band card" id="contacto">
         <div>
-          <p class="eyebrow">Listo para mostrarte</p>
-          <h2>Agenda una demo y lanza en semanas.</h2>
+          <p class="eyebrow">BitForward by AFORTU</p>
+          <h2>Convierte mercado digital en estrategia patrimonial.</h2>
           <p class="muted">
-            Integramos tu stack, configuramos riesgos y personalizamos la UI para tu marca.
+            Solicita una revision de perfil, horizonte, tolerancia al riesgo y asignacion sugerida
+            antes de invertir en activos digitales.
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="mission-control.html">Ver Mission Control</a>
-            <a class="btn ghost" href="mailto:asesoraft@bitforward.financial"
-              >Hablar con el equipo</a
-            >
+            <a class="btn primary" href="mailto:asesoraft@bitforward.financial">Solicitar analisis</a>
+            <a class="btn ghost" href="login.html">Acceso cliente</a>
           </div>
         </div>
-        <div class="cta-metrics">
-          <div class="metric">
-            <span class="label">Time-to-market</span>
-            <span class="value">4-6 semanas</span>
-          </div>
-          <div class="metric">
-            <span class="label">Soporte</span>
-            <span class="value">24/7 NOC</span>
-          </div>
-          <div class="metric">
-            <span class="label">Integraciones</span>
-            <span class="value">KYC • Custodia • Oracle</span>
-          </div>
+        <div class="disclaimer">
+          <strong>Aviso importante</strong>
+          <p>
+            La informacion presentada es educativa e informativa. No constituye asesoria individual,
+            oferta publica ni garantia de rendimiento. Todo activo digital implica riesgo de perdida.
+          </p>
         </div>
       </section>
     </main>
