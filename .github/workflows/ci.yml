@@ -43,8 +43,8 @@ jobs:
           NODE_OPTIONS: --experimental-vm-modules
           DATABASE_FILE: ./server/database/ci.sqlite3
           ETHEREUM_RPC_URL: http://localhost:8545
-          PRIVATE_KEY: 0x1111111111111111111111111111111111111111111111111111111111111111
-          PORT: 0
+          PRIVATE_KEY: '0x1111111111111111111111111111111111111111111111111111111111111111'
+          PORT: '0'
         run: npm test -- --passWithNoTests
 
       - name: Build
