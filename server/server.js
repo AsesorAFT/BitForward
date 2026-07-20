@@ -389,8 +389,14 @@ class BitForwardServer {
         console.log('🚀 El servidor continuará, pero algunas funciones pueden fallar');
       }
 
-      // Inicializar servicio blockchain
-      const blockchainConnected = await this.initializeBlockchainService();
+      // La integración blockchain es experimental y debe habilitarse explícitamente.
+      const blockchainEnabled = process.env.BLOCKCHAIN_ENABLED === 'true';
+      const blockchainConnected = blockchainEnabled
+        ? await this.initializeBlockchainService()
+        : false;
+      if (!blockchainEnabled) {
+        console.log('ℹ️  Integración blockchain deshabilitada');
+      }
 
       // Iniciar servidor (HTTP o HTTPS)
       const useTLS = process.env.ENABLE_TLS === 'true';

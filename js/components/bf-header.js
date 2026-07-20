@@ -4,75 +4,95 @@ class BFHeader extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.walletConnected = false;
     this.menuOpen = false;
-    this.render();
+    this.handleResize = this.handleResize.bind(this);
+    this.handleKeydown = this.handleKeydown.bind(this);
+    this.handleLightDomClick = this.handleLightDomClick.bind(this);
   }
 
   connectedCallback() {
-    const walletBtn = this.shadowRoot.querySelector('.bf-wallet-btn');
-    if (walletBtn) walletBtn.addEventListener('click', () => this.toggleWallet());
-    this.shadowRoot
-      .querySelector('.bf-menu-toggle')
-      .addEventListener('click', () => this.toggleMenu());
-    window.addEventListener('resize', () => this.closeMenuOnResize());
+    this.renderAndBind();
+    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('keydown', this.handleKeydown);
+    this.addEventListener('click', this.handleLightDomClick);
   }
 
   disconnectedCallback() {
-    const walletBtn = this.shadowRoot.querySelector('.bf-wallet-btn');
-    if (walletBtn) walletBtn.removeEventListener('click', () => this.toggleWallet());
+    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('keydown', this.handleKeydown);
+    this.removeEventListener('click', this.handleLightDomClick);
+  }
+
+  handleResize() {
+    if (window.innerWidth > 900 && this.menuOpen) this.setMenuOpen(false);
+  }
+
+  handleKeydown(event) {
+    if (event.key === 'Escape' && this.menuOpen) {
+      this.setMenuOpen(false);
+      this.shadowRoot.querySelector('.bf-menu-toggle')?.focus();
+    }
+  }
+
+  handleLightDomClick(event) {
+    if (event.target.closest('a') && this.menuOpen) this.setMenuOpen(false);
+  }
+
+  setMenuOpen(open) {
+    this.menuOpen = open;
+    this.renderAndBind();
+  }
+
+  renderAndBind() {
+    this.render();
     this.shadowRoot
       .querySelector('.bf-menu-toggle')
-      .removeEventListener('click', () => this.toggleMenu());
-    window.removeEventListener('resize', () => this.closeMenuOnResize());
-  }
-
-  toggleWallet() {
-    this.walletConnected = !this.walletConnected;
-    this.render();
-  }
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-    this.render();
-  }
-
-  closeMenuOnResize() {
-    if (window.innerWidth > 900 && this.menuOpen) {
-      this.menuOpen = false;
-      this.render();
-    }
+      ?.addEventListener('click', () => this.setMenuOpen(!this.menuOpen));
+    this.shadowRoot.querySelector('.bf-menu')?.addEventListener('click', event => {
+      if (event.target.closest('a')) this.setMenuOpen(false);
+    });
   }
 
   render() {
     const logoSrc = this.getAttribute('logo-src') || 'assets/logo-astronaut-rocket.svg';
-    const walletStatus = this.walletConnected ? 'Conectado' : 'Conectar Wallet';
-    const walletClass = this.walletConnected ? 'connected' : '';
     const menuClass = this.menuOpen ? 'open' : '';
     const hideLogo = this.hasAttribute('hide-logo');
     const hideWallet = this.hasAttribute('hide-wallet');
+    const hasCustomNavigation = this.childElementCount > 0;
+    const menuLabel = this.menuOpen ? 'Cerrar menú' : 'Abrir menú';
+    const defaultNavigation = hasCustomNavigation
+      ? ''
+      : `
+          <a href="index.html">Inicio</a>
+          <a href="mission-control.html">Simulador</a>
+          <a href="about.html">Metodología</a>
+        `;
+
     this.shadowRoot.innerHTML = `
       <style>${styles}</style>
       <header>
         ${
           hideLogo
             ? ''
-            : `<div class="bf-logo">
-          <img src="${logoSrc}" alt="BitForward logo" />
-          <span>BitForward</span>
-        </div>`
+            : `<a class="bf-logo" href="index.html" aria-label="BitForward, inicio">
+                <img src="${logoSrc}" alt="" />
+                <span>BitForward</span>
+              </a>`
         }
-        <button class="bf-menu-toggle" aria-label="Abrir menú">
+        <button
+          class="bf-menu-toggle"
+          type="button"
+          aria-label="${menuLabel}"
+          aria-expanded="${this.menuOpen}"
+          aria-controls="bf-primary-navigation"
+        >
           <span></span><span></span><span></span>
         </button>
-        <nav class="bf-menu ${menuClass}">
-          <a href="index.html">Inicio</a>
-          <a href="markets.html">Mercados</a>
-          <a href="dashboard.html">Dashboard</a>
-          <a href="community.html">Comunidad</a>
+        <nav id="bf-primary-navigation" class="bf-menu ${menuClass}" aria-label="Navegación principal">
+          ${defaultNavigation}
           <slot></slot>
         </nav>
-        ${hideWallet ? '' : `<button class="bf-wallet-btn ${walletClass}">${walletStatus}</button>`}
+        ${hideWallet ? '' : '<a class="bf-wallet-btn" href="login.html">Acceso</a>'}
       </header>
     `;
   }

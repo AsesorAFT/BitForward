@@ -1,199 +1,69 @@
-# BitForward Roadmap 2025-2026
+# Roadmap BitForward — julio a octubre de 2026
 
-## Visión General
+## Objetivo
 
-Este roadmap detalla las etapas de desarrollo planificadas para BitForward, una plataforma DeFi empresarial con enfoque en contratos forward, préstamos con colateral y análisis financiero. El tema visual unificado de "espacio y cohetes" representa el despegue y crecimiento constante de la plataforma.
+Convertir BitForward en un MVP educativo demostrable para incubación, usuarios piloto y futura integración con AFORTU OS, sin custodia, ejecución real ni datos de clientes dentro del repositorio.
 
-## Q4 2025: Fundamentos - "Preparación para el Despegue" 🚀
+## Prioridad dominante
 
-### Infraestructura Técnica
+**Confiabilidad antes que expansión:** una narrativa coherente, datos trazables, simulación útil, seguridad de información y calidad verificable.
 
-- [x] **Diseño de arquitectura**
-  - [x] Definir estructura del proyecto
-  - [x] Establecer estándares de código
-  - [x] Documentar arquitectura de contratos
-- [ ] **Implementación del tema espacial**
-  - [x] Desarrollar CSS base para fondo espacial
-  - [x] Crear componentes animados de cohetes
-  - [x] Implementar sistema de carga de recursos
-  - [ ] Completar implementación en todas las páginas (70%)
-- [ ] **Base de contratos inteligentes**
-  - [x] Desarrollar ForwardEngine.sol (versión alpha)
-  - [ ] Implementar Vault.sol para colaterales
-  - [ ] Desarrollar sistema de oráculos
-  - [ ] Auditoría inicial de seguridad
+## Fase 0 — Saneamiento y verdad operativa (0 a 14 días)
 
-### Experiencia de Usuario
+- [x] Retirar dependencias y bases de datos versionadas.
+- [x] Eliminar claves privadas completas de archivos de ejemplo.
+- [x] Publicar sólo el build estático en GitHub Pages.
+- [x] Alinear README y estado real del MVP.
+- [x] Añadir validación estática, build, lint, formato y smoke tests en CI.
+- [ ] Rotar cualquier credencial que haya sido real.
+- [ ] Decidir y ejecutar, con respaldo, la limpieza del historial Git.
+- [ ] Cerrar o consolidar issues duplicados.
 
-- [ ] **Diseño de interfaces**
-  - [x] Aplicar tema espacial a dashboard
-  - [x] Diseñar interfaz de préstamos
-  - [ ] Diseñar módulo de contratos forward
-- [ ] **Autenticación y seguridad**
-  - [x] Implementar sistema de login
-  - [ ] Integración con wallets blockchain
-  - [ ] Sistema de roles y permisos
+**Criterio de salida:** CI verde, cero bases/credenciales en la rama activa y backlog sin duplicados.
 
-### Logros Clave
+## Fase 1 — MVP educativo coherente (15 a 45 días)
 
-- [x] Repositorio configurado con estructura definida
-- [x] Tema espacial aplicado en páginas principales
-- [ ] Prototipo funcional en entorno de desarrollo
+- [x] Unificar navegación, lenguaje visual y accesibilidad en las rutas públicas.
+- [x] Separar el sitio público de las vistas operativas del laboratorio.
+- [x] Construir simulador de portafolio con BTC 60%, ETH 20%, SOL 10% y ADA 10%.
+- [x] Incorporar bandas de rebalanceo de ±5 puntos y revisión mensual.
+- [ ] Mostrar fuente, hora y estado de actualización de cada dato de mercado.
+- [ ] Añadir gráfica histórica y comparación contra el portafolio modelo.
+- [ ] Medir rendimiento y accesibilidad con una línea base reproducible.
 
-## Q1 2026: MVP Launch - "Ignición de Motores" 🔥
+**Criterio de salida:** un usuario puede entender la propuesta, simular una asignación y reconocer riesgos sin confundir la demo con una operación real.
 
-### Funcionalidades Core
+## Fase 2 — Piloto controlado e incubación (46 a 90 días)
 
-- [ ] **Sistema de contratos forward**
-  - [ ] Interfaz completa para creación de contratos
-  - [ ] Sistema de liquidación automática
-  - [ ] Dashboard de seguimiento
-- [ ] **Plataforma de préstamos**
-  - [ ] Funcionalidad completa de préstamos con colateral
-  - [ ] Gestión de tasas de interés dinámicas
-  - [ ] Liquidaciones y refinanciamiento
-- [ ] **Integración blockchain**
-  - [ ] Despliegue en Ethereum Mainnet
-  - [ ] Integración con Polygon
-  - [ ] Bridge entre cadenas
+- [ ] Preparar expediente técnico y narrativa para incubación del IPN.
+- [ ] Definir usuarios, problemas, propuesta de valor y modelo de ingresos.
+- [ ] Diseñar PostgreSQL como sistema de registro, separado del frontend público.
+- [ ] Definir Drive como fuente documental inicial, con permisos por rol.
+- [ ] Implementar autenticación, roles, auditoría y ambientes separados.
+- [ ] Probar con datos sintéticos y un grupo piloto controlado.
+- [ ] Documentar revisión jurídica, de privacidad y ciberseguridad previa a datos reales.
 
-### Mejoras de UX/UI
+**Criterio de salida:** piloto demostrable, arquitectura aprobada y decisión informada de inversión para la siguiente etapa.
 
-- [ ] **Refinamiento del tema espacial**
-  - [ ] Animaciones avanzadas de cohetes
-  - [ ] Efectos de paralaje en scrolling
-  - [ ] Personalización de tema para usuarios
-- [ ] **Análisis de datos**
-  - [ ] Gráficos interactivos con tema espacial
-  - [ ] Panel de métricas en tiempo real
-  - [ ] Notificaciones con animaciones de cohete
+## Fuera de alcance hasta nueva aprobación
 
-### Logros Clave
+- Mainnet, custodia o movimientos de capital real.
+- DAO, token BFWD, staking o incentivos financieros.
+- Derivados, apalancamiento, opciones, futuros o liquidaciones automáticas.
+- Predicciones presentadas como certezas o recomendaciones automáticas.
+- Carga de expedientes, CURP, estados de cuenta o información identificable en GitHub.
 
-- [ ] MVP completo y funcional
-- [ ] Primeras transacciones en mainnet
-- [ ] Onboarding de beta testers empresariales
+## Indicadores
 
-## Q2 2026: Growth - "Órbita Estable" 🌌
+| Tipo       | Indicador                                                   |     Meta de fase |
+| ---------- | ----------------------------------------------------------- | ---------------: |
+| Adelantado | PR con CI completa                                          |             100% |
+| Adelantado | Issues P0/P1 con responsable y criterio de aceptación       |             100% |
+| Riesgo     | Bases, llaves o datos identificables versionados            |                0 |
+| Producto   | Rutas públicas marcadas como real, simulación o laboratorio |             100% |
+| Calidad    | Errores críticos de accesibilidad en landing                |                0 |
+| Resultado  | Usuarios piloto que completan la simulación sin ayuda       | Medir línea base |
 
-### Expansión de Funcionalidades
+## Decisión de arquitectura
 
-- [ ] **Nuevos instrumentos financieros**
-  - [ ] Opciones sobre criptoactivos
-  - [ ] Contratos sintéticos
-  - [ ] Pools de liquidez especializados
-- [ ] **Expansión multi-chain**
-  - [ ] Integración con Solana
-  - [ ] Integración con BSC
-  - [ ] Sistema unificado cross-chain
-- [ ] **Herramientas avanzadas**
-  - [ ] Simulador de estrategias
-  - [ ] Sistema de alertas personalizadas
-  - [ ] API para integración empresarial
-
-### Mejoras de Plataforma
-
-- [ ] **Escalabilidad y rendimiento**
-  - [ ] Optimización de gas fees
-  - [ ] Soluciones Layer-2
-  - [ ] Mejora de velocidad de transacciones
-- [ ] **Seguridad y conformidad**
-  - [ ] Auditoría completa de contratos
-  - [ ] Implementación de estándares KYC/AML
-  - [ ] Documentación legal y normativa
-
-### Logros Clave
-
-- [ ] Integración completa multi-chain
-- [ ] Suite completa de instrumentos financieros
-- [ ] Primera ronda de asociaciones empresariales
-
-## Q3 2026: Scale - "Exploración Interestelar" 🪐
-
-### Descentralización
-
-- [ ] **Implementación de DAO**
-  - [ ] Gobernanza de plataforma
-  - [ ] Sistema de votación para mejoras
-  - [ ] Tesorería descentralizada
-- [ ] **Token de utilidad BFWD**
-  - [ ] Lanzamiento del token
-  - [ ] Staking y recompensas
-  - [ ] Programa de incentivos
-
-### Expansión de Mercado
-
-- [ ] **Soluciones B2B personalizadas**
-  - [ ] API empresarial completa
-  - [ ] Dashboards personalizados
-  - [ ] Soluciones white-label
-- [ ] **Mercados globales**
-  - [ ] Soporte multi-idioma
-  - [ ] Cumplimiento regulatorio por región
-  - [ ] Adaptaciones por mercado
-
-### Innovaciones Técnicas
-
-- [ ] **Experiencia 3D inmersiva**
-  - [ ] Dashboard espacial en 3D
-  - [ ] Visualizaciones avanzadas de datos
-  - [ ] Realidad aumentada para análisis
-- [ ] **IA para análisis predictivo**
-  - [ ] Modelos de predicción de mercado
-  - [ ] Recomendaciones automatizadas
-  - [ ] Detección de anomalías
-
-### Logros Clave
-
-- [ ] Lanzamiento de DAO y token
-- [ ] Expansión a mercados internacionales
-- [ ] Establecimiento como líder en DeFi empresarial
-
-## Métricas de Éxito
-
-### Técnicas
-
-- **Rendimiento:** Tiempo de carga < 2 segundos, TPS > 100
-- **Seguridad:** 0 vulnerabilidades críticas, auditorías trimestrales
-- **Escalabilidad:** Soporte para 100K+ usuarios activos
-
-### Negocio
-
-- **TVL:** Alcanzar $50M para Q4 2026
-- **Usuarios:** 50K+ usuarios empresariales
-- **Retención:** Tasa de retención > 85%
-
-### Producto
-
-- **NPS:** Mantener puntuación > 8/10
-- **Adopción de funciones:** > 75% de uso de funciones clave
-- **Tiempo en plataforma:** Promedio > 15 minutos por sesión
-
-## Consideraciones de Implementación
-
-### Tecnologías Clave
-
-- **Frontend:** React, TailwindCSS, Three.js (para efectos 3D)
-- **Backend:** Node.js, Express, PostgreSQL
-- **Blockchain:** Solidity, Web3.js, Ethers.js, The Graph
-- **Infraestructura:** AWS, IPFS para almacenamiento descentralizado
-
-### Riesgos y Mitigaciones
-
-- **Técnicos:**
-  - Riesgo: Escalabilidad blockchain
-  - Mitigación: Implementar soluciones L2 y arquitectura multi-chain
-
-- **Regulatorios:**
-  - Riesgo: Cambios en regulaciones DeFi
-  - Mitigación: Arquitectura flexible, asesoría legal continua
-
-- **Mercado:**
-  - Riesgo: Volatilidad extrema
-  - Mitigación: Mecanismos de seguridad y circuit breakers
-
----
-
-Este roadmap está sujeto a ajustes basados en el feedback del mercado, cambios tecnológicos y evolución del ecosistema blockchain.
-
-Última actualización: 17 de octubre de 2025
+BitForward se mantiene como módulo especializado de activos digitales. AFORTU OS será la capa superior para clientes, expedientes, oportunidades, ingresos, riesgos y aprendizaje. Compartirán contratos de integración; no mezclarán datos operativos con el repositorio público.

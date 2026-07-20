@@ -3,155 +3,274 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mission Control | BitForward</title>
+    <title>Simulador educativo | BitForward</title>
+    <meta
+      name="description"
+      content="Simula escenarios hipotéticos para el portafolio educativo BitForward 60/20/10/10 y observa sus reglas de rebalanceo mensual."
+    />
+    <meta name="theme-color" content="#050914" />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/design-system.css" />
-    <link rel="stylesheet" href="css/mission-control.css" />
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script type="module" src="js/mission-control.js"></script>
+    <link rel="stylesheet" href="css/simulator.css" />
+    <script type="module" src="js/simulator.js"></script>
   </head>
-  <body class="mc-body">
-    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
-      <a class="cta" href="enterprise.html">Enterprise</a>
-    </bf-header>
+  <body class="simulator-body">
+    <a class="skip-link" href="#contenido">Saltar al simulador</a>
 
-    <main class="mc-shell">
-      <section class="topbar card">
-        <div class="tb-left">
-          <div>
-            <p class="eyebrow">Mission Control</p>
-            <h1>Trading, Lending y Coberturas</h1>
-          </div>
-          <div class="pill">Live</div>
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg" hide-wallet></bf-header>
+
+    <main class="simulator-shell" id="contenido" tabindex="-1">
+      <section class="simulator-hero" aria-labelledby="simulator-title">
+        <div>
+          <p class="eyebrow">Laboratorio educativo · BitForward</p>
+          <h1 id="simulator-title">Prueba una estrategia antes de creer en ella.</h1>
+          <p class="lead">
+            Define un escenario hipotético y observa cómo evolucionaría el modelo BTC 60%, ETH 20%,
+            SOL 10% y ADA 10%, con revisión mensual y bandas de rebalanceo de ±5 puntos.
+          </p>
         </div>
-        <div class="tb-right">
-          <div class="chip">
-            <span>Red</span>
-            <select id="network-picker"></select>
-          </div>
-          <div class="chip">
-            <span>Saldo</span>
-            <strong id="portfolio-balance">$--</strong>
-          </div>
-          <button class="btn primary" id="refresh-dashboard">Refrescar</button>
-        </div>
+        <aside class="model-card" aria-label="Reglas del portafolio modelo">
+          <span>Regla vigente</span>
+          <strong>60 / 20 / 10 / 10</strong>
+          <small>Sin apalancamiento, derivados, custodia ni ejecución real.</small>
+          <div class="allocation-strip" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </aside>
       </section>
 
-      <section class="tabs card">
-        <button class="tab active" data-tab="perps">Perps</button>
-        <button class="tab" data-tab="lending">Lending</button>
-        <button class="tab" data-tab="vault">Vault</button>
-        <button class="tab" data-tab="hedges">Hedges</button>
+      <section class="workspace-grid" aria-label="Área de simulación">
+        <form class="panel input-panel" id="simulator-form" novalidate>
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Entradas</p>
+              <h2>Construye tu escenario</h2>
+            </div>
+            <span class="step-badge">1 · Define</span>
+          </div>
+
+          <div class="form-error" id="form-error" role="alert" tabindex="-1" hidden></div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Capital inicial (MXN)</span>
+              <input
+                name="initialCapital"
+                type="number"
+                min="100"
+                max="100000000"
+                step="100"
+                value="10000"
+                required
+              />
+            </label>
+            <label class="field">
+              <span>Aportación mensual (MXN)</span>
+              <input
+                name="monthlyContribution"
+                type="number"
+                min="0"
+                max="10000000"
+                step="100"
+                value="1000"
+                required
+              />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Horizonte (meses)</span>
+            <input name="months" type="number" min="1" max="120" step="1" value="36" required />
+          </label>
+
+          <p class="rate-title">Variación anual hipotética por activo</p>
+          <p class="helper">No son rendimientos esperados. Úsalos para explorar escenarios.</p>
+
+          <div class="preset-row" aria-label="Escenarios de ejemplo">
+            <button class="preset" type="button" data-preset="didactic" aria-pressed="true">
+              Didáctico
+            </button>
+            <button class="preset" type="button" data-preset="neutral" aria-pressed="false">
+              Sin variación
+            </button>
+            <button class="preset" type="button" data-preset="stress" aria-pressed="false">
+              Estrés
+            </button>
+          </div>
+
+          <div class="rate-grid">
+            <label class="field">
+              <span>BTC (%)</span>
+              <input
+                id="btc-return"
+                name="btcReturn"
+                type="number"
+                min="-95"
+                max="300"
+                value="15"
+              />
+            </label>
+            <label class="field">
+              <span>ETH (%)</span>
+              <input
+                id="eth-return"
+                name="ethReturn"
+                type="number"
+                min="-95"
+                max="300"
+                value="10"
+              />
+            </label>
+            <label class="field">
+              <span>SOL (%)</span>
+              <input id="sol-return" name="solReturn" type="number" min="-95" max="300" value="5" />
+            </label>
+            <label class="field">
+              <span>ADA (%)</span>
+              <input id="ada-return" name="adaReturn" type="number" min="-95" max="300" value="0" />
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="action-button primary" type="submit">Calcular escenario</button>
+            <button class="action-button" type="reset">Restablecer</button>
+          </div>
+        </form>
+
+        <section
+          class="panel results-panel"
+          id="simulation-results"
+          tabindex="-1"
+          aria-labelledby="results-title"
+          aria-live="polite"
+        >
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Resultados</p>
+              <h2 id="results-title">Lectura del escenario</h2>
+            </div>
+            <button class="action-button" id="export-csv" type="button">Exportar CSV</button>
+          </div>
+
+          <div class="metrics-grid">
+            <article class="metric">
+              <span>Valor hipotético final</span>
+              <strong id="result-final">—</strong>
+            </article>
+            <article class="metric">
+              <span>Capital aportado</span>
+              <strong id="result-contributed">—</strong>
+            </article>
+            <article class="metric">
+              <span>Resultado hipotético</span>
+              <strong id="result-change">—</strong>
+            </article>
+            <article class="metric">
+              <span>Rebalanceos activados</span>
+              <strong id="result-rebalances">—</strong>
+            </article>
+            <article class="metric">
+              <span>Caída máxima del escenario</span>
+              <strong id="result-drawdown">—</strong>
+            </article>
+            <article class="metric">
+              <span>Banda de control</span>
+              <strong>±5 puntos</strong>
+            </article>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-topline">
+              <span class="chart-legend">
+                <span><i class="portfolio-key"></i>Portafolio</span>
+                <span><i class="contribution-key"></i>Capital aportado</span>
+              </span>
+            </div>
+            <svg
+              id="projection-chart"
+              viewBox="0 0 760 280"
+              role="img"
+              aria-label="Proyección del escenario"
+            ></svg>
+          </div>
+
+          <div class="results-lower">
+            <section class="allocation-card">
+              <h3>Asignación al cierre</h3>
+              <ul class="allocation-list" id="final-allocation"></ul>
+            </section>
+            <section class="table-card">
+              <h3>Hitos trimestrales y rebalanceos</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Periodo</th>
+                      <th>Aportado</th>
+                      <th>Valor</th>
+                      <th>Resultado</th>
+                      <th>Rebalanceo</th>
+                    </tr>
+                  </thead>
+                  <tbody id="projection-rows"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <p class="scenario-summary" id="scenario-summary"></p>
+        </section>
       </section>
 
-      <section class="mc-panels">
-        <div class="card panel">
-          <div class="panel-header">
-            <div>
-              <p class="eyebrow">Orden</p>
-              <h2 id="panel-title">Ticket de orden</h2>
-            </div>
-            <span class="pill">Perps</span>
-          </div>
-          <form class="order-form" id="order-form">
-            <label class="field">
-              <span>Par</span>
-              <select id="pair">
-                <option value="BTC-USDT">BTC/USDT</option>
-                <option value="ETH-USDT">ETH/USDT</option>
-                <option value="SOL-USDT">SOL/USDT</option>
-              </select>
-            </label>
-            <label class="field">
-              <span>Monto</span>
-              <input type="number" id="amount" min="0" step="0.001" placeholder="0.00" />
-            </label>
-            <label class="field">
-              <span>Precio Límite</span>
-              <input type="number" id="limit-price" min="0" step="0.01" placeholder="0.00" />
-            </label>
-            <label class="field">
-              <span>Leverage</span>
-              <input type="range" id="leverage" min="1" max="20" value="5" />
-              <div class="hint"><span id="lev-display">5x</span> · riesgo moderado</div>
-            </label>
-            <div class="btn-group">
-              <button class="btn primary" type="button" id="btn-long">Long</button>
-              <button class="btn outline" type="button" id="btn-short">Short</button>
-            </div>
-            <p class="hint" id="order-hint">Estimación de fees y funding en vivo</p>
-          </form>
-        </div>
+      <section class="method-section" aria-label="Metodología y límites">
+        <article class="method-card">
+          <p class="eyebrow">Metodología reproducible</p>
+          <h2>Qué hace el cálculo</h2>
+          <ol class="method-list">
+            <li>
+              <span>1</span>
+              <div>
+                <strong>Asigna</strong>
+                <p>Distribuye capital y aportaciones según 60/20/10/10.</p>
+              </div>
+            </li>
+            <li>
+              <span>2</span>
+              <div>
+                <strong>Aplica el escenario</strong>
+                <p>Convierte cada variación anual a una tasa mensual constante.</p>
+              </div>
+            </li>
+            <li>
+              <span>3</span>
+              <div>
+                <strong>Revisa</strong>
+                <p>Compara los pesos al cierre de cada mes contra el objetivo.</p>
+              </div>
+            </li>
+            <li>
+              <span>4</span>
+              <div>
+                <strong>Rebalancea</strong>
+                <p>Vuelve al objetivo sólo si un peso rebasa ±5 puntos.</p>
+              </div>
+            </li>
+          </ol>
+        </article>
 
-        <div class="card panel">
-          <div class="panel-header">
-            <div>
-              <p class="eyebrow">Riesgo</p>
-              <h2>Alertas y health</h2>
-            </div>
-            <button class="btn ghost" id="scan-risk">Escanear</button>
-          </div>
-          <div class="pill secondary" id="risk-indicator">HF: --</div>
-          <ul class="alert-list" id="alert-list"></ul>
-        </div>
-      </section>
-
-      <section class="mc-panels">
-        <div class="card panel">
-          <div class="panel-header">
-            <div>
-              <p class="eyebrow">Actividad</p>
-              <h2>Contratos y Hedges</h2>
-            </div>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Tipo</th>
-                  <th>Activo</th>
-                  <th>Monto</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody id="contracts-table"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="card panel">
-          <div class="panel-header">
-            <div>
-              <p class="eyebrow">Préstamos y Vault</p>
-              <h2>Loans & Positions</h2>
-            </div>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Tipo</th>
-                  <th>Asset</th>
-                  <th>Monto</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody id="loans-table"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="card panel">
-        <div class="panel-header">
-          <div>
-            <p class="eyebrow">Portfolio</p>
-            <h2>Distribución y métricas</h2>
-          </div>
-        </div>
-        <div id="tvl-chart"></div>
+        <article class="disclaimer-card">
+          <p class="eyebrow">Límite del modelo</p>
+          <h2>Es un escenario, no un pronóstico.</h2>
+          <p>
+            El cálculo no incorpora comisiones, impuestos, spreads, liquidez, eventos extremos ni
+            cambios de correlación. No constituye recomendación individual, garantía de rendimiento,
+            custodia ni oferta para invertir. Los activos digitales pueden perder una parte
+            sustancial o la totalidad de su valor.
+          </p>
+        </article>
       </section>
     </main>
+
+    <footer class="simulator-footer">
+      BitForward by AFORTU · MVP educativo en validación · Datos introducidos sólo en tu navegador.
+    </footer>
   </body>
 </html>

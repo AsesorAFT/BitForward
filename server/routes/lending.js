@@ -436,14 +436,21 @@ function getAssetVolatility(asset) {
   return volatility[asset] || 'unknown';
 }
 
+function toIsoTimestamp(value) {
+  if (value === undefined || value === null || value === '') return null;
+  const numericValue = typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value;
+  const date = new Date(numericValue);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
 function formatLoan(row) {
   if (!row) return null;
 
   const terms = row.terms ? JSON.parse(row.terms) : {};
   const ltvRatio =
     row.ltv_ratio !== undefined && row.ltv_ratio !== null ? parseFloat(row.ltv_ratio) : null;
-  const createdAt = row.created_at ? new Date(row.created_at).toISOString() : null;
-  const dueDate = row.due_date ? new Date(row.due_date).toISOString() : null;
+  const createdAt = toIsoTimestamp(row.created_at);
+  const dueDate = toIsoTimestamp(row.due_date);
 
   return {
     id: row.id,
@@ -474,7 +481,7 @@ function formatLoan(row) {
     },
     timestamps: {
       requested: createdAt,
-      updated: row.updated_at ? new Date(row.updated_at).toISOString() : null,
+      updated: toIsoTimestamp(row.updated_at),
       dueDate,
       expires: terms.expiresAt || terms.expires || null,
     },
