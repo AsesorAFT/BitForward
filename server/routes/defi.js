@@ -277,6 +277,13 @@ function calculateHealthFactor(ltvRatio) {
   );
 }
 
+function toIsoTimestamp(value) {
+  if (value === undefined || value === null || value === '') return null;
+  const numericValue = typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value;
+  const date = new Date(numericValue);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
 function formatPosition(row) {
   if (!row) return null;
   const metadata = row.metadata ? JSON.parse(row.metadata) : {};
@@ -292,8 +299,8 @@ function formatPosition(row) {
     status: row.status,
     metadata,
     timestamps: {
-      created: row.created_at ? new Date(row.created_at).toISOString() : null,
-      updated: row.updated_at ? new Date(row.updated_at).toISOString() : null,
+      created: toIsoTimestamp(row.created_at),
+      updated: toIsoTimestamp(row.updated_at),
     },
   };
 }
@@ -312,8 +319,8 @@ function formatHedge(row) {
     status: row.status,
     details,
     timestamps: {
-      created: row.created_at ? new Date(row.created_at).toISOString() : null,
-      updated: row.updated_at ? new Date(row.updated_at).toISOString() : null,
+      created: toIsoTimestamp(row.created_at),
+      updated: toIsoTimestamp(row.updated_at),
     },
   };
 }
@@ -328,7 +335,7 @@ function formatLiquidation(row) {
     recoveredAmount: row.recovered_amount !== undefined ? parseFloat(row.recovered_amount) : null,
     recoveredAsset: row.recovered_asset,
     reason: row.reason,
-    executedAt: row.executed_at ? new Date(row.executed_at).toISOString() : null,
+    executedAt: toIsoTimestamp(row.executed_at),
     details,
   };
 }

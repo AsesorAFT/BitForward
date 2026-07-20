@@ -21,6 +21,8 @@ async function setupDatabase() {
         table.string('username').unique().notNullable();
         table.string('password_hash').notNullable();
         table.boolean('email_verified').defaultTo(false);
+        table.boolean('is_active').defaultTo(true);
+        table.string('role').defaultTo('user');
         table.string('verification_token').nullable();
         table.timestamp('last_login').nullable();
         table.json('profile').nullable(); // Para datos adicionales del usuario
@@ -34,6 +36,21 @@ async function setupDatabase() {
       console.log('✅ Tabla "users" creada con éxito');
     } else {
       console.log('📝 Tabla "users" ya existe');
+    }
+
+    const userColumns = [
+      ['is_active', table => table.boolean('is_active').defaultTo(true)],
+      ['role', table => table.string('role').defaultTo('user')],
+    ];
+
+    for (const [columnName, definition] of userColumns) {
+      const exists = await db.schema.hasColumn('users', columnName);
+      if (!exists) {
+        await db.schema.table('users', table => {
+          definition(table);
+        });
+        console.log(`✅ Columna "${columnName}" añadida a "users"`);
+      }
     }
 
     // Tabla de contratos
@@ -288,11 +305,11 @@ async function setupDatabase() {
 
     console.log('\n🎯 ¡Búnker de Datos Persistente construido exitosamente!');
     console.log('📊 Resumen de la infraestructura:');
-    console.log('   • 5 tablas principales creadas');
+    console.log('   • 8 tablas principales verificadas');
     console.log('   • Índices optimizados para consultas rápidas');
     console.log('   • Relaciones y restricciones configuradas');
     console.log('   • Configuraciones por defecto inicializadas');
-    console.log('\n🚀 BitForward está listo para almacenar datos de forma permanente');
+    console.log('\n🚀 Base local lista para pruebas y desarrollo');
   } catch (error) {
     console.error('\n❌ Error durante la construcción del búnker:', error.message);
     console.error('🔧 Detalles técnicos:', error);

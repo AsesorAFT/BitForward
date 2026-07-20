@@ -1,7 +1,7 @@
 {
   "name": "bitforward-enterprise",
   "version": "2.0.0",
-  "description": "BitForward Financial Technologies - Enterprise DeFi Platform with Phoenix UI",
+  "description": "Plataforma fintech educativa de AFORTU para simulación, análisis y gestión patrimonial con activos digitales",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -11,6 +11,8 @@
     "preview": "vite preview",
     "analyze": "vite build --mode analyze && open dist/stats.html",
     "smoke:pages": "node scripts/smoke-pages.js",
+    "verify:static": "node scripts/validate-static.mjs",
+    "verify": "npm run lint && npm run format:check && npm run verify:static && npm run build",
     "server:dev": "nodemon server/server.js",
     "frontend": "live-server --port=8080 --entry-file=enterprise.html",
     "prototype": "python -m http.server 8000",
@@ -67,8 +69,8 @@
     "url": "https://github.com/AsesorAFT/BitForward/issues"
   },
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
+    "node": ">=20.0.0 <23.0.0",
+    "npm": ">=10.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^5.4.3",
@@ -97,23 +99,24 @@
     "vite-plugin-compression": "^0.5.1"
   },
   "dependencies": {
-    "@solana/web3.js": "^1.0.0",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
-    "bitcoinjs-lib": "^6.0.0",
+    "compression": "^1.8.1",
     "cors": "^2.8.5",
-    "csurf": "^1.11.0",
-    "dompurify": "^3.3.0",
+    "dotenv": "^16.6.1",
+    "ethers": "^6.17.0",
     "express": "^4.19.2",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^8.1.0",
     "helmet": "^8.1.0",
     "hpp": "^0.2.3",
+    "joi": "^17.13.4",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
-    "sqlite3": "^5.1.7",
-    "web3": "^4.0.0",
-    "xss-clean": "^0.1.4"
+    "sqlite3": "^6.0.1",
+    "uuid": "^11.1.0",
+    "winston": "^3.19.0",
+    "ws": "^8.21.1"
   },
   "browserslist": [
     "> 1%",

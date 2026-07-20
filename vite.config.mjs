@@ -8,7 +8,7 @@ import legacy from '@vitejs/plugin-legacy';
 export default defineConfig({
   // Base path para producción
   base: './',
-  
+
   // Server config para desarrollo
   server: {
     port: 5173,
@@ -20,19 +20,19 @@ export default defineConfig({
         target: 'http://localhost:5000',
         changeOrigin: true,
         secure: false,
-      }
-    }
+      },
+    },
   },
-  
+
   // Build optimizations
   build: {
     // Output directory
     outDir: 'dist',
     assetsDir: 'assets',
-    
+
     // Source maps solo en desarrollo
     sourcemap: process.env.NODE_ENV !== 'production',
-    
+
     // Minification con Terser (más agresiva que esbuild)
     minify: 'terser',
     terserOptions: {
@@ -46,16 +46,12 @@ export default defineConfig({
         comments: false, // Eliminar comentarios
       },
     },
-    
+
     // Configuración de chunks
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
         'mission-control': resolve(__dirname, 'mission-control.html'),
-        login: resolve(__dirname, 'login.html'),
-        dashboard: resolve(__dirname, 'dashboard.html'),
-        lending: resolve(__dirname, 'lending.html'),
-        enterprise: resolve(__dirname, 'enterprise.html'),
         about: resolve(__dirname, 'about.html'),
       },
       output: {
@@ -86,7 +82,7 @@ export default defineConfig({
           if (id.includes('/js/dashboard')) return 'dashboard-core';
           if (id.includes('/js/auth') || id.includes('/js/siwe')) return 'auth';
         },
-        
+
         // Naming de chunks
         chunkFileNames: 'js/[name]-[hash].js',
         entryFileNames: 'js/[name]-[hash].js',
@@ -104,30 +100,22 @@ export default defineConfig({
         },
       },
     },
-    
+
     // Tamaño de chunk warning
     chunkSizeWarningLimit: 600, // 600kb (librerías crypto/chart pueden ser pesadas)
-    
+
     // Reportar tamaño de chunks
     reportCompressedSize: true,
-    
+
     // CSS code splitting
     cssCodeSplit: true,
   },
-  
+
   // Optimización de dependencias
   optimizeDeps: {
-    include: [
-      'ethers',
-      'sortablejs',
-      'apexcharts',
-    ],
-    exclude: [
-      '@vite/client',
-      '@vite/env',
-    ],
+    exclude: ['@vite/client', '@vite/env'],
   },
-  
+
   // Plugins
   plugins: [
     // Soporte para navegadores legacy (opcional)
@@ -135,7 +123,7 @@ export default defineConfig({
       targets: ['defaults', 'not IE 11'],
       additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
     }),
-    
+
     // Compresión Gzip
     viteCompression({
       verbose: true,
@@ -145,7 +133,7 @@ export default defineConfig({
       ext: '.gz',
       deleteOriginFile: false,
     }),
-    
+
     // Compresión Brotli (mejor que Gzip)
     viteCompression({
       verbose: true,
@@ -155,7 +143,7 @@ export default defineConfig({
       ext: '.br',
       deleteOriginFile: false,
     }),
-    
+
     // Visualizador de bundle (solo en build)
     visualizer({
       filename: './dist/stats.html',
@@ -165,7 +153,7 @@ export default defineConfig({
       template: 'treemap', // 'sunburst', 'treemap', 'network'
     }),
   ],
-  
+
   // Alias para imports más limpios
   resolve: {
     alias: {
@@ -175,25 +163,25 @@ export default defineConfig({
       '@components': resolve(__dirname, './src/components'),
     },
   },
-  
+
   // CSS preprocessor
   css: {
     postcss: './postcss.config.js',
     devSourcemap: true,
   },
-  
+
   // JSON optimizations
   json: {
     namedExports: true,
     stringify: false,
   },
-  
+
   // Configuración de preview (servidor de producción local)
   preview: {
     port: 4173,
     open: true,
   },
-  
+
   // Variables de entorno
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '3.0.0'),

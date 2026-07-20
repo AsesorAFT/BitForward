@@ -6,31 +6,45 @@ on:
   pull_request:
     branches: [main, master]
 
+permissions:
+  contents: read
+
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 18
+          node-version-file: .nvmrc
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Lint
         run: npm run lint
+
+      - name: Formatting
+        run: npm run format:check
+
+      - name: Static safety and structure
+        run: npm run verify:static
+
+      - name: Production dependency audit
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Test
         env:
           NODE_OPTIONS: --experimental-vm-modules
           DATABASE_FILE: ./server/database/ci.sqlite3
           ETHEREUM_RPC_URL: http://localhost:8545
-          PRIVATE_KEY: 0x1111111111111111111111111111111111111111111111111111111111111111
-          PORT: 0
+          PRIVATE_KEY: '0x1111111111111111111111111111111111111111111111111111111111111111'
+          PORT: '0'
         run: npm test -- --passWithNoTests
 
       - name: Build
@@ -40,13 +54,20 @@ jobs:
 
       - name: Serve build for smoke tests
         run: |
-          npx serve -s dist -l 4173 >/tmp/serve.log 2>&1 &
+          npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/bitforward-preview.log 2>&1 &
           echo $! > /tmp/serve.pid
-          sleep 2
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/bitforward-preview.log
+          exit 1
 
       - name: Smoke pages
         env:
-          SMOKE_BASE_URL: http://localhost:4173
+          SMOKE_BASE_URL: http://127.0.0.1:4173
         run: npm run smoke:pages
 
       - name: Shutdown preview server

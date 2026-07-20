@@ -1,7 +1,7 @@
 :root {
   --surface: rgba(255, 255, 255, 0.045);
   --surface-strong: rgba(255, 255, 255, 0.075);
-  --stroke: rgba(255, 255, 255, 0.10);
+  --stroke: rgba(255, 255, 255, 0.1);
   --gold: #d4af37;
   --gold-dark: #8a6b20;
   --ink: #02040a;
@@ -19,13 +19,38 @@ html {
   scroll-behavior: smooth;
 }
 
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 900;
+  text-decoration: none;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+#mercado,
+#estrategia,
+#riesgo,
+#contacto {
+  scroll-margin-top: 84px;
+}
+
 .landing-body {
   min-height: 100vh;
   margin: 0;
   background:
     radial-gradient(circle at 18% 12%, rgba(212, 175, 55, 0.16), transparent 30%),
     radial-gradient(circle at 82% 18%, rgba(37, 99, 235, 0.15), transparent 28%),
-    radial-gradient(circle at 70% 86%, rgba(16, 185, 129, 0.10), transparent 32%),
+    radial-gradient(circle at 70% 86%, rgba(16, 185, 129, 0.1), transparent 32%),
     linear-gradient(135deg, #02040a 0%, #07111f 52%, #02040a 100%);
   color: var(--text);
   font-family: var(--bf-font-base, 'Inter', system-ui, -apple-system, sans-serif);
@@ -70,7 +95,12 @@ html {
   overflow: hidden;
   padding: clamp(28px, 4vw, 52px);
   background:
-    linear-gradient(90deg, rgba(2, 4, 10, 0.92) 0%, rgba(2, 4, 10, 0.74) 47%, rgba(2, 4, 10, 0.45) 100%),
+    linear-gradient(
+      90deg,
+      rgba(2, 4, 10, 0.92) 0%,
+      rgba(2, 4, 10, 0.74) 47%,
+      rgba(2, 4, 10, 0.45) 100%
+    ),
     url('https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=1800&q=85');
   background-size: cover;
   background-position: center;
@@ -99,6 +129,18 @@ html {
   font-weight: 900;
   letter-spacing: 2.6px;
   text-transform: uppercase;
+}
+
+.status-note {
+  display: inline-flex;
+  margin: 0 0 16px;
+  padding: 7px 10px;
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.12);
+  color: #f5d77b;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .hero h1 {
@@ -135,7 +177,10 @@ html {
   font-weight: 900;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
 .btn.primary {
@@ -180,7 +225,7 @@ html {
 
 .desk-card {
   background: rgba(2, 4, 10, 0.72);
-  border: 1px solid rgba(212, 175, 55, 0.30);
+  border: 1px solid rgba(212, 175, 55, 0.3);
   border-radius: 24px;
   padding: 22px;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
@@ -248,10 +293,18 @@ html {
   box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
 }
 
-.market-card.btc { border-color: rgba(247, 147, 26, 0.38); }
-.market-card.eth { border-color: rgba(98, 126, 234, 0.38); }
-.market-card.sol { border-color: rgba(20, 241, 149, 0.34); }
-.market-card.ada { border-color: rgba(212, 175, 55, 0.34); }
+.market-card.btc {
+  border-color: rgba(247, 147, 26, 0.38);
+}
+.market-card.eth {
+  border-color: rgba(98, 126, 234, 0.38);
+}
+.market-card.sol {
+  border-color: rgba(20, 241, 149, 0.34);
+}
+.market-card.ada {
+  border-color: rgba(212, 175, 55, 0.34);
+}
 
 .asset-row {
   display: flex;
@@ -297,8 +350,12 @@ html {
   font-weight: 800;
 }
 
-.asset-change.up { color: #4ade80; }
-.asset-change.down { color: #fb7185; }
+.asset-change.up {
+  color: #4ade80;
+}
+.asset-change.down {
+  color: #fb7185;
+}
 
 .insight,
 .risk,
@@ -401,7 +458,7 @@ html {
   text-align: center;
   border-radius: 50%;
   background: #050812;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .allocation-ring strong {
@@ -430,10 +487,18 @@ html {
   margin-right: 8px;
 }
 
-.btc-dot { background: #f7931a; }
-.eth-dot { background: #627eea; }
-.sol-dot { background: #14f195; }
-.ada-dot { background: #d4af37; }
+.btc-dot {
+  background: #f7931a;
+}
+.eth-dot {
+  background: #627eea;
+}
+.sol-dot {
+  background: #14f195;
+}
+.ada-dot {
+  background: #d4af37;
+}
 
 .radar-grid {
   display: grid;
@@ -462,6 +527,38 @@ html {
 
 .disclaimer strong {
   color: #fff;
+}
+
+.landing-footer {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto 36px;
+  padding: 20px 24px;
+  border-top: 1px solid var(--stroke);
+  color: var(--muted);
+  text-align: center;
+  font-size: 13px;
+}
+
+.landing-footer p {
+  margin: 5px 0;
+}
+
+.landing-footer strong {
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @media (max-width: 980px) {

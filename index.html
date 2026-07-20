@@ -8,6 +8,7 @@
       name="description"
       content="BitForward es el centro de inteligencia de activos digitales de AFORTU: mercado, portafolios, riesgo y educación patrimonial."
     />
+    <meta name="theme-color" content="#02040a" />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="css/design-system.css" />
@@ -21,25 +22,27 @@
     <script type="module" src="js/landing.js"></script>
   </head>
   <body class="landing-body">
-    <bf-header logo-src="assets/logo-astronaut-rocket.svg">
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg" hide-wallet>
       <a href="#mercado">Mercado</a>
-      <a href="#estrategia">Estrategia</a>
-      <a href="#riesgo">Riesgo</a>
-      <a href="#contacto" class="cta">Contacto</a>
+      <a href="mission-control.html">Simulador</a>
+      <a href="about.html">Metodología</a>
     </bf-header>
 
-    <main class="landing-shell">
+    <main class="landing-shell" id="contenido" tabindex="-1">
       <section class="hero card" id="hero">
         <div class="hero-copy">
-          <p class="eyebrow">BitForward • AFORTU Asset Management</p>
-          <h1>Inteligencia digital para inversionistas patrimoniales.</h1>
+          <p class="eyebrow">BitForward • AFORTU</p>
+          <p class="status-note">MVP educativo en validación</p>
+          <h1>Inteligencia patrimonial para activos digitales.</h1>
           <p class="lead">
-            Seguimiento de criptoactivos, tesis de mercado, portafolios modelo y control de riesgo
-            bajo una lectura profesional de largo plazo.
+            Simulación, análisis de mercado, portafolios modelo y control de riesgo bajo una lectura
+            profesional de largo plazo. Sin custodia ni ejecución de capital desde esta plataforma.
           </p>
           <div class="hero-actions">
             <a class="btn primary" href="#mercado">Ver mercado</a>
-            <a class="btn ghost" href="mission-control.html">Abrir Mission Control</a>
+            <a class="btn ghost" href="mission-control.html">Abrir simulador</a>
           </div>
           <div class="trust">
             <span class="pill">Bitcoin</span>
@@ -54,13 +57,13 @@
             <div class="desk-topline">Digital Asset Desk</div>
             <div class="desk-title">Lectura AFORTU</div>
             <p>
-              Mercado volátil, adopción institucional y oportunidades selectivas. La prioridad no
-              es perseguir ruido: es administrar exposición con método.
+              Mercado volátil, adopción institucional y oportunidades selectivas. La prioridad no es
+              perseguir ruido: es administrar exposición con método.
             </p>
             <div class="desk-metrics">
               <div>
                 <span>Actualización</span>
-                <strong id="market-updated">Conectando...</strong>
+                <strong id="market-updated" aria-live="polite">Conectando...</strong>
               </div>
               <div>
                 <span>Sesgo</span>
@@ -126,15 +129,17 @@
           <p class="eyebrow">Resumen ejecutivo</p>
           <h2>Tecnología financiera con disciplina patrimonial.</h2>
           <p class="muted">
-            BitForward traduce el mercado digital a decisiones comprensibles: que comprar, cuanto
-            riesgo asumir, cuando rebalancear y que narrativa de largo plazo se mantiene vigente.
+            BitForward traduce el mercado digital a decisiones comprensibles: qué analizar, cuánto
+            riesgo asumir, cuándo rebalancear y qué tesis de largo plazo sigue vigente.
           </p>
         </div>
         <div class="insight-list">
           <div>
             <span>01</span>
             <strong>Adopción institucional</strong>
-            <p>Bancos, fondos, ETFs y tokenización empujan a cripto hacia infraestructura financiera.</p>
+            <p>
+              Bancos, fondos, ETFs y tokenización empujan a cripto hacia infraestructura financiera.
+            </p>
           </div>
           <div>
             <span>02</span>
@@ -144,7 +149,9 @@
           <div>
             <span>03</span>
             <strong>Asignación selectiva</strong>
-            <p>No todo activo digital merece capital. Se prioriza liquidez, utilidad y resiliencia.</p>
+            <p>
+              No todo activo digital merece capital. Se prioriza liquidez, utilidad y resiliencia.
+            </p>
           </div>
         </div>
       </section>
@@ -159,17 +166,32 @@
           </p>
         </div>
         <div class="allocation">
-          <div class="allocation-ring" aria-label="Asignacion modelo">
+          <div
+            class="allocation-ring"
+            aria-label="Asignación modelo: 60% Bitcoin, 20% Ethereum, 10% Solana y 10% Cardano"
+          >
             <div>
               <strong>60/20/10/10</strong>
               <span>Modelo base</span>
             </div>
           </div>
           <div class="allocation-list">
-            <div><span class="dot btc-dot"></span><strong>60% Bitcoin</strong><small>Reserva digital y activo principal.</small></div>
-            <div><span class="dot eth-dot"></span><strong>20% Ethereum</strong><small>Infraestructura de contratos y tokenización.</small></div>
-            <div><span class="dot sol-dot"></span><strong>10% Solana</strong><small>Crecimiento, velocidad y ecosistema.</small></div>
-            <div><span class="dot ada-dot"></span><strong>10% Cardano</strong><small>Posición complementaria de alto riesgo.</small></div>
+            <div>
+              <span class="dot btc-dot"></span><strong>60% Bitcoin</strong
+              ><small>Reserva digital y activo principal.</small>
+            </div>
+            <div>
+              <span class="dot eth-dot"></span><strong>20% Ethereum</strong
+              ><small>Infraestructura de contratos y tokenización.</small>
+            </div>
+            <div>
+              <span class="dot sol-dot"></span><strong>10% Solana</strong
+              ><small>Crecimiento, velocidad y ecosistema.</small>
+            </div>
+            <div>
+              <span class="dot ada-dot"></span><strong>10% Cardano</strong
+              ><small>Posición complementaria de alto riesgo.</small>
+            </div>
           </div>
         </div>
       </section>
@@ -183,7 +205,9 @@
           <article>
             <span>Tokenización</span>
             <h3>Activos reales en blockchain</h3>
-            <p>La digitalización de instrumentos financieros puede abrir nuevas rutas de liquidez.</p>
+            <p>
+              La digitalización de instrumentos financieros puede abrir nuevas rutas de liquidez.
+            </p>
           </article>
           <article>
             <span>Stablecoins</span>
@@ -213,34 +237,54 @@
           </p>
         </div>
         <div class="risk-rules">
-          <div><strong>Limite de exposición</strong><span>Asignar solo capital compatible con alta volatilidad.</span></div>
-          <div><strong>Liquidez</strong><span>Mantener efectivo o instrumentos defensivos fuera del portafolio cripto.</span></div>
-          <div><strong>Rebalanceo</strong><span>Tomar utilidades o reducir riesgo cuando el portafolio se desvia del objetivo.</span></div>
-          <div><strong>Custodia</strong><span>Separar acceso, contraseñas, wallets, exchanges y comprobantes.</span></div>
+          <div>
+            <strong>Límite de exposición</strong
+            ><span>Asignar sólo capital compatible con alta volatilidad.</span>
+          </div>
+          <div>
+            <strong>Liquidez</strong
+            ><span>Mantener efectivo o instrumentos defensivos fuera del portafolio cripto.</span>
+          </div>
+          <div>
+            <strong>Rebalanceo</strong
+            ><span
+              >Tomar utilidades o reducir riesgo cuando el portafolio se desvía del objetivo.</span
+            >
+          </div>
+          <div>
+            <strong>Custodia</strong
+            ><span>Separar acceso, contraseñas, wallets, exchanges y comprobantes.</span>
+          </div>
         </div>
       </section>
 
       <section class="cta-band card" id="contacto">
         <div>
           <p class="eyebrow">BitForward by AFORTU</p>
-          <h2>Convierte mercado digital en estrategia patrimonial.</h2>
+          <h2>Prueba el método con tus propios supuestos.</h2>
           <p class="muted">
-            Solicita una revision de perfil, horizonte, tolerancia al riesgo y asignacion sugerida
-            antes de invertir en activos digitales.
+            Explora escenarios del portafolio educativo 60/20/10/10 y observa cuándo se activan sus
+            reglas de rebalanceo.
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="mailto:asesoraft@bitforward.financial">Solicitar analisis</a>
-            <a class="btn ghost" href="login.html">Acceso cliente</a>
+            <a class="btn primary" href="mission-control.html">Probar simulador</a>
+            <a class="btn ghost" href="about.html">Leer metodología</a>
           </div>
         </div>
         <div class="disclaimer">
           <strong>Aviso importante</strong>
           <p>
-            La informacion presentada es educativa e informativa. No constituye asesoria individual,
-            oferta publica ni garantia de rendimiento. Todo activo digital implica riesgo de perdida.
+            La información presentada es educativa e informativa. No constituye asesoría individual,
+            oferta pública, custodia ni garantía de rendimiento. Todo activo digital implica riesgo
+            de pérdida.
           </p>
         </div>
       </section>
     </main>
+
+    <footer class="landing-footer">
+      <p><strong>BitForward by AFORTU</strong> · Plataforma fintech educativa.</p>
+      <p>© 2026 AFORTU. Información de mercado sujeta a disponibilidad de terceros.</p>
+    </footer>
   </body>
 </html>

@@ -1,5 +1,7 @@
 # 🎉 BitForward MVP - Completion Report
 
+> **Documento histórico, no certificación vigente.** Este reporte fue generado el 19 de octubre de 2025 y contiene resultados “esperados” que no equivalen a auditorías externas. El estado actual del proyecto es **MVP público en validación**; consulta `README.md` y `ROADMAP.md` para el alcance vigente.
+
 **Fecha de Finalización:** 19 de octubre de 2025  
 **Estado del MVP:** ✅ **100% COMPLETADO - PRODUCTION READY**
 
