@@ -5,7 +5,7 @@
 
 const authConfig = require('../config/auth');
 const database = require('../database/database');
-const rateLimit = require('express-rate-limit');
+const { rateLimit, ipKeyGenerator } = require('express-rate-limit');
 
 class AuthMiddleware {
   constructor() {
@@ -28,7 +28,8 @@ class AuthMiddleware {
       },
       standardHeaders: true,
       legacyHeaders: false,
-      keyGenerator: req => req.body.username || req.ip,
+      keyGenerator: req =>
+        req.body?.username ? `username:${req.body.username}` : ipKeyGenerator(req.ip),
     });
   }
 

@@ -24,10 +24,12 @@ class AuthService {
     this.loginAttempts = new Map();
 
     // Limpiar nonces expirados cada minuto
-    setInterval(() => this.cleanupExpiredNonces(), 60000);
+    this.nonceCleanupTimer = setInterval(() => this.cleanupExpiredNonces(), 60000);
+    this.nonceCleanupTimer.unref?.();
 
     // Limpiar intentos de login cada 15 minutos
-    setInterval(() => this.cleanupLoginAttempts(), 15 * 60 * 1000);
+    this.loginCleanupTimer = setInterval(() => this.cleanupLoginAttempts(), 15 * 60 * 1000);
+    this.loginCleanupTimer.unref?.();
   }
 
   /**
@@ -95,7 +97,8 @@ class AuthService {
       nonceData.used = true;
 
       // Limpiar nonce después de uso exitoso
-      setTimeout(() => this.nonces.delete(nonce), 5000);
+      const cleanupTimer = setTimeout(() => this.nonces.delete(nonce), 5000);
+      cleanupTimer.unref?.();
 
       logger.info(`Signature verified successfully for address: ${address}`);
 

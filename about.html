@@ -3,211 +3,141 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sobre BitForward | Innovación DeFi</title>
+    <title>Metodología | BitForward</title>
     <meta
       name="description"
-      content="Descubre BitForward: La plataforma DeFi innovadora que revoluciona los contratos forward, lending y derivados financieros"
+      content="Conoce el alcance, las reglas de riesgo y la metodología educativa del MVP BitForward de AFORTU."
     />
-
+    <meta name="theme-color" content="#050914" />
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/design-system.css" />
-
-    <style>
-      body {
-        background-color: var(--bf-bg-primary);
-        color: var(--bf-text-primary);
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 0 2rem;
-      }
-
-      .hero {
-        text-align: center;
-        padding: 4rem 0;
-      }
-
-      .hero h1 {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 1rem;
-        background: linear-gradient(135deg, var(--bf-primary-color), var(--bf-secondary-color));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .hero-subtitle {
-        font-size: 1.25rem;
-        color: var(--bf-text-secondary);
-        max-width: 700px;
-        margin: 0 auto;
-      }
-
-      .section {
-        margin-bottom: 4rem;
-      }
-
-      .section-title {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 2rem;
-        text-align: center;
-        color: var(--bf-text-primary);
-      }
-
-      .cards-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
-      }
-
-      /* Usando la clase .card del design-system.css */
-
-      .card h3 {
-        font-size: 1.25rem;
-        margin-bottom: 0.75rem;
-        color: var(--bf-text-primary);
-      }
-
-      .timeline {
-        position: relative;
-        max-width: 800px;
-        margin: 0 auto;
-        padding-left: 2rem;
-      }
-
-      .timeline::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        background: var(--bf-border-color);
-      }
-
-      .timeline-item {
-        position: relative;
-        margin-bottom: 2rem;
-        padding-left: 1.5rem;
-      }
-
-      .timeline-dot {
-        position: absolute;
-        left: -7px;
-        top: 5px;
-        width: 14px;
-        height: 14px;
-        background: var(--bf-primary-color);
-        border-radius: 50%;
-      }
-
-      .timeline-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--bf-primary-color);
-        margin-bottom: 0.5rem;
-      }
-
-      .cta-section {
-        text-align: center;
-        padding: 3rem 0;
-      }
-    </style>
+    <link rel="stylesheet" href="css/methodology.css" />
+    <script type="module" src="js/components/bf-header.js"></script>
   </head>
-  <body>
-    <bf-nav>
-      <a class="cta" href="enterprise.html">Enterprise</a>
-    </bf-nav>
+  <body class="methodology-body">
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg" hide-wallet></bf-header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-      <h1>Sobre BitForward</h1>
-      <p class="hero-subtitle">
-        Nuestra misión es construir un sistema financiero abierto, transparente y accesible para
-        todos, impulsado por la tecnología blockchain.
-      </p>
-    </section>
+    <main class="methodology-shell">
+      <section class="methodology-hero">
+        <p class="eyebrow">Metodología y alcance</p>
+        <h1>Reglas claras antes que promesas.</h1>
+        <p class="lead">
+          BitForward es una plataforma fintech educativa de AFORTU para simular, analizar y explicar
+          decisiones patrimoniales con activos digitales. El MVP público no recibe dinero, no
+          custodia activos y no ejecuta operaciones.
+        </p>
+        <span class="status-line">MVP educativo en validación · julio de 2026</span>
+      </section>
 
-    <div class="container">
-      <!-- ¿Qué es BitForward? -->
-      <section class="section">
-        <h2 class="section-title">Nuestros Valores</h2>
+      <section class="method-grid" aria-label="Capas del producto">
+        <article class="method-card">
+          <span>01 · Observar</span>
+          <h2>Mercado trazable</h2>
+          <p>Datos públicos con fuente, estado de disponibilidad y hora de actualización.</p>
+        </article>
+        <article class="method-card">
+          <span>02 · Simular</span>
+          <h2>Escenarios reproducibles</h2>
+          <p>Supuestos definidos por el usuario, cálculo transparente y resultados exportables.</p>
+        </article>
+        <article class="method-card">
+          <span>03 · Aprender</span>
+          <h2>Riesgo comprensible</h2>
+          <p>
+            Asignación, desviaciones y rebalanceos explicados sin presentar escenarios como
+            certezas.
+          </p>
+        </article>
+      </section>
 
-        <div class="cards-grid">
-          <div class="card">
-            <h3>Innovación Constante</h3>
+      <section class="method-section">
+        <p class="eyebrow">Portafolio educativo</p>
+        <h2>Modelo Génesis 60/20/10/10</h2>
+        <p>
+          El modelo sirve para enseñar diversificación y control de exposición. No sustituye el
+          perfil de riesgo, horizonte, liquidez ni situación fiscal de una persona.
+        </p>
+        <table class="rules-table">
+          <thead>
+            <tr>
+              <th>Activo</th>
+              <th>Peso objetivo</th>
+              <th>Función educativa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bitcoin</td>
+              <td>60%</td>
+              <td>Núcleo y reserva digital del modelo.</td>
+            </tr>
+            <tr>
+              <td>Ethereum</td>
+              <td>20%</td>
+              <td>Infraestructura de contratos y tokenización.</td>
+            </tr>
+            <tr>
+              <td>Solana</td>
+              <td>10%</td>
+              <td>Exposición complementaria de crecimiento.</td>
+            </tr>
+            <tr>
+              <td>Cardano</td>
+              <td>10%</td>
+              <td>Exposición complementaria de mayor riesgo.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="method-section">
+        <p class="eyebrow">Gobierno del modelo</p>
+        <h2>Revisión mensual, rebalanceo por excepción.</h2>
+        <div class="boundary-grid">
+          <div>
+            <strong>Bandas ±5 puntos</strong>
+            <p>El portafolio vuelve al objetivo sólo cuando un activo rebasa su rango permitido.</p>
+          </div>
+          <div>
+            <strong>Sin apalancamiento</strong>
             <p>
-              Buscamos sin descanso las mejores soluciones tecnológicas para resolver problemas
-              financieros complejos de forma descentralizada.
+              No se permiten futuros, opciones, préstamos, liquidaciones automáticas ni derivados.
             </p>
           </div>
-
-          <div class="card">
-            <h3>Seguridad Primero</h3>
+          <div>
+            <strong>Escenarios, no predicciones</strong>
             <p>
-              La protección de los activos de nuestros usuarios es nuestra máxima prioridad.
-              Implementamos múltiples capas de seguridad y auditorías constantes.
+              Los rendimientos del simulador son entradas hipotéticas controladas por el usuario.
             </p>
           </div>
-
-          <div class="card">
-            <h3>Transparencia Radical</h3>
+          <div>
+            <strong>Cero datos de clientes</strong>
             <p>
-              Operamos sobre una base de código abierto y todas las transacciones son verificables
-              en la blockchain. Creemos en la confianza a través de la transparencia.
+              GitHub no almacena CURP, estados de cuenta, credenciales, expedientes ni bases
+              operativas.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- Roadmap -->
-      <section class="section">
-        <h2 class="section-title">Nuestra Trayectoria</h2>
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <h3 class="timeline-title">Q1 2025 - Lanzamiento Beta</h3>
-            <p>Lanzamiento de la plataforma con contratos forward y pools de lending.</p>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <h3 class="timeline-title">Q2 2025 - Expansión Multi-Chain</h3>
-            <p>Integración con Solana y Polygon para mayor escalabilidad y menores costes.</p>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <h3 class="timeline-title">Q3 2025 - Exchange y Mercados</h3>
-            <p>
-              Lanzamiento de la interfaz de trading spot y la página de exploración de mercados.
-            </p>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <h3 class="timeline-title">Q4 2025 - Gobernanza DAO</h3>
-            <p>
-              Transición a un modelo de gobernanza descentralizada a través de la BitForward DAO.
-            </p>
-          </div>
+      <section class="boundary-card">
+        <p class="eyebrow">Frontera de responsabilidad</p>
+        <h2>Lo que BitForward todavía no es.</h2>
+        <p>
+          No es exchange, custodio, casa de bolsa, recomendador automático ni sistema productivo de
+          gestión de clientes. La autenticación real, PostgreSQL, roles, auditoría, integraciones
+          con custodios y revisión jurídica permanecen fuera del MVP público hasta superar pruebas
+          técnicas, de privacidad y cumplimiento.
+        </p>
+        <div class="method-actions">
+          <a href="mission-control.html">Abrir simulador</a>
+          <a href="index.html">Volver al inicio</a>
         </div>
       </section>
+    </main>
 
-      <!-- CTA -->
-      <section class="cta-section">
-        <h2 class="section-title">Únete a la Revolución DeFi</h2>
-        <a href="trading.html" class="btn btn-primary">Empezar a Operar</a>
-      </section>
-    </div>
-
-    <bf-footer></bf-footer>
-
-    <!-- Scripts Universales -->
-    <script type="module" src="js/components/bf-nav.js"></script>
-    <script type="module" src="js/components/bf-footer.js"></script>
+    <footer class="methodology-footer">
+      BitForward by AFORTU · Innovación financiera con método.
+    </footer>
   </body>
 </html>

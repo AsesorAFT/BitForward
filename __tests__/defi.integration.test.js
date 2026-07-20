@@ -5,6 +5,25 @@
 
 const path = require('path');
 const fs = require('fs');
+
+const testDbFile = path.join(
+  __dirname,
+  '..',
+  'server',
+  'database',
+  `test-defi-${process.pid}-${Date.now()}.sqlite3`
+);
+process.env.NODE_ENV = 'test';
+process.env.KEEP_DB_OPEN = 'true';
+process.env.DATABASE_FILE = testDbFile;
+process.env.PORT = '0';
+process.env.JWT_ACCESS_SECRET = 'test-access-secret';
+process.env.JWT_REFRESH_SECRET = 'test-refresh-secret';
+process.env.JWT_SECRET = 'test-general-secret';
+process.env.BLOCKCHAIN_ENABLED = 'false';
+process.env.ETHEREUM_RPC_URL = process.env.ETHEREUM_RPC_URL || 'http://localhost:8545';
+process.env.PRIVATE_KEY = process.env.PRIVATE_KEY || '0x' + '1'.repeat(64);
+
 const request = require('supertest');
 const BitForwardServer = require('../server/server');
 const authConfig = require('../server/config/auth');
@@ -15,25 +34,9 @@ describe('🔗 DeFi API Integration', () => {
   let serverInstance;
   let api;
   let accessToken;
-  let testDbFile;
   let userId;
 
   beforeAll(async () => {
-    process.env.JWT_ACCESS_SECRET = 'test-access-secret';
-    process.env.JWT_REFRESH_SECRET = 'test-refresh-secret';
-    // Aislar BD de pruebas
-    testDbFile = path.join(
-      __dirname,
-      '..',
-      'server',
-      'database',
-      `test-defi-${Date.now()}.sqlite3`
-    );
-    process.env.DATABASE_FILE = testDbFile;
-    process.env.PORT = '0'; // puerto aleatorio
-    process.env.ETHEREUM_RPC_URL = process.env.ETHEREUM_RPC_URL || 'http://localhost:8545';
-    process.env.PRIVATE_KEY = process.env.PRIVATE_KEY || '0x' + '1'.repeat(64);
-
     await setupDatabase();
 
     // Crear usuario y token

@@ -4,6 +4,13 @@
   color-scheme: dark;
 }
 
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -23,6 +30,7 @@ header {
   font-weight: 700;
   font-size: 1.2rem;
   color: var(--bf-text-primary, #fff);
+  text-decoration: none;
 }
 .bf-logo img {
   height: 2.2rem;
@@ -47,7 +55,19 @@ header {
     background 0.2s,
     color 0.2s;
 }
+.bf-menu slot::slotted(a) {
+  color: var(--bf-text-secondary, #fff);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
 .bf-menu a:hover {
+  background: var(--bf-surface-3, rgba(255, 255, 255, 0.08));
+  color: var(--bf-text-primary, #fff);
+}
+.bf-menu slot::slotted(a:hover) {
   background: var(--bf-surface-3, rgba(255, 255, 255, 0.08));
   color: var(--bf-text-primary, #fff);
 }
@@ -69,6 +89,7 @@ header {
   transition:
     background 0.2s,
     box-shadow 0.2s;
+  text-decoration: none;
 }
 .bf-wallet-btn.connected {
   background: linear-gradient(
@@ -79,10 +100,20 @@ header {
 }
 .bf-wallet-btn:focus-visible,
 .bf-menu a:focus-visible,
+.bf-menu slot::slotted(a:focus-visible),
 .bf-menu-toggle:focus-visible {
   outline: 2px solid var(--bf-color-secondary, #f59e0b);
   outline-offset: 2px;
   border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bf-menu,
+  .bf-menu a,
+  .bf-menu-toggle span,
+  .bf-wallet-btn {
+    transition: none;
+  }
 }
 
 .bf-menu-toggle {

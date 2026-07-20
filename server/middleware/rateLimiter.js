@@ -3,7 +3,7 @@
  * Protege contra abuso y ataques DDoS
  */
 
-const rateLimit = require('express-rate-limit');
+const { rateLimit, ipKeyGenerator } = require('express-rate-limit');
 
 // Rate limiter principal
 const rateLimitMiddleware = rateLimit({
@@ -17,7 +17,7 @@ const rateLimitMiddleware = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: req => req.ip,
+  keyGenerator: req => ipKeyGenerator(req.ip),
   skip: req => {
     // Skip rate limiting para health checks
     return req.path === '/api/health';
@@ -50,7 +50,8 @@ const authLimit = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: req => req.body.username || req.ip,
+  keyGenerator: req =>
+    req.body?.username ? `username:${req.body.username}` : ipKeyGenerator(req.ip),
 });
 
 // Rate limiter estricto para wallet authentication
@@ -67,7 +68,8 @@ const authRateLimiter = rateLimit({
   legacyHeaders: false,
   keyGenerator: req => {
     const address = req.body?.address || req.query?.address;
-    return address ? `${req.ip}-${address}` : req.ip;
+    const ip = ipKeyGenerator(req.ip);
+    return address ? `${ip}-${address}` : ip;
   },
 });
 
