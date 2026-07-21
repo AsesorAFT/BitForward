@@ -1,0 +1,69 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/Mexico_City
+    open-pull-requests-limit: 5
+    rebase-strategy: auto
+    commit-message:
+      prefix: deps
+    groups:
+      root-minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: npm
+    directory: /server
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:30"
+      timezone: America/Mexico_City
+    open-pull-requests-limit: 5
+    rebase-strategy: auto
+    commit-message:
+      prefix: deps-server
+    groups:
+      server-minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: npm
+    directory: /dashboard-app
+    schedule:
+      interval: weekly
+      day: tuesday
+      time: "09:00"
+      timezone: America/Mexico_City
+    open-pull-requests-limit: 3
+    rebase-strategy: auto
+    commit-message:
+      prefix: deps-dashboard
+    groups:
+      dashboard-minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: wednesday
+      time: "09:00"
+      timezone: America/Mexico_City
+    open-pull-requests-limit: 3
+    rebase-strategy: auto
+    commit-message:
+      prefix: ci
+    groups:
+      github-actions:
+        patterns:
+          - "*"
