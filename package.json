@@ -80,7 +80,7 @@
     "gif-encoder-2": "^1.0.5",
     "gzip-size": "^7.0.0",
     "husky": "^9.1.7",
-    "imagemin": "^8.0.1",
+    "imagemin": "^9.0.1",
     "imagemin-svgo": "^10.0.1",
     "jest": "^29.0.0",
     "jsdom": "^27.0.1",
