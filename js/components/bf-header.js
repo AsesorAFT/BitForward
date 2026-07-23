@@ -57,9 +57,11 @@ class BFHeader extends HTMLElement {
     const logoSrc = this.getAttribute('logo-src') || 'assets/logo-astronaut-rocket.svg';
     const menuClass = this.menuOpen ? 'open' : '';
     const hideLogo = this.hasAttribute('hide-logo');
-    const hideWallet = this.hasAttribute('hide-wallet');
+    const hideCta = this.hasAttribute('hide-cta') || this.hasAttribute('hide-wallet');
     const hasCustomNavigation = this.childElementCount > 0;
     const menuLabel = this.menuOpen ? 'Cerrar menú' : 'Abrir menú';
+    const ctaHref = this.getAttribute('cta-href') || 'mission-control.html';
+    const ctaLabel = this.getAttribute('cta-label') || 'Abrir simulador';
     const defaultNavigation = hasCustomNavigation
       ? ''
       : `
@@ -71,28 +73,33 @@ class BFHeader extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>${styles}</style>
       <header>
-        ${
-          hideLogo
-            ? ''
-            : `<a class="bf-logo" href="index.html" aria-label="BitForward, inicio">
-                <img src="${logoSrc}" alt="" />
-                <span>BitForward</span>
-              </a>`
-        }
-        <button
-          class="bf-menu-toggle"
-          type="button"
-          aria-label="${menuLabel}"
-          aria-expanded="${this.menuOpen}"
-          aria-controls="bf-primary-navigation"
-        >
-          <span></span><span></span><span></span>
-        </button>
-        <nav id="bf-primary-navigation" class="bf-menu ${menuClass}" aria-label="Navegación principal">
-          ${defaultNavigation}
-          <slot></slot>
-        </nav>
-        ${hideWallet ? '' : '<a class="bf-wallet-btn" href="login.html">Acceso</a>'}
+        <div class="bf-header-inner">
+          ${
+            hideLogo
+              ? ''
+              : `<a class="bf-logo" href="index.html" aria-label="BitForward, inicio">
+                  <span class="bf-logo-mark"><img src="${logoSrc}" alt="" /></span>
+                  <span class="bf-brand">
+                    <strong>BitForward</strong>
+                    <small>Digital Asset Intelligence · AFORTU</small>
+                  </span>
+                </a>`
+          }
+          <button
+            class="bf-menu-toggle"
+            type="button"
+            aria-label="${menuLabel}"
+            aria-expanded="${this.menuOpen}"
+            aria-controls="bf-primary-navigation"
+          >
+            <span></span><span></span><span></span>
+          </button>
+          <nav id="bf-primary-navigation" class="bf-menu ${menuClass}" aria-label="Navegación principal">
+            ${defaultNavigation}
+            <slot></slot>
+          </nav>
+          ${hideCta ? '' : `<a class="bf-cta" href="${ctaHref}">${ctaLabel}<span aria-hidden="true">↗</span></a>`}
+        </div>
       </header>
     `;
   }
