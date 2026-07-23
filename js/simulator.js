@@ -1,4 +1,5 @@
 import './components/bf-header.js';
+import './pwa.js';
 import { MODEL_ALLOCATION, simulatePortfolio, simulationToCsv } from './simulation-engine.mjs';
 
 const ASSET_COLORS = {
@@ -18,7 +19,10 @@ const form = document.getElementById('simulator-form');
 const errorBox = document.getElementById('form-error');
 const resultsRegion = document.getElementById('simulation-results');
 const exportButton = document.getElementById('export-csv');
+const copyButton = document.getElementById('copy-summary');
+const copyStatus = document.getElementById('copy-status');
 let latestSimulation = null;
+let liveCalculationTimer = null;
 
 const money = new Intl.NumberFormat('es-MX', {
   style: 'currency',
@@ -67,6 +71,33 @@ function renderSummary(simulation) {
   const resultChange = document.getElementById('result-change');
   resultChange.classList.toggle('negative', simulation.result < 0);
   resultChange.classList.toggle('positive', simulation.result > 0);
+}
+
+function renderInterpretation(simulation) {
+  const card = document.getElementById('scenario-reading-card');
+  const reading = document.getElementById('scenario-reading');
+  const detail = document.getElementById('scenario-detail');
+  const meter = document.getElementById('risk-meter-fill');
+  const drawdown = Math.abs(simulation.maxDrawdown);
+
+  card.classList.remove('positive', 'negative');
+  if (simulation.resultPercent > 8 && drawdown < 20) {
+    card.classList.add('positive');
+    reading.textContent = 'Crecimiento con control moderado';
+    detail.textContent =
+      'El valor final supera el capital aportado y la caída del escenario permanece acotada. Aun así, el supuesto no es un pronóstico.';
+  } else if (simulation.resultPercent >= 0) {
+    reading.textContent = 'Escenario estable o de crecimiento limitado';
+    detail.textContent =
+      'El resultado no es negativo, pero la diferencia frente al capital aportado exige revisar horizonte, inflación, costos e impuestos.';
+  } else {
+    card.classList.add('negative');
+    reading.textContent = 'Escenario de pérdida: revisar capacidad de riesgo';
+    detail.textContent =
+      'El valor final queda por debajo del capital aportado. Antes de invertir, la exposición y la reserva de liquidez tendrían que resistir esta caída.';
+  }
+
+  meter.style.width = `${Math.min(100, Math.max(8, drawdown * 1.8))}%`;
 }
 
 function getChartPoint(index, value, records, width, height, padding, maxValue) {
@@ -182,15 +213,18 @@ function calculate({ focusResults = false } = {}) {
   try {
     latestSimulation = simulatePortfolio(getOptions());
     renderSummary(latestSimulation);
+    renderInterpretation(latestSimulation);
     renderChart(latestSimulation);
     renderAllocation(latestSimulation);
     renderTable(latestSimulation);
     renderMethodNote(latestSimulation);
     exportButton.disabled = false;
+    copyButton.disabled = false;
     if (focusResults) resultsRegion.focus();
   } catch (error) {
     latestSimulation = null;
     exportButton.disabled = true;
+    copyButton.disabled = true;
     errorBox.textContent = error.message;
     errorBox.hidden = false;
     errorBox.focus();
@@ -219,6 +253,11 @@ form.addEventListener('reset', () => {
   window.setTimeout(() => applyPreset('didactic'), 0);
 });
 
+form.addEventListener('input', () => {
+  window.clearTimeout(liveCalculationTimer);
+  liveCalculationTimer = window.setTimeout(() => calculate(), 220);
+});
+
 document.querySelectorAll('[data-preset]').forEach(button => {
   button.addEventListener('click', () => applyPreset(button.dataset.preset));
 });
@@ -233,6 +272,33 @@ exportButton.addEventListener('click', () => {
   link.download = 'bitforward-simulacion-educativa.csv';
   link.click();
   URL.revokeObjectURL(link.href);
+});
+
+function buildTextSummary(simulation) {
+  return [
+    'BitForward · Resumen de escenario educativo',
+    `Horizonte: ${simulation.months} meses`,
+    `Capital aportado: ${money.format(simulation.totalContributions)}`,
+    `Valor hipotético final: ${money.format(simulation.finalValue)}`,
+    `Resultado hipotético: ${money.format(simulation.result)} (${formatPercent(simulation.resultPercent)})`,
+    `Caída máxima: ${formatPercent(simulation.maxDrawdown)}`,
+    `Rebalanceos: ${simulation.rebalanceCount}`,
+    'Modelo: BTC 60%, ETH 20%, SOL 10%, ADA 10%',
+    'Aviso: escenario informativo; no es pronóstico ni recomendación.',
+  ].join('\n');
+}
+
+copyButton.addEventListener('click', async () => {
+  if (!latestSimulation) return;
+  try {
+    await navigator.clipboard.writeText(buildTextSummary(latestSimulation));
+    copyStatus.textContent = 'Resumen copiado.';
+  } catch {
+    copyStatus.textContent = 'Tu navegador bloqueó el portapapeles. Usa Exportar CSV.';
+  }
+  window.setTimeout(() => {
+    copyStatus.textContent = '';
+  }, 3000);
 });
 
 calculate();

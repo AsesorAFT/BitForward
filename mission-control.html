@@ -6,10 +6,16 @@
     <title>Simulador educativo | BitForward</title>
     <meta
       name="description"
-      content="Simula escenarios hipotéticos para el portafolio educativo BitForward 60/20/10/10 y observa sus reglas de rebalanceo mensual."
+      content="Construye escenarios hipotéticos para el modelo BitForward 60/20/10/10 y revisa resultado, caída máxima y rebalanceos."
     />
-    <meta name="theme-color" content="#050914" />
+    <meta name="theme-color" content="#041019" />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/design-system.css" />
     <link rel="stylesheet" href="css/simulator.css" />
     <script type="module" src="js/simulator.js"></script>
@@ -17,23 +23,36 @@
   <body class="simulator-body">
     <a class="skip-link" href="#contenido">Saltar al simulador</a>
 
-    <bf-header logo-src="assets/logo-astronaut-rocket.svg" hide-wallet></bf-header>
+    <bf-header logo-src="assets/logo-astronaut-rocket.svg" hide-cta>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#mercado">Mercado</a>
+      <a href="about.html">Metodología</a>
+    </bf-header>
 
     <main class="simulator-shell" id="contenido" tabindex="-1">
       <section class="simulator-hero" aria-labelledby="simulator-title">
-        <div>
-          <p class="eyebrow">Laboratorio educativo · BitForward</p>
-          <h1 id="simulator-title">Prueba una estrategia antes de creer en ella.</h1>
+        <div class="hero-copy">
+          <p class="eyebrow">Laboratorio de escenarios · BitForward</p>
+          <h1 id="simulator-title">Prueba la estrategia. <em>Después decide.</em></h1>
           <p class="lead">
-            Define un escenario hipotético y observa cómo evolucionaría el modelo BTC 60%, ETH 20%,
-            SOL 10% y ADA 10%, con revisión mensual y bandas de rebalanceo de ±5 puntos.
+            Define capital, aportaciones, horizonte y variaciones hipotéticas. El motor muestra cómo
+            evolucionaría el modelo Génesis con revisión mensual y bandas de ±5 puntos.
           </p>
+          <div class="hero-facts">
+            <span><b>01</b> Cálculo local</span>
+            <span><b>02</b> Datos exportables</span>
+            <span><b>03</b> Sin ejecución real</span>
+          </div>
         </div>
         <aside class="model-card" aria-label="Reglas del portafolio modelo">
-          <span>Regla vigente</span>
+          <div class="model-card-top">
+            <span>Modelo activo</span>
+            <small>Génesis</small>
+          </div>
           <strong>60 / 20 / 10 / 10</strong>
-          <small>Sin apalancamiento, derivados, custodia ni ejecución real.</small>
+          <p>BTC · ETH · SOL · ADA</p>
           <div class="allocation-strip" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <small>Sin apalancamiento, derivados, custodia ni ejecución.</small>
         </aside>
       </section>
 
@@ -41,98 +60,144 @@
         <form class="panel input-panel" id="simulator-form" novalidate>
           <div class="panel-heading">
             <div>
-              <p class="eyebrow">Entradas</p>
+              <p class="eyebrow">01 · Entradas</p>
               <h2>Construye tu escenario</h2>
             </div>
-            <span class="step-badge">1 · Define</span>
+            <span class="step-badge">Editable</span>
           </div>
 
           <div class="form-error" id="form-error" role="alert" tabindex="-1" hidden></div>
 
           <div class="field-grid">
             <label class="field">
-              <span>Capital inicial (MXN)</span>
-              <input
-                name="initialCapital"
-                type="number"
-                min="100"
-                max="100000000"
-                step="100"
-                value="10000"
-                required
-              />
+              <span>Capital inicial <small>MXN</small></span>
+              <span class="input-shell"
+                ><b>$</b
+                ><input
+                  name="initialCapital"
+                  type="number"
+                  min="100"
+                  max="100000000"
+                  step="100"
+                  value="10000"
+                  required
+              /></span>
             </label>
             <label class="field">
-              <span>Aportación mensual (MXN)</span>
-              <input
-                name="monthlyContribution"
-                type="number"
-                min="0"
-                max="10000000"
-                step="100"
-                value="1000"
-                required
-              />
+              <span>Aportación mensual <small>MXN</small></span>
+              <span class="input-shell"
+                ><b>$</b
+                ><input
+                  name="monthlyContribution"
+                  type="number"
+                  min="0"
+                  max="10000000"
+                  step="100"
+                  value="1000"
+                  required
+              /></span>
             </label>
           </div>
 
-          <label class="field">
-            <span>Horizonte (meses)</span>
-            <input name="months" type="number" min="1" max="120" step="1" value="36" required />
+          <label class="field horizon-field">
+            <span>Horizonte <small>1 a 120 meses</small></span>
+            <span class="input-shell"
+              ><input
+                name="months"
+                type="number"
+                min="1"
+                max="120"
+                step="1"
+                value="36"
+                required
+              /><b>meses</b></span
+            >
           </label>
 
-          <p class="rate-title">Variación anual hipotética por activo</p>
-          <p class="helper">No son rendimientos esperados. Úsalos para explorar escenarios.</p>
+          <div class="assumption-heading">
+            <div>
+              <p class="rate-title">Variación anual hipotética</p>
+              <p class="helper">Son supuestos de prueba; no rendimientos esperados.</p>
+            </div>
+            <span>Rango: −95% a +300%</span>
+          </div>
 
           <div class="preset-row" aria-label="Escenarios de ejemplo">
             <button class="preset" type="button" data-preset="didactic" aria-pressed="true">
-              Didáctico
+              <strong>Base</strong><small>Crecimiento diferenciado</small>
             </button>
             <button class="preset" type="button" data-preset="neutral" aria-pressed="false">
-              Sin variación
+              <strong>Plano</strong><small>Sin variación</small>
             </button>
             <button class="preset" type="button" data-preset="stress" aria-pressed="false">
-              Estrés
+              <strong>Estrés</strong><small>Caída simultánea</small>
             </button>
           </div>
 
           <div class="rate-grid">
-            <label class="field">
-              <span>BTC (%)</span>
-              <input
-                id="btc-return"
-                name="btcReturn"
-                type="number"
-                min="-95"
-                max="300"
-                value="15"
-              />
+            <label class="field asset-field btc-field">
+              <span>BTC <small>Núcleo</small></span>
+              <span class="input-shell"
+                ><input
+                  id="btc-return"
+                  name="btcReturn"
+                  type="number"
+                  min="-95"
+                  max="300"
+                  value="15"
+                /><b>%</b></span
+              >
             </label>
-            <label class="field">
-              <span>ETH (%)</span>
-              <input
-                id="eth-return"
-                name="ethReturn"
-                type="number"
-                min="-95"
-                max="300"
-                value="10"
-              />
+            <label class="field asset-field eth-field">
+              <span>ETH <small>Infraestructura</small></span>
+              <span class="input-shell"
+                ><input
+                  id="eth-return"
+                  name="ethReturn"
+                  type="number"
+                  min="-95"
+                  max="300"
+                  value="10"
+                /><b>%</b></span
+              >
             </label>
-            <label class="field">
-              <span>SOL (%)</span>
-              <input id="sol-return" name="solReturn" type="number" min="-95" max="300" value="5" />
+            <label class="field asset-field sol-field">
+              <span>SOL <small>Crecimiento</small></span>
+              <span class="input-shell"
+                ><input
+                  id="sol-return"
+                  name="solReturn"
+                  type="number"
+                  min="-95"
+                  max="300"
+                  value="5"
+                /><b>%</b></span
+              >
             </label>
-            <label class="field">
-              <span>ADA (%)</span>
-              <input id="ada-return" name="adaReturn" type="number" min="-95" max="300" value="0" />
+            <label class="field asset-field ada-field">
+              <span>ADA <small>Satélite</small></span>
+              <span class="input-shell"
+                ><input
+                  id="ada-return"
+                  name="adaReturn"
+                  type="number"
+                  min="-95"
+                  max="300"
+                  value="0"
+                /><b>%</b></span
+              >
             </label>
           </div>
 
           <div class="form-actions">
-            <button class="action-button primary" type="submit">Calcular escenario</button>
+            <button class="action-button primary" type="submit">
+              Calcular escenario <span aria-hidden="true">↗</span>
+            </button>
             <button class="action-button" type="reset">Restablecer</button>
           </div>
+          <p class="privacy-note">
+            Los valores permanecen en este navegador y no se envían a AFORTU.
+          </p>
         </form>
 
         <section
@@ -142,16 +207,30 @@
           aria-labelledby="results-title"
           aria-live="polite"
         >
-          <div class="panel-heading">
+          <div class="panel-heading results-heading">
             <div>
-              <p class="eyebrow">Resultados</p>
+              <p class="eyebrow">02 · Resultados</p>
               <h2 id="results-title">Lectura del escenario</h2>
             </div>
-            <button class="action-button" id="export-csv" type="button">Exportar CSV</button>
+            <div class="result-actions">
+              <button class="action-button compact" id="copy-summary" type="button">
+                Copiar resumen
+              </button>
+              <button class="action-button compact" id="export-csv" type="button">
+                Exportar CSV
+              </button>
+            </div>
+          </div>
+
+          <div class="scenario-reading" id="scenario-reading-card">
+            <span>Interpretación automática</span>
+            <strong id="scenario-reading">Calculando escenario base</strong>
+            <p id="scenario-detail">El resultado se comparará contra el capital aportado.</p>
+            <div class="risk-meter" aria-hidden="true"><i id="risk-meter-fill"></i></div>
           </div>
 
           <div class="metrics-grid">
-            <article class="metric">
+            <article class="metric primary-metric">
               <span>Valor hipotético final</span>
               <strong id="result-final">—</strong>
             </article>
@@ -164,24 +243,25 @@
               <strong id="result-change">—</strong>
             </article>
             <article class="metric">
-              <span>Rebalanceos activados</span>
+              <span>Rebalanceos</span>
               <strong id="result-rebalances">—</strong>
             </article>
             <article class="metric">
-              <span>Caída máxima del escenario</span>
+              <span>Caída máxima</span>
               <strong id="result-drawdown">—</strong>
             </article>
             <article class="metric">
               <span>Banda de control</span>
-              <strong>±5 puntos</strong>
+              <strong>±5 pts.</strong>
             </article>
           </div>
 
           <div class="chart-card">
             <div class="chart-topline">
+              <span>Evolución del escenario</span>
               <span class="chart-legend">
                 <span><i class="portfolio-key"></i>Portafolio</span>
-                <span><i class="contribution-key"></i>Capital aportado</span>
+                <span><i class="contribution-key"></i>Aportado</span>
               </span>
             </div>
             <svg
@@ -217,12 +297,13 @@
           </div>
 
           <p class="scenario-summary" id="scenario-summary"></p>
+          <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
         </section>
       </section>
 
       <section class="method-section" aria-label="Metodología y límites">
         <article class="method-card">
-          <p class="eyebrow">Metodología reproducible</p>
+          <p class="eyebrow">Motor reproducible</p>
           <h2>Qué hace el cálculo</h2>
           <ol class="method-list">
             <li>
@@ -235,7 +316,7 @@
             <li>
               <span>2</span>
               <div>
-                <strong>Aplica el escenario</strong>
+                <strong>Compone</strong>
                 <p>Convierte cada variación anual a una tasa mensual constante.</p>
               </div>
             </li>
@@ -260,17 +341,18 @@
           <p class="eyebrow">Límite del modelo</p>
           <h2>Es un escenario, no un pronóstico.</h2>
           <p>
-            El cálculo no incorpora comisiones, impuestos, spreads, liquidez, eventos extremos ni
-            cambios de correlación. No constituye recomendación individual, garantía de rendimiento,
-            custodia ni oferta para invertir. Los activos digitales pueden perder una parte
-            sustancial o la totalidad de su valor.
+            No incorpora comisiones, impuestos, spreads, cambios de liquidez, eventos extremos ni
+            correlaciones variables. No constituye recomendación individual, garantía, custodia u
+            oferta. Un activo digital puede perder una parte sustancial o la totalidad de su valor.
           </p>
+          <a href="about.html">Revisar metodología completa <span aria-hidden="true">→</span></a>
         </article>
       </section>
     </main>
 
     <footer class="simulator-footer">
-      BitForward by AFORTU · MVP educativo en validación · Datos introducidos sólo en tu navegador.
+      <strong>BitForward by AFORTU</strong>
+      <span>MVP educativo en validación · Datos introducidos sólo en tu navegador.</span>
     </footer>
   </body>
 </html>

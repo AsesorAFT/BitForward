@@ -6,138 +6,268 @@
     <title>Metodología | BitForward</title>
     <meta
       name="description"
-      content="Conoce el alcance, las reglas de riesgo y la metodología educativa del MVP BitForward de AFORTU."
+      content="Conoce la metodología, reglas de riesgo, fuentes y alcance educativo de BitForward by AFORTU."
     />
-    <meta name="theme-color" content="#050914" />
+    <meta name="theme-color" content="#041019" />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/design-system.css" />
     <link rel="stylesheet" href="css/methodology.css" />
-    <script type="module" src="js/components/bf-header.js"></script>
+    <script type="module" src="js/methodology.js"></script>
   </head>
   <body class="methodology-body">
-    <bf-header logo-src="assets/logo-astronaut-rocket.svg" hide-wallet></bf-header>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-    <main class="methodology-shell">
-      <section class="methodology-hero">
-        <p class="eyebrow">Metodología y alcance</p>
-        <h1>Reglas claras antes que promesas.</h1>
-        <p class="lead">
-          BitForward es una plataforma fintech educativa de AFORTU para simular, analizar y explicar
-          decisiones patrimoniales con activos digitales. El MVP público no recibe dinero, no
-          custodia activos y no ejecuta operaciones.
-        </p>
-        <span class="status-line">MVP educativo en validación · julio de 2026</span>
-      </section>
+    <bf-header
+      logo-src="assets/logo-astronaut-rocket.svg"
+      cta-href="mission-control.html"
+      cta-label="Abrir simulador"
+    >
+      <a href="index.html">Inicio</a>
+      <a href="index.html#mercado">Mercado</a>
+      <a href="#modelo">Modelo</a>
+      <a href="#diagnostico">Diagnóstico</a>
+    </bf-header>
 
-      <section class="method-grid" aria-label="Capas del producto">
-        <article class="method-card">
-          <span>01 · Observar</span>
-          <h2>Mercado trazable</h2>
-          <p>Datos públicos con fuente, estado de disponibilidad y hora de actualización.</p>
-        </article>
-        <article class="method-card">
-          <span>02 · Simular</span>
-          <h2>Escenarios reproducibles</h2>
-          <p>Supuestos definidos por el usuario, cálculo transparente y resultados exportables.</p>
-        </article>
-        <article class="method-card">
-          <span>03 · Aprender</span>
-          <h2>Riesgo comprensible</h2>
-          <p>
-            Asignación, desviaciones y rebalanceos explicados sin presentar escenarios como
-            certezas.
+    <main class="methodology-shell" id="contenido" tabindex="-1">
+      <section class="methodology-hero" aria-labelledby="method-title">
+        <div class="method-hero-copy">
+          <p class="eyebrow">Metodología · Gobierno · Alcance</p>
+          <h1 id="method-title">Reglas claras antes que <em>promesas.</em></h1>
+          <p class="lead">
+            BitForward convierte datos y supuestos en escenarios comprensibles. Cada resultado debe
+            mostrar su fuente, fórmula, límite y condición de riesgo.
           </p>
-        </article>
-      </section>
-
-      <section class="method-section">
-        <p class="eyebrow">Portafolio educativo</p>
-        <h2>Modelo Génesis 60/20/10/10</h2>
-        <p>
-          El modelo sirve para enseñar diversificación y control de exposición. No sustituye el
-          perfil de riesgo, horizonte, liquidez ni situación fiscal de una persona.
-        </p>
-        <table class="rules-table">
-          <thead>
-            <tr>
-              <th>Activo</th>
-              <th>Peso objetivo</th>
-              <th>Función educativa</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Bitcoin</td>
-              <td>60%</td>
-              <td>Núcleo y reserva digital del modelo.</td>
-            </tr>
-            <tr>
-              <td>Ethereum</td>
-              <td>20%</td>
-              <td>Infraestructura de contratos y tokenización.</td>
-            </tr>
-            <tr>
-              <td>Solana</td>
-              <td>10%</td>
-              <td>Exposición complementaria de crecimiento.</td>
-            </tr>
-            <tr>
-              <td>Cardano</td>
-              <td>10%</td>
-              <td>Exposición complementaria de mayor riesgo.</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section class="method-section">
-        <p class="eyebrow">Gobierno del modelo</p>
-        <h2>Revisión mensual, rebalanceo por excepción.</h2>
-        <div class="boundary-grid">
-          <div>
-            <strong>Bandas ±5 puntos</strong>
-            <p>El portafolio vuelve al objetivo sólo cuando un activo rebasa su rango permitido.</p>
+          <div class="status-line">
+            <span aria-hidden="true"></span>
+            MVP educativo en validación · julio de 2026
           </div>
-          <div>
-            <strong>Sin apalancamiento</strong>
-            <p>
-              No se permiten futuros, opciones, préstamos, liquidaciones automáticas ni derivados.
-            </p>
-          </div>
-          <div>
-            <strong>Escenarios, no predicciones</strong>
-            <p>
-              Los rendimientos del simulador son entradas hipotéticas controladas por el usuario.
-            </p>
-          </div>
-          <div>
-            <strong>Cero datos de clientes</strong>
-            <p>
-              GitHub no almacena CURP, estados de cuenta, credenciales, expedientes ni bases
-              operativas.
-            </p>
+        </div>
+        <div class="method-hero-visual">
+          <img
+            src="assets/brand/risk-layers.svg"
+            alt="Capas abstractas que representan controles sucesivos de riesgo"
+            width="1100"
+            height="825"
+          />
+          <div class="visual-panel">
+            <span>Arquitectura BitForward</span>
+            <strong>Dato → Escenario → Control → Decisión</strong>
           </div>
         </div>
       </section>
 
+      <section class="process-section" aria-labelledby="process-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Proceso verificable</p>
+            <h2 id="process-title">De la observación a la decisión.</h2>
+          </div>
+          <p>El proceso evita confundir un movimiento de precio con una recomendación.</p>
+        </div>
+        <div class="method-grid">
+          <article>
+            <span>01</span>
+            <h3>Observar</h3>
+            <p>Consultar datos públicos con hora, fuente y disponibilidad visibles.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Formular</h3>
+            <p>Definir capital, aportaciones, horizonte y variaciones hipotéticas.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Simular</h3>
+            <p>Aplicar la fórmula mensual y registrar los rebalanceos activados.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Controlar</h3>
+            <p>Leer resultado, caída máxima, liquidez y capacidad de pérdida.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="model-section" id="modelo" aria-labelledby="model-title">
+        <div class="model-intro">
+          <p class="eyebrow">Portafolio educativo</p>
+          <h2 id="model-title">Modelo Génesis 60 / 20 / 10 / 10.</h2>
+          <p>
+            El modelo enseña concentración controlada y posiciones satélite acotadas. No sustituye
+            el perfil de riesgo, la reserva de liquidez ni la situación fiscal de una persona.
+          </p>
+          <a href="mission-control.html">Simular el modelo <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="model-table-wrap">
+          <table class="rules-table">
+            <thead>
+              <tr>
+                <th>Activo</th>
+                <th>Peso</th>
+                <th>Función</th>
+                <th>Banda</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><i class="dot btc-dot"></i>Bitcoin</td>
+                <td>60%</td>
+                <td>Núcleo y reserva digital.</td>
+                <td>55–65%</td>
+              </tr>
+              <tr>
+                <td><i class="dot eth-dot"></i>Ethereum</td>
+                <td>20%</td>
+                <td>Infraestructura programable.</td>
+                <td>15–25%</td>
+              </tr>
+              <tr>
+                <td><i class="dot sol-dot"></i>Solana</td>
+                <td>10%</td>
+                <td>Exposición de crecimiento.</td>
+                <td>5–15%</td>
+              </tr>
+              <tr>
+                <td><i class="dot ada-dot"></i>Cardano</td>
+                <td>10%</td>
+                <td>Posición satélite de mayor riesgo.</td>
+                <td>5–15%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="governance-section" aria-labelledby="governance-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Gobierno del modelo</p>
+            <h2 id="governance-title">Cuatro límites no negociables.</h2>
+          </div>
+          <p>
+            Si una regla no puede explicarse antes de invertir, no protege cuando llega la presión.
+          </p>
+        </div>
+        <div class="boundary-grid">
+          <article>
+            <span>Bandas ±5 puntos</span><strong>Rebalanceo por excepción</strong>
+            <p>El portafolio vuelve al objetivo sólo cuando un activo rebasa su rango.</p>
+          </article>
+          <article>
+            <span>Exposición acotada</span><strong>Sin apalancamiento</strong>
+            <p>No se modelan futuros, préstamos, liquidaciones automáticas ni derivados.</p>
+          </article>
+          <article>
+            <span>Supuestos visibles</span><strong>Escenarios, no predicciones</strong>
+            <p>Las tasas son entradas hipotéticas controladas por el usuario.</p>
+          </article>
+          <article>
+            <span>Privacidad primero</span><strong>Cero expedientes</strong>
+            <p>La versión pública no almacena CURP, credenciales, cuentas ni documentos.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="diagnostic-section" id="diagnostico" aria-labelledby="diagnostic-title">
+        <div class="diagnostic-copy">
+          <p class="eyebrow">Diagnóstico educativo</p>
+          <h2 id="diagnostic-title">¿Tu estructura resiste la volatilidad?</h2>
+          <p>
+            Marca únicamente lo que ya existe hoy. El resultado no determina idoneidad; identifica
+            brechas que deberían resolverse antes de asumir exposición digital.
+          </p>
+          <div class="diagnostic-result" id="diagnostic-result" aria-live="polite">
+            <span>Preparación observada</span>
+            <strong id="diagnostic-label">Sin evaluar</strong>
+            <p id="diagnostic-detail">Responde los cinco controles para obtener una lectura.</p>
+            <div class="diagnostic-meter" aria-hidden="true">
+              <i id="diagnostic-meter-fill"></i>
+            </div>
+          </div>
+        </div>
+        <form class="readiness-form" id="readiness-form">
+          <label
+            ><input type="checkbox" name="control" /><span
+              ><b>Liquidez</b><small>Tengo un fondo de emergencia separado.</small></span
+            ></label
+          >
+          <label
+            ><input type="checkbox" name="control" /><span
+              ><b>Horizonte</b><small>No necesito este capital en al menos tres años.</small></span
+            ></label
+          >
+          <label
+            ><input type="checkbox" name="control" /><span
+              ><b>Capacidad de pérdida</b
+              ><small>Puedo tolerar una caída fuerte sin vender por necesidad.</small></span
+            ></label
+          >
+          <label
+            ><input type="checkbox" name="control" /><span
+              ><b>Custodia</b
+              ><small>Comprendo respaldos, accesos y riesgos de plataforma.</small></span
+            ></label
+          >
+          <label
+            ><input type="checkbox" name="control" /><span
+              ><b>Disciplina</b
+              ><small>Tengo un límite de exposición y una regla de rebalanceo.</small></span
+            ></label
+          >
+          <button type="reset">Restablecer diagnóstico</button>
+        </form>
+      </section>
+
+      <section class="evidence-section" aria-labelledby="evidence-title">
+        <div>
+          <p class="eyebrow">Trazabilidad</p>
+          <h2 id="evidence-title">Qué se muestra y cómo se limita.</h2>
+        </div>
+        <div class="evidence-grid">
+          <article>
+            <span>Mercado</span><strong>CoinGecko / Binance</strong>
+            <p>Precios públicos en USD o pares USDT; caché local cuando la fuente no responde.</p>
+          </article>
+          <article>
+            <span>Cálculo</span><strong>Motor en navegador</strong>
+            <p>Capitalización mensual constante, aportación por activo y revisión al cierre.</p>
+          </article>
+          <article>
+            <span>Privacidad</span><strong>Sin envío de entradas</strong>
+            <p>
+              Los valores del simulador se procesan localmente y el CSV se genera en el dispositivo.
+            </p>
+          </article>
+        </div>
+      </section>
+
       <section class="boundary-card">
-        <p class="eyebrow">Frontera de responsabilidad</p>
-        <h2>Lo que BitForward todavía no es.</h2>
-        <p>
-          No es exchange, custodio, casa de bolsa, recomendador automático ni sistema productivo de
-          gestión de clientes. La autenticación real, PostgreSQL, roles, auditoría, integraciones
-          con custodios y revisión jurídica permanecen fuera del MVP público hasta superar pruebas
-          técnicas, de privacidad y cumplimiento.
-        </p>
-        <div class="method-actions">
-          <a href="mission-control.html">Abrir simulador</a>
+        <div>
+          <p class="eyebrow">Frontera de responsabilidad</p>
+          <h2>Lo que BitForward no es.</h2>
+          <p>
+            No es exchange, custodio, casa de bolsa, recomendador automático ni sistema de gestión
+            de clientes. No recibe dinero ni ejecuta operaciones desde esta versión pública.
+          </p>
+        </div>
+        <div class="boundary-actions">
+          <a class="primary-link" href="mission-control.html"
+            >Abrir simulador <span aria-hidden="true">↗</span></a
+          >
           <a href="index.html">Volver al inicio</a>
         </div>
       </section>
     </main>
 
     <footer class="methodology-footer">
-      BitForward by AFORTU · Innovación financiera con método.
+      <strong>BitForward by AFORTU</strong>
+      <span>Innovación financiera con método.</span>
     </footer>
   </body>
 </html>

@@ -1,258 +1,113 @@
 /**
- * BitForward Service Worker
- * PWA con caching estratégico para performance óptima
- *
- * @version 1.0.0
- * @date 2025-10-19
+ * BitForward service worker.
+ * Mantiene la navegación actualizada y ofrece una copia offline del núcleo público.
  */
 
-const CACHE_NAME = 'bitforward-v1.0.0';
-const RUNTIME_CACHE = 'bitforward-runtime';
-
-// Recursos críticos para precache (cargan instantáneamente)
+const CACHE_NAME = 'bitforward-public-v4';
 const CRITICAL_RESOURCES = [
-  '/',
-  '/index.html',
-  '/dashboard.html',
-  '/css/style.css',
-  '/css/main.css',
-  '/css/dashboard.css',
-  '/js/wallet-manager-real.js',
-  '/js/price-feeds.js',
-  '/assets/logo-astronaut-rocket.svg',
-  '/assets/favicon.svg',
+  './',
+  './index.html',
+  './mission-control.html',
+  './about.html',
+  './dashboard.html',
+  './offline.html',
+  './manifest.json',
+  './css/design-system.css',
+  './css/bf-header.css',
+  './css/landing-mission.css',
+  './css/simulator.css',
+  './css/methodology.css',
+  './js/landing.js',
+  './js/simulator.js',
+  './js/methodology.js',
+  './js/simulation-engine.mjs',
+  './js/components/bf-header.js',
+  './assets/logo-astronaut-rocket.svg',
+  './assets/favicon.ico',
+  './assets/brand/hero-digital-treasury.svg',
+  './assets/brand/risk-layers.svg',
 ];
 
-// APIs externas (cache con network fallback)
-const API_URLS = ['https://api.coingecko.com', 'wss://stream.binance.com'];
-
-// CDNs (cache first, luego network)
-const CDN_URLS = ['https://cdn.jsdelivr.net', 'https://cdn.tailwindcss.com'];
-
-/**
- * Install Event - Precache recursos críticos
- */
 self.addEventListener('install', event => {
-  console.log('[SW] Installing Service Worker...');
-
-  event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then(cache => {
-        console.log('[SW] Precaching critical resources');
-        return cache.addAll(CRITICAL_RESOURCES);
-      })
-      .then(() => {
-        console.log('[SW] Service Worker installed successfully');
-        return self.skipWaiting();
-      })
-      .catch(error => {
-        console.error('[SW] Error during install:', error);
-      })
-  );
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(CRITICAL_RESOURCES)));
+  self.skipWaiting();
 });
 
-/**
- * Activate Event - Limpiar caches antiguos
- */
 self.addEventListener('activate', event => {
-  console.log('[SW] Activating Service Worker...');
-
   event.waitUntil(
     caches
       .keys()
-      .then(cacheNames => {
-        return Promise.all(
-          cacheNames
-            .filter(cacheName => {
-              return cacheName !== CACHE_NAME && cacheName !== RUNTIME_CACHE;
-            })
-            .map(cacheName => {
-              console.log('[SW] Deleting old cache:', cacheName);
-              return caches.delete(cacheName);
-            })
-        );
-      })
-      .then(() => {
-        console.log('[SW] Service Worker activated');
-        return self.clients.claim();
-      })
+      .then(names =>
+        Promise.all(
+          names
+            .filter(name => name.startsWith('bitforward-') && name !== CACHE_NAME)
+            .map(name => caches.delete(name))
+        )
+      )
+      .then(() => self.clients.claim())
   );
 });
 
-/**
- * Fetch Event - Estrategias de caching inteligentes
- */
 self.addEventListener('fetch', event => {
   const { request } = event;
+  if (request.method !== 'GET') return;
+
   const url = new URL(request.url);
+  if (!['http:', 'https:'].includes(url.protocol)) return;
 
-  // Ignorar requests de extensiones del browser
-  if (url.protocol === 'chrome-extension:' || url.protocol === 'moz-extension:') {
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirst(request));
     return;
   }
 
-  // Ignorar WebSocket requests
-  if (url.protocol === 'ws:' || url.protocol === 'wss:') {
+  if (url.origin !== self.location.origin || isApiRequest(url)) {
+    event.respondWith(networkFirst(request, false));
     return;
   }
 
-  // Estrategia según tipo de recurso
-  if (isCDNRequest(url)) {
-    // CDN: Cache First, luego Network
-    event.respondWith(cacheFirst(request));
-  } else if (isAPIRequest(url)) {
-    // API: Network First, luego Cache (stale-while-revalidate)
-    event.respondWith(networkFirst(request));
-  } else if (isStaticAsset(request)) {
-    // Assets estáticos: Cache First
-    event.respondWith(cacheFirst(request));
-  } else {
-    // Otros: Network First con cache fallback
-    event.respondWith(networkFirst(request));
-  }
+  event.respondWith(cacheFirst(request));
 });
 
-/**
- * Estrategia: Cache First
- * Intenta cache primero, luego network si no está
- */
 async function cacheFirst(request) {
-  try {
-    const cachedResponse = await caches.match(request);
-
-    if (cachedResponse) {
-      console.log('[SW] Cache hit:', request.url);
-      return cachedResponse;
-    }
-
-    console.log('[SW] Cache miss, fetching:', request.url);
-    const networkResponse = await fetch(request);
-
-    // Cachear la respuesta si es exitosa
-    if (networkResponse.ok) {
-      const cache = await caches.open(RUNTIME_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-
-    return networkResponse;
-  } catch (error) {
-    console.error('[SW] Fetch failed:', error);
-
-    // Intentar cache como fallback
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-
-    // Retornar página offline si existe
-    return caches.match('/offline.html');
+  const cached = await caches.match(request);
+  if (cached) {
+    void fetchAndCache(request);
+    return cached;
   }
+  return fetchAndCache(request);
 }
 
-/**
- * Estrategia: Network First
- * Intenta network primero, cache como fallback
- */
-async function networkFirst(request) {
+async function networkFirst(request, useOfflineFallback = true) {
   try {
-    const networkResponse = await fetch(request);
-
-    // Cachear respuestas exitosas
-    if (networkResponse.ok) {
-      const cache = await caches.open(RUNTIME_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-
-    return networkResponse;
+    return await fetchAndCache(request);
   } catch (error) {
-    console.log('[SW] Network failed, trying cache:', request.url);
-
-    // Fallback a cache
-    const cachedResponse = await caches.match(request);
-
-    if (cachedResponse) {
-      return cachedResponse;
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    if (useOfflineFallback) {
+      const offline = await caches.match('./offline.html');
+      if (offline) return offline;
     }
-
-    // Si es una página HTML, retornar offline page
-    if (request.headers.get('accept').includes('text/html')) {
-      return caches.match('/offline.html');
-    }
-
     throw error;
   }
 }
 
-/**
- * Verificar si es request a CDN
- */
-function isCDNRequest(url) {
-  return CDN_URLS.some(cdn => url.href.startsWith(cdn));
+async function fetchAndCache(request) {
+  const response = await fetch(request);
+  if (response.ok && response.type !== 'opaque') {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(request, response.clone());
+  }
+  return response;
 }
 
-/**
- * Verificar si es request a API
- */
-function isAPIRequest(url) {
-  return API_URLS.some(api => url.href.startsWith(api)) || url.pathname.startsWith('/api/');
+function isApiRequest(url) {
+  return (
+    url.pathname.startsWith('/api/') ||
+    url.hostname.includes('coingecko.com') ||
+    url.hostname.includes('binance.com')
+  );
 }
 
-/**
- * Verificar si es asset estático
- */
-function isStaticAsset(request) {
-  const url = new URL(request.url);
-  return url.pathname.match(/\.(css|js|jpg|jpeg|png|gif|svg|webp|woff|woff2|ttf|eot)$/);
-}
-
-/**
- * Message Event - Comandos desde el cliente
- */
 self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-
-  if (event.data && event.data.type === 'CLEAR_CACHE') {
-    caches
-      .keys()
-      .then(cacheNames => {
-        return Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
-      })
-      .then(() => {
-        event.ports[0].postMessage({ success: true });
-      });
-  }
-
-  if (event.data && event.data.type === 'GET_CACHE_SIZE') {
-    getCacheSize().then(size => {
-      event.ports[0].postMessage({ size });
-    });
-  }
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
-
-/**
- * Obtener tamaño total del cache
- */
-async function getCacheSize() {
-  const cacheNames = await caches.keys();
-  let totalSize = 0;
-
-  for (const cacheName of cacheNames) {
-    const cache = await caches.open(cacheName);
-    const requests = await cache.keys();
-
-    for (const request of requests) {
-      const response = await cache.match(request);
-      if (response) {
-        const blob = await response.blob();
-        totalSize += blob.size;
-      }
-    }
-  }
-
-  return totalSize;
-}
-
-console.log('[SW] Service Worker loaded');
