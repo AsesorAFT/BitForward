@@ -5,7 +5,7 @@
   "start_url": "/BitForward/",
   "display": "standalone",
   "background_color": "#02040a",
-  "theme_color": "#d4af37",
+  "theme_color": "#041019",
   "orientation": "portrait-primary",
   "scope": "/BitForward/",
   "lang": "es",
@@ -20,23 +20,9 @@
       "purpose": "any maskable"
     },
     {
-      "src": "assets/logo-astronaut-rocket.svg",
+      "src": "assets/favicon.ico",
       "sizes": "32x32",
-      "type": "image/svg+xml"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "assets/screenshot-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
-      "src": "assets/screenshot-narrow.png",
-      "sizes": "750x1334",
-      "type": "image/png",
-      "form_factor": "narrow"
+      "type": "image/x-icon"
     }
   ],
   "shortcuts": [
