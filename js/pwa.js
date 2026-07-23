@@ -1,8 +1,8 @@
 const supported = 'serviceWorker' in navigator && window.isSecureContext;
 
 if (supported) {
-  const workerUrl = new URL('../sw.js', import.meta.url);
-  const scopeUrl = new URL('../', import.meta.url);
+  const scopeUrl = new URL('./', window.location.href);
+  const workerUrl = new URL('sw.js', scopeUrl);
 
   window.addEventListener('load', async () => {
     try {
