@@ -3,30 +3,8 @@
  * Mantiene la navegación actualizada y ofrece una copia offline del núcleo público.
  */
 
-const CACHE_NAME = 'bitforward-public-v4';
-const CRITICAL_RESOURCES = [
-  './',
-  './index.html',
-  './mission-control.html',
-  './about.html',
-  './dashboard.html',
-  './offline.html',
-  './manifest.json',
-  './css/design-system.css',
-  './css/bf-header.css',
-  './css/landing-mission.css',
-  './css/simulator.css',
-  './css/methodology.css',
-  './js/landing.js',
-  './js/simulator.js',
-  './js/methodology.js',
-  './js/simulation-engine.mjs',
-  './js/components/bf-header.js',
-  './assets/logo-astronaut-rocket.svg',
-  './assets/favicon.ico',
-  './assets/brand/hero-digital-treasury.svg',
-  './assets/brand/risk-layers.svg',
-];
+const CACHE_NAME = 'bitforward-public-v5';
+const CRITICAL_RESOURCES = ['./', './index.html', './mission-control.html', './about.html'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(CRITICAL_RESOURCES)));
@@ -84,7 +62,7 @@ async function networkFirst(request, useOfflineFallback = true) {
     const cached = await caches.match(request);
     if (cached) return cached;
     if (useOfflineFallback) {
-      const offline = await caches.match('./offline.html');
+      const offline = await caches.match('./index.html');
       if (offline) return offline;
     }
     throw error;
