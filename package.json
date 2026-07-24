@@ -84,7 +84,7 @@
     "imagemin-svgo": "^10.0.1",
     "jest": "^29.0.0",
     "jsdom": "^27.0.1",
-    "lighthouse": "^11.7.1",
+    "lighthouse": "^13.4.1",
     "lint-staged": "^15.5.2",
     "nodemon": "^3.1.14",
     "postcss": "^8.4.38",
