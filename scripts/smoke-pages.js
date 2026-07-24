@@ -7,9 +7,22 @@ const axios = require('axios');
 
 const baseUrl = process.env.SMOKE_BASE_URL || 'http://localhost:4173';
 const pages = [
-  { path: '/', tokens: ['BitForward'] },
+  {
+    path: '/',
+    tokens: ['BitForward v2.0 | Proyecto cripto de AFORTU', 'id="bitforward-root"'],
+  },
+  {
+    path: '/bitforward.webmanifest',
+    tokens: ['Proyecto cripto de AFORTU', '#mision'],
+  },
+  {
+    path: '/sw.js',
+    tokens: ['bitforward-public-v6'],
+  },
   { path: '/mission-control.html', tokens: ['Simulador educativo | BitForward', '60/20/10/10'] },
   { path: '/about.html', tokens: ['Metodología | BitForward', 'MVP educativo en validación'] },
+  { path: '/assets/brand/bitforward-social-v2.jpg', tokens: [] },
+  { path: '/assets/brand/bitforward-app-icon-192.png', tokens: [] },
 ];
 
 function buildUrl(path) {
@@ -20,8 +33,8 @@ async function assertPage({ path, tokens }) {
   const url = buildUrl(path);
   const res = await axios.get(url, { timeout: 8000 });
   if (res.status >= 400) throw new Error(`Status ${res.status} en ${url}`);
-  const html = res.data || '';
-  const missing = tokens.filter(token => !html.includes(token));
+  const body = typeof res.data === 'string' ? res.data : JSON.stringify(res.data);
+  const missing = tokens.filter(token => !body.includes(token));
   if (missing.length) {
     throw new Error(`Faltan tokens en ${url}: ${missing.join(', ')}`);
   }

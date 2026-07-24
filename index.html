@@ -1,435 +1,69 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-MX">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BitForward | Inteligencia de activos digitales by AFORTU</title>
+    <title>BitForward v2.0 | Proyecto cripto de AFORTU</title>
     <meta
       name="description"
-      content="BitForward transforma datos, escenarios y reglas de riesgo en una lectura patrimonial comprensible para activos digitales."
+      content="Define una misión, prueba escenarios de caída y convierte tu exposición cripto en reglas de análisis, aportación y rebalanceo con BitForward, proyecto de AFORTU."
     />
-    <meta name="theme-color" content="#041019" />
-    <meta property="og:title" content="BitForward | Digital Asset Intelligence" />
+    <meta name="application-name" content="BitForward v2.0" />
+    <meta name="theme-color" content="#05070a" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <link rel="canonical" href="https://asesoraft.github.io/BitForward/index.html" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content="BitForward v2.0" />
+    <meta property="og:title" content="BitForward v2.0 | Proyecto cripto de AFORTU" />
     <meta
       property="og:description"
-      content="Mercado, simulación y control de riesgo con metodología patrimonial."
+      content="Tu estrategia cripto necesita una misión, no una apuesta. Explora el sistema de análisis y control de riesgo de AFORTU."
     />
-    <meta property="og:type" content="website" />
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
-    <link rel="manifest" href="manifest.json" />
+    <meta property="og:url" content="https://asesoraft.github.io/BitForward/index.html" />
+    <meta
+      property="og:image"
+      content="https://asesoraft.github.io/BitForward/assets/brand/bitforward-social-v2.jpg"
+    />
+    <meta property="og:image:alt" content="BitForward v2.0, proyecto cripto de AFORTU" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BitForward v2.0 | Proyecto cripto de AFORTU" />
+    <meta
+      name="twitter:description"
+      content="Tu estrategia cripto necesita una misión, no una apuesta."
+    />
+    <meta
+      name="twitter:image"
+      content="https://asesoraft.github.io/BitForward/assets/brand/bitforward-social-v2.jpg"
+    />
+
+    <link
+      rel="icon"
+      href="%BASE_URL%assets/brand/bitforward-app-icon-192.png"
+      type="image/png"
+      sizes="192x192"
+    />
+    <link rel="apple-touch-icon" href="%BASE_URL%assets/brand/bitforward-app-icon-192.png" />
+    <link rel="manifest" href="%BASE_URL%bitforward.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.coingecko.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="preload" href="assets/brand/hero-digital-treasury.svg" as="image" />
-    <link rel="stylesheet" href="css/design-system.css" />
-    <link rel="stylesheet" href="css/landing-mission.css" />
-    <script type="module" src="js/landing.js"></script>
+    <link rel="preload" href="%BASE_URL%assets/brand/rocket-hero-v2.webp" as="image" />
+    <script type="module" src="src/site-v2/main.jsx"></script>
   </head>
-  <body class="landing-body">
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
-
-    <bf-header
-      logo-src="assets/logo-astronaut-rocket.svg"
-      cta-href="mission-control.html"
-      cta-label="Simular estrategia"
-    >
-      <a href="#mercado">Mercado</a>
-      <a href="#modelo">Modelo</a>
-      <a href="#riesgo">Riesgo</a>
-      <a href="about.html">Metodología</a>
-    </bf-header>
-
-    <main class="landing-shell" id="contenido" tabindex="-1">
-      <section class="hero" id="hero" aria-labelledby="hero-title">
-        <img
-          class="hero-art"
-          src="assets/brand/hero-digital-treasury.svg"
-          alt=""
-          width="1280"
-          height="801"
-          fetchpriority="high"
-        />
-        <div class="hero-shade" aria-hidden="true"></div>
-        <div class="hero-copy">
-          <div class="hero-kicker">
-            <span class="live-dot" aria-hidden="true"></span>
-            <span>BitForward · Digital Asset Intelligence</span>
-          </div>
-          <h1 id="hero-title">Convierte volatilidad en <em>decisiones con método.</em></h1>
-          <p class="lead">
-            Mercado, simulación y control de riesgo bajo una lectura patrimonial de largo plazo.
-            Diseñado por AFORTU para entender antes de asignar capital.
-          </p>
-          <div class="hero-actions">
-            <a class="btn primary" href="mission-control.html">
-              Construir un escenario <span aria-hidden="true">↗</span>
-            </a>
-            <a class="btn ghost" href="#mercado">Ver pulso de mercado</a>
-          </div>
-          <ul class="trust-list" aria-label="Alcance de la plataforma">
-            <li><span>01</span> Sin custodia</li>
-            <li><span>02</span> Sin ejecución</li>
-            <li><span>03</span> Cálculo reproducible</li>
-          </ul>
-        </div>
-
-        <aside class="command-card" aria-label="Lectura ejecutiva de mercado">
-          <div class="command-topline">
-            <span>AFORTU · Digital Asset Desk</span>
-            <span class="status-chip">Educativo</span>
-          </div>
-          <div class="command-head">
-            <div>
-              <small>Lectura de sesión</small>
-              <strong id="market-bias">Conectando mercado</strong>
-            </div>
-            <span class="signal-orbit" aria-hidden="true"></span>
-          </div>
-          <p id="market-narrative">
-            Contrastamos dirección, amplitud y volatilidad antes de interpretar el movimiento.
-          </p>
-          <div class="command-metrics">
-            <div>
-              <span>Fuente</span>
-              <strong id="market-source">Conectando</strong>
-            </div>
-            <div>
-              <span>Actualización</span>
-              <strong id="market-updated" aria-live="polite">Conectando...</strong>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <section class="market-section" id="mercado" aria-labelledby="market-title">
-        <div class="section-heading market-heading">
-          <div>
-            <p class="eyebrow">Pulso de mercado</p>
-            <h2 id="market-title">Cuatro activos. Una lectura ejecutiva.</h2>
-          </div>
-          <div class="market-tools">
-            <span id="market-availability">Datos públicos en USD</span>
-            <button class="refresh-button" id="market-refresh" type="button">
-              Actualizar <span aria-hidden="true">↻</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="market-grid" aria-label="Precios de mercado">
-          <article class="market-card btc">
-            <div class="asset-row">
-              <div class="asset-identity">
-                <span class="asset-icon">₿</span>
-                <div>
-                  <p>Bitcoin</p>
-                  <h3>BTC / USD</h3>
-                </div>
-              </div>
-              <span class="asset-badge">Núcleo</span>
-            </div>
-            <div class="asset-price" id="price-btc">$--</div>
-            <div class="asset-change" id="change-btc">Conectando</div>
-            <div class="sparkline btc-line" aria-hidden="true"></div>
-          </article>
-
-          <article class="market-card eth">
-            <div class="asset-row">
-              <div class="asset-identity">
-                <span class="asset-icon">Ξ</span>
-                <div>
-                  <p>Ethereum</p>
-                  <h3>ETH / USD</h3>
-                </div>
-              </div>
-              <span class="asset-badge">Infraestructura</span>
-            </div>
-            <div class="asset-price" id="price-eth">$--</div>
-            <div class="asset-change" id="change-eth">Conectando</div>
-            <div class="sparkline eth-line" aria-hidden="true"></div>
-          </article>
-
-          <article class="market-card sol">
-            <div class="asset-row">
-              <div class="asset-identity">
-                <span class="asset-icon">S</span>
-                <div>
-                  <p>Solana</p>
-                  <h3>SOL / USD</h3>
-                </div>
-              </div>
-              <span class="asset-badge">Crecimiento</span>
-            </div>
-            <div class="asset-price" id="price-sol">$--</div>
-            <div class="asset-change" id="change-sol">Conectando</div>
-            <div class="sparkline sol-line" aria-hidden="true"></div>
-          </article>
-
-          <article class="market-card ada">
-            <div class="asset-row">
-              <div class="asset-identity">
-                <span class="asset-icon">A</span>
-                <div>
-                  <p>Cardano</p>
-                  <h3>ADA / USD</h3>
-                </div>
-              </div>
-              <span class="asset-badge">Satélite</span>
-            </div>
-            <div class="asset-price" id="price-ada">$--</div>
-            <div class="asset-change" id="change-ada">Conectando</div>
-            <div class="sparkline ada-line" aria-hidden="true"></div>
-          </article>
-        </div>
-
-        <div class="market-pulse" aria-label="Síntesis de mercado">
-          <article>
-            <span>Amplitud</span>
-            <strong id="market-breadth">—</strong>
-            <p>Activos positivos en la muestra.</p>
-          </article>
-          <article>
-            <span>Liderazgo</span>
-            <strong id="market-leader">—</strong>
-            <p>Mayor variación de 24 horas.</p>
-          </article>
-          <article>
-            <span>Volatilidad</span>
-            <strong id="market-volatility">—</strong>
-            <p>Movimiento absoluto promedio.</p>
-          </article>
-          <article class="pulse-note">
-            <span>Disciplina BitForward</span>
-            <strong>Precio no equivale a tesis.</strong>
-            <p>La señal se valida contra horizonte, exposición y reglas de salida.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="model-lab" id="modelo" aria-labelledby="model-title">
-        <div class="model-copy">
-          <p class="eyebrow">Modelo Génesis</p>
-          <h2 id="model-title">Arquitectura 60 / 20 / 10 / 10.</h2>
-          <p>
-            Un núcleo dominante y posiciones satélite acotadas. Ajusta el capital para ver cómo se
-            distribuye el modelo antes de llevarlo al simulador.
-          </p>
-          <label class="capital-field" for="model-capital">
-            <span>Capital de referencia · MXN</span>
-            <span class="capital-input">
-              <b>$</b>
-              <input
-                id="model-capital"
-                type="number"
-                min="1000"
-                max="100000000"
-                step="1000"
-                value="100000"
-                inputmode="numeric"
-              />
-            </span>
-          </label>
-          <p class="field-note">
-            Cálculo informativo. No representa una recomendación personalizada.
-          </p>
-          <a class="text-link" href="mission-control.html">
-            Probar retornos y aportaciones <span aria-hidden="true">→</span>
-          </a>
-        </div>
-
-        <div class="allocation-console">
-          <div class="allocation-ring" aria-label="Asignación modelo">
-            <div><strong>Génesis</strong><span>Base educativa</span></div>
-          </div>
-          <div class="allocation-list">
-            <div class="allocation-row">
-              <span class="allocation-name"
-                ><i class="dot btc-dot"></i>Bitcoin <small>60%</small></span
-              >
-              <strong id="alloc-btc">$60,000</strong>
-            </div>
-            <div class="allocation-row">
-              <span class="allocation-name"
-                ><i class="dot eth-dot"></i>Ethereum <small>20%</small></span
-              >
-              <strong id="alloc-eth">$20,000</strong>
-            </div>
-            <div class="allocation-row">
-              <span class="allocation-name"
-                ><i class="dot sol-dot"></i>Solana <small>10%</small></span
-              >
-              <strong id="alloc-sol">$10,000</strong>
-            </div>
-            <div class="allocation-row">
-              <span class="allocation-name"
-                ><i class="dot ada-dot"></i>Cardano <small>10%</small></span
-              >
-              <strong id="alloc-ada">$10,000</strong>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="principles" aria-labelledby="principles-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Sistema de decisión</p>
-            <h2 id="principles-title">Menos ruido. Más trazabilidad.</h2>
-          </div>
-          <p>
-            Cada lectura debe poder explicar qué dato se usó, qué supuesto cambió y qué regla
-            protegió la decisión.
-          </p>
-        </div>
-        <div class="principle-grid">
-          <article>
-            <span>01</span>
-            <h3>Observar</h3>
-            <p>Datos públicos, hora de actualización y estado de disponibilidad visibles.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Simular</h3>
-            <p>Escenarios propios, aportaciones mensuales y resultado reproducible.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>Controlar</h3>
-            <p>Bandas de rebalanceo, límite de exposición y lectura de caída máxima.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="risk-section" id="riesgo" aria-labelledby="risk-title">
-        <div class="risk-visual">
-          <img
-            src="assets/brand/risk-layers.svg"
-            alt="Arquitectura abstracta de capas concéntricas que representa controles de riesgo"
-            width="1100"
-            height="825"
-            loading="lazy"
-          />
-          <div class="risk-caption">
-            <span>4 capas de control</span>
-            <strong>Exposición · Liquidez · Rebalanceo · Custodia</strong>
-          </div>
-        </div>
-        <div class="risk-copy">
-          <p class="eyebrow">Marco de riesgo</p>
-          <h2 id="risk-title">Primero protección. Después crecimiento.</h2>
-          <p>
-            El potencial no elimina el riesgo. BitForward obliga a separar una tesis de inversión de
-            una reacción emocional.
-          </p>
-          <ol class="risk-list">
-            <li>
-              <span>01</span>
-              <div>
-                <strong>Límite de exposición</strong>
-                <p>Capital compatible con volatilidad alta y pérdida posible.</p>
-              </div>
-            </li>
-            <li>
-              <span>02</span>
-              <div>
-                <strong>Reserva de liquidez</strong>
-                <p>El portafolio digital no sustituye el fondo de emergencia.</p>
-              </div>
-            </li>
-            <li>
-              <span>03</span>
-              <div>
-                <strong>Rebalanceo por excepción</strong>
-                <p>La asignación vuelve al objetivo cuando rompe su banda.</p>
-              </div>
-            </li>
-            <li>
-              <span>04</span>
-              <div>
-                <strong>Custodia documentada</strong>
-                <p>Accesos, respaldos y comprobantes se controlan por separado.</p>
-              </div>
-            </li>
-          </ol>
-          <a class="text-link" href="about.html#diagnostico">
-            Revisar mi preparación <span aria-hidden="true">→</span>
-          </a>
-        </div>
-      </section>
-
-      <section class="radar-section" aria-labelledby="radar-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Radar BitForward</p>
-            <h2 id="radar-title">Lo que sí merece seguimiento.</h2>
-          </div>
-          <p>
-            Temas estructurales que pueden cambiar la utilidad, liquidez y regulación del mercado.
-          </p>
-        </div>
-        <div class="radar-grid">
-          <article>
-            <span>01 · Infraestructura</span>
-            <h3>Tokenización de activos reales</h3>
-            <p>Bonos, fondos y otros instrumentos trasladan procesos a redes programables.</p>
-          </article>
-          <article>
-            <span>02 · Liquidez</span>
-            <h3>Stablecoins y pagos 24/7</h3>
-            <p>El puente entre dinero tradicional, tesorería digital y liquidación global.</p>
-          </article>
-          <article>
-            <span>03 · Automatización</span>
-            <h3>IA aplicada a riesgo</h3>
-            <p>Monitoreo, alertas y análisis mejoran; la responsabilidad no desaparece.</p>
-          </article>
-          <article>
-            <span>04 · Gobierno</span>
-            <h3>Regulación y custodia</h3>
-            <p>La adopción sostenible depende de controles, revelación y protección del usuario.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="cta-band" id="contacto">
-        <div>
-          <p class="eyebrow">Laboratorio BitForward</p>
-          <h2>Una estrategia se prueba antes de defenderse.</h2>
-          <p>
-            Modifica capital, aportaciones, horizonte y variaciones anuales. Después revisa
-            resultado, caída máxima y rebalanceos.
-          </p>
-        </div>
-        <div class="cta-actions">
-          <a class="btn primary" href="mission-control.html"
-            >Abrir simulador <span aria-hidden="true">↗</span></a
-          >
-          <a class="btn ghost" href="about.html">Conocer metodología</a>
-        </div>
-      </section>
-
-      <aside class="legal-note">
-        <strong>Alcance.</strong>
-        <span>
-          Información educativa e informativa. No constituye oferta, asesoría individual, custodia,
-          intermediación ni garantía de rendimiento. Los activos digitales implican riesgo de
-          pérdida.
-        </span>
-      </aside>
-    </main>
-
-    <footer class="landing-footer">
-      <div>
-        <strong>BitForward</strong>
-        <span>Digital Asset Intelligence by AFORTU</span>
-      </div>
-      <div>
-        <a href="about.html">Metodología</a>
-        <a href="mission-control.html">Simulador</a>
-        <span>© 2026 AFORTU</span>
-      </div>
-    </footer>
+  <body>
+    <noscript>
+      BitForward requiere JavaScript para ejecutar el Centro de Misión y sus simulaciones.
+    </noscript>
+    <div id="bitforward-root"></div>
   </body>
 </html>

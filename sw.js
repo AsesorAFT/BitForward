@@ -3,8 +3,8 @@
  * Mantiene la navegación actualizada y ofrece una copia offline del núcleo público.
  */
 
-const CACHE_NAME = 'bitforward-public-v5';
-const CRITICAL_RESOURCES = ['./', './index.html', './mission-control.html', './about.html'];
+const CACHE_NAME = 'bitforward-public-v6';
+const CRITICAL_RESOURCES = ['./', './index.html'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(CRITICAL_RESOURCES)));
