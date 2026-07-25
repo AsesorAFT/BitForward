@@ -36,6 +36,31 @@ jobs:
       - name: Build public site
         run: npm run build
 
+      - name: Serve build for runtime verification
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/bitforward-preview.log 2>&1 &
+          echo $! > /tmp/serve.pid
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/bitforward-preview.log
+          exit 1
+
+      - name: Verify rendered application
+        env:
+          SMOKE_BASE_URL: http://127.0.0.1:4173
+        run: npm run smoke:pages
+
+      - name: Shutdown preview server
+        if: always()
+        run: |
+          if [ -f /tmp/serve.pid ]; then
+            kill $(cat /tmp/serve.pid) || true
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v6
 

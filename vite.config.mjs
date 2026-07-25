@@ -9,6 +9,12 @@ export default defineConfig({
   // Base path para producción
   base: './',
 
+  // Usa el runtime JSX moderno para que cada módulo importe sus dependencias
+  // de React y no dependa de una variable global en GitHub Pages.
+  esbuild: {
+    jsx: 'automatic',
+  },
+
   // Server config para desarrollo
   server: {
     port: 5173,
