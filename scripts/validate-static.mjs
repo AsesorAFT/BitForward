@@ -120,7 +120,7 @@ assert.doesNotMatch(
   /Acceso Cliente|mission-control\.html|login\.html/i,
   'El manifiesto público no debe exponer accesos heredados'
 );
-assert.match(serviceWorker, /bitforward-public-v6/, 'La nueva versión debe invalidar la caché');
+assert.match(serviceWorker, /bitforward-public-v7/, 'La nueva versión debe invalidar la caché');
 
 for (const path of [
   'public/assets/brand/bitforward-app-icon-192.png',
