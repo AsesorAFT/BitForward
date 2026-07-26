@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import logoUrl from '../../assets/brand/bitforward-logo-v2.webp';
 import heroUrl from '../../assets/brand/hero-intelligence.webp';
-import rocketUrl from '../../assets/brand/rocket-hero-v2.webp';
+import pilotAstronautUrl from '../../assets/brand/pilot-astronaut-v3.webp';
 
 const sections = [
   { id: 'panel', code: '00', label: 'Cockpit', short: 'Inicio' },
@@ -160,7 +160,14 @@ function Overview({ notify, motionPaused }) {
           </div>
         </div>
         <div className="demo-mission-visual">
-          <img src={rocketUrl} alt="" aria-hidden="true" />
+          <img
+            className="demo-pilot-astronaut"
+            src={pilotAstronautUrl}
+            width="800"
+            height="1200"
+            alt=""
+            aria-hidden="true"
+          />
           <div className="demo-mission-stage">
             <strong>4/4</strong>
             <span>etapas demostradas</span>
@@ -986,8 +993,14 @@ export default function CockpitDemo() {
             >
               {motionPaused ? 'Activar movimiento' : 'Pausar movimiento'}
             </button>
-            <a className="demo-pilot-chip" href="#privacidad">
-              <span>P</span>
+            <a
+              className="demo-pilot-chip"
+              href="#privacidad"
+              aria-label="Abrir Privacidad del Piloto Demo"
+            >
+              <span aria-hidden="true">
+                <img src={pilotAstronautUrl} alt="" />
+              </span>
               <div>
                 <strong>Piloto Demo</strong>
                 <small>Datos sintéticos</small>
