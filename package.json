@@ -9,7 +9,7 @@
     "build": "NODE_ENV=production vite build",
     "build:full": "bash scripts/build.sh",
     "preview": "vite preview",
-    "analyze": "vite build --mode analyze && open dist/stats.html",
+    "analyze": "ANALYZE=true vite build --mode analyze",
     "smoke:pages": "node scripts/smoke-pages.js",
     "verify:static": "node scripts/validate-static.mjs",
     "verify": "npm run lint && npm run format:check && npm run verify:static && npm run build",

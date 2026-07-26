@@ -27,6 +27,7 @@ server/logs/
 dist/
 build/
 .cache/
+.bundle-analysis/
 
 # IDE and editor files
 .vscode/
