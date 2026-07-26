@@ -1293,8 +1293,14 @@ img {
 }
 
 .demo-table-scroll {
+  min-width: 0;
+  max-width: 100%;
   margin-top: 20px;
   overflow-x: auto;
+}
+
+.demo-table-panel {
+  min-width: 0;
 }
 
 .demo-table-scroll table {
@@ -1997,7 +2003,7 @@ img {
   .demo-two-column,
   .demo-telemetry-grid,
   .demo-navigator-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .demo-rule-grid,

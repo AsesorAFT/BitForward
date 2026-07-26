@@ -185,6 +185,17 @@ async function assertApplicationRuntime() {
         viewportTitle: document.querySelector('.demo-location strong')?.textContent ?? '',
         viewportWidth: document.documentElement.clientWidth,
         pageWidth: document.documentElement.scrollWidth,
+        wideElements: Array.from(document.querySelectorAll('body *'))
+          .filter(element => {
+            const rect = element.getBoundingClientRect();
+            return rect.left < -1 || rect.right > document.documentElement.clientWidth + 1;
+          })
+          .slice(0, 6)
+          .map(element => ({
+            tag: element.tagName,
+            className: String(element.className || ''),
+            width: Math.round(element.getBoundingClientRect().width),
+          })),
       };
     });
     if (mobileState.sidebarDisplay !== 'none' || mobileState.dockDisplay !== 'flex') {
@@ -195,7 +206,7 @@ async function assertApplicationRuntime() {
     }
     if (mobileState.pageWidth > mobileState.viewportWidth + 1) {
       throw new Error(
-        `La página desborda horizontalmente: ${mobileState.pageWidth}px > ${mobileState.viewportWidth}px.`
+        `La página desborda horizontalmente: ${mobileState.pageWidth}px > ${mobileState.viewportWidth}px. Elementos: ${JSON.stringify(mobileState.wideElements)}`
       );
     }
     if (mobileState.topbarWidth > mobileState.viewportWidth + 1) {
