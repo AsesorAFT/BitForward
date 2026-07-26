@@ -126,6 +126,10 @@ async function assertApplicationRuntime() {
       visible: true,
       timeout: 10000,
     });
+    await page.waitForFunction(() => {
+      const image = document.querySelector('.demo-pilot-astronaut');
+      return Boolean(image?.complete && image.naturalWidth > 0);
+    });
 
     const desktopState = await page.evaluate(() => ({
       banner: document.querySelector('.demo-banner')?.textContent || '',
@@ -133,6 +137,16 @@ async function assertApplicationRuntime() {
       navigationCount: document.querySelectorAll('.demo-sidebar nav a').length,
       forms: document.querySelectorAll('form, input, textarea').length,
       text: document.querySelector('#bitforward-root')?.textContent || '',
+      pilot: (() => {
+        const image = document.querySelector('.demo-pilot-astronaut');
+        const rect = image?.getBoundingClientRect();
+        return {
+          complete: image?.complete ?? false,
+          naturalWidth: image?.naturalWidth ?? 0,
+          width: rect?.width ?? 0,
+          height: rect?.height ?? 0,
+        };
+      })(),
     }));
 
     if (!desktopState.banner.includes('DEMO PÚBLICA · DATOS FICTICIOS · NO RECIBE DINERO')) {
@@ -146,6 +160,14 @@ async function assertApplicationRuntime() {
     }
     if (!desktopState.text.includes('Buen regreso, Piloto Demo.')) {
       throw new Error('La réplica no montó el Panel de Misión.');
+    }
+    if (
+      !desktopState.pilot.complete ||
+      desktopState.pilot.naturalWidth === 0 ||
+      desktopState.pilot.width < 180 ||
+      desktopState.pilot.height < 420
+    ) {
+      throw new Error('El astronauta protagonista no cargó o no conserva presencia en escritorio.');
     }
 
     await page.click('.demo-sidebar a[href="#telemetria"]');
@@ -172,6 +194,14 @@ async function assertApplicationRuntime() {
       document.querySelector('.demo-stress-result strong')?.textContent?.includes('$36,000')
     );
 
+    await page.click('.demo-sidebar a[href="#panel"]');
+    await page.waitForFunction(() => window.location.hash === '#panel');
+    await page.waitForSelector('.demo-pilot-astronaut', { visible: true });
+    await page.waitForFunction(() => {
+      const image = document.querySelector('.demo-pilot-astronaut');
+      return Boolean(image?.complete && image.naturalWidth > 0);
+    });
+
     await page.setViewport({ width: 320, height: 700, deviceScaleFactor: 1 });
     await page.evaluate(() => window.scrollTo(0, 0));
     const mobileState = await page.evaluate(() => {
@@ -185,6 +215,23 @@ async function assertApplicationRuntime() {
         viewportTitle: document.querySelector('.demo-location strong')?.textContent ?? '',
         viewportWidth: document.documentElement.clientWidth,
         pageWidth: document.documentElement.scrollWidth,
+        pilot: (() => {
+          const image = document.querySelector('.demo-pilot-astronaut');
+          const copy = document.querySelector('.demo-mission-copy');
+          const rect = image?.getBoundingClientRect();
+          const copyRect = copy?.getBoundingClientRect();
+          return {
+            complete: image?.complete ?? false,
+            naturalWidth: image?.naturalWidth ?? 0,
+            left: rect?.left ?? 0,
+            right: rect?.right ?? 0,
+            top: rect?.top ?? 0,
+            bottom: rect?.bottom ?? 0,
+            width: rect?.width ?? 0,
+            height: rect?.height ?? 0,
+            copyTop: copyRect?.top ?? 0,
+          };
+        })(),
         wideElements: Array.from(document.querySelectorAll('body *'))
           .filter(element => {
             const rect = element.getBoundingClientRect();
@@ -211,6 +258,21 @@ async function assertApplicationRuntime() {
     }
     if (mobileState.topbarWidth > mobileState.viewportWidth + 1) {
       throw new Error('La topbar desborda el viewport mínimo de 320 px.');
+    }
+    if (
+      !mobileState.pilot.complete ||
+      mobileState.pilot.naturalWidth === 0 ||
+      mobileState.pilot.width < 120 ||
+      mobileState.pilot.height < 220
+    ) {
+      throw new Error('El astronauta no conserva una silueta reconocible en 320 px.');
+    }
+    if (
+      mobileState.pilot.left < -1 ||
+      mobileState.pilot.right > mobileState.viewportWidth + 1 ||
+      mobileState.pilot.bottom > mobileState.pilot.copyTop + 1
+    ) {
+      throw new Error('El astronauta se recorta o invade el contenido en móvil.');
     }
 
     const motionButton = await page.$('.demo-quiet-button');

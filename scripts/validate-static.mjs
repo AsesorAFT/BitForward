@@ -81,6 +81,16 @@ assert.match(
   'El banner persistente debe declarar la frontera pública'
 );
 assert.match(app, /Piloto Demo/g, 'La aplicación debe usar una identidad sintética');
+assert.match(
+  app,
+  /pilot-astronaut-v3\.webp/,
+  'El cockpit debe conservar al astronauta como protagonista visual'
+);
+assert.match(
+  app,
+  /className="demo-pilot-astronaut"[\s\S]*width="800"[\s\S]*height="1200"/i,
+  'El astronauta debe declarar dimensiones estables'
+);
 assert.match(app, /MÉTODOS DE PAGO/, 'La demo debe reservar el módulo de pagos');
 assert.match(
   app,
@@ -199,9 +209,11 @@ for (const path of [
   'public/assets/brand/bitforward-logo-v2.webp',
   'public/assets/brand/bitforward-social-v2.jpg',
   'assets/brand/hero-intelligence.webp',
+  'assets/brand/pilot-astronaut-v3.webp',
   'assets/brand/rocket-hero-v2.webp',
 ]) {
   assert.ok(existsSync(path), `Falta el recurso público ${path}`);
+  assert.ok(trackedFiles.includes(path), `El recurso público ${path} debe quedar versionado`);
   assert.ok(statSync(path).size > 1000, `El recurso público ${path} parece vacío`);
 }
 
