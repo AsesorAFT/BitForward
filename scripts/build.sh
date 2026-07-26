@@ -80,8 +80,8 @@ fi
 
 # Step 6: Analyze bundle size
 echo -e "${BLUE}[6/7] 📊 Analyzing bundle size...${NC}"
-if [ -f "dist/stats.html" ]; then
-    echo -e "${GREEN}✓ Bundle analysis saved to dist/stats.html${NC}"
+if [ -f ".bundle-analysis/stats.html" ]; then
+    echo -e "${GREEN}✓ Bundle analysis saved to .bundle-analysis/stats.html${NC}"
     
     # Calculate total size
     TOTAL_SIZE=$(du -sh dist | cut -f1)

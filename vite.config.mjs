@@ -150,14 +150,18 @@ export default defineConfig({
       deleteOriginFile: false,
     }),
 
-    // Visualizador de bundle (solo en build)
-    visualizer({
-      filename: './dist/stats.html',
-      open: false,
-      gzipSize: true,
-      brotliSize: true,
-      template: 'treemap', // 'sunburst', 'treemap', 'network'
-    }),
+    // El mapa del bundle es una herramienta local y no forma parte del artefacto público.
+    ...(process.env.ANALYZE === 'true'
+      ? [
+          visualizer({
+            filename: './.bundle-analysis/stats.html',
+            open: false,
+            gzipSize: true,
+            brotliSize: true,
+            template: 'treemap',
+          }),
+        ]
+      : []),
   ],
 
   // Alias para imports más limpios

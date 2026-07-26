@@ -6,6 +6,8 @@ import orbitalMissionUrl from '../../assets/brand/orbital-mission-v2.webp';
 
 const MARKET_URL =
   'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,cardano&price_change_percentage=24h,7d&sparkline=true';
+const PILOT_ACCESS_URL =
+  'mailto:contacto@afortu.com.mx?subject=Solicitud%20de%20acceso%20BitForward';
 const MARKET_CACHE_KEY = 'bitforward-market-v2';
 const MARKET_CACHE_TTL = 2 * 60 * 1e3;
 const fallbackAssets = [
@@ -738,8 +740,8 @@ function Home() {
             <a className="button button-primary" href="#mision">
               Iniciar mi misión <span aria-hidden="true">↗</span>
             </a>
-            <a className="button button-secondary" href="#metodologia">
-              Explorar el método <span aria-hidden="true">→</span>
+            <a className="button button-secondary" href={PILOT_ACCESS_URL}>
+              Solicitar acceso al piloto <span aria-hidden="true">→</span>
             </a>
           </div>
           <div className="mission-path" aria-label="Ruta de análisis BitForward">
@@ -2153,6 +2155,7 @@ function Home() {
           <a href="#modelo">Modelo Génesis</a>
           <a href="#metodologia">Método</a>
           <a href="#afortu">AFORTU</a>
+          <a href={PILOT_ACCESS_URL}>Solicitar acceso</a>
           <a href="mailto:contacto@afortu.com.mx?subject=Consulta%20BitForward">Contacto</a>
         </div>
         <p>

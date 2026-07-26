@@ -31,6 +31,7 @@ const publicManifest = read('public/bitforward.webmanifest');
 const serviceWorker = read('public/sw.js');
 const rootServiceWorker = read('sw.js');
 const simulator = read('mission-control.html');
+const about = read('about.html');
 const viteConfig = read('vite.config.mjs');
 const envExample = read('server/.env.example');
 
@@ -53,6 +54,16 @@ assert.match(
 assert.doesNotMatch(index, /href="#"/i, 'La portada no debe publicar enlaces vacíos');
 
 assert.match(app, /href="#mision"/i, 'La aplicación necesita acceso directo al Centro de Misión');
+assert.match(
+  app,
+  /mailto:contacto@afortu\.com\.mx\?subject=Solicitud%20de%20acceso%20BitForward/i,
+  'La portada pública debe ofrecer una ruta de solicitud para el piloto'
+);
+assert.doesNotMatch(
+  app,
+  /bitforward-premium|jonathangranados1242|chatgpt\.site/i,
+  'La portada pública no debe revelar la dirección ni la cuenta del cockpit privado'
+);
 assert.match(app, /id="mision"/i, 'La aplicación necesita un Centro de Misión identificable');
 assert.match(
   app,
@@ -138,6 +149,11 @@ assert.match(
   /Es un escenario, no un pronóstico/i,
   'El simulador heredado debe diferenciar escenarios de pronósticos'
 );
+assert.match(
+  about,
+  /localStorage[\s\S]*CoinGecko[\s\S]*Google Fonts/i,
+  'La metodología pública debe explicar almacenamiento local y conexiones externas'
+);
 assert.doesNotMatch(
   simulator,
   /(?:leverage|perps|empezar a operar)/i,
@@ -147,6 +163,16 @@ assert.doesNotMatch(
   viteConfig,
   /(?:trading|lending|dashboard|enterprise):\s*resolve/i,
   'El build público no debe incluir rutas operativas del laboratorio'
+);
+assert.match(
+  viteConfig,
+  /process\.env\.ANALYZE === ['"]true['"]/i,
+  'El mapa del bundle debe permanecer desactivado en publicaciones normales'
+);
+assert.doesNotMatch(
+  viteConfig,
+  /filename:\s*['"]\.\/dist\/stats\.html['"]/i,
+  'El mapa técnico del bundle no debe escribirse dentro del artefacto público'
 );
 assert.doesNotMatch(
   envExample,

@@ -50,7 +50,10 @@ jobs:
       - name: Build
         env:
           NODE_ENV: production
-        run: npm run build
+        run: |
+          npm run build
+          test ! -e dist/stats.html
+          ! grep -R -I -E "bitforward-premium|jonathangranados1242|chatgpt\.site" dist
 
       - name: Serve build for smoke tests
         run: |

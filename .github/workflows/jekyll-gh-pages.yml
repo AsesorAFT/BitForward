@@ -34,7 +34,10 @@ jobs:
         run: npm run verify:static
 
       - name: Build public site
-        run: npm run build
+        run: |
+          npm run build
+          test ! -e dist/stats.html
+          ! grep -R -I -E "bitforward-premium|jonathangranados1242|chatgpt\.site" dist
 
       - name: Serve build for runtime verification
         run: |
