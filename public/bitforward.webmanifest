@@ -1,9 +1,9 @@
 {
-  "name": "BitForward v2.0 · Proyecto cripto de AFORTU",
-  "short_name": "BitForward",
-  "description": "Centro de Misión, escenarios de riesgo, asignación y rebalanceo para explorar activos digitales con método.",
+  "name": "BitForward Mission Control · Demo pública",
+  "short_name": "BitForward Demo",
+  "description": "Demostración navegable con datos ficticios, sin autenticación, pagos ni operaciones reales.",
   "start_url": "/BitForward/",
-  "display": "standalone",
+  "display": "browser",
   "background_color": "#05070a",
   "theme_color": "#05070a",
   "orientation": "portrait-primary",
@@ -26,32 +26,7 @@
       "purpose": "any maskable"
     }
   ],
-  "shortcuts": [
-    {
-      "name": "Centro de Misión",
-      "short_name": "Misión",
-      "description": "Definir límites, probar turbulencia y construir una ruta",
-      "url": "/BitForward/#mision",
-      "icons": [
-        {
-          "src": "assets/brand/bitforward-app-icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Radar de mercado",
-      "short_name": "Radar",
-      "description": "Comparar la lectura pública de BTC, ETH, SOL y ADA",
-      "url": "/BitForward/#mercado",
-      "icons": [
-        {
-          "src": "assets/brand/bitforward-app-icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
-    }
-  ],
+  "shortcuts": [],
   "related_applications": [],
   "iarc_rating_id": "",
   "permissions": []

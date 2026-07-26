@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Smoke test liviano para verificar que las páginas principales cargan.
- * Usa un host configurable para apuntar a preview local o a producción.
+ * Smoke test de la réplica pública de Mission Control.
+ * Comprueba artefacto, montaje React, fronteras demo y navegación responsive.
  */
 const axios = require('axios');
 const fs = require('fs');
@@ -11,18 +11,16 @@ const baseUrl = process.env.SMOKE_BASE_URL || 'http://localhost:4173';
 const pages = [
   {
     path: '/',
-    tokens: ['BitForward v2.0 | Proyecto cripto de AFORTU', 'id="bitforward-root"'],
+    tokens: ['BitForward Mission Control Demo | AFORTU', 'id="bitforward-root"'],
   },
   {
     path: '/bitforward.webmanifest',
-    tokens: ['Proyecto cripto de AFORTU', '#mision'],
+    tokens: ['Mission Control · Demo pública', '"display":"browser"'],
   },
   {
     path: '/sw.js',
-    tokens: ['bitforward-public-v7'],
+    tokens: ['self.registration.unregister()'],
   },
-  { path: '/mission-control.html', tokens: ['Simulador educativo | BitForward', '60/20/10/10'] },
-  { path: '/about.html', tokens: ['Metodología | BitForward', 'MVP educativo en validación'] },
   { path: '/assets/brand/bitforward-social-v2.jpg', tokens: [] },
   { path: '/assets/brand/bitforward-app-icon-192.png', tokens: [] },
 ];
@@ -67,8 +65,7 @@ async function assertJsxRuntime() {
   console.log('✓ Bundles JSX enlazados al runtime modular de React.');
 }
 
-async function assertApplicationRuntime() {
-  const runtimeErrors = [];
+function resolveChrome() {
   let executablePath = [
     process.env.PUPPETEER_EXECUTABLE_PATH,
     '/usr/bin/google-chrome',
@@ -85,7 +82,11 @@ async function assertApplicationRuntime() {
       executablePath = undefined;
     }
   }
+  return executablePath;
+}
 
+async function assertApplicationRuntime() {
+  const executablePath = resolveChrome();
   if (!executablePath) {
     if (process.env.CI) {
       throw new Error('Chrome es obligatorio para validar el render antes de publicar.');
@@ -94,6 +95,8 @@ async function assertApplicationRuntime() {
     return;
   }
 
+  const runtimeErrors = [];
+  const externalRequests = [];
   const browser = await puppeteer.launch({
     headless: true,
     executablePath,
@@ -103,29 +106,149 @@ async function assertApplicationRuntime() {
   try {
     const page = await browser.newPage();
     page.on('pageerror', error => runtimeErrors.push(error.message));
+    page.on('request', request => {
+      const requestUrl = new URL(request.url());
+      const expectedOrigin = new URL(baseUrl).origin;
+      if (
+        !['data:', 'blob:'].includes(requestUrl.protocol) &&
+        requestUrl.origin !== expectedOrigin
+      ) {
+        externalRequests.push(request.url());
+      }
+    });
 
+    await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
     await page.goto(buildUrl('/'), {
       waitUntil: 'domcontentloaded',
       timeout: 15000,
     });
-    await page.waitForSelector('#bitforward-root > *', {
+    await page.waitForSelector('#bitforward-root > .demo-shell', {
       visible: true,
       timeout: 10000,
     });
 
-    const appState = await page.$eval('#bitforward-root', element => ({
-      childCount: element.children.length,
-      text: element.textContent || '',
+    const desktopState = await page.evaluate(() => ({
+      banner: document.querySelector('.demo-banner')?.textContent || '',
+      active: document.querySelector('.demo-sidebar a[aria-current="page"]')?.getAttribute('href'),
+      navigationCount: document.querySelectorAll('.demo-sidebar nav a').length,
+      forms: document.querySelectorAll('form, input, textarea').length,
+      text: document.querySelector('#bitforward-root')?.textContent || '',
     }));
 
-    if (appState.childCount === 0 || !appState.text.includes('Centro de Misión')) {
-      throw new Error('La aplicación React no montó el Centro de Misión.');
+    if (!desktopState.banner.includes('DEMO PÚBLICA · DATOS FICTICIOS · NO RECIBE DINERO')) {
+      throw new Error('El banner de frontera demo no está visible.');
+    }
+    if (desktopState.active !== '#panel' || desktopState.navigationCount !== 9) {
+      throw new Error('La navegación de escritorio no expone los nueve módulos.');
+    }
+    if (desktopState.forms !== 0) {
+      throw new Error('La demo pública no puede captar texto o formularios.');
+    }
+    if (!desktopState.text.includes('Buen regreso, Piloto Demo.')) {
+      throw new Error('La réplica no montó el Panel de Misión.');
+    }
+
+    await page.click('.demo-sidebar a[href="#telemetria"]');
+    await page.waitForFunction(() => window.location.hash === '#telemetria');
+    await page.waitForSelector('.demo-stress-panel', { visible: true });
+    await page.$eval('.demo-skip-link', element => element.click());
+    const skipState = await page.evaluate(() => ({
+      hash: window.location.hash,
+      active: document.querySelector('.demo-sidebar a[aria-current="page"]')?.getAttribute('href'),
+      focused: document.activeElement?.id,
+    }));
+    if (
+      skipState.hash !== '#telemetria' ||
+      skipState.active !== '#telemetria' ||
+      skipState.focused !== 'demo-content'
+    ) {
+      throw new Error('El enlace de salto cambió el módulo o no enfocó el contenido.');
+    }
+
+    const stressButtons = await page.$$('.demo-scenario-buttons button');
+    if (stressButtons.length !== 3) throw new Error('Faltan escenarios de estrés.');
+    await stressButtons[2].click();
+    await page.waitForFunction(() =>
+      document.querySelector('.demo-stress-result strong')?.textContent?.includes('$36,000')
+    );
+
+    await page.setViewport({ width: 320, height: 700, deviceScaleFactor: 1 });
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const mobileState = await page.evaluate(() => {
+      const sidebar = document.querySelector('.demo-sidebar');
+      const dock = document.querySelector('.demo-mobile-dock');
+      return {
+        sidebarDisplay: sidebar ? getComputedStyle(sidebar).display : 'missing',
+        dockDisplay: dock ? getComputedStyle(dock).display : 'missing',
+        dockItems: dock?.querySelectorAll('a').length ?? 0,
+        topbarWidth: document.querySelector('.demo-topbar')?.scrollWidth ?? 0,
+        viewportTitle: document.querySelector('.demo-location strong')?.textContent ?? '',
+        viewportWidth: document.documentElement.clientWidth,
+        pageWidth: document.documentElement.scrollWidth,
+        wideElements: Array.from(document.querySelectorAll('body *'))
+          .filter(element => {
+            const rect = element.getBoundingClientRect();
+            return rect.left < -1 || rect.right > document.documentElement.clientWidth + 1;
+          })
+          .slice(0, 6)
+          .map(element => ({
+            tag: element.tagName,
+            className: String(element.className || ''),
+            width: Math.round(element.getBoundingClientRect().width),
+          })),
+      };
+    });
+    if (mobileState.sidebarDisplay !== 'none' || mobileState.dockDisplay !== 'flex') {
+      throw new Error('El responsive no cambia de sidebar a dock móvil.');
+    }
+    if (mobileState.dockItems !== 9) {
+      throw new Error('El dock móvil no conserva los nueve módulos.');
+    }
+    if (mobileState.pageWidth > mobileState.viewportWidth + 1) {
+      throw new Error(
+        `La página desborda horizontalmente: ${mobileState.pageWidth}px > ${mobileState.viewportWidth}px. Elementos: ${JSON.stringify(mobileState.wideElements)}`
+      );
+    }
+    if (mobileState.topbarWidth > mobileState.viewportWidth + 1) {
+      throw new Error('La topbar desborda el viewport mínimo de 320 px.');
+    }
+
+    const motionButton = await page.$('.demo-quiet-button');
+    const pauseIcon = await page.evaluate(
+      element => getComputedStyle(element, '::after').content,
+      motionButton
+    );
+    await motionButton.click();
+    const playIcon = await page.evaluate(
+      element => getComputedStyle(element, '::after').content,
+      motionButton
+    );
+    if (!pauseIcon.includes('⏸') || !playIcon.includes('▶')) {
+      throw new Error('El control móvil de movimiento no refleja su estado.');
+    }
+
+    await page.$eval('.demo-mobile-dock a[href="#pagos"]', element => element.click());
+    await page.waitForFunction(() => window.location.hash === '#pagos');
+    await page.waitForSelector('.demo-payment-status', { visible: true });
+    const paymentState = await page.evaluate(() => ({
+      text: document.querySelector('.demo-payment-status')?.textContent || '',
+      disabled: document.querySelector('.demo-disabled-action')?.disabled ?? false,
+    }));
+    if (!paymentState.text.includes('Sin cargos activos.')) {
+      throw new Error('El módulo móvil de pagos no comunica su estado inactivo.');
+    }
+    if (!paymentState.disabled) {
+      throw new Error('El módulo de pago debe permanecer deshabilitado.');
+    }
+
+    if (externalRequests.length) {
+      throw new Error(`La demo abrió conexiones externas: ${externalRequests.join(', ')}`);
     }
     if (runtimeErrors.length) {
       throw new Error(`Errores de JavaScript: ${runtimeErrors.join(' | ')}`);
     }
 
-    console.log('✓ Aplicación React montada sin errores de ejecución.');
+    console.log('✓ Cockpit Demo montado y navegado en escritorio y móvil sin conexiones externas.');
   } finally {
     await browser.close();
   }
@@ -137,8 +260,8 @@ async function assertApplicationRuntime() {
     await assertJsxRuntime();
     await assertApplicationRuntime();
     console.log('Smoke test completado.');
-  } catch (err) {
-    console.error('Smoke test falló:', err.message);
+  } catch (error) {
+    console.error('Smoke test falló:', error.message);
     process.exit(1);
   }
 })();

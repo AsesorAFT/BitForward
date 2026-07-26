@@ -34,6 +34,7 @@ export default defineConfig({
   build: {
     // Output directory
     outDir: 'dist',
+    emptyOutDir: true,
     assetsDir: 'assets',
 
     // Source maps solo en desarrollo
@@ -57,8 +58,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        'mission-control': resolve(__dirname, 'mission-control.html'),
-        about: resolve(__dirname, 'about.html'),
       },
       output: {
         // Manual chunk splitting para optimización

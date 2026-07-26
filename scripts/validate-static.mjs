@@ -23,146 +23,202 @@ assert.deepEqual(
 );
 
 const index = read('index.html');
-const app = read('src/site-v2/bitforward-app.jsx');
+const app = read('src/site-v2/cockpit-demo.jsx');
 const main = read('src/site-v2/main.jsx');
-const styles = read('css/bitforward-v2.css');
+const styles = read('css/cockpit-demo.css');
 const manifest = read('manifest.json');
 const publicManifest = read('public/bitforward.webmanifest');
 const serviceWorker = read('public/sw.js');
 const rootServiceWorker = read('sw.js');
-const simulator = read('mission-control.html');
-const about = read('about.html');
+const pwaCleanup = read('js/pwa.js');
 const viteConfig = read('vite.config.mjs');
 const envExample = read('server/.env.example');
 
 assert.match(
   index,
-  /BitForward v2\.0 \| Proyecto cripto de AFORTU/i,
-  'La portada debe publicar la identidad final'
+  /BitForward Mission Control Demo \| AFORTU/i,
+  'La portada debe identificarse como demostración'
 );
 assert.match(
   index,
   /id="bitforward-root"/i,
   'La portada necesita el contenedor estable de la aplicación'
 );
-assert.match(index, /src="src\/site-v2\/main\.jsx"/i, 'La portada debe cargar la aplicación final');
+assert.match(index, /src="src\/site-v2\/main\.jsx"/i, 'La portada debe cargar la entrada React');
 assert.match(
   index,
   /https:\/\/asesoraft\.github\.io\/BitForward\/assets\/brand\/bitforward-social-v2\.jpg/i,
   'La vista previa social debe usar una URL pública estable'
 );
-assert.doesNotMatch(index, /href="#"/i, 'La portada no debe publicar enlaces vacíos');
+assert.doesNotMatch(index, /rel="manifest"/i, 'La demo no debe instalarse como aplicación');
+assert.doesNotMatch(
+  index,
+  /fonts\.googleapis|fonts\.gstatic|api\.coingecko/i,
+  'La portada demo no debe abrir conexiones externas'
+);
 
-assert.match(app, /href="#mision"/i, 'La aplicación necesita acceso directo al Centro de Misión');
-assert.match(
-  app,
-  /mailto:contacto@afortu\.com\.mx\?subject=Solicitud%20de%20acceso%20BitForward/i,
-  'La portada pública debe ofrecer una ruta de solicitud para el piloto'
-);
-assert.doesNotMatch(
-  app,
-  /bitforward-premium|jonathangranados1242|chatgpt\.site/i,
-  'La portada pública no debe revelar la dirección ni la cuenta del cockpit privado'
-);
-assert.match(app, /id="mision"/i, 'La aplicación necesita un Centro de Misión identificable');
-assert.match(
-  app,
-  /disabled=\{step > missionStep\}/,
-  'La navegación no debe permitir saltar a pasos futuros'
-);
-assert.match(
-  app,
-  /aria-current=\{missionStep === step \? ['"]step['"]/,
-  'La misión debe anunciar el paso actual'
-);
-assert.match(
-  app,
-  /missionMode === ['"]portfolio['"] \? totalHoldings : Math\.max\(capital, 0\)/,
-  'La prueba de estrés debe evaluar la exposición declarada, no recortarla antes'
-);
-assert.match(
-  app,
-  /className=['"]market-meta['"] aria-live=['"]polite['"]/,
-  'El estado de mercado debe anunciar cambios'
-);
-assert.match(app, /api\.coingecko\.com/, 'La versión estática necesita una fuente pública');
-assert.doesNotMatch(
-  app,
-  /fetch\(["']\/api\/market/,
-  'GitHub Pages no puede depender de una ruta de servidor'
-);
-assert.doesNotMatch(
-  app,
-  /src=["']\//,
-  'Los recursos de la aplicación no pueden usar rutas absolutas incompatibles con Pages'
-);
-assert.match(
-  app,
-  /No recibe dinero, no guarda llaves, no opera activos y no\s+garantiza rendimientos/i,
-  'La frontera de responsabilidad debe permanecer visible'
-);
-assert.match(
-  app,
-  /pérdida parcial o total\s+del capital/i,
-  'La advertencia de riesgo debe permanecer visible'
-);
-assert.match(app, /version:\s*2/, 'Las sesiones locales deben tener versión');
-assert.match(app, /clearWorkspace/, 'El usuario debe poder eliminar la sesión local');
-assert.match(main, /createRoot/, 'La entrada debe montar la aplicación React');
-assert.match(main, /js\/pwa\.js/, 'La entrada debe registrar el modo instalable');
+assert.match(main, /CockpitDemo/, 'La entrada debe montar la réplica del cockpit');
+assert.match(main, /cockpit-demo\.css/, 'La entrada debe cargar el sistema visual de la demo');
+assert.doesNotMatch(main, /bitforward-app\.jsx/, 'La portada no debe montar la landing anterior');
 
-assert.doesNotMatch(
-  styles,
-  /\.mission-disclaimer,\s*\.afortu-section\s*\{\s*display:\s*none/i,
-  'El informe impreso no puede ocultar el aviso jurídico'
+for (const id of [
+  'panel',
+  'perfil',
+  'plan',
+  'telemetria',
+  'bitacora',
+  'navigator',
+  'torre',
+  'privacidad',
+  'pagos',
+]) {
+  assert.match(app, new RegExp(`id: ['"]${id}['"]`), `Falta el módulo demo ${id}`);
+}
+
+assert.match(
+  app,
+  /DEMO PÚBLICA · DATOS FICTICIOS · NO RECIBE DINERO/i,
+  'El banner persistente debe declarar la frontera pública'
+);
+assert.match(app, /Piloto Demo/g, 'La aplicación debe usar una identidad sintética');
+assert.match(app, /MÉTODOS DE PAGO/, 'La demo debe reservar el módulo de pagos');
+assert.match(
+  app,
+  /Esta página no solicita, transmite ni almacena información bancaria/i,
+  'El módulo de pagos debe negar la captura bancaria'
+);
+assert.match(
+  app,
+  /Configurar método de pago · próximamente/i,
+  'El control de pagos debe permanecer deshabilitado'
+);
+assert.match(
+  app,
+  /disabled className="demo-disabled-action"/i,
+  'El control de pagos no puede ejecutar una acción'
+);
+assert.match(app, /window\.print\(\)/, 'La Torre debe ofrecer un reporte demo imprimible');
+assert.match(
+  app,
+  /Comprueba la ausencia de almacenamiento/i,
+  'Privacidad no debe prometer un reinicio que el control no ejecuta'
 );
 assert.match(
   styles,
-  /\.mission-disclaimer\s*\{[\s\S]*display:\s*block !important/i,
-  'El informe impreso debe mostrar su aviso jurídico'
+  /DEMO PÚBLICA · DATOS FICTICIOS · SIN VALIDEZ OPERATIVA/i,
+  'La impresión debe conservar una marca de agua inequívoca'
 );
+assert.match(styles, /@page[\s\S]*size:\s*A4 portrait/i, 'El reporte debe declarar formato A4');
+assert.match(
+  styles,
+  /\.demo-tower > \.demo-stepper[\s\S]*display:\s*none !important/i,
+  'La impresión debe excluir los controles de Torre'
+);
+assert.match(
+  styles,
+  /\.demo-dossier-card[\s\S]*break-inside:\s*avoid/i,
+  'El expediente impreso debe evitar cortes internos'
+);
+assert.match(
+  styles,
+  /@media \(max-width: 920px\)[\s\S]*\.demo-mobile-dock/i,
+  'La navegación móvil debe conservar todos los módulos'
+);
+assert.match(
+  styles,
+  /@media \(prefers-reduced-motion: reduce\)/i,
+  'La demo debe respetar movimiento reducido'
+);
+
+assert.doesNotMatch(
+  app,
+  /bitforward-premium|jonathangranados1242|chatgpt\.site|@gmail\.com/i,
+  'La demo no debe revelar el cockpit o al propietario'
+);
+assert.doesNotMatch(
+  app,
+  /\b(?:fetch|XMLHttpRequest|WebSocket)\s*\(/i,
+  'La réplica estática no debe ejecutar solicitudes de datos'
+);
+assert.doesNotMatch(
+  app,
+  /localStorage|sessionStorage|indexedDB/i,
+  'La réplica no debe persistir información en el navegador'
+);
+assert.doesNotMatch(
+  app,
+  /<(?:input|textarea|form)\b/i,
+  'La réplica no debe ofrecer captura libre de datos'
+);
+assert.doesNotMatch(
+  app,
+  /(?:import|from|require\s*\()[^\n]*(?:stripe|paypal|mercadopago|ethers|web3|wallet)/i,
+  'La réplica no puede importar SDK de credenciales, wallet o pago'
+);
+assert.doesNotMatch(
+  app,
+  /(?:type|name|id)=["'](?:password|email|cvv|clabe|card|wallet|private-key|seed)["']/i,
+  'La réplica no puede declarar campos de credenciales o pago'
+);
+assert.doesNotMatch(app, /href=["']https?:\/\//i, 'La réplica no debe enlazar servicios externos');
 
 assert.equal(manifest, publicManifest, 'El manifiesto fuente y el público deben coincidir');
-assert.equal(serviceWorker, rootServiceWorker, 'Los service workers deben coincidir');
-assert.match(manifest, /Proyecto cripto de AFORTU/i, 'El manifiesto debe usar la identidad final');
-assert.match(manifest, /#mision/i, 'El manifiesto debe abrir el Centro de Misión');
-assert.doesNotMatch(
-  manifest,
-  /Acceso Cliente|mission-control\.html|login\.html/i,
-  'El manifiesto público no debe exponer accesos heredados'
+assert.equal(serviceWorker, rootServiceWorker, 'Los service workers de retiro deben coincidir');
+assert.match(manifest, /Mission Control · Demo pública/i, 'El manifiesto debe decir demo');
+assert.match(manifest, /"display": "browser"/i, 'La demo debe mantener visible el navegador');
+assert.match(manifest, /"shortcuts": \[\]/i, 'La demo no debe ofrecer accesos instalables');
+assert.match(
+  serviceWorker,
+  /self\.registration\.unregister\(\)/i,
+  'El service worker heredado debe retirarse'
 );
-assert.match(serviceWorker, /bitforward-public-v7/, 'La nueva versión debe invalidar la caché');
+assert.match(
+  pwaCleanup,
+  /getRegistrations\(\)[\s\S]*unregister\(\)/i,
+  'La página debe limpiar instalaciones PWA heredadas'
+);
+assert.match(
+  pwaCleanup,
+  /registrationPath\.startsWith\(appScopePath\)/i,
+  'La limpieza PWA debe limitarse al scope actual de BitForward'
+);
+assert.match(
+  pwaCleanup,
+  /startsWith\(['"]bitforward-public-['"]\)/i,
+  'La página sólo debe retirar la familia histórica de cachés públicas'
+);
+assert.match(
+  serviceWorker,
+  /startsWith\(['"]bitforward-public-['"]\)/i,
+  'El service worker sólo debe retirar la familia histórica de cachés públicas'
+);
 
 for (const path of [
   'public/assets/brand/bitforward-app-icon-192.png',
   'public/assets/brand/bitforward-app-icon-512.png',
   'public/assets/brand/bitforward-logo-v2.webp',
   'public/assets/brand/bitforward-social-v2.jpg',
-  'public/assets/brand/rocket-hero-v2.webp',
+  'assets/brand/hero-intelligence.webp',
+  'assets/brand/rocket-hero-v2.webp',
 ]) {
   assert.ok(existsSync(path), `Falta el recurso público ${path}`);
   assert.ok(statSync(path).size > 1000, `El recurso público ${path} parece vacío`);
 }
 
-assert.match(
-  simulator,
-  /Es un escenario, no un pronóstico/i,
-  'El simulador heredado debe diferenciar escenarios de pronósticos'
-);
-assert.match(
-  about,
-  /localStorage[\s\S]*CoinGecko[\s\S]*Google Fonts/i,
-  'La metodología pública debe explicar almacenamiento local y conexiones externas'
-);
-assert.doesNotMatch(
-  simulator,
-  /(?:leverage|perps|empezar a operar)/i,
-  'La ruta pública de simulación no puede ofrecer apalancamiento u operación'
-);
 assert.doesNotMatch(
   viteConfig,
   /(?:trading|lending|dashboard|enterprise):\s*resolve/i,
   'El build público no debe incluir rutas operativas del laboratorio'
+);
+assert.doesNotMatch(
+  viteConfig,
+  /['"](?:mission-control|about)['"]:\s*resolve/i,
+  'El artefacto público debe contener únicamente la réplica del cockpit'
+);
+assert.match(
+  viteConfig,
+  /emptyOutDir:\s*true/i,
+  'Cada build debe retirar bundles obsoletos antes de publicar'
 );
 assert.match(
   viteConfig,
@@ -180,10 +236,7 @@ assert.doesNotMatch(
   'El archivo de ejemplo no puede contener claves privadas completas'
 );
 
-for (const path of ['index.html', 'mission-control.html', 'about.html']) {
-  const html = read(path);
-  assert.match(html, /<!doctype html>/i, `${path} no tiene doctype`);
-  assert.match(html, /<title>[^<]+<\/title>/i, `${path} no tiene título`);
-}
+assert.match(index, /<!doctype html>/i, 'index.html no tiene doctype');
+assert.match(index, /<title>[^<]+<\/title>/i, 'index.html no tiene título');
 
 console.log(`Validación estática completada: ${trackedFiles.length} archivos rastreados.`);
