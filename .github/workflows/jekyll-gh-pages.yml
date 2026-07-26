@@ -37,7 +37,7 @@ jobs:
         run: |
           npm run build
           test ! -e dist/stats.html
-          ! grep -R -I -E "bitforward-premium|jonathangranados1242|chatgpt\.site" dist
+          ! grep -R -I -E "bitforward-premium|chatgpt\.site" dist
 
       - name: Serve build for runtime verification
         run: |

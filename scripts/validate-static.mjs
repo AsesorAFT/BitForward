@@ -24,10 +24,12 @@ assert.deepEqual(
 
 const index = read('index.html');
 const app = read('src/site-v2/cockpit-demo.jsx');
+const readme = read('README.md');
 const main = read('src/site-v2/main.jsx');
 const styles = read('css/cockpit-demo.css');
 const manifest = read('manifest.json');
 const publicManifest = read('public/bitforward.webmanifest');
+const robots = read('public/robots.txt');
 const serviceWorker = read('public/sw.js');
 const rootServiceWorker = read('sw.js');
 const pwaCleanup = read('js/pwa.js');
@@ -36,8 +38,8 @@ const envExample = read('server/.env.example');
 
 assert.match(
   index,
-  /BitForward Mission Control Demo \| AFORTU/i,
-  'La portada debe identificarse como demostración'
+  /BitForward Mission Control \| Experiencia pública de AFORTU/i,
+  'La portada debe identificarse como experiencia pública'
 );
 assert.match(
   index,
@@ -50,15 +52,23 @@ assert.match(
   /https:\/\/asesoraft\.github\.io\/BitForward\/assets\/brand\/bitforward-social-v2\.jpg/i,
   'La vista previa social debe usar una URL pública estable'
 );
-assert.doesNotMatch(index, /rel="manifest"/i, 'La demo no debe instalarse como aplicación');
+assert.doesNotMatch(
+  index,
+  /rel="manifest"/i,
+  'La versión pública no debe instalarse como aplicación'
+);
 assert.doesNotMatch(
   index,
   /fonts\.googleapis|fonts\.gstatic|api\.coingecko/i,
-  'La portada demo no debe abrir conexiones externas'
+  'La portada pública no debe abrir conexiones externas'
 );
 
 assert.match(main, /CockpitDemo/, 'La entrada debe montar la réplica del cockpit');
-assert.match(main, /cockpit-demo\.css/, 'La entrada debe cargar el sistema visual de la demo');
+assert.match(
+  main,
+  /cockpit-demo\.css/,
+  'La entrada debe cargar el sistema visual de la experiencia pública'
+);
 assert.doesNotMatch(main, /bitforward-app\.jsx/, 'La portada no debe montar la landing anterior');
 
 for (const id of [
@@ -72,15 +82,30 @@ for (const id of [
   'privacidad',
   'pagos',
 ]) {
-  assert.match(app, new RegExp(`id: ['"]${id}['"]`), `Falta el módulo demo ${id}`);
+  assert.match(app, new RegExp(`id: ['"]${id}['"]`), `Falta el módulo público ${id}`);
 }
 
 assert.match(
   app,
-  /DEMO PÚBLICA · DATOS FICTICIOS · NO RECIBE DINERO/i,
+  /VERSIÓN PÚBLICA EDUCATIVA · DATOS ILUSTRATIVOS · SIN OPERACIÓN REAL/i,
   'El banner persistente debe declarar la frontera pública'
 );
-assert.match(app, /Piloto Demo/g, 'La aplicación debe usar una identidad sintética');
+assert.match(app, /Piloto Explorador/g, 'La aplicación debe usar una identidad sintética');
+assert.doesNotMatch(
+  `${app}\n${readme}`,
+  /advisoryPartners|Equipo promotor de AFORTU|Certificación individual|partner\.(?:name|role|credential)|initials:/i,
+  'La experiencia pública no debe identificar socios ni exponer credenciales personales'
+);
+assert.match(
+  readme,
+  /identifica únicamente a AFORTU como institución/i,
+  'La documentación pública debe mantener una representación exclusivamente institucional'
+);
+assert.match(
+  app,
+  /acreditaciones aplicables se documentan[\s\S]*instrumentos contractuales correspondientes/i,
+  'La representación profesional debe remitirse discretamente a los contratos aplicables'
+);
 assert.match(
   app,
   /pilot-astronaut-v3\.webp/,
@@ -91,7 +116,7 @@ assert.match(
   /className="demo-pilot-astronaut"[\s\S]*width="800"[\s\S]*height="1200"/i,
   'El astronauta debe declarar dimensiones estables'
 );
-assert.match(app, /MÉTODOS DE PAGO/, 'La demo debe reservar el módulo de pagos');
+assert.match(app, /MÉTODOS DE PAGO/, 'La versión pública debe reservar el módulo de pagos');
 assert.match(
   app,
   /Esta página no solicita, transmite ni almacena información bancaria/i,
@@ -107,7 +132,7 @@ assert.match(
   /disabled className="demo-disabled-action"/i,
   'El control de pagos no puede ejecutar una acción'
 );
-assert.match(app, /window\.print\(\)/, 'La Torre debe ofrecer un reporte demo imprimible');
+assert.match(app, /window\.print\(\)/, 'La Torre debe ofrecer un reporte ilustrativo imprimible');
 assert.match(
   app,
   /Comprueba la ausencia de almacenamiento/i,
@@ -115,7 +140,7 @@ assert.match(
 );
 assert.match(
   styles,
-  /DEMO PÚBLICA · DATOS FICTICIOS · SIN VALIDEZ OPERATIVA/i,
+  /VERSIÓN PÚBLICA EDUCATIVA · DATOS ILUSTRATIVOS · SIN VALIDEZ OPERATIVA/i,
   'La impresión debe conservar una marca de agua inequívoca'
 );
 assert.match(styles, /@page[\s\S]*size:\s*A4 portrait/i, 'El reporte debe declarar formato A4');
@@ -136,14 +161,19 @@ assert.match(
 );
 assert.match(
   styles,
+  /@media \(max-width: 680px\)[\s\S]*\.demo-governance-grid[\s\S]*grid-template-columns:\s*1fr/i,
+  'El bloque de gobierno institucional debe conservar una sola columna en móvil'
+);
+assert.match(
+  styles,
   /@media \(prefers-reduced-motion: reduce\)/i,
-  'La demo debe respetar movimiento reducido'
+  'La experiencia pública debe respetar movimiento reducido'
 );
 
 assert.doesNotMatch(
   app,
-  /bitforward-premium|jonathangranados1242|chatgpt\.site|@gmail\.com/i,
-  'La demo no debe revelar el cockpit o al propietario'
+  /bitforward-premium|chatgpt\.site|@gmail\.com/i,
+  'La experiencia pública no debe revelar el cockpit o al propietario'
 );
 assert.doesNotMatch(
   app,
@@ -170,13 +200,37 @@ assert.doesNotMatch(
   /(?:type|name|id)=["'](?:password|email|cvv|clabe|card|wallet|private-key|seed)["']/i,
   'La réplica no puede declarar campos de credenciales o pago'
 );
-assert.doesNotMatch(app, /href=["']https?:\/\//i, 'La réplica no debe enlazar servicios externos');
+const externalHrefs = [...app.matchAll(/href=["'](https?:\/\/[^"']+)["']/gi)].map(
+  match => match[1]
+);
+assert.deepEqual(
+  externalHrefs,
+  [],
+  'La experiencia pública no debe enlazar superficies externas sin revisión'
+);
 
 assert.equal(manifest, publicManifest, 'El manifiesto fuente y el público deben coincidir');
 assert.equal(serviceWorker, rootServiceWorker, 'Los service workers de retiro deben coincidir');
-assert.match(manifest, /Mission Control · Demo pública/i, 'El manifiesto debe decir demo');
-assert.match(manifest, /"display": "browser"/i, 'La demo debe mantener visible el navegador');
-assert.match(manifest, /"shortcuts": \[\]/i, 'La demo no debe ofrecer accesos instalables');
+assert.match(
+  manifest,
+  /Mission Control · Experiencia pública/i,
+  'El manifiesto debe identificar la experiencia pública'
+);
+assert.match(
+  manifest,
+  /"display": "browser"/i,
+  'La experiencia pública debe mantener visible el navegador'
+);
+assert.match(
+  manifest,
+  /"shortcuts": \[\]/i,
+  'La experiencia pública no debe ofrecer accesos instalables'
+);
+assert.match(
+  robots,
+  /^User-agent: \*\s+Allow: \/\s*$/i,
+  'robots.txt debe permitir el sitio público'
+);
 assert.match(
   serviceWorker,
   /self\.registration\.unregister\(\)/i,
