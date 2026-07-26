@@ -1,18 +1,31 @@
-const supported = 'serviceWorker' in navigator && window.isSecureContext;
-
-if (supported) {
-  const scopeUrl = new URL('./', window.location.href);
-  const workerUrl = new URL('sw.js', scopeUrl);
-
+/**
+ * La demo pública funciona en el navegador y conserva visible su URL.
+ * Limpia registros PWA heredados para evitar que una instalación anterior
+ * aparente ser una aplicación operativa.
+ */
+if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const registration = await navigator.serviceWorker.register(workerUrl, {
-        scope: scopeUrl.pathname,
-        updateViaCache: 'none',
-      });
-      await registration.update();
-    } catch (error) {
-      console.warn('BitForward seguirá disponible sin modo offline.', error);
+      const appScopePath = new URL('./', window.location.href).pathname;
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(
+        registrations
+          .filter(registration => {
+            const registrationPath = new URL(registration.scope).pathname;
+            return registrationPath.startsWith(appScopePath);
+          })
+          .map(registration => registration.unregister())
+      );
+      if ('caches' in window) {
+        const names = await caches.keys();
+        await Promise.all(
+          names
+            .filter(name => name.startsWith('bitforward-public-'))
+            .map(name => caches.delete(name))
+        );
+      }
+    } catch {
+      // La limpieza es defensiva; la demo no depende de service workers.
     }
   });
 }

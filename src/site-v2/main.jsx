@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import Home from './bitforward-app.jsx';
-import '../../css/bitforward-v2.css';
+import CockpitDemo from './cockpit-demo.jsx';
+import '../../css/cockpit-demo.css';
 import '../../js/pwa.js';
 
 const root = document.getElementById('bitforward-root');
@@ -12,6 +12,6 @@ if (!root) {
 
 createRoot(root).render(
   <React.StrictMode>
-    <Home />
+    <CockpitDemo />
   </React.StrictMode>
 );
