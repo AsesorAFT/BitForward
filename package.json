@@ -1,7 +1,7 @@
 {
   "name": "bitforward-enterprise",
   "version": "2.0.0",
-  "description": "Plataforma fintech educativa de AFORTU para simulación, análisis y gestión patrimonial con activos digitales",
+  "description": "Experiencia pública educativa de AFORTU para documentar contexto, límites y escenarios ilustrativos de activos digitales",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -64,7 +64,7 @@
     "type": "git",
     "url": "https://github.com/AsesorAFT/BitForward.git"
   },
-  "homepage": "https://github.com/AsesorAFT/BitForward#readme",
+  "homepage": "https://asesoraft.github.io/BitForward/",
   "bugs": {
     "url": "https://github.com/AsesorAFT/BitForward/issues"
   },

@@ -11,15 +11,19 @@ const baseUrl = process.env.SMOKE_BASE_URL || 'http://localhost:4173';
 const pages = [
   {
     path: '/',
-    tokens: ['BitForward Mission Control Demo | AFORTU', 'id="bitforward-root"'],
+    tokens: ['BitForward Mission Control | Experiencia pública de AFORTU', 'id="bitforward-root"'],
   },
   {
     path: '/bitforward.webmanifest',
-    tokens: ['Mission Control · Demo pública', '"display":"browser"'],
+    tokens: ['Mission Control · Experiencia pública', '"display":"browser"'],
   },
   {
     path: '/sw.js',
     tokens: ['self.registration.unregister()'],
+  },
+  {
+    path: '/robots.txt',
+    tokens: ['User-agent: *', 'Allow: /'],
   },
   { path: '/assets/brand/bitforward-social-v2.jpg', tokens: [] },
   { path: '/assets/brand/bitforward-app-icon-192.png', tokens: [] },
@@ -149,16 +153,20 @@ async function assertApplicationRuntime() {
       })(),
     }));
 
-    if (!desktopState.banner.includes('DEMO PÚBLICA · DATOS FICTICIOS · NO RECIBE DINERO')) {
-      throw new Error('El banner de frontera demo no está visible.');
+    if (
+      !desktopState.banner.includes(
+        'VERSIÓN PÚBLICA EDUCATIVA · DATOS ILUSTRATIVOS · SIN OPERACIÓN REAL'
+      )
+    ) {
+      throw new Error('El banner de frontera pública no está visible.');
     }
     if (desktopState.active !== '#panel' || desktopState.navigationCount !== 9) {
       throw new Error('La navegación de escritorio no expone los nueve módulos.');
     }
     if (desktopState.forms !== 0) {
-      throw new Error('La demo pública no puede captar texto o formularios.');
+      throw new Error('La experiencia pública no puede captar texto o formularios.');
     }
-    if (!desktopState.text.includes('Buen regreso, Piloto Demo.')) {
+    if (!desktopState.text.includes('Bienvenido, Piloto Explorador.')) {
       throw new Error('La réplica no montó el Panel de Misión.');
     }
     if (
@@ -304,7 +312,9 @@ async function assertApplicationRuntime() {
     }
 
     if (externalRequests.length) {
-      throw new Error(`La demo abrió conexiones externas: ${externalRequests.join(', ')}`);
+      throw new Error(
+        `La experiencia pública abrió conexiones externas: ${externalRequests.join(', ')}`
+      );
     }
     if (runtimeErrors.length) {
       throw new Error(`Errores de JavaScript: ${runtimeErrors.join(' | ')}`);

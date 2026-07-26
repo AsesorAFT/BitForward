@@ -22,10 +22,10 @@ const towerTabs = [
 ];
 
 const positions = [
-  { symbol: 'BTC', role: 'Núcleo', value: 30000, cost: 27000, weight: 50 },
-  { symbol: 'ETH', role: 'Infraestructura', value: 18000, cost: 17400, weight: 30 },
-  { symbol: 'SOL', role: 'Crecimiento', value: 8000, cost: 8400, weight: 13.3 },
-  { symbol: 'ADA', role: 'Satélite', value: 4000, cost: 4600, weight: 6.7 },
+  { symbol: 'BTC', role: 'Ejemplo A', value: 30000, cost: 27000, weight: 50 },
+  { symbol: 'ETH', role: 'Ejemplo B', value: 18000, cost: 17400, weight: 30 },
+  { symbol: 'SOL', role: 'Ejemplo C', value: 8000, cost: 8400, weight: 13.3 },
+  { symbol: 'ADA', role: 'Ejemplo D', value: 4000, cost: 4600, weight: 6.7 },
 ];
 
 const systems = [
@@ -41,7 +41,7 @@ const intents = {
     eyebrow: 'CONTRADICCIONES · RESULTADO SIMULADO',
     title: 'Una regla necesita revisión.',
     summary:
-      'La exposición ficticia de esta demostración es 30%, por debajo del límite de 35%. El pendiente es documental: falta registrar una revisión semanal.',
+      'La exposición ilustrativa de esta experiencia es 30%, por debajo del límite de 35%. El pendiente es documental: falta registrar una revisión semanal.',
     facts: [
       ['Exposición observada', '30%'],
       ['Límite del plan', '35%'],
@@ -53,10 +53,10 @@ const intents = {
     eyebrow: 'ESCENARIOS · RESULTADO SIMULADO',
     title: 'El escenario cambia la pérdida matemática, no la decisión.',
     summary:
-      'Una caída hipotética de 40% sobre $60,000 MXN equivale a $24,000 MXN. La demo no indica comprar, vender ni modificar posiciones.',
+      'Una caída hipotética de 40% sobre $60,000 MXN equivale a $24,000 MXN. La experiencia pública no indica comprar, vender ni modificar posiciones.',
     facts: [
       ['Capital de referencia', '$200,000 MXN'],
-      ['Exposición ficticia', '$60,000 MXN'],
+      ['Exposición ilustrativa', '$60,000 MXN'],
       ['Caída hipotética', '−40%'],
       ['Pérdida matemática', '$24,000 MXN'],
     ],
@@ -69,7 +69,7 @@ const intents = {
     facts: [
       ['Perfil', 'Completo'],
       ['Plan', 'Revisión 3'],
-      ['Telemetría', 'Muestra ficticia'],
+      ['Telemetría', 'Muestra ilustrativa'],
       ['Pago', 'No configurado'],
     ],
   },
@@ -139,24 +139,30 @@ function Overview({ notify, motionPaused }) {
         aria-labelledby="demo-welcome"
       >
         <div className="demo-mission-copy">
-          <MicroLabel>BITFORWARD · PROYECTO CRIPTO DE AFORTU</MicroLabel>
+          <MicroLabel>BITFORWARD · EXPERIENCIA PÚBLICA DE AFORTU</MicroLabel>
           <h1 id="demo-welcome">
-            Buen regreso, <em>Piloto Demo.</em>
+            Bienvenido, <em>Piloto Explorador.</em>
           </h1>
           <p>
-            Esta cabina muestra cómo se organizan contexto, reglas, telemetría y decisiones. Todo el
-            contenido de esta versión es ficticio.
+            BitForward es una experiencia educativa para documentar contexto, reglas, telemetría y
+            decisiones sobre activos digitales. Sus datos son ilustrativos y no corresponden a una
+            persona, cuenta o portafolio real.
           </p>
           <div className="demo-priority">
-            <span>REVISIÓN DE MISIÓN</span>
-            <h2>La revisión semanal sigue pendiente.</h2>
+            <span>RECORRIDO EDUCATIVO</span>
+            <h2>Documenta antes de decidir.</h2>
             <p>
-              Las cifras de ejemplo están dentro de los límites. Falta documentar que el piloto
-              revisó la evidencia.
+              Comienza por un perfil ilustrativo, convierte intención en reglas y comprueba cómo
+              cambia un escenario sin convertirlo en una orden.
             </p>
-            <a className="demo-action" href="#navigator">
-              Abrir explicación <span aria-hidden="true">→</span>
-            </a>
+            <div className="demo-priority-actions">
+              <a className="demo-action" href="#perfil">
+                Iniciar recorrido <span aria-hidden="true">→</span>
+              </a>
+              <a className="demo-priority-link" href="#privacidad">
+                Ver límites de la experiencia
+              </a>
+            </div>
           </div>
         </div>
         <div className="demo-mission-visual">
@@ -170,7 +176,7 @@ function Overview({ notify, motionPaused }) {
           />
           <div className="demo-mission-stage">
             <strong>4/4</strong>
-            <span>etapas demostradas</span>
+            <span>etapas ilustradas</span>
             <small>{motionPaused ? 'Movimiento pausado' : 'Trayectoria activa'}</small>
           </div>
           <div className="demo-trajectory" aria-hidden="true">
@@ -180,12 +186,12 @@ function Overview({ notify, motionPaused }) {
         </div>
       </section>
 
-      <section className="demo-metric-grid" aria-label="Estado ficticio de misión">
+      <section className="demo-metric-grid" aria-label="Estado ilustrativo de misión">
         {[
           ['PILOT', '5/5', 'Sistemas del piloto confirmados'],
-          ['PLAN', 'R3', 'Plan de muestra activo'],
-          ['TEL', '$60,000', 'Exposición ficticia capturada'],
-          ['LOG', '3', 'Entradas de ejemplo'],
+          ['PLAN', 'R3', 'Plan ilustrativo activo'],
+          ['TEL', '$60,000', 'Exposición ilustrativa capturada'],
+          ['LOG', '3', 'Entradas ilustrativas'],
         ].map(metric => (
           <article key={metric[0]}>
             <span>{metric[0]}</span>
@@ -199,7 +205,7 @@ function Overview({ notify, motionPaused }) {
         <div className="demo-radar">
           <header className="demo-radar-header">
             <div>
-              <MicroLabel>RADAR DE DESVIACIONES · DEMO</MicroLabel>
+              <MicroLabel>RADAR DE DESVIACIONES · VERSIÓN PÚBLICA</MicroLabel>
               <h2>Revisión requerida</h2>
               <p>Hay un control documental pendiente; no existe una desviación financiera.</p>
             </div>
@@ -237,14 +243,18 @@ function Overview({ notify, motionPaused }) {
               </p>
               <dl>
                 <div>
-                  <dt>Exposición ficticia</dt>
-                  <dd>30%</dd>
-                  <small>Telemetría demo · 25 jul 2026</small>
+                  <dt>Exposición ilustrativa</dt>
+                  <dd>
+                    <span>30%</span>
+                    <small>Telemetría pública · 25 jul 2026</small>
+                  </dd>
                 </div>
                 <div>
                   <dt>Límite declarado</dt>
-                  <dd>35%</dd>
-                  <small>Plan de muestra · revisión 3</small>
+                  <dd>
+                    <span>35%</span>
+                    <small>Plan de muestra · revisión 3</small>
+                  </dd>
                 </div>
               </dl>
               <a href="#navigator">Abrir explicación completa →</a>
@@ -254,12 +264,12 @@ function Overview({ notify, motionPaused }) {
         <aside className="demo-weekly-card">
           <MicroLabel>REVISIÓN SEMANAL</MicroLabel>
           <h2>Registra lo que revisaste.</h2>
-          <p>En la demo no se guarda información ni se modifica ningún expediente.</p>
+          <p>Esta experiencia no guarda información ni modifica expedientes.</p>
           <div className="demo-readonly-note">
             <span>Nota de control</span>
             <p>Ejemplo: revisé límites, fuente y fecha de la telemetría.</p>
           </div>
-          <DemoButton onClick={() => notify('Demostración visual: la revisión no fue guardada.')}>
+          <DemoButton onClick={() => notify('Vista educativa: la revisión no fue guardada.')}>
             Simular revisión
           </DemoButton>
           <small>
@@ -275,7 +285,7 @@ function Overview({ notify, motionPaused }) {
               <MicroLabel>MAPA DEL PILOTO</MicroLabel>
               <h2>Integridad del sistema personal.</h2>
             </div>
-            <span>5/5 DEMOSTRADOS</span>
+            <span>5/5 ILUSTRADOS</span>
           </header>
           <ol>
             {systems.map((system, index) => (
@@ -297,10 +307,10 @@ function Overview({ notify, motionPaused }) {
           <MicroLabel>SECUENCIA OPERATIVA</MicroLabel>
           <h2>Una siguiente acción.</h2>
           {[
-            ['01', 'Perfil', '6/6 campos ficticios'],
+            ['01', 'Perfil', '6/6 campos ilustrativos'],
             ['02', 'Plan', 'Revisión 3'],
             ['03', 'Telemetría', 'Muestra fechada'],
-            ['04', 'Expediente', 'BF-DEMO-0001'],
+            ['04', 'Expediente', 'BF-PUBLICO-0001'],
           ].map(item => (
             <div className="demo-timeline-row" key={item[0]}>
               <span>{item[0]}</span>
@@ -312,13 +322,49 @@ function Overview({ notify, motionPaused }) {
             </div>
           ))}
           <div className="demo-scope-note">
-            <strong>Frontera de la demostración</strong>
+            <strong>Frontera de la experiencia pública</strong>
             <p>
               No compra, vende, custodia, autentica usuarios, procesa pagos ni emite recomendaciones
               individuales.
             </p>
           </div>
         </aside>
+      </section>
+      <section className="demo-governance-panel" aria-labelledby="demo-governance-title">
+        <header>
+          <div>
+            <MicroLabel>GOBIERNO HUMANO · ENTORNO PROTEGIDO</MicroLabel>
+            <h2 id="demo-governance-title">Criterio institucional y responsabilidad trazable.</h2>
+          </div>
+          <span>AFORTU · CONTROL INSTITUCIONAL</span>
+        </header>
+        <div className="demo-governance-grid">
+          <article>
+            <span aria-hidden="true">01</span>
+            <div>
+              <h3>Revisión humana</h3>
+              <p>Las decisiones profesionales ocurren fuera de esta experiencia pública.</p>
+            </div>
+          </article>
+          <article>
+            <span aria-hidden="true">02</span>
+            <div>
+              <h3>Trazabilidad contractual</h3>
+              <p>
+                Responsables, alcances y acreditaciones se verifican en cada instrumento aplicable.
+              </p>
+            </div>
+          </article>
+        </div>
+        <p className="demo-regulatory-note">
+          La representación profesional, sus alcances y las acreditaciones aplicables se documentan
+          en los instrumentos contractuales correspondientes. Esta versión permanece educativa y no
+          emite recomendaciones individualizadas.
+        </p>
+        <div className="demo-institution-line">
+          <span>Experiencia pública: educativa y sin operación</span>
+          <span>Gestión profesional: entorno protegido</span>
+        </div>
       </section>
     </div>
   );
@@ -332,21 +378,21 @@ function Profile() {
         eyebrow="PERFIL DEL PILOTO"
         title="Documenta capacidad antes de medir exposición."
         detail="La muestra utiliza información sintética. No ingreses datos personales o patrimoniales en esta página."
-        badge="6/6 CAMPOS DEMO"
+        badge="6/6 DATOS ILUSTRATIVOS"
       />
       <div className="demo-two-column">
         <section className="demo-panel">
-          <MicroLabel>CONTEXTO FICTICIO</MicroLabel>
+          <MicroLabel>CONTEXTO ILUSTRATIVO</MicroLabel>
           <div className="demo-detail-grid">
             {[
-              ['Piloto', 'Piloto Demo'],
+              ['Piloto', 'Piloto Explorador'],
               ['Objetivo', 'Aprender un proceso disciplinado'],
               ['Horizonte', '36 meses'],
               ['Experiencia', 'Intermedia'],
               ['Capital de referencia', '$200,000 MXN'],
               ['Pérdida máxima', '$50,000 MXN'],
               ['Liquidez', '6 meses'],
-              ['Reserva separada', 'Sí · dato simulado'],
+              ['Reserva separada', 'Sí · dato ilustrativo'],
             ].map(item => (
               <div key={item[0]}>
                 <span>{item[0]}</span>
@@ -368,7 +414,7 @@ function Profile() {
                   <strong>{system[0]}</strong>
                   <small>{system[1]}</small>
                 </div>
-                <em>DEMO</em>
+                <em>ILUSTRATIVO</em>
               </li>
             ))}
           </ol>
@@ -385,24 +431,24 @@ function Plan() {
         code="02"
         eyebrow="PLAN DE VUELO"
         title="Convierte intención en reglas revisables."
-        detail="El plan demostrativo conserva propósito, límites y criterios de revisión sin ejecutar una estrategia."
-        badge="R3 · MUESTRA"
+        detail="El plan ilustrativo conserva propósito, límites y criterios de revisión sin ejecutar una estrategia."
+        badge="R3 · ILUSTRATIVO"
       />
       <section className="demo-panel demo-plan-hero">
         <div>
-          <MicroLabel>PLAN PRIMARIO · DATOS FICTICIOS</MicroLabel>
+          <MicroLabel>PLAN PRIMARIO · DATOS ILUSTRATIVOS</MicroLabel>
           <h2>Disciplina antes que pronóstico.</h2>
           <p>Explorar un proceso de control de exposición y documentar por qué una regla cambia.</p>
         </div>
         <div className="demo-plan-orbit" aria-hidden="true">
           <span>35%</span>
-          <small>LÍMITE DEMO</small>
+          <small>LÍMITE ILUSTRATIVO</small>
         </div>
       </section>
       <div className="demo-rule-grid">
         {[
           ['Universo', 'BTC, ETH, SOL y ADA como muestra educativa.'],
-          ['Límite', 'La exposición ficticia no rebasa 35% del capital de referencia.'],
+          ['Límite', 'La exposición ilustrativa no rebasa 35% del capital de referencia.'],
           ['Aportación', 'No existe una regla operativa ni una instrucción de depósito.'],
           ['Revisión', 'Revisar fuente, fecha, límites y evidencia cada semana.'],
           ['Invalidación', 'Detener el análisis si falta una fuente o el objetivo cambia.'],
@@ -433,14 +479,14 @@ function Telemetry() {
       <ModuleHeader
         code="03"
         eyebrow="TELEMETRÍA"
-        title="Una fotografía ficticia, no una conexión de cartera."
+        title="Una fotografía ilustrativa, no una conexión de cartera."
         detail="Las posiciones son sintéticas y el cálculo ocurre únicamente en memoria. No se conecta una wallet ni una cuenta."
-        badge="FUENTE DEMO"
+        badge="FUENTE ILUSTRATIVA"
       />
       <section className="demo-metric-grid standalone" aria-label="Resumen de telemetría">
         {[
           ['EXPOSICIÓN', money.format(total), '30% del capital de referencia'],
-          ['COSTO DEMO', '$57,400', 'Cifra ficticia'],
+          ['COSTO ILUSTRATIVO', '$57,400', 'Cifra de ejemplo'],
           ['ESCENARIO', `−${drop}%`, 'Caída hipotética'],
           [
             'PÉRDIDA',
@@ -469,9 +515,9 @@ function Telemetry() {
               <thead>
                 <tr>
                   <th>Activo</th>
-                  <th>Rol</th>
-                  <th>Valor ficticio</th>
-                  <th>Peso</th>
+                  <th>Etiqueta</th>
+                  <th>Valor ilustrativo</th>
+                  <th>Participación ilustrativa</th>
                 </tr>
               </thead>
               <tbody>
@@ -485,6 +531,9 @@ function Telemetry() {
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="demo-info-strip">
+            Esta composición no es una asignación objetivo, recomendación ni resultado histórico.
           </div>
         </section>
         <aside className="demo-panel demo-stress-panel">
@@ -507,7 +556,7 @@ function Telemetry() {
           <div className={`demo-stress-result ${withinLimit ? 'ok' : 'alert'}`}>
             <span>Pérdida matemática</span>
             <strong>{money.format(stressLoss)}</strong>
-            <small>Límite ficticio: $50,000 MXN</small>
+            <small>Límite ilustrativo: $50,000 MXN</small>
           </div>
           <p className="demo-fine-print">
             El escenario no indica comprar, vender, depositar, retirar o rebalancear.
@@ -526,22 +575,30 @@ function Journal({ notify }) {
         eyebrow="BITÁCORA"
         title="Preserva lo que pensabas antes del resultado."
         detail="La versión pública no ofrece texto libre: evita que se introduzcan datos reales y muestra únicamente ejemplos."
-        badge="3 ENTRADAS DEMO"
+        badge="3 ENTRADAS ILUSTRATIVAS"
       />
       <div className="demo-journal-grid">
         {[
           [
             'TESIS',
-            'PORTAFOLIO DEMO',
+            'PORTAFOLIO ILUSTRATIVO',
             'Revisar límites antes de observar rendimiento.',
             '25 jul 2026',
+            'Simular revisión de límites',
           ],
-          ['REVISIÓN', 'FUENTES', 'Confirmar que cada cifra tenga fuente y fecha.', '24 jul 2026'],
+          [
+            'REVISIÓN',
+            'FUENTES',
+            'Confirmar que cada cifra tenga fuente y fecha.',
+            '24 jul 2026',
+            'Simular revisión de fuentes',
+          ],
           [
             'APRENDIZAJE',
             'DISCIPLINA',
             'Una regla sólo cambia con evidencia documentada.',
             '22 jul 2026',
+            'Simular revisión de disciplina',
           ],
         ].map((entry, index) => (
           <article key={entry[1]}>
@@ -555,19 +612,17 @@ function Journal({ notify }) {
               <small>{entry[3]}</small>
               <button
                 type="button"
-                onClick={() =>
-                  notify('Demostración visual: la entrada original no fue modificada.')
-                }
+                onClick={() => notify('Vista educativa: la entrada original no fue modificada.')}
               >
-                Simular revisión
+                {entry[4]}
               </button>
             </footer>
           </article>
         ))}
       </div>
       <div className="demo-info-strip">
-        No se pueden crear notas en esta demo. La plataforma protegida será la única superficie para
-        información real.
+        No se pueden crear notas en esta versión pública. La plataforma protegida será la única
+        superficie para información real.
       </div>
     </div>
   );
@@ -606,7 +661,7 @@ function Navigator() {
           ))}
           <div className="demo-scope-note">
             <strong>Límite</strong>
-            <p>Navigator Demo no elige activos ni indica una operación.</p>
+            <p>Navigator público no elige activos ni indica una operación.</p>
           </div>
         </nav>
         <section className="demo-navigator-result" aria-live="polite">
@@ -658,14 +713,14 @@ function Tower({ notify }) {
         code="06"
         eyebrow="TORRE AFORTU"
         title="Convierte una misión documentada en una muestra revisable."
-        detail="La referencia, la huella y los estados que aparecen aquí son ficticios. No existe expediente en servidor."
-        badge="MODO DEMO"
+        detail="La referencia, la huella y los estados que aparecen aquí son ilustrativos. No existe expediente en servidor."
+        badge="VERSIÓN PÚBLICA"
       />
       <ol className="demo-stepper" aria-label="Flujo demostrativo de expediente">
         {[
           ['01', 'Contexto', 'Datos sintéticos listos'],
           ['02', 'Evidencia', 'Fuentes de ejemplo'],
-          ['03', 'Consentimiento', 'No aplicable en demo'],
+          ['03', 'Consentimiento', 'No aplicable en esta versión'],
           ['04', 'Revisión', 'Estado ilustrativo'],
         ].map(step => (
           <li key={step[0]}>
@@ -705,10 +760,10 @@ function Tower({ notify }) {
           <article className="demo-dossier-card">
             <header>
               <div>
-                <MicroLabel>BF-DEMO-0001 · REFERENCIA FICTICIA</MicroLabel>
+                <MicroLabel>BF-PUBLICO-0001 · REFERENCIA ILUSTRATIVA</MicroLabel>
                 <h2>Revisión del marco de control.</h2>
               </div>
-              <span>EN REVISIÓN · DEMO</span>
+              <span>EN REVISIÓN · ILUSTRATIVO</span>
             </header>
             <p>
               Pregunta de muestra: ¿la evidencia disponible permite confirmar que los límites y la
@@ -717,11 +772,11 @@ function Tower({ notify }) {
             <dl>
               <div>
                 <dt>Alcance</dt>
-                <dd>Perfil, plan, telemetría y radar ficticios</dd>
+                <dd>Perfil, plan, telemetría y radar ilustrativos</dd>
               </div>
               <div>
                 <dt>Huella</dt>
-                <dd>HUELLA-DEMO · no verificable</dd>
+                <dd>HUELLA-ILUSTRATIVA · no verificable</dd>
               </div>
               <div>
                 <dt>Presentación</dt>
@@ -729,10 +784,10 @@ function Tower({ notify }) {
               </div>
             </dl>
             <DemoButton onClick={() => window.print()} secondary>
-              Imprimir reporte demo
+              Imprimir reporte ilustrativo
             </DemoButton>
           </article>
-          <aside className="demo-report-watermark">DEMO</aside>
+          <aside className="demo-report-watermark">EDUCATIVO</aside>
         </section>
       ) : null}
       {tab === 'decisions' ? (
@@ -743,15 +798,13 @@ function Tower({ notify }) {
           aria-labelledby="tower-tab-decisions"
         >
           <article className="demo-decision-card">
-            <span>PRIORIDAD ESTÁNDAR · FICTICIA</span>
+            <span>PRIORIDAD ESTÁNDAR · ILUSTRATIVA</span>
             <h2>Actualizar la nota de fuente.</h2>
             <p>
-              Responsable: Piloto Demo · Fecha ilustrativa: 31 jul 2026 · Criterio: fuente y fecha
-              visibles.
+              Responsable: Piloto Explorador · Fecha ilustrativa: 31 jul 2026 · Criterio: fuente y
+              fecha visibles.
             </p>
-            <DemoButton
-              onClick={() => notify('Demostración visual: ninguna decisión fue cerrada.')}
-            >
+            <DemoButton onClick={() => notify('Vista educativa: ninguna decisión fue cerrada.')}>
               Simular cierre
             </DemoButton>
           </article>
@@ -766,7 +819,7 @@ function Tower({ notify }) {
         >
           <article className="demo-review-card">
             <MicroLabel>MESA HUMANA · REPRESENTACIÓN</MicroLabel>
-            <h2>La revisión real no ocurre en GitHub Pages.</h2>
+            <h2>La revisión real ocurre únicamente en el entorno protegido.</h2>
             <p>
               Un asesor autorizado tendría que abrir el expediente dentro del entorno protegido,
               revisar evidencia y dejar una observación trazable.
@@ -787,7 +840,7 @@ function Privacy({ notify }) {
       <ModuleHeader
         code="07"
         eyebrow="PRIVACIDAD"
-        title="Una demo pública debe ser operacionalmente estéril."
+        title="Una versión pública debe ser operacionalmente estéril."
         detail="Esta interfaz no crea cuentas, no envía formularios, no usa APIs de mercado y no conserva datos patrimoniales."
         badge="SIN DATOS REALES"
       />
@@ -797,7 +850,7 @@ function Privacy({ notify }) {
           ['02', 'Sin persistencia', 'Los controles se reinician al recargar la página.'],
           ['03', 'Sin wallet', 'No conecta, firma ni solicita direcciones o frases semilla.'],
           ['04', 'Sin pagos', 'No recibe dinero, CLABE, tarjeta, SPEI o datos bancarios.'],
-          ['05', 'Sin expediente', 'Las referencias y huellas son marcadores ficticios.'],
+          ['05', 'Sin expediente', 'Las referencias y huellas son marcadores ilustrativos.'],
           ['06', 'Sin recomendación', 'Explica aritmética y procesos; no indica operaciones.'],
         ].map(item => (
           <article key={item[0]}>
@@ -807,6 +860,11 @@ function Privacy({ notify }) {
           </article>
         ))}
       </div>
+      <div className="demo-info-strip">
+        BitForward no persiste datos de usuario en almacenamiento local ni en un backend propio
+        desde esta versión. El proveedor de alojamiento puede procesar registros técnicos conforme a
+        sus políticas.
+      </div>
       <section className="demo-panel demo-boundary-panel">
         <div>
           <MicroLabel>CONTROL DE SESIÓN</MicroLabel>
@@ -814,7 +872,9 @@ function Privacy({ notify }) {
           <p>La acción confirma que esta página no conserva información entre recargas.</p>
         </div>
         <DemoButton
-          onClick={() => notify('La demo no guarda datos; no había información que borrar.')}
+          onClick={() =>
+            notify('La versión pública no guarda datos; no había información que borrar.')
+          }
           secondary
         >
           Comprobar almacenamiento
@@ -830,7 +890,7 @@ function Payments() {
       <ModuleHeader
         code="08"
         eyebrow="MÉTODOS DE PAGO"
-        title="La contratación todavía no forma parte de esta demostración."
+        title="La contratación todavía no forma parte de esta versión pública."
         detail="AFORTU está definiendo el flujo comercial y el método de pago. Publicarlo requerirá validación jurídica, seguridad y un procesador externo."
         badge="EN CONFIGURACIÓN"
       />
@@ -847,7 +907,7 @@ function Payments() {
       </section>
       <div className="demo-payment-grid">
         {[
-          ['Plan', 'Piloto demostrativo', 'Identidad comercial aún por definir'],
+          ['Plan', 'Experiencia pública', 'Identidad comercial aún por definir'],
           ['Método', 'No configurado', 'Sin tarjeta, CLABE, SPEI o wallet'],
           ['Próximo cobro', 'No aplica', 'No existe suscripción ni cargo recurrente'],
           ['Disponibilidad', 'Después del piloto', 'Sujeto a validación legal y técnica'],
@@ -898,6 +958,7 @@ export default function CockpitDemo() {
   useEffect(() => {
     const onHashChange = () => {
       setActive(currentSection());
+      setNotice('');
       window.scrollTo({ top: 0, behavior: 'auto' });
       window.requestAnimationFrame(() => document.getElementById('demo-content')?.focus());
     };
@@ -906,7 +967,7 @@ export default function CockpitDemo() {
   }, []);
 
   useEffect(() => {
-    document.title = `${activeMeta.label} | BitForward Mission Control Demo`;
+    document.title = `${activeMeta.label} | BitForward Mission Control`;
   }, [activeMeta.label]);
 
   useEffect(() => {
@@ -941,15 +1002,15 @@ export default function CockpitDemo() {
         Saltar al contenido
       </a>
       <div className="demo-banner" role="note">
-        DEMO PÚBLICA · DATOS FICTICIOS · NO RECIBE DINERO
+        VERSIÓN PÚBLICA EDUCATIVA · DATOS ILUSTRATIVOS · SIN OPERACIÓN REAL
       </div>
-      <aside className="demo-sidebar" aria-label="Navegación del Mission Control Demo">
+      <aside className="demo-sidebar" aria-label="Navegación de BitForward Mission Control">
         <a className="demo-brand" href="#panel">
           <img src={logoUrl} alt="BitForward" />
-          <span>MISSION CONTROL · DEMO</span>
+          <span>MISSION CONTROL · VERSIÓN PÚBLICA</span>
         </a>
         <nav>
-          <p>SISTEMA DEMOSTRATIVO</p>
+          <p>EXPERIENCIA EDUCATIVA</p>
           {sections.map(section => (
             <a
               href={`#${section.id}`}
@@ -966,7 +1027,7 @@ export default function CockpitDemo() {
           <div>
             <span aria-hidden="true">◆</span>
             <p>
-              <strong>Demostración estática</strong>
+              <strong>Experiencia pública</strong>
               <small>Sin cuenta · sin almacenamiento</small>
             </p>
           </div>
@@ -983,7 +1044,7 @@ export default function CockpitDemo() {
           <div className="demo-topbar-actions">
             <span className="demo-session">
               <i aria-hidden="true" />
-              MODO DEMOSTRACIÓN
+              VERSIÓN EDUCATIVA
             </span>
             <button
               type="button"
@@ -996,14 +1057,14 @@ export default function CockpitDemo() {
             <a
               className="demo-pilot-chip"
               href="#privacidad"
-              aria-label="Abrir Privacidad del Piloto Demo"
+              aria-label="Abrir privacidad de la experiencia pública"
             >
               <span aria-hidden="true">
                 <img src={pilotAstronautUrl} alt="" />
               </span>
               <div>
-                <strong>Piloto Demo</strong>
-                <small>Datos sintéticos</small>
+                <strong>Piloto Explorador</strong>
+                <small>Datos ilustrativos</small>
               </div>
             </a>
           </div>
@@ -1013,7 +1074,7 @@ export default function CockpitDemo() {
           <ActiveModule {...activeProps} />
         </main>
         <footer className="demo-footer">
-          <span>BitForward Mission Control™ · Demostración pública Alpha 0.3</span>
+          <span>BitForward Mission Control™ · Versión pública educativa v2.0 · 2026</span>
           <span>Sin custodia, ejecución, autenticación, pagos ni recomendación individual.</span>
         </footer>
       </div>

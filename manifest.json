@@ -1,7 +1,7 @@
 {
-  "name": "BitForward Mission Control · Demo pública",
-  "short_name": "BitForward Demo",
-  "description": "Demostración navegable con datos ficticios, sin autenticación, pagos ni operaciones reales.",
+  "name": "BitForward Mission Control · Experiencia pública",
+  "short_name": "BitForward",
+  "description": "Experiencia pública educativa con datos ilustrativos, sin autenticación, pagos ni operaciones reales.",
   "start_url": "/BitForward/",
   "display": "browser",
   "background_color": "#05070a",

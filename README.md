@@ -1,54 +1,67 @@
 # BitForward
 
-**Mesa de inteligencia de activos digitales de AFORTU.**
+**Experiencia pública educativa de activos digitales de AFORTU.**
 
-BitForward es una plataforma fintech educativa para simulación, análisis y gestión patrimonial con activos digitales, orientada a formación académica, innovación financiera y transferencia tecnológica.
+BitForward Mission Control presenta un marco visual para documentar contexto, límites, telemetría
+ilustrativa y decisiones. La versión publicada en GitHub Pages es deliberadamente inerte: permite
+recorrer la experiencia sin crear cuentas, guardar datos, conectar wallets, recibir dinero o
+ejecutar operaciones.
 
-> Estado actual, 19 de julio de 2026: **MVP público en validación**. No es una plataforma transaccional, custodial ni un sistema autorizado para operar dinero de clientes.
+> Estado al 26 de julio de 2026: **versión pública educativa en validación**. No es una plataforma
+> transaccional, custodial ni un sistema autorizado para operar dinero de clientes.
 
-## Qué funciona hoy
+## Qué funciona en la versión pública
 
-- Landing pública con precios de BTC, ETH, SOL y ADA desde una API pública.
-- Caché local de corta duración y actualización automática cada cinco minutos.
-- Marco educativo de riesgo y portafolio modelo 60/20/10/10.
-- Simulador determinista con escenarios definidos por el usuario, aportaciones mensuales,
-  bandas de rebalanceo de ±5 puntos y exportación CSV.
-- Sitio público reducido a inicio, simulador y metodología; los prototipos operativos no se publican.
-- Frontend multipágina construido con Vite.
-- Prototipos de dashboard, analítica, contratos y backend para investigación técnica.
-- Build y lint reproducibles con Node.js 22.
+- Cockpit navegable con nueve módulos: inicio, perfil, plan, telemetría, bitácora, Navigator, Torre
+  AFORTU, privacidad y pagos en configuración.
+- Datos sintéticos e ilustrativos que no corresponden a una persona, cuenta o portafolio real.
+- Prueba de estrés determinista con escenarios de caída de 20%, 40% y 60%.
+- Reporte ilustrativo imprimible desde Torre AFORTU.
+- Navegación responsive desde 320 px, controles de teclado y reducción de movimiento.
+- Guardas estáticas que impiden formularios, persistencia, conexiones de cartera, pagos y llamadas
+  a APIs.
 
-## Qué todavía no está validado
+## Qué no hace
 
-- Autenticación y autorización para usuarios reales.
-- Persistencia de producción en PostgreSQL.
-- Integración operativa con custodios o subcuentas.
-- Contratos inteligentes auditados y desplegados.
-- Pruebas integrales, pentest y revisión regulatoria.
-- Uso con información o capital real de clientes.
+- No autentica usuarios ni abre cuentas.
+- No solicita nombres, correos, contraseñas, frases semilla, direcciones o datos bancarios.
+- No consulta balances, precios o portafolios reales.
+- No compra, vende, rebalancea, custodia ni transfiere activos.
+- No emite recomendaciones individualizadas ni promete rendimientos.
+- No procesa cobros o suscripciones; el módulo de pagos permanece **en configuración**.
 
-Los documentos históricos que hablan de “100% production-ready” describen una meta anterior y no sustituyen una verificación técnica actual.
+## Separación público–privado
 
-## Regla de datos
-
-GitHub no almacena información de clientes. Las bases locales, credenciales, llaves, expedientes y exportaciones están fuera del repositorio. Consulta [DATA_SECURITY_POLICY.md](DATA_SECURITY_POLICY.md).
-
-## Arquitectura actual
+BitForward mantiene dos superficies con responsabilidades distintas:
 
 ```text
-BitForward
-├── Experiencia pública     HTML, CSS, JavaScript y precios de mercado
-├── Simulación pública      Escenarios, riesgo, rebalanceo y exportación CSV
-├── Laboratorio backend     Node.js, Express y SQLite sólo para desarrollo
-├── Laboratorio blockchain  Contratos Solidity no auditados
-└── Calidad                 Vite, ESLint, Prettier, smoke tests y GitHub Actions
+GitHub Pages
+└── Experiencia pública educativa
+    ├── Interfaz y narrativa seleccionadas
+    ├── Datos sintéticos
+    └── Cero persistencia u operación
+
+Núcleo privado de AFORTU
+└── Cockpit protegido
+    ├── Autenticación y permisos
+    ├── Datos, expedientes y trazabilidad
+    └── Lógica operativa no publicada
 ```
 
-La arquitectura objetivo separará el código público de la operación: Drive como fuente documental inicial y PostgreSQL como sistema de registro. Ninguna de esas fuentes debe replicarse en GitHub.
+El núcleo privado, sus datos, motores, endpoints y metodología confidencial no forman parte de este
+repositorio. La sincronización permitida es selectiva y unidireccional: sólo componentes visuales,
+copy aprobado y fixtures sintéticos pueden trasladarse a la experiencia pública.
 
-## Inicio rápido
+## Gobierno y frontera pública
 
-Requisitos: Node.js 22 y npm 10 o superior.
+La experiencia identifica únicamente a AFORTU como institución. La representación profesional,
+los responsables, los alcances y las acreditaciones aplicables se documentan en los instrumentos
+contractuales y expedientes internos correspondientes; esta superficie pública no expone datos
+personales del equipo.
+
+## Desarrollo local
+
+Requisitos declarados por el proyecto: Node.js 20–22 y npm 10 o superior.
 
 ```bash
 git clone https://github.com/AsesorAFT/BitForward.git
@@ -64,26 +77,28 @@ npm run lint
 npm run format:check
 npm run verify:static
 npm run build
-npm test
-npm audit --omit=dev --audit-level=high
+npm run smoke:pages
 ```
 
-El backend usa `sqlite3`, por lo que requiere soporte para módulos nativos. Las pruebas crean bases efímeras; nunca deben usar una base operativa.
+GitHub Pages publica únicamente el resultado de `npm run build`. No publica el servidor
+experimental, archivos de entorno ni datos locales.
+
+## Seguridad de datos
+
+GitHub no es un sistema para información de clientes. Bases, credenciales, llaves, expedientes y
+exportaciones deben permanecer fuera del repositorio. Consulta
+[DATA_SECURITY_POLICY.md](DATA_SECURITY_POLICY.md).
 
 ## Despliegues
 
 - Sitio público: [asesoraft.github.io/BitForward](https://asesoraft.github.io/BitForward/)
 - Repositorio: [github.com/AsesorAFT/BitForward](https://github.com/AsesorAFT/BitForward)
 
-GitHub Pages publica únicamente el resultado de `npm run build`; no publica el código del servidor, archivos de entorno ni datos locales.
-
-## Prioridad de producto
-
-La prioridad dominante es convertir el prototipo disperso en un MVP educativo verificable: una sola narrativa, datos confiables, simulación clara, controles de riesgo y cero información de clientes en el código. El plan vigente está en [ROADMAP.md](ROADMAP.md).
-
 ## Aviso
 
-BitForward presenta información educativa y simulaciones. No constituye oferta pública, custodia, garantía de rendimiento ni recomendación individual. Los activos digitales implican riesgo elevado de pérdida.
+BitForward presenta información educativa y escenarios ilustrativos. No constituye oferta pública,
+intermediación, custodia, garantía de rendimiento ni recomendación individual. Los activos
+digitales implican riesgo elevado de pérdida.
 
 ---
 
