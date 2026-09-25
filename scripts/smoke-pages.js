@@ -106,7 +106,7 @@ async function assertEditorialRuntime(browser) {
       }));
       if (state.pageWidth > state.width + 1) throw new Error(`Editorial overflow at ${width}px`);
       if (!state.imageLoaded) throw new Error('ATF image did not load');
-      if (!state.heading.includes('Menos ruido.')) throw new Error('Editorial heading missing');
+      if (!state.heading.includes('Formación en')) throw new Error('Editorial heading missing');
       if (width <= 900) {
         await page.click('.menu-toggle');
         await page.waitForSelector('#main-nav.is-open', { visible: true });
@@ -117,6 +117,20 @@ async function assertEditorialRuntime(browser) {
         if (!focused) throw new Error('Mobile menu lost focus on Escape');
       }
     }
+    const coinMotion = () =>
+      page.$eval('.coin-strip img', img => ({
+        name: getComputedStyle(img).animationName,
+        state: getComputedStyle(img).animationPlayState,
+      }));
+    if ((await coinMotion()).name !== 'coin-float') throw new Error('Coin motion missing');
+    await page.click('.motion-toggle');
+    if ((await coinMotion()).state !== 'paused') throw new Error('Coin pause failed');
+    await page.click('.motion-toggle');
+    if ((await coinMotion()).state !== 'running') throw new Error('Coin resume failed');
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    await page.waitForFunction(() => document.querySelector('.motion-toggle').disabled);
+    if ((await coinMotion()).name !== 'none') throw new Error('Reduced motion not respected');
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]);
     await page.click('[data-filter="ethereum"]');
     if ((await page.$$eval('.mission-card:not([hidden])', cards => cards.length)) !== 1) {
       throw new Error('Ethereum filter failed');
@@ -133,6 +147,22 @@ async function assertEditorialRuntime(browser) {
     await page.click('.lesson-list summary');
     if (!(await page.$eval('.lesson-list details', el => el.open)))
       throw new Error('Bitacora expansion failed');
+    for (const path of [
+      '/misiones.html',
+      '/laboratorio.html',
+      '/atf.html',
+      '/membresias.html',
+      '/acceso.html',
+    ]) {
+      for (const width of [320, 1440]) {
+        await page.setViewport({ width, height: 900, deviceScaleFactor: 1 });
+        await page.goto(buildUrl(path), { waitUntil: 'networkidle0' });
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+        );
+        if (overflow) throw new Error(`Learning page overflow: ${path} at ${width}px`);
+      }
+    }
     if (errors.length) throw new Error(errors.join(' | '));
     console.log(
       '✓ Editorial: 320/390/768/1440px, menu, filter, article reload and expandable answers.'

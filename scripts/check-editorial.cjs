@@ -60,9 +60,18 @@ for (const path of pages) {
 const source = readFileSync('src/editorial/main.js', 'utf8').replace(/^import .+;$/gm, '');
 const dom = new JSDOM(readFileSync('index.html', 'utf8'), {
   runScripts: 'outside-only',
+  pretendToBeVisual: true,
   url: 'https://example.test/BitForward/',
 });
-dom.window.matchMedia = () => ({ addEventListener() {} });
+let onMotionPreferenceChange;
+const motionPreference = {
+  matches: false,
+  addEventListener(_event, listener) {
+    onMotionPreferenceChange = listener;
+  },
+};
+dom.window.matchMedia = query =>
+  query.includes('prefers-reduced-motion') ? motionPreference : { addEventListener() {} };
 dom.window.eval(source);
 const doc = dom.window.document;
 const menu = doc.querySelector('.menu-toggle');
@@ -84,9 +93,28 @@ for (const category of ['ethereum', 'seguridad', 'fundamentos', 'all']) {
   if (category !== 'all') assert.equal(visible[0].dataset.category, category);
   assert.ok(doc.querySelector('#filter-result').textContent);
 }
+const motionButton = doc.querySelector('.motion-toggle');
+assert.equal(motionButton.hidden, false);
+assert.equal(doc.documentElement.dataset.coinMotion, 'running');
+motionButton.click();
+assert.equal(doc.documentElement.dataset.coinMotion, 'paused');
+assert.ok(motionButton.textContent.includes('Activar movimiento'));
+motionButton.click();
+assert.equal(doc.documentElement.dataset.coinMotion, 'running');
+motionPreference.matches = true;
+onMotionPreferenceChange();
+assert.equal(doc.documentElement.dataset.coinMotion, 'paused');
+assert.equal(motionButton.disabled, true);
+motionButton.click();
+assert.equal(doc.documentElement.dataset.coinMotion, 'paused');
+motionPreference.matches = false;
+onMotionPreferenceChange();
+assert.equal(motionButton.disabled, false);
+assert.equal(doc.documentElement.dataset.coinMotion, 'running');
 console.log(
   '✓ Fifteen pages: valid assets, links, anchors, metadata, no-JS content and /BitForward/ base.'
 );
 console.log(
   '✓ Menu open/close/Escape/focus and all four mission filters. DOM checks; not a visual browser audit.'
 );
+console.log('✓ Coin motion can be paused and respects changes to reduced-motion preferences.');

@@ -112,7 +112,7 @@ function Tutor() {
           <h2>
             ATF<span>By AFORTU</span>
           </h2>
-          <p>Primero entender. Después practicar. Siempre preguntar.</p>
+          <p>Lecciones, ejercicios y seguimiento de tu avance.</p>
           <div className="tutor-progress">
             <strong>{completed.length} / 9</strong>
             <span>comprobaciones completadas</span>

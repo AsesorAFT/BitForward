@@ -1427,3 +1427,110 @@
     width: 100%;
   }
 }
+
+/* Coin movement is decorative, user-controlled, and limited to the public home. */
+.portal-hero h1 {
+  font-family: Manrope, sans-serif;
+  font-size: clamp(30px, 5vw, 64px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+.coin-strip .coin-strip-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid #ffffff0a;
+  padding-block: 4px 8px;
+}
+.coin-strip-controls > span {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: #9faec7;
+}
+.motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: #c1cce0;
+  font-size: 11px;
+}
+.motion-toggle:hover:not(:disabled) {
+  background: #18253e;
+  border-color: #354865;
+}
+.motion-toggle:disabled {
+  cursor: default;
+  color: #a1b1cb;
+}
+.motion-symbol {
+  width: 10px;
+  height: 10px;
+  border-inline: 3px solid currentColor;
+}
+.motion-toggle[data-paused='true'] .motion-symbol {
+  border: 0;
+  border-left: 8px solid currentColor;
+  border-block: 5px solid transparent;
+  width: 8px;
+}
+[data-coin-motion] :is(.coin-strip a img, .asset-tile .coin-name img) {
+  animation: coin-float 6s ease-in-out infinite;
+  transform-origin: center;
+}
+[data-coin-motion] :is(.coin-strip a, .asset-tile):nth-child(2n) img {
+  animation-delay: -2s;
+}
+[data-coin-motion] :is(.coin-strip a, .asset-tile):nth-child(3n) img {
+  animation-delay: -4s;
+}
+[data-coin-motion='paused'] :is(.coin-strip a img, .asset-tile .coin-name img) {
+  animation-play-state: paused;
+}
+.coin-strip a:focus-visible img,
+.asset-tile:focus-visible img {
+  animation-play-state: paused;
+}
+@keyframes coin-float {
+  0%,
+  100% {
+    transform: translateY(0) perspective(160px) rotateY(-12deg) rotateZ(-3deg);
+  }
+  50% {
+    transform: translateY(-5px) perspective(160px) rotateY(12deg) rotateZ(3deg);
+  }
+}
+.tool-nav button {
+  border-radius: 12px;
+  border-color: #283650;
+  background: #0e1727;
+  transition:
+    background-color 180ms,
+    border-color 180ms;
+}
+.tool-nav button:hover {
+  border-color: #6987bb;
+  background: #1a2740;
+}
+.tool-nav button[aria-pressed='true'] {
+  border-color: #7795d5;
+  background: linear-gradient(150deg, #283d6b, #1b2a4b);
+  box-shadow: inset 0 1px 0 #ffffff15;
+}
+@media (max-width: 380px) {
+  .coin-strip-controls > span {
+    max-width: 90px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-coin-motion] :is(.coin-strip a img, .asset-tile .coin-name img) {
+    animation: none;
+    transform: none;
+  }
+}

@@ -51,3 +51,29 @@ if (filters) {
       `${count} ${count === 1 ? 'misión disponible' : 'misiones disponibles'}`;
   });
 }
+
+const motionButton = document.querySelector('.motion-toggle');
+if (motionButton) {
+  const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = preference.matches;
+  const updateMotion = () => {
+    const reduced = preference.matches;
+    document.documentElement.dataset.coinMotion =
+      paused || reduced || document.hidden ? 'paused' : 'running';
+    motionButton.disabled = reduced;
+    motionButton.dataset.paused = String(paused || reduced);
+    motionButton.querySelector('[data-motion-label]').textContent = reduced
+      ? 'Movimiento reducido'
+      : paused
+        ? 'Activar movimiento'
+        : 'Pausar movimiento';
+  };
+  motionButton.hidden = false;
+  motionButton.addEventListener('click', () => {
+    paused = !paused;
+    updateMotion();
+  });
+  preference.addEventListener('change', updateMotion);
+  document.addEventListener('visibilitychange', updateMotion);
+  updateMotion();
+}
