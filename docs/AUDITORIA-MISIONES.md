@@ -38,6 +38,7 @@ Se inspeccionaron la página publicada, el código del repositorio, los recursos
 
 - Sitio público: lint, formato, guardas estáticas, build, quince páginas y comprobaciones DOM de enlaces, menú, teclado, filtros, herramientas, notas, borrado, progreso y recorrido ATF.
 - Cálculos verificados con escenarios de pérdida, pérdida de paridad, valores extremos, entradas inválidas y gas.
+- Dependencias de producción actualizadas dentro de sus versiones compatibles: Express, body-parser, qs, ip-address, Joi, tar y Undici. La auditoría npm de producción del 25 de septiembre de 2026 reportó cero vulnerabilidades conocidas; esto no sustituye una revisión de seguridad del código.
 - Portal AFORTU OS: compilación, TypeScript y lint correctos; suite de 453 pruebas pasada, incluidas ocho pruebas nuevas de capacitación. Aislamiento entre usuarios, control de acceso, solicitudes de otro origen, respuestas inválidas, repetición y auditoría transaccional comprobados.
 - La revisión visual automatizada permanece pendiente del navegador alternativo: el navegador integrado de la sesión falla al iniciarse. Las comprobaciones DOM no prueban distribución visual, contraste renderizado o funcionamiento con lector de pantalla. No se afirma una puntuación Lighthouse ni conformidad WCAG completa.
 - La sesión real con llave/MFA de una cuenta de producción, el despliegue y la migración de producción no se ejecutaron.
