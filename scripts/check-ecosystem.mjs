@@ -1,3 +1,4 @@
+import './check-adaptive.mjs';
 /** Source-level interaction checks in a DOM, not a visual browser audit. */
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -175,33 +176,67 @@ console.log(
 const tutor = dom(readFileSync('atf.html', 'utf8'), 'https://example.test/BitForward/atf.html');
 tutor.window.eval(await bundle('src/ecosystem/tutor.jsx'));
 await tick();
-input(tutor, 'tutor-focus', 'ETH');
+assert.equal(tutor.window.document.querySelectorAll('.atf-concept').length, 9);
+await clickText(tutor, 'Comenzar diagnóstico');
+for (let i = 0; i < 9; i++) {
+  await clickText(tutor, 'Aún no lo sé');
+  assert.equal(
+    JSON.parse(tutor.window.localStorage.getItem(STORAGE_KEY)).adaptive.attempts.length,
+    i + 1
+  );
+  await clickText(tutor, i === 8 ? 'Ver mi ruta' : 'Siguiente concepto');
+}
+assert.match(tutor.window.document.querySelector('.atf-next h3').textContent, /Red, activo/);
+await clickText(tutor, 'Entrar al aula');
+await clickText(tutor, 'Necesito una pista');
+assert.match(tutor.window.document.querySelector('.atf-hint').textContent, /práctica guiada/);
+tutor.window.document.querySelector('input[value="1"]').click();
 await tick();
-await clickText(tutor, 'Comenzar mi sesión');
-assert.match(tutor.window.document.querySelector('.tutor-session h2').textContent, /gasolinera/);
-await clickText(tutor, 'Entendido');
-assert.match(tutor.window.document.querySelector('.practice-step a').href, /herramienta=gas/);
-await clickText(tutor, 'Ya practiqué');
-const form = tutor.window.document.querySelector('.tutor-check');
-form.querySelector('input[value="1"]').click();
+tutor.window.document
+  .querySelector('.atf-exercise')
+  .dispatchEvent(new tutor.window.Event('submit', { bubbles: true, cancelable: true }));
 await tick();
-form.dispatchEvent(new tutor.window.Event('submit', { bubbles: true, cancelable: true }));
-await tick();
-assert.equal(
-  tutor.window.localStorage.getItem(STORAGE_KEY),
-  null,
-  'wrong answer does not save progress'
+assert.match(
+  tutor.window.document.querySelector('.atf-feedback').textContent,
+  /Respuesta correcta/
 );
-form.querySelector('input[value="0"]').click();
-await tick();
-form.dispatchEvent(new tutor.window.Event('submit', { bubbles: true, cancelable: true }));
-await tick();
-assert.deepEqual(JSON.parse(tutor.window.localStorage.getItem(STORAGE_KEY)).completed, ['002']);
-await clickText(tutor, 'Siguiente tema');
-assert.match(tutor.window.document.querySelector('.tutor-session h2').textContent, /Stablecoins/);
+assert.equal(
+  JSON.parse(tutor.window.localStorage.getItem(STORAGE_KEY)).adaptive.attempts.at(-1).independent,
+  false
+);
+await clickText(tutor, 'Ver mi siguiente paso');
+await clickText(tutor, 'Laboratorio');
+assert.equal(tutor.window.document.querySelectorAll('.atf-lab-grid article').length, 9);
+assert.match(tutor.window.document.querySelector('.atf-lab-grid a').href, /herramienta=ficha/);
+const savedTutor = tutor.window.localStorage.getItem(STORAGE_KEY);
 tutor.window.close();
+const resumed = dom(readFileSync('atf.html', 'utf8'), 'https://example.test/BitForward/atf.html');
+resumed.window.localStorage.setItem(STORAGE_KEY, savedTutor);
+resumed.window.eval(await bundle('src/ecosystem/tutor.jsx'));
+await tick();
+assert.ok(!resumed.window.document.body.textContent.includes('Comenzar diagnóstico'));
+assert.match(resumed.window.document.querySelector('.atf-next').textContent, /RECOMENDACIÓN/);
+resumed.window.close();
+const blocked = dom(readFileSync('atf.html', 'utf8'), 'https://example.test/BitForward/atf.html');
+Object.defineProperty(blocked.window, 'localStorage', {
+  get() {
+    throw new Error('blocked');
+  },
+});
+blocked.window.eval(await bundle('src/ecosystem/tutor.jsx'));
+await tick();
+await clickText(blocked, 'Comenzar diagnóstico');
+await clickText(blocked, 'Aún no lo sé');
+assert.match(
+  blocked.window.document.querySelector('.atf-save-notice').textContent,
+  /no permite guardar/
+);
+await clickText(blocked, 'Siguiente concepto');
+await clickText(blocked, 'Aún no lo sé');
+assert.match(blocked.window.document.querySelector('.atf-feedback').textContent, /Revisemos/);
+blocked.window.close();
 console.log(
-  '✓ ATF session: topic choice, lesson, practice handoff, incorrect feedback, correct completion and next topic.'
+  '✓ Campus DOM: nine-question diagnosis, hint-aware assessment, persisted resume, nine lab links and storage-blocked in-memory continuity.'
 );
 const learningBundle = await bundle('src/ecosystem/learning.js');
 for (const m of missions) {

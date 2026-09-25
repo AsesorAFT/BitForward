@@ -10,7 +10,7 @@
     "build:full": "bash scripts/build.sh",
     "preview": "vite preview",
     "analyze": "ANALYZE=true vite build --mode analyze",
-    "smoke:pages": "node scripts/check-editorial.cjs && node scripts/smoke-pages.js",
+    "smoke:pages": "node scripts/check-editorial.cjs && node scripts/smoke-pages.js && node scripts/smoke-campus.mjs",
     "verify:editorial": "node scripts/check-editorial.cjs",
     "verify:static": "node scripts/validate-static.mjs",
     "verify": "npm run lint && npm run format:check && npm run verify:static && npm run build && npm run verify:editorial && npm run verify:ecosystem",

@@ -1,8 +1,10 @@
+import { normalizeAdaptive } from './adaptive-engine.mjs';
 export const STORAGE_KEY = 'bitforward-learning-v1';
 const knownMissions = ['001', '002', '003', '004', '005', '006', '007', '008', '009'];
 export function normalizeState(value) {
   const input = value && typeof value === 'object' ? value : {};
   return {
+    adaptive: normalizeAdaptive(input.adaptive),
     completed: Array.isArray(input.completed)
       ? [...new Set(input.completed.filter(id => knownMissions.includes(id)))]
       : [],

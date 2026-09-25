@@ -35,13 +35,13 @@ Las áreas futuras pueden incluir Bitcoin, Ethereum y redes de segunda capa, sta
 - Revisión de lenguaje, accesibilidad, móvil y exactitud antes de publicar.
 - Un responsable editorial y una fecha de revisión. Corregir públicamente cambios materiales.
 
-La primera versión incluye una pregunta por misión. Es una comprobación inicial, no una evaluación completa de competencias ni una certificación.
+Las nueve misiones conservan su comprobación de lectura. El campus añade nueve preguntas de diagnóstico y 27 ejercicios; distingue una respuesta acertada de evidencia independiente. Sigue siendo una evaluación inicial, no una certificación. Ver [Campus ATF](CAMPUS-ATF.md).
 
 ## ATF como tutor
 
-**Ahora:** guía estructurada por tema, explicación, práctica, comprobación y progreso. La versión privada conserva el avance por cuenta.
+**Ahora:** campus con diagnóstico, mapa de nueve conceptos, ejercicios adaptados, pistas y repasos. La versión pública conserva el avance local y la privada lo guarda por identidad AFORTU OS. Las comprobaciones y notas anteriores se mantienen.
 
-**Siguiente etapa:** diagnóstico sencillo sin pedir datos financieros, ejemplos alternativos, seguimiento de dificultades y repasos espaciados.
+**Siguiente etapa:** piloto con alumnos, revisión de los ejercicios y ampliación del banco de casos. Salas 3D y colaboración pertenecen a fase 2.
 
 **Tutor conversacional posterior:** respuestas apoyadas en un corpus editorial revisado, citas visibles, reconocimiento de incertidumbre, límites de uso y escalamiento de dudas. Debe poder explicar de otra manera y verificar comprensión; no sólo producir textos largos. Una respuesta del modelo no se registra automáticamente como hecho verificado.
 
