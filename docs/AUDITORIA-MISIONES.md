@@ -40,7 +40,9 @@ Se inspeccionaron la página publicada, el código del repositorio, los recursos
 - Cálculos verificados con escenarios de pérdida, pérdida de paridad, valores extremos, entradas inválidas y gas.
 - Dependencias de producción actualizadas dentro de sus versiones compatibles: Express, body-parser, qs, ip-address, Joi, tar y Undici. La auditoría npm de producción del 25 de septiembre de 2026 reportó cero vulnerabilidades conocidas; esto no sustituye una revisión de seguridad del código.
 - Portal AFORTU OS: compilación, TypeScript y lint correctos; suite de 453 pruebas pasada, incluidas ocho pruebas nuevas de capacitación. Aislamiento entre usuarios, control de acceso, solicitudes de otro origen, respuestas inválidas, repetición y auditoría transaccional comprobados.
-- La revisión visual automatizada permanece pendiente del navegador alternativo: el navegador integrado de la sesión falla al iniciarse. Las comprobaciones DOM no prueban distribución visual, contraste renderizado o funcionamiento con lector de pantalla. No se afirma una puntuación Lighthouse ni conformidad WCAG completa.
+- GitHub Actions pasó las pruebas de navegador de la portada en 320, 390, 768 y 1440 px: imagen, ausencia de desbordamiento, menú, filtros, recarga de misión y respuestas desplegables; también pasó la navegación de la demo conservada. Ejecución de referencia: [CI 36195252121](https://github.com/AsesorAFT/BitForward/actions/runs/36195252121), código `b8ead39`.
+- Las tres suites existentes de Jest pasaron sus diez pruebas. Los flujos CI y AFORTU Sites CI del portal también finalizaron correctamente para `e23a6d2`.
+- La inspección visual de detalle por el agente permanece pendiente: el navegador integrado de la sesión falla al iniciarse. Las pruebas automáticas no demuestran contraste renderizado, calidad de composición o funcionamiento con lector de pantalla. No se afirma una puntuación Lighthouse ni conformidad WCAG completa.
 - La sesión real con llave/MFA de una cuenta de producción, el despliegue y la migración de producción no se ejecutaron.
 
 ## Rendimiento

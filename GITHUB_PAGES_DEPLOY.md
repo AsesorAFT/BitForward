@@ -48,8 +48,9 @@ de nuevo. No borres imágenes históricas ni archivos de referencia.
 ## Estado de esta entrega
 
 Los archivos locales están preparados para publicación. No se ha fusionado ni desplegado el
-rediseño en producción automáticamente. La revisión visual en navegador está pendiente porque
-el navegador integrado de esta sesión no pudo iniciarse.
+rediseño en producción automáticamente. GitHub Actions pasó las pruebas de navegador de escritorio
+y móvil. La inspección visual de detalle permanece pendiente porque el navegador integrado de
+esta sesión no pudo iniciarse. Véase `docs/AUDITORIA-MISIONES.md` para la evidencia y sus límites.
 
 ## Activar la capacitación con cuenta
 
