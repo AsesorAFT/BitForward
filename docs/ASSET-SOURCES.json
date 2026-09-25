@@ -1,0 +1,42 @@
+[
+  {
+    "asset": "spacegrotesk-latin.woff2",
+    "source": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2",
+    "license": "SIL Open Font License 1.1"
+  },
+  {
+    "asset": "manrope-latin.woff2",
+    "source": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSvfedN4.woff2",
+    "license": "SIL Open Font License 1.1"
+  },
+  {
+    "asset": "btc.svg",
+    "source": "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/btc.svg",
+    "license": "CC0-1.0 (repository)"
+  },
+  {
+    "asset": "eth.svg",
+    "source": "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/eth.svg",
+    "license": "CC0-1.0 (repository)"
+  },
+  {
+    "asset": "usdt.svg",
+    "source": "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/usdt.svg",
+    "license": "CC0-1.0 (repository)"
+  },
+  {
+    "asset": "ada.svg",
+    "source": "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/ada.svg",
+    "license": "CC0-1.0 (repository)"
+  },
+  {
+    "asset": "sol.svg",
+    "source": "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/sol.svg",
+    "license": "CC0-1.0 (repository)"
+  },
+  {
+    "asset": "usdc.svg",
+    "source": "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/usdc.svg",
+    "license": "CC0-1.0 (repository)"
+  }
+]

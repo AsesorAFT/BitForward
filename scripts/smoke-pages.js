@@ -10,7 +10,7 @@ const puppeteer = require('puppeteer');
 const baseUrl = process.env.SMOKE_BASE_URL || 'http://localhost:4173';
 const pages = [
   {
-    path: '/',
+    path: '/cockpit.html',
     tokens: ['BitForward Mission Control | Experiencia pública de AFORTU', 'id="bitforward-root"'],
   },
   {
@@ -46,10 +46,10 @@ async function assertPage({ path, tokens }) {
 }
 
 async function assertJsxRuntime() {
-  const indexUrl = buildUrl('/');
+  const indexUrl = buildUrl('/cockpit.html');
   const indexResponse = await axios.get(indexUrl, { timeout: 8000 });
   const entryPaths = [
-    ...String(indexResponse.data).matchAll(/(?:src|data-src)="([^"]*main[^"]+\.js)"/g),
+    ...String(indexResponse.data).matchAll(/(?:src|data-src)="([^"]*(?:main|cockpit)[^"]+\.js)"/g),
   ].map(match => match[1]);
 
   if (entryPaths.length === 0) {
@@ -89,6 +89,59 @@ function resolveChrome() {
   return executablePath;
 }
 
+async function assertEditorialRuntime(browser) {
+  const page = await browser.newPage();
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  try {
+    for (const width of [320, 390, 768, 1440]) {
+      await page.setViewport({ width, height: 900, deviceScaleFactor: 1 });
+      await page.goto(buildUrl('/'), { waitUntil: 'networkidle0' });
+      await page.waitForSelector('.hero-astronaut', { visible: true });
+      const state = await page.evaluate(() => ({
+        width: document.documentElement.clientWidth,
+        pageWidth: document.documentElement.scrollWidth,
+        imageLoaded: document.querySelector('.hero-astronaut').naturalWidth > 0,
+        heading: document.querySelector('h1').textContent,
+      }));
+      if (state.pageWidth > state.width + 1) throw new Error(`Editorial overflow at ${width}px`);
+      if (!state.imageLoaded) throw new Error('ATF image did not load');
+      if (!state.heading.includes('Menos ruido.')) throw new Error('Editorial heading missing');
+      if (width <= 900) {
+        await page.click('.menu-toggle');
+        await page.waitForSelector('#main-nav.is-open', { visible: true });
+        await page.keyboard.press('Escape');
+        const focused = await page.evaluate(() =>
+          document.activeElement.classList.contains('menu-toggle')
+        );
+        if (!focused) throw new Error('Mobile menu lost focus on Escape');
+      }
+    }
+    await page.click('[data-filter="ethereum"]');
+    if ((await page.$$eval('.mission-card:not([hidden])', cards => cards.length)) !== 1) {
+      throw new Error('Ethereum filter failed');
+    }
+    await page.click('.mission-card:not([hidden]) a');
+    await page.waitForSelector('.article-content');
+    await page.reload({ waitUntil: 'networkidle0' });
+    if (!page.url().includes('002-gasolinera-ethereum.html'))
+      throw new Error('Mission deep link failed');
+    await page.click('.mission-question summary');
+    if (!(await page.$eval('.mission-question details', el => el.open)))
+      throw new Error('Mission answer failed');
+    await page.goto(buildUrl('/'), { waitUntil: 'networkidle0' });
+    await page.click('.lesson-list summary');
+    if (!(await page.$eval('.lesson-list details', el => el.open)))
+      throw new Error('Bitacora expansion failed');
+    if (errors.length) throw new Error(errors.join(' | '));
+    console.log(
+      '✓ Editorial: 320/390/768/1440px, menu, filter, article reload and expandable answers.'
+    );
+  } finally {
+    await page.close();
+  }
+}
+
 async function assertApplicationRuntime() {
   const executablePath = resolveChrome();
   if (!executablePath) {
@@ -108,6 +161,7 @@ async function assertApplicationRuntime() {
   });
 
   try {
+    await assertEditorialRuntime(browser);
     const page = await browser.newPage();
     page.on('pageerror', error => runtimeErrors.push(error.message));
     page.on('request', request => {
@@ -122,7 +176,7 @@ async function assertApplicationRuntime() {
     });
 
     await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
-    await page.goto(buildUrl('/'), {
+    await page.goto(buildUrl('/cockpit.html'), {
       waitUntil: 'domcontentloaded',
       timeout: 15000,
     });

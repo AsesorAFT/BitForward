@@ -55,6 +55,9 @@ jobs:
           test ! -e dist/stats.html
           ! grep -R -I -E "bitforward-premium|chatgpt\.site" dist
 
+      - name: Verify learning tools
+        run: npm run verify:ecosystem
+
       - name: Serve build for smoke tests
         run: |
           npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/bitforward-preview.log 2>&1 &

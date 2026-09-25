@@ -22,7 +22,20 @@ assert.deepEqual(
   `Archivos de runtime o datos versionados: ${forbiddenTrackedFiles.join(', ')}`
 );
 
-const index = read('index.html');
+// Preserve the existing public-demo contract on its dedicated route.
+const index = read('cockpit.html');
+const home = read('index.html');
+const editorial = read('src/editorial/main.js');
+assert.match(home, /BitForward \| By AFORTU — Misiones Cripto/);
+for (const section of ['misiones', 'reporta', 'bitacora', 'seguridad']) {
+  assert.ok(home.includes(`id="${section}"`), `Falta la sección editorial ${section}`);
+}
+assert.doesNotMatch(editorial, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage)\b/);
+assert.doesNotMatch(home, /<iframe|<form|type="password"/i);
+assert.match(home, /advisor-atf-approved\.webp/);
+assert.match(home, /instagram\.com\/bitforward_aft/);
+assert.match(home, /datetime="2026-09-07"/);
+
 const app = read('src/site-v2/cockpit-demo.jsx');
 const readme = read('README.md');
 const main = read('src/site-v2/main.jsx');
