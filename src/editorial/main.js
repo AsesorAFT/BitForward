@@ -1,5 +1,6 @@
 import '../../css/editorial.css';
 import '../../css/ecosystem.css';
+import '../../css/institutional-refinement.css';
 import '../../js/pwa.js';
 
 const menuButton = document.querySelector('.menu-toggle');
