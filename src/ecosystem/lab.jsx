@@ -78,7 +78,8 @@ function AssetSelect({ id, label, value, onChange }) {
 function Source({ href, children }) {
   return (
     <a className="text-link" href={href} target="_blank" rel="noopener noreferrer">
-      {children} ↗<span className="sr-only"> (nueva pestaña)</span>
+      {children}
+      <span className="sr-only"> (nueva pestaña)</span>
     </a>
   );
 }
@@ -134,7 +135,7 @@ function Compare({ initialAsset }) {
               <blockquote>{a.question}</blockquote>
               <Source href={a.source}>Consultar fuente primaria</Source>
               <a className="text-link" href={`./misiones/${a.mission}.html`}>
-                Ir a la misión →
+                Ir a la misión
               </a>
             </article>
           );
@@ -268,7 +269,7 @@ function Exposure() {
                 Stablecoins: <b>{percent(result.stableShare)}</b> del total.
               </p>
               <button className="button button-outline" onClick={exportReport}>
-                Descargar escenario ↓
+                Descargar escenario
               </button>
             </>
           ) : (
@@ -282,7 +283,7 @@ function Exposure() {
         cotizaciones en vivo.
       </p>
       <a className="text-link" href="./misiones/007-mapa-de-exposicion.html">
-        Entender los pesos y los límites del modelo →
+        Entender los pesos y los límites del modelo
       </a>
     </>
   );
@@ -368,7 +369,7 @@ function Gas() {
         cargos adicionales de redes de segunda capa.
       </p>
       <a className="text-link" href="./misiones/002-gasolinera-ethereum.html">
-        Volver a la gasolinera Ethereum →
+        Volver a la gasolinera Ethereum
       </a>
     </>
   );
@@ -532,7 +533,7 @@ function Analysis({ initialAsset }) {
         </div>
         <div className="action-row">
           <button className="button button-primary" type="submit">
-            Descargar ficha ↓
+            Descargar ficha
           </button>
           <button className="button button-outline" type="button" onClick={save}>
             Guardar en este navegador
@@ -650,7 +651,7 @@ function Journal() {
         </h3>
         {entries.length > 0 && (
           <button className="button button-outline" onClick={exportNotes}>
-            Descargar bitácora ↓
+            Descargar bitácora
           </button>
         )}
       </div>
@@ -753,7 +754,6 @@ function Lab() {
           >
             <span>{n}</span>
             {label}
-            <span aria-hidden="true">↗</span>
           </button>
         ))}
         <p>
@@ -761,7 +761,7 @@ function Lab() {
           <br />
           <strong>Abierto y gratuito</strong>
         </p>
-        <a href="./misiones.html">Ver mi ruta de misiones →</a>
+        <a href="./misiones.html">Ver mi ruta de misiones</a>
       </nav>
       <section
         className="tool-workspace"

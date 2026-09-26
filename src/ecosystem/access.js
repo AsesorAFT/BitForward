@@ -4,7 +4,7 @@ if (ready) {
   const link = document.querySelector('[data-afortu-learning-link]');
   if (link) {
     link.href = 'https://app.afortu.com.mx/mi-afortu/bitforward';
-    link.textContent = 'Continuar con mi cuenta AFORTU OS ↗';
+    link.textContent = 'Continuar con mi cuenta AFORTU OS';
     link.removeAttribute('target');
     link.removeAttribute('rel');
   }
