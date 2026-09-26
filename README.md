@@ -9,13 +9,17 @@ Un ecosistema educativo 100% cripto: Bitcoin, Ethereum, Tether, Cardano, Solana 
 - Home con tipografías locales Space Grotesk y Manrope; negro, azul eléctrico, violeta y acentos de cada criptoactivo.
 - Nueve Misiones Cripto agrupadas en Entender, Analizar y Documentar. Cada misión contiene explicación, fuente, práctica y comprobación.
 - Sesión guiada con ATF: elegir tema, entender, practicar, recibir retroalimentación y continuar. Utiliza lecciones preparadas; no simula un chat de IA.
+- Práctica diaria para móvil con una pregunta por día, diagnóstico, explicación y repaso adaptado a las respuestas guardadas en este navegador.
 - Laboratorio con comparador de seis activos, escenario de exposición, calculadora de gas, ficha de análisis y bitácora descargable.
+- Mercado BTC/USD con velas históricas de Coinbase Exchange, fuente y hora de consulta visibles, tabla accesible, descarga CSV e hipótesis locales exportables.
+- Simulador educativo spot, largo y corto con capital ficticio, costos y umbral teórico de liquidación basados en supuestos introducidos por la persona usuaria.
+- Respaldo JSON exportable e importable para progreso, ficha y bitácora. Las hipótesis del mercado BTC tienen su propia descarga y no forman parte de ese respaldo.
 - Acceso Explorador gratuito. Analista y Círculo AFORTU se presentan como propuesta, sin precios, suscripciones ni cobros habilitados.
 - Entrada al acceso de AFORTU OS, activable después de publicar la capacitación privada en el portal.
 - BitForward Reporta con fuentes primarias y fechas. Seguridad y comunidad oficial en Instagram.
 - `cockpit.html` conserva la experiencia anterior y sus nueve módulos ilustrativos.
 
-La experiencia identifica únicamente a AFORTU como institución. No solicita fondos, conecta wallets ni ejecuta operaciones. No muestra cotizaciones o noticias como datos en tiempo real. Los formularios del laboratorio son locales y no se transmiten a un servidor. No deben contener contraseñas, claves ni datos sensibles.
+La experiencia identifica únicamente a AFORTU como institución. No solicita fondos, conecta wallets ni ejecuta operaciones. Las velas BTC/USD son datos históricos consultados a una fuente externa, no una cotización ejecutable en tiempo real; las demás calculadoras usan valores manuales. Los formularios del laboratorio son locales y no se transmiten a un servidor. No deben contener contraseñas, claves ni datos sensibles.
 
 ## Desarrollo y validación
 
@@ -28,7 +32,7 @@ npm run verify
 npm run preview -- --host 127.0.0.1 --port 4173
 ```
 
-`verify` ejecuta lint, formato, guardas de la demo conservada, build, validación de las 15 páginas y pruebas de las herramientas/sesión ATF con DOM. Estas últimas no sustituyen una auditoría visual de navegador.
+`verify` ejecuta lint, formato, guardas de la demo conservada, build, validación de las páginas públicas y pruebas de las herramientas/sesión ATF con DOM. Estas últimas no sustituyen una auditoría visual de navegador.
 
 Con el preview activo, `npm run smoke:pages` ejecuta las pruebas de navegador existentes. Los informes de validación indican cuáles se han podido ejecutar en esta entrega.
 
@@ -40,6 +44,9 @@ Con el preview activo, `npm run smoke:pages` ejecuta las pruebas de navegador ex
 | `misiones.html`, `misiones/*.html`       | Catálogo y nueve lecturas con URL propia            |
 | `laboratorio.html`                       | Cinco herramientas gratuitas                        |
 | `atf.html`                               | Capacitación guiada sin cuenta                      |
+| `practica.html`                          | Pregunta diaria y repaso adaptado                   |
+| `mercado.html`                           | Velas BTC/USD históricas e hipótesis                |
+| `simulador.html`                         | Escenarios ficticios spot, largo y corto            |
 | `membresias.html`, `acceso.html`         | Niveles propuestos y conexión AFORTU OS             |
 | `src/ecosystem`                          | Currículo, herramientas, cálculos, progreso y tutor |
 | `css/editorial.css`, `css/ecosystem.css` | Identidad visual y responsive                       |
@@ -55,7 +62,7 @@ Vite descubre los HTML de `misiones/` y genera rutas reales compatibles con GitH
 
 ## Datos locales y cuenta
 
-El sitio público guarda progreso, una ficha y hasta 100 notas bajo `bitforward-learning-v1`, sólo al completar una comprobación o elegir guardar. Hay descarga y borrado con confirmación. Un navegador privado o que bloquee almacenamiento puede impedir guardar; la interfaz lo informa.
+El sitio público guarda progreso, una ficha y hasta 100 notas bajo `bitforward-learning-v1`, sólo al completar una comprobación o elegir guardar. La práctica diaria usa el mismo estado de aprendizaje. Mi bitácora permite descargar e importar un respaldo JSON compatible, con vista previa y confirmación antes de reemplazar los datos existentes; también permite borrar con confirmación. Las hipótesis de Mercado BTC se guardan por separado en este navegador y pueden descargarse como Markdown. Un navegador privado o que bloquee almacenamiento puede impedir guardar; la interfaz lo informa.
 
 La capacitación privada de AFORTU OS guarda comprobaciones por identidad. No importa notas locales ni comparte cookies con GitHub Pages. Ver [integración y activación](docs/INTEGRACION-AFORTU-OS.md).
 

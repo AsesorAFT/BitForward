@@ -44,6 +44,9 @@ jobs:
       - name: Verify learning tools
         run: npm run verify:ecosystem
 
+      - name: Verify daily practice, BTC data and scenarios
+        run: npm run verify:learning
+
       - name: Serve build for runtime verification
         run: |
           npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/bitforward-preview.log 2>&1 &

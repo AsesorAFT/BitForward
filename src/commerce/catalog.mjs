@@ -112,7 +112,7 @@ export const levels = [
       'Gráficos, velas, órdenes, liquidez, comisiones, tamaño de posición y evaluación de estrategias en simulación.',
     result: 'Mantener una bitácora de operaciones simuladas con costes y reglas reproducibles.',
     topics: 'Spot · Órdenes · Riesgo · Backtesting',
-    link: '#simulador',
+    link: './simulador.html',
   },
   {
     number: '04',
@@ -123,7 +123,7 @@ export const levels = [
     result:
       'Calcular cómo cambia una pérdida con el apalancamiento y explicar cuándo se liquida una posición.',
     topics: 'Long / short · Margen · Funding · Liquidación',
-    link: '#simulador',
+    link: './simulador.html',
   },
   {
     number: '05',

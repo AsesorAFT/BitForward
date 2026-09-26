@@ -9,6 +9,9 @@ const pages = [
   'laboratorio.html',
   'membresias.html',
   'ruta.html',
+  'practica.html',
+  'mercado.html',
+  'simulador.html',
   'atf.html',
   'acceso.html',
   ...readdirSync('misiones')
@@ -55,7 +58,17 @@ for (const path of pages) {
     assert.ok(link.textContent.includes('nueva pestaña'), `${path}: disclose new tab`);
   }
   const loadedScripts = [...document.querySelectorAll('script[src]')].map(s => s.src).join(' ');
-  if (!['laboratorio.html', 'atf.html', 'membresias.html', 'ruta.html'].includes(path))
+  if (
+    ![
+      'laboratorio.html',
+      'atf.html',
+      'membresias.html',
+      'ruta.html',
+      'practica.html',
+      'mercado.html',
+      'simulador.html',
+    ].includes(path)
+  )
     assert.ok(!loadedScripts.includes('vendor-react'), `${path}: editorial should not load React`);
 }
 const source = readFileSync('src/editorial/main.js', 'utf8').replace(/^import .+;$/gm, '');
@@ -113,7 +126,7 @@ onMotionPreferenceChange();
 assert.equal(motionButton.disabled, false);
 assert.equal(doc.documentElement.dataset.coinMotion, 'running');
 console.log(
-  '✓ Sixteen pages: valid assets, links, anchors, metadata, no-JS content and /BitForward/ base.'
+  '✓ Nineteen pages: valid assets, links, anchors, metadata, no-JS content and /BitForward/ base.'
 );
 console.log(
   '✓ Menu open/close/Escape/focus and all four mission filters. DOM checks; not a visual browser audit.'

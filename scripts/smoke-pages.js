@@ -150,6 +150,9 @@ async function assertEditorialRuntime(browser) {
     for (const path of [
       '/misiones.html',
       '/laboratorio.html',
+      '/practica.html',
+      '/mercado.html',
+      '/simulador.html',
       '/atf.html',
       '/membresias.html',
       '/acceso.html',
