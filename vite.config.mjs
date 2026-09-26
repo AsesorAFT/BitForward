@@ -65,6 +65,7 @@ export default defineConfig({
         tutor: resolve(__dirname, 'atf.html'),
         access: resolve(__dirname, 'acceso.html'),
         memberships: resolve(__dirname, 'membresias.html'),
+        learningRoute: resolve(__dirname, 'ruta.html'),
         ...Object.fromEntries(
           readdirSync(resolve(__dirname, 'misiones'))
             .filter(file => file.endsWith('.html'))
