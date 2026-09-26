@@ -6,3 +6,5 @@ coverage
 package-lock.json
 .husky
 public/assets
+# Preserve upstream license text verbatim.
+assets/crypto/LICENSE.md

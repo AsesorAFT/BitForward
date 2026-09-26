@@ -1074,6 +1074,7 @@ export default function CockpitDemo() {
           <ActiveModule {...activeProps} />
         </main>
         <footer className="demo-footer">
+          <a href="./index.html">← Volver a Misiones Cripto</a>
           <span>BitForward Mission Control™ · Versión pública educativa v2.0 · 2026</span>
           <span>Sin custodia, ejecución, autenticación, pagos ni recomendación individual.</span>
         </footer>

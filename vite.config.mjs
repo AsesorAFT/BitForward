@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { readdirSync } from 'node:fs';
 import { visualizer } from 'rollup-plugin-visualizer';
 import viteCompression from 'vite-plugin-compression';
 import legacy from '@vitejs/plugin-legacy';
@@ -58,6 +59,17 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        cockpit: resolve(__dirname, 'cockpit.html'),
+        curriculum: resolve(__dirname, 'misiones.html'),
+        lab: resolve(__dirname, 'laboratorio.html'),
+        tutor: resolve(__dirname, 'atf.html'),
+        access: resolve(__dirname, 'acceso.html'),
+        memberships: resolve(__dirname, 'membresias.html'),
+        ...Object.fromEntries(
+          readdirSync(resolve(__dirname, 'misiones'))
+            .filter(file => file.endsWith('.html'))
+            .map(file => [file.replace('.html', ''), resolve(__dirname, 'misiones', file)])
+        ),
       },
       output: {
         // Manual chunk splitting para optimización

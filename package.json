@@ -1,7 +1,7 @@
 {
   "name": "bitforward-enterprise",
   "version": "2.0.0",
-  "description": "Experiencia pública educativa de AFORTU para documentar contexto, límites y escenarios ilustrativos de activos digitales",
+  "description": "Experiencia p\u00fablica educativa de AFORTU para documentar contexto, l\u00edmites y escenarios ilustrativos de activos digitales",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -10,9 +10,10 @@
     "build:full": "bash scripts/build.sh",
     "preview": "vite preview",
     "analyze": "ANALYZE=true vite build --mode analyze",
-    "smoke:pages": "node scripts/smoke-pages.js",
+    "smoke:pages": "node scripts/check-editorial.cjs && node scripts/smoke-pages.js && node scripts/smoke-campus.mjs",
+    "verify:editorial": "node scripts/check-editorial.cjs",
     "verify:static": "node scripts/validate-static.mjs",
-    "verify": "npm run lint && npm run format:check && npm run verify:static && npm run build",
+    "verify": "npm run lint && npm run format:check && npm run verify:static && npm run build && npm run verify:editorial && npm run verify:ecosystem",
     "server:dev": "nodemon server/server.js",
     "frontend": "live-server --port=8080 --entry-file=enterprise.html",
     "prototype": "python -m http.server 8000",
@@ -33,7 +34,9 @@
     "docker:run": "docker run -p 3001:3001 bitforward-enterprise",
     "deploy:prod": "npm run build:full && npm run deploy",
     "deploy": "echo 'Production deployment - configure your hosting service'",
-    "lighthouse": "lighthouse http://localhost:4173 --view --output-path=./lighthouse-report.html"
+    "lighthouse": "lighthouse http://localhost:4173 --view --output-path=./lighthouse-report.html",
+    "verify:ecosystem": "node scripts/check-ecosystem.mjs",
+    "generate:learning": "node scripts/generate-learning.mjs"
   },
   "keywords": [
     "defi",

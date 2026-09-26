@@ -34,10 +34,15 @@ jobs:
         run: npm run verify:static
 
       - name: Build public site
+        env:
+          VITE_AFORTU_LEARNING_READY: ${{ vars.AFORTU_LEARNING_READY }}
         run: |
           npm run build
           test ! -e dist/stats.html
           ! grep -R -I -E "bitforward-premium|chatgpt\.site" dist
+
+      - name: Verify learning tools
+        run: npm run verify:ecosystem
 
       - name: Serve build for runtime verification
         run: |
