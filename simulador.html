@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Simulador de escenarios | BitForward — By AFORTU</title>
+    <meta
+      name="description"
+      content="Practica escenarios spot, largos y cortos con capital ficticio, costos explícitos y una bitácora educativa. Sin operaciones reales."
+    />
+    <meta name="theme-color" content="#070a13" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href="https://www.afortu.com.mx/bitforward/simulador.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Simulador de escenarios | BitForward" />
+    <meta
+      property="og:description"
+      content="Explora el efecto del apalancamiento y los costos con ejemplos ficticios."
+    />
+    <link rel="icon" href="./assets/brand/bitforward-app-icon-192.png" />
+    <script type="module" src="./src/simulator/main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="BitForward, inicio"
+        ><strong class="brand-wordmark">BitForward<small>LABORATORIO</small></strong
+        ><span>BY AFORTU</span></a
+      ><button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        hidden
+      >
+        Menú
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+      <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+        <a href="./ruta.html">Desde cero</a><a href="./practica.html">Práctica diaria</a
+        ><a href="./laboratorio.html">Laboratorio</a><a href="./mercado.html">Mercado BTC</a
+        ><a href="./membresias.html">Planes</a><a href="https://afortu.com.mx/">AFORTU</a
+        ><a class="nav-community" href="./acceso.html">AFORTU OS</a>
+      </nav>
+    </header>
+    <main class="wrap sim-page" id="contenido" tabindex="-1">
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div>
+          <p class="eyebrow">
+            LABORATORIO / ESCENARIOS <span class="access-tag">CAPITAL FICTICIO</span>
+          </p>
+          <h1 id="sim-title">Entiende el riesgo<br /><em>antes de operar.</em></h1>
+          <p>
+            Cambia un precio y observa qué pasa con una compra spot, un largo o un corto. Todos los
+            valores son supuestos tuyos; este ejercicio no cotiza activos ni abre posiciones.
+          </p>
+        </div>
+        <div class="sim-hero-index" aria-label="Secuencia del ejercicio">
+          <span>01 / SUPUESTOS</span><span>02 / CONSECUENCIAS</span><span>03 / REFLEXIÓN</span>
+        </div>
+      </section>
+
+      <section class="sim-explainer" aria-label="Qué significa cada modalidad">
+        <article>
+          <span>01</span>
+          <h2>Spot</h2>
+          <p>Compras una cantidad ficticia. No hay margen ni funding.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h2>Largo</h2>
+          <p>Tu resultado mejora si sube el precio. El apalancamiento amplifica la pérdida.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h2>Corto</h2>
+          <p>
+            Tu resultado mejora si baja el precio. Si sube, la pérdida puede superar tu capital.
+          </p>
+        </article>
+      </section>
+
+      <div id="sim-fallback" class="sim-notice">
+        Activa JavaScript para usar el simulador. También puedes estudiar la
+        <a href="./ruta.html">ruta desde cero</a> sin realizar operaciones.
+      </div>
+
+      <div id="sim-app" hidden>
+        <div class="sim-workspace">
+          <section class="sim-panel sim-input-panel" aria-labelledby="inputs-title">
+            <div class="sim-panel-heading">
+              <span>01</span>
+              <div>
+                <p class="eyebrow">CONFIGURA EL CASO</p>
+                <h2 id="inputs-title">Tus supuestos</h2>
+              </div>
+            </div>
+            <form id="scenario-form" novalidate>
+              <fieldset class="sim-mode-group">
+                <legend>Tipo de posición</legend>
+                <div class="sim-mode-options">
+                  <label
+                    ><input type="radio" name="mode" value="spot" checked /><span>Spot</span></label
+                  >
+                  <label><input type="radio" name="mode" value="long" /><span>Largo</span></label>
+                  <label><input type="radio" name="mode" value="short" /><span>Corto</span></label>
+                </div>
+              </fieldset>
+              <div class="sim-field-grid">
+                <label class="sim-field" for="capital"
+                  ><span>Capital ficticio <small>USD</small></span
+                  ><input
+                    id="capital"
+                    name="capital"
+                    type="number"
+                    inputmode="decimal"
+                    min="1"
+                    max="100000000"
+                    step="any"
+                    value="100"
+                    required
+                /></label>
+                <label class="sim-field sim-leverage-field" for="leverage"
+                  ><span>Apalancamiento <small>veces</small></span
+                  ><input
+                    id="leverage"
+                    name="leverage"
+                    type="number"
+                    inputmode="decimal"
+                    min="1"
+                    max="20"
+                    step="any"
+                    value="5"
+                    disabled
+                /></label>
+                <label class="sim-field" for="entryPrice"
+                  ><span>Precio de entrada <small>USD/BTC</small></span
+                  ><input
+                    id="entryPrice"
+                    name="entryPrice"
+                    type="number"
+                    inputmode="decimal"
+                    min="0.00000001"
+                    max="1000000000"
+                    step="any"
+                    value="100000"
+                    required
+                /></label>
+                <label class="sim-field" for="exitPrice"
+                  ><span>Precio de salida <small>USD/BTC</small></span
+                  ><input
+                    id="exitPrice"
+                    name="exitPrice"
+                    type="number"
+                    inputmode="decimal"
+                    min="0.00000001"
+                    max="1000000000"
+                    step="any"
+                    value="95000"
+                    required
+                /></label>
+              </div>
+              <details class="sim-costs" open>
+                <summary>Costos y condiciones del ejemplo <span>Editar supuestos</span></summary>
+                <div class="sim-field-grid">
+                  <label class="sim-field" for="feePercent"
+                    ><span>Comisión por lado <small>%</small></span
+                    ><input
+                      id="feePercent"
+                      name="feePercent"
+                      type="number"
+                      inputmode="decimal"
+                      min="0"
+                      max="2"
+                      step="any"
+                      value="0.1"
+                      required
+                  /></label>
+                  <label class="sim-field" for="spreadPercent"
+                    ><span>Spread total <small>%</small></span
+                    ><input
+                      id="spreadPercent"
+                      name="spreadPercent"
+                      type="number"
+                      inputmode="decimal"
+                      min="0"
+                      max="2"
+                      step="any"
+                      value="0.05"
+                      required
+                  /></label>
+                  <label class="sim-field sim-derivative-field" for="fundingPercent"
+                    ><span>Funding cada 8 h <small>%</small></span
+                    ><input
+                      id="fundingPercent"
+                      name="fundingPercent"
+                      type="number"
+                      inputmode="decimal"
+                      min="-2"
+                      max="2"
+                      step="any"
+                      value="0.01"
+                      disabled
+                  /></label>
+                  <label class="sim-field sim-derivative-field" for="hours"
+                    ><span>Duración <small>horas</small></span
+                    ><input
+                      id="hours"
+                      name="hours"
+                      type="number"
+                      inputmode="decimal"
+                      min="0"
+                      max="240"
+                      step="any"
+                      value="8"
+                      disabled
+                  /></label>
+                  <label class="sim-field sim-derivative-field" for="maintenancePercent"
+                    ><span>Margen de mantenimiento <small>%</small></span
+                    ><input
+                      id="maintenancePercent"
+                      name="maintenancePercent"
+                      type="number"
+                      inputmode="decimal"
+                      min="0"
+                      max="10"
+                      step="any"
+                      value="0.5"
+                      disabled
+                  /></label>
+                </div>
+                <p class="sim-helper">
+                  Valores ilustrativos, no tarifas de un exchange. En spot, el capital incluye la
+                  comisión de entrada. Spread dividido entre entrada y salida; funding constante
+                  sobre el nocional inicial.
+                </p>
+              </details>
+              <p id="scenario-error" class="sim-error" role="alert" hidden></p>
+              <button class="sim-primary-button" type="submit">Calcular escenario</button>
+            </form>
+          </section>
+
+          <section class="sim-panel sim-result-panel" aria-labelledby="results-title">
+            <div class="sim-panel-heading">
+              <span>02</span>
+              <div>
+                <p class="eyebrow">CONSECUENCIAS</p>
+                <h2 id="results-title">Qué cambiaría</h2>
+              </div>
+            </div>
+            <div id="scenario-results" aria-live="polite">
+              <div class="sim-result-lead">
+                <span>Resultado algebraico del escenario</span>
+                <strong id="result-net">—</strong>
+                <small id="result-return">—</small>
+              </div>
+              <dl class="sim-result-grid">
+                <div>
+                  <dt>Exposición ficticia</dt>
+                  <dd id="result-notional">—</dd>
+                </div>
+                <div>
+                  <dt>BTC de ejemplo</dt>
+                  <dd id="result-quantity">—</dd>
+                </div>
+                <div>
+                  <dt>Movimiento tras spread</dt>
+                  <dd id="result-gross">—</dd>
+                </div>
+                <div>
+                  <dt>Comisiones de ambos lados</dt>
+                  <dd id="result-fees">—</dd>
+                </div>
+                <div>
+                  <dt>Funding supuesto</dt>
+                  <dd id="result-funding">—</dd>
+                </div>
+                <div>
+                  <dt>Saldo algebraico</dt>
+                  <dd id="result-equity">—</dd>
+                </div>
+              </dl>
+              <div class="sim-threshold" id="threshold-box">
+                <span>Umbral didáctico de liquidación</span>
+                <strong id="result-threshold">—</strong>
+                <small id="result-distance">—</small>
+              </div>
+              <p class="sim-result-warning" id="result-warning" hidden></p>
+              <p class="sim-helper">
+                El resultado usa entrada y salida manuales; no modela la trayectoria del precio ni
+                órdenes ejecutadas. El umbral no es un precio de liquidación real.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <section class="sim-panel sim-reflection" aria-labelledby="reflection-title">
+          <div class="sim-panel-heading">
+            <span>03</span>
+            <div>
+              <p class="eyebrow">APRENDE DEL ESCENARIO</p>
+              <h2 id="reflection-title">Deja constancia de tu criterio</h2>
+            </div>
+          </div>
+          <label class="sim-field" for="reflection"
+            ><span>¿Qué riesgo o supuesto revisarías antes de decidir?</span
+            ><textarea
+              id="reflection"
+              maxlength="500"
+              rows="3"
+              placeholder="Por ejemplo: verificar comisiones reales y cuánto perdería ante un movimiento contrario."
+            ></textarea>
+          </label>
+          <div class="sim-actions">
+            <button id="save-scenario" class="sim-primary-button" type="button">
+              Guardar en Mi bitácora
+            </button>
+            <button id="download-scenario" class="sim-secondary-button" type="button">
+              Descargar ficha
+            </button>
+            <a class="sim-text-link" href="./laboratorio.html?herramienta=bitacora"
+              >Abrir Mi bitácora</a
+            >
+          </div>
+          <p id="save-status" class="sim-save-status" role="status"></p>
+          <p class="sim-helper">
+            Guardar usa sólo este navegador; descarga una copia si quieres conservarla fuera de él.
+          </p>
+        </section>
+      </div>
+      <aside class="sim-education-note">
+        <strong>Una pausa útil:</strong> Un cambio pequeño de precio puede consumir el margen cuando
+        hay apalancamiento. Los exchanges usan precios de marca, reglas por instrumento, márgenes
+        variables y liquidaciones propias. Este simulador no ofrece señales, órdenes ni
+        recomendación de inversión.
+      </aside>
+    </main>
+    <footer class="site-footer wrap">
+      <div class="footer-top">
+        <div>
+          <a class="footer-brand" href="./">BitForward<span>BY AFORTU</span></a>
+          <p>Formación y análisis de criptoactivos.</p>
+        </div>
+        <nav aria-label="Comunidad y recursos">
+          <a href="https://afortu.com.mx/">Volver a AFORTU</a
+          ><a
+            href="https://www.instagram.com/bitforward_aft/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Instagram<span class="sr-only"> (nueva pestaña)</span></a
+          ><a href="./misiones.html">Misiones</a><a href="./practica.html">Práctica diaria</a
+          ><a href="./mercado.html">Mercado BTC</a><a href="./simulador.html">Simulador</a
+          ><a href="./membresias.html">Membresías</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 BitForward | By AFORTU</p>
+        <p>
+          Contenido educativo, no asesoría de inversión. El sitio no conecta wallets ni solicita
+          fondos. Tu progreso y tus notas se guardan sólo en este navegador cuando eliges hacerlo.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -11,6 +11,7 @@ import {
   analysisMarkdown,
 } from '../src/ecosystem/engine.mjs';
 import { normalizeState, STORAGE_KEY } from '../src/ecosystem/storage.mjs';
+import { makeBackup, parseBackup, MAX_BACKUP_BYTES } from '../src/ecosystem/backup.mjs';
 import { missions, assets } from '../src/ecosystem/data.mjs';
 const sample = analyzeExposure(
   [
@@ -64,6 +65,17 @@ assert.equal(
   }).entries.length,
   100
 );
+const backedUp = makeBackup({
+  completed: ['001', '001', '009'],
+  entries: [{ id: 'saved-note', asset: 'BTC', text: 'Una hipótesis', date: '2026-09-25' }],
+  analysis: { asset: 'BTC', purpose: 'Estudiar la red' },
+});
+assert.deepEqual(parseBackup(backedUp).completed, ['001', '009']);
+assert.equal(parseBackup(backedUp).entries[0].text, 'Una hipótesis');
+assert.equal(parseBackup(backedUp).analysis.purpose, 'Estudiar la red');
+assert.throws(() => parseBackup('{'), /JSON válido/);
+assert.throws(() => parseBackup('{"format":"otro","learning":{}}'), /compatible/);
+assert.throws(() => parseBackup(' '.repeat(MAX_BACKUP_BYTES + 1)), /demasiado grande/);
 assert.equal(missions.length, 9);
 assert.equal(new Set(missions.map(m => m.id)).size, 9);
 assert.equal(assets.length, 6);
@@ -91,6 +103,7 @@ async function bundle(entry, definitions = {}) {
 function dom(html, url = 'https://example.test/BitForward/laboratorio.html') {
   const d = new JSDOM(html, { url, runScripts: 'outside-only', pretendToBeVisual: true });
   d.window.matchMedia = () => ({ addEventListener() {} });
+  d.window.TextEncoder = TextEncoder;
   d.window.URL.createObjectURL = () => 'blob:https://example.test/export';
   d.window.URL.revokeObjectURL = () => {};
   d.window.HTMLAnchorElement.prototype.click = function () {};
@@ -159,6 +172,23 @@ doc
 await tick();
 assert.equal(JSON.parse(lab.window.localStorage.getItem(STORAGE_KEY)).entries.length, 1);
 assert.match(doc.querySelector('.journal-list').textContent, /fuente e hipótesis/);
+const backupInput = doc.getElementById('learning-backup-file');
+const importText = makeBackup({
+  completed: ['001', '009'],
+  entries: [{ id: 'imported-note', text: 'Nota importada', asset: 'BTC' }],
+  analysis: { purpose: 'Continuar en otro dispositivo' },
+});
+Object.defineProperty(backupInput, 'files', {
+  configurable: true,
+  value: [{ size: importText.length, text: async () => importText }],
+});
+backupInput.dispatchEvent(new lab.window.Event('change', { bubbles: true }));
+await tick();
+assert.match(doc.body.textContent, /Respaldo listo/);
+await clickText(lab, 'Reemplazar con este respaldo');
+assert.deepEqual(JSON.parse(lab.window.localStorage.getItem(STORAGE_KEY)).completed, ['001', '009']);
+assert.match(doc.querySelector('.journal-list').textContent, /Nota importada/);
+assert.equal(doc.querySelector('.journal-list').textContent.includes('fuente e hipótesis'), false);
 await clickText(lab, 'Borrar todos');
 await clickText(lab, 'Cancelar');
 assert.ok(lab.window.localStorage.getItem(STORAGE_KEY));

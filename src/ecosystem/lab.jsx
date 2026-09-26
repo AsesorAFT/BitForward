@@ -5,6 +5,7 @@ import '../editorial/main.js';
 import { assets } from './data.mjs';
 import { analyzeExposure, calculateGas, safeSource, analysisMarkdown } from './engine.mjs';
 import { readLearning, saveLearning, clearLearning } from './storage.mjs';
+import { makeBackup, parseBackup, MAX_BACKUP_BYTES } from './backup.mjs';
 
 import btcIcon from '../../assets/crypto/btc.svg';
 import ethIcon from '../../assets/crypto/eth.svg';
@@ -557,6 +558,7 @@ function Journal() {
   const [source, setSource] = useState('');
   const [message, setMessage] = useState('');
   const [confirm, setConfirm] = useState(false);
+  const [pendingBackup, setPendingBackup] = useState(null);
   function persist(next) {
     if (saveLearning({ entries: next })) {
       setEntries(next);
@@ -599,6 +601,46 @@ function Journal() {
       `# BitForward · Bitácora\n\n${entries.map(e => `## ${e.asset} · ${e.date.slice(0, 10)}\n${e.text}\n\nFuente: ${e.source || 'No registrada'}\n`).join('\n')}`,
       'bitforward-bitacora.md'
     );
+  }
+  function exportBackup() {
+    download(
+      makeBackup(readLearning()),
+      'bitforward-respaldo.json',
+      'application/json;charset=utf-8'
+    );
+    setMessage(
+      'Respaldo descargado. Contiene progreso, ficha y notas de Mi bitácora. Guárdalo en privado.'
+    );
+  }
+  async function inspectBackup(event) {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    setPendingBackup(null);
+    if (!file) return;
+    if (file.size > MAX_BACKUP_BYTES) {
+      setMessage('El archivo es demasiado grande. Elige un respaldo menor a 1 MB.');
+      return;
+    }
+    try {
+      const backup = parseBackup(await file.text());
+      setPendingBackup(backup);
+      setMessage(
+        `Respaldo listo: ${backup.completed.length} misiones y ${backup.entries.length} notas. Revisa antes de reemplazar los datos actuales.`
+      );
+    } catch (error) {
+      setMessage(error.message);
+    }
+  }
+  function restoreBackup() {
+    if (!pendingBackup) return;
+    if (!saveLearning(pendingBackup)) {
+      setMessage('No fue posible restaurar. Revisa los permisos o espacio de este navegador.');
+      return;
+    }
+    setEntries(pendingBackup.entries);
+    setPendingBackup(null);
+    window.dispatchEvent(new Event('learning-reset'));
+    setMessage('Respaldo restaurado en este navegador. Tu progreso y notas están disponibles.');
   }
   return (
     <>
@@ -687,11 +729,52 @@ function Journal() {
         </div>
       )}
       <details className="local-data">
-        <summary>Acerca de tus datos y opciones de borrado</summary>
+        <summary>Respaldar, trasladar o borrar mis datos</summary>
         <p>
           Este espacio no tiene cuenta ni sincronización. Borrar los datos del navegador elimina tu
           progreso, ficha y notas. No guardes frases semilla, contraseñas ni datos sensibles.
         </p>
+        <div className="action-row">
+          <button className="button button-outline" type="button" onClick={exportBackup}>
+            Respaldar progreso y bitácora
+          </button>
+          <label htmlFor="learning-backup-file">
+            Importar respaldo de BitForward
+            <input
+              id="learning-backup-file"
+              type="file"
+              accept=".json,application/json"
+              onChange={inspectBackup}
+            />
+          </label>
+        </div>
+        <p>
+          Para cambiar de dominio o teléfono, descarga el respaldo en el navegador anterior y ábrelo
+          aquí. Incluye el campus ATF, misiones, ficha y Mi bitácora; las hipótesis del Mercado BTC
+          se exportan en esa página por separado. No compartas estos archivos públicamente. Importar
+          reemplazará el progreso, la ficha y las notas de este navegador.
+        </p>
+        {pendingBackup && (
+          <div>
+            <p>
+              Se restaurarán {pendingBackup.completed.length} misiones y{' '}
+              {pendingBackup.entries.length} notas. Descarga primero un respaldo de tus datos
+              actuales si quieres conservarlos.
+            </p>
+            <div className="action-row">
+              <button className="button button-primary" type="button" onClick={restoreBackup}>
+                Reemplazar con este respaldo
+              </button>
+              <button
+                className="button button-outline"
+                type="button"
+                onClick={() => setPendingBackup(null)}
+              >
+                Cancelar importación
+              </button>
+            </div>
+          </div>
+        )}
         {!confirm ? (
           <button className="button button-outline" onClick={() => setConfirm(true)}>
             Borrar todos mis datos de aprendizaje

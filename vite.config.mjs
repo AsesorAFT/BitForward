@@ -67,6 +67,9 @@ export default defineConfig({
         access: resolve(__dirname, 'acceso.html'),
         memberships: resolve(__dirname, 'membresias.html'),
         learningRoute: resolve(__dirname, 'ruta.html'),
+        dailyPractice: resolve(__dirname, 'practica.html'),
+        btcMarket: resolve(__dirname, 'mercado.html'),
+        riskSimulator: resolve(__dirname, 'simulador.html'),
         ...Object.fromEntries(
           readdirSync(resolve(__dirname, 'misiones'))
             .filter(file => file.endsWith('.html'))

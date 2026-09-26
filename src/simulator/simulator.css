@@ -1,0 +1,503 @@
+.sim-page {
+  padding-block: 44px 100px;
+}
+
+.sim-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  align-items: end;
+  gap: 32px;
+  padding: 48px 0 54px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sim-hero h1 {
+  max-width: 840px;
+  margin: 16px 0 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.8rem, 6.5vw, 5.8rem);
+  line-height: 0.99;
+  letter-spacing: -0.065em;
+}
+
+.sim-hero h1 em {
+  font-style: normal;
+  color: #a5c2ff;
+}
+
+.sim-hero p:not(.eyebrow) {
+  max-width: 650px;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+}
+
+.sim-hero-index {
+  display: grid;
+  gap: 15px;
+  padding: 22px 0 8px 25px;
+  border-left: 1px solid #52617d;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  color: #d1daf3;
+}
+
+.sim-explainer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 28px 0 40px;
+}
+
+.sim-explainer article {
+  padding: 22px 24px 23px;
+  border: 1px solid #293754;
+  border-radius: 18px;
+  background: linear-gradient(155deg, #17243e 0%, #111b2e 100%);
+}
+
+.sim-explainer span,
+.sim-panel-heading > span {
+  color: #8db2ff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.77rem;
+}
+
+.sim-explainer h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+  margin: 8px 0 5px;
+}
+
+.sim-explainer p {
+  font-size: 0.87rem;
+  line-height: 1.55;
+  color: #b9c6df;
+}
+
+.sim-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(330px, 0.9fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.sim-panel {
+  min-width: 0;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid #2c3c59;
+  border-radius: 23px;
+  background: #111b2e;
+  box-shadow: 0 18px 50px #03081725;
+}
+
+.sim-result-panel {
+  background: linear-gradient(155deg, #1b2a45 0%, #121d30 65%);
+}
+
+.sim-panel-heading {
+  display: flex;
+  gap: 16px;
+  align-items: start;
+  padding-bottom: 23px;
+}
+
+.sim-panel-heading > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  height: 32px;
+  border: 1px solid #59749e;
+  border-radius: 9px;
+}
+
+.sim-panel-heading h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  line-height: 1.15;
+}
+
+.sim-panel-heading .eyebrow {
+  color: #9cb5e5;
+  margin: 2px 0 5px;
+}
+
+.sim-mode-group {
+  margin: 0 0 25px;
+  border: 0;
+  padding: 0;
+}
+
+.sim-mode-group legend,
+.sim-field > span {
+  display: block;
+  margin-bottom: 9px;
+  color: #e8eefb;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.sim-mode-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.sim-mode-options label {
+  position: relative;
+  min-width: 0;
+}
+
+.sim-mode-options input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.sim-mode-options span {
+  display: grid;
+  place-items: center;
+  min-height: 47px;
+  border: 1px solid #465774;
+  border-radius: 12px;
+  color: #c4d0e8;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.sim-mode-options input:checked + span {
+  background: #385e9c;
+  border-color: #87aeef;
+  color: #fff;
+}
+
+.sim-mode-options input:focus-visible + span {
+  outline: 3px solid #a5c2ff;
+  outline-offset: 3px;
+}
+
+.sim-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 13px;
+}
+
+.sim-field {
+  display: block;
+  min-width: 0;
+}
+
+.sim-field small {
+  color: #9db2d1;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.sim-field input,
+.sim-field textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 11px 13px;
+  border: 1px solid #526482;
+  border-radius: 12px;
+  color: #fff;
+  background: #0b1424;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.sim-field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.sim-field input:focus,
+.sim-field textarea:focus {
+  outline: 2px solid #a5c2ff;
+  outline-offset: 2px;
+}
+
+.sim-field input:disabled {
+  color: #8997ac;
+  background: #1c2638;
+  border-color: #35445c;
+}
+
+.sim-field:has(input:disabled) > span {
+  color: #93a2bb;
+}
+
+.sim-costs {
+  margin: 25px 0;
+  border-top: 1px solid #34445e;
+  border-bottom: 1px solid #34445e;
+  padding: 15px 0 20px;
+}
+
+.sim-costs summary {
+  cursor: pointer;
+  color: #eef3ff;
+  font-weight: 750;
+  list-style-position: inside;
+}
+
+.sim-costs summary span {
+  float: right;
+  color: #a8c1e9;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.sim-costs .sim-field-grid {
+  margin: 19px 0 12px;
+}
+
+.sim-helper {
+  color: #aebdd5;
+  font-size: 0.77rem;
+  line-height: 1.55;
+}
+
+.sim-primary-button,
+.sim-secondary-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  padding: 11px 19px;
+  border-radius: 12px;
+  border: 1px solid #9bbbf5;
+  background: #a9c8ff;
+  color: #071426;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.sim-primary-button:hover {
+  background: #d0e0ff;
+}
+
+.sim-secondary-button {
+  color: #eaf1ff;
+  background: #263b5d;
+  border-color: #58729a;
+}
+
+.sim-secondary-button:hover {
+  background: #36537e;
+}
+
+.sim-error {
+  margin-bottom: 14px;
+  padding: 11px 13px;
+  color: #ffe1dc;
+  background: #5b2d35;
+  border-radius: 10px;
+  font-size: 0.88rem;
+}
+
+.sim-result-lead {
+  padding: 24px;
+  border: 1px solid #738bb0;
+  border-radius: 16px;
+  background: #283e61;
+}
+
+.sim-result-lead span,
+.sim-threshold span {
+  display: block;
+  color: #c4d2e7;
+  font-size: 0.78rem;
+}
+
+.sim-result-lead strong {
+  display: block;
+  margin: 6px 0 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.sim-result-lead[data-outcome='loss'] strong {
+  color: #ffc1b4;
+}
+
+.sim-result-lead[data-outcome='gain'] strong {
+  color: #b0f2d9;
+}
+
+.sim-result-lead small,
+.sim-threshold small {
+  display: block;
+  margin-top: 5px;
+  color: #b9c9e1;
+}
+
+.sim-result-grid {
+  margin: 17px 0;
+}
+
+.sim-result-grid > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #354861;
+}
+
+.sim-result-grid dt {
+  color: #bbcae0;
+  font-size: 0.82rem;
+}
+
+.sim-result-grid dd {
+  margin: 0;
+  font-size: 0.89rem;
+  font-weight: 750;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.sim-threshold {
+  padding: 18px 20px;
+  border: 1px solid #677f9e;
+  border-radius: 14px;
+  background: #172c48;
+  margin-bottom: 15px;
+}
+
+.sim-threshold strong {
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  margin-top: 4px;
+}
+
+.sim-result-warning {
+  padding: 13px 15px;
+  margin-bottom: 14px;
+  border: 1px solid #b17b58;
+  border-radius: 12px;
+  color: #ffdfc1;
+  background: #513626;
+  font-size: 0.81rem;
+}
+
+.sim-reflection {
+  margin-top: 18px;
+}
+
+.sim-reflection .sim-field {
+  max-width: 760px;
+}
+
+.sim-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 10px;
+}
+
+.sim-text-link {
+  padding: 12px;
+  color: #b7d0ff;
+  font-weight: 700;
+  font-size: 0.86rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.sim-save-status {
+  min-height: 1.5em;
+  font-size: 0.85rem;
+  color: #b8e8d4;
+}
+
+.sim-education-note,
+.sim-notice {
+  margin-top: 24px;
+  padding: 18px 22px;
+  border-left: 3px solid #729ce0;
+  border-radius: 0 12px 12px 0;
+  color: #b7c4da;
+  background: #10192a;
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.sim-education-note strong {
+  color: #e9f0ff;
+}
+
+.sim-notice a {
+  color: #bbd4ff;
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .sim-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sim-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sim-hero-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    padding: 0;
+    border: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .sim-page {
+    padding-block: 18px 70px;
+  }
+
+  .sim-hero {
+    gap: 23px;
+    padding: 28px 0 35px;
+  }
+
+  .sim-explainer {
+    grid-template-columns: minmax(0, 1fr);
+    margin: 19px 0 27px;
+  }
+
+  .sim-explainer article {
+    padding: 15px 18px;
+  }
+
+  .sim-explainer h2 {
+    margin: 2px 0;
+  }
+
+  .sim-field-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sim-panel {
+    border-radius: 18px;
+  }
+
+  .sim-costs summary span {
+    display: none;
+  }
+
+  .sim-actions > button,
+  .sim-actions > a {
+    width: 100%;
+  }
+}
