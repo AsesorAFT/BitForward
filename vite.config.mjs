@@ -20,6 +20,7 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true,
+    allowedHosts: ['terminal.local'],
     open: true,
     cors: true,
     proxy: {
