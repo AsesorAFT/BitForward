@@ -163,7 +163,7 @@ export default function AdaptiveCampus({
                 ? 'Avance vinculado a tu cuenta AFORTU OS.'
                 : 'Avance local en este navegador.'}
             </p>
-            {!account && <a href={baseUrl + 'acceso.html'}>Acceso con AFORTU OS ↗</a>}
+            {!account && <a href={baseUrl + 'acceso.html'}>Acceso con AFORTU OS</a>}
           </div>
         </aside>
         <section className="atf-workspace" aria-label="Aprendizaje adaptativo con ATF">
@@ -217,7 +217,6 @@ export default function AdaptiveCampus({
                         ? 'Hacer mi repaso'
                         : 'Entrar al aula'
                       : 'Abrir laboratorio'}{' '}
-                  <span aria-hidden="true">↗</span>
                 </button>
               </div>
               <div className="atf-section-heading">
@@ -325,7 +324,7 @@ export default function AdaptiveCampus({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Misión completa y fuentes ↗ <span className="atf-sr">(nueva pestaña)</span>
+                      Misión completa y fuentes <span className="atf-sr">(nueva pestaña)</span>
                     </a>
                   </details>
                   {active.rehearsal && (
@@ -417,12 +416,12 @@ export default function AdaptiveCampus({
                         className="atf-primary"
                         onClick={() => (diagnostic ? openQuestion(diagnostic) : setView('campus'))}
                       >
-                        {diagnostic ? 'Siguiente concepto' : 'Ver mi ruta personalizada'} →
+                        {diagnostic ? 'Siguiente concepto' : 'Ver mi ruta personalizada'}
                       </button>
                     ) : (
                       <>
                         <button className="atf-primary" onClick={() => setView('campus')}>
-                          Ver mi siguiente paso →
+                          Ver mi siguiente paso
                         </button>
                         <button
                           className="atf-secondary"
@@ -461,7 +460,7 @@ export default function AdaptiveCampus({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Abrir herramienta ↗ <span className="atf-sr">(nueva pestaña)</span>
+                      Abrir herramienta <span className="atf-sr">(nueva pestaña)</span>
                     </a>
                   </article>
                 ))}

@@ -67,13 +67,13 @@ function Memberships() {
     (method === 'binance_pay' ? '&asset=' + asset : '');
   return (
     <>
-      <div className="bf-mobile-cart">
+      <div className="bf-mobile-cart" data-empty={cart.length === 0 ? 'true' : 'false'}>
         <span>
           {cart.length} {cart.length === 1 ? 'selección' : 'selecciones'} · {money(cartTotal(cart))}{' '}
           MXN
         </span>
         <a href="#carrito" onClick={() => checkout.current?.focus()}>
-          Ver carrito ↓
+          Ver carrito
         </a>
       </div>
       <div className="bf-period" role="group" aria-label="Periodo propuesto">
@@ -99,7 +99,7 @@ function Memberships() {
             <li>Fichas y bitácora descargables.</li>
           </ul>
           <a className="button button-outline" href="./ruta.html#desde-cero">
-            Comenzar desde cero ↗
+            Comenzar desde cero
           </a>
           <small>Sin cuenta. Progreso local en tu navegador.</small>
         </article>
@@ -154,7 +154,17 @@ function Memberships() {
           <h2 id="cart-title" tabIndex="-1" ref={checkout}>
             Tu carrito.
           </h2>
-          <p>01 Selección → 02 Método de pago → 03 Confirmación</p>
+          <ol className="bf-checkout-steps" aria-label="Proceso de compra">
+            <li aria-current={step === 'cart' ? 'step' : undefined}>
+              <span>01</span>Selección
+            </li>
+            <li aria-current={step === 'payment' ? 'step' : undefined}>
+              <span>02</span>Método de pago
+            </li>
+            <li>
+              <span>03</span>Confirmación
+            </li>
+          </ol>
           <p className="bf-proposal">
             Vista previa comercial. Puedes preparar tu selección; los cobros todavía no están
             abiertos.
@@ -201,7 +211,7 @@ function Memberships() {
               </p>
               {step === 'cart' && (
                 <button className="button button-primary" onClick={() => setStep('payment')}>
-                  Elegir método de pago →
+                  Elegir método de pago
                 </button>
               )}
             </>
@@ -276,7 +286,7 @@ function Memberships() {
               </p>
               {live ? (
                 <a className="button button-primary" href={privateUrl}>
-                  Continuar en AFORTU OS ↗
+                  Continuar en AFORTU OS
                 </a>
               ) : (
                 <div className="bf-proposal">
