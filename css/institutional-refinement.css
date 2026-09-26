@@ -1,0 +1,142 @@
+/* BitForward keeps its exploratory identity within the AFORTU family. */
+:root {
+  --accent: #cbb282;
+}
+.site-header {
+  background: #080e18;
+}
+.main-nav {
+  gap: 20px;
+}
+.main-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+}
+.button {
+  min-height: 48px;
+  border-radius: 3px;
+}
+.hero-description {
+  font-size: 17px;
+  line-height: 1.85;
+}
+.hero-visual {
+  max-height: 650px;
+}
+.hero-astronaut {
+  object-fit: contain;
+}
+.lab-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  padding-block: 72px;
+  border-bottom: 1px solid var(--border);
+}
+.lab-preview h2 {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+  margin: 18px 0 24px;
+}
+.lab-preview p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 450px;
+}
+.lab-preview .text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  color: var(--accent);
+}
+.lab-preview-tools a {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  column-gap: 18px;
+  padding: 22px 0;
+  border-top: 1px solid var(--border);
+}
+.lab-preview-tools span {
+  grid-row: span 2;
+  color: var(--accent);
+  font-size: 12px;
+}
+.lab-preview-tools strong {
+  font-size: 20px;
+  font-weight: 500;
+}
+.lab-preview-tools small {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 7px;
+}
+.lab-preview-tools a:hover strong {
+  color: var(--accent);
+}
+.guide-identity {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 36px;
+  padding-block: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.guide-identity p {
+  color: var(--muted);
+  max-width: 730px;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0;
+}
+.guide-identity strong {
+  color: var(--ink);
+}
+.guide-identity a {
+  flex-shrink: 0;
+  color: var(--accent);
+  font-size: 13px;
+  min-height: 44px;
+  align-content: center;
+}
+:where(a, button, input, summary, select, textarea):focus-visible {
+  outline: 3px solid #d5b777;
+  outline-offset: 4px;
+}
+@media (max-width: 900px) {
+  .lab-preview {
+    gap: 36px;
+  }
+  .guide-identity {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+@media (max-width: 640px) {
+  .lab-preview {
+    grid-template-columns: 1fr;
+    padding-block: 44px;
+    gap: 28px;
+  }
+  .hero-description {
+    font-size: 16px;
+  }
+  .hero-visual {
+    max-height: 450px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

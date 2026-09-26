@@ -26,7 +26,7 @@ assert.deepEqual(
 const index = read('cockpit.html');
 const home = read('index.html');
 const editorial = read('src/editorial/main.js');
-assert.match(home, /BitForward \| By AFORTU — Misiones Cripto/);
+assert.match(home, /BitForward \| Laboratorio cripto de AFORTU/);
 for (const section of ['misiones', 'reporta', 'bitacora', 'seguridad']) {
   assert.ok(home.includes(`id="${section}"`), `Falta la sección editorial ${section}`);
 }

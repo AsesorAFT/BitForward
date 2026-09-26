@@ -106,7 +106,7 @@ async function assertEditorialRuntime(browser) {
       }));
       if (state.pageWidth > state.width + 1) throw new Error(`Editorial overflow at ${width}px`);
       if (!state.imageLoaded) throw new Error('ATF image did not load');
-      if (!state.heading.includes('Formación en')) throw new Error('Editorial heading missing');
+      if (!state.heading.includes('Entiende cripto')) throw new Error('Editorial heading missing');
       if (width <= 900) {
         await page.click('.menu-toggle');
         await page.waitForSelector('#main-nav.is-open', { visible: true });
