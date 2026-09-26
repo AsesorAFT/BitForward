@@ -1,6 +1,11 @@
+import { membershipBody, routeBody } from '../src/commerce/templates.mjs';
 import { readFileSync, writeFileSync } from 'node:fs';
+import prettier from 'prettier';
 import { missions, tracks, assets } from '../src/ecosystem/data.mjs';
 import { content } from '../src/ecosystem/content.mjs';
+const writeHtml = async (path, html) => {
+  writeFileSync(path, await prettier.format(html, { parser: 'html', printWidth: 100 }));
+};
 const esc = value =>
   String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');
 const toolUrl = (m, base = '.') =>
@@ -8,7 +13,7 @@ const toolUrl = (m, base = '.') =>
 const head = (title, description, base = '.', path = '', script = 'src/editorial/main.js') =>
   `<!doctype html><html lang="es-MX"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)} | BitForward — By AFORTU</title><meta name="description" content="${esc(description)}"><meta name="theme-color" content="#070a13"><meta name="color-scheme" content="dark"><link rel="canonical" href="https://asesoraft.github.io/BitForward/${path}"><meta property="og:type" content="website"><meta property="og:title" content="${esc(title)} | BitForward"><meta property="og:description" content="${esc(description)}"><link rel="icon" href="${base}/assets/brand/bitforward-app-icon-192.png"><script type="module" src="${base}/${script}"></script></head><body><a class="skip-link" href="#contenido">Saltar al contenido</a>`;
 const header = (base = '.') =>
-  `<header class="site-header"><a class="brand" href="${base}/" aria-label="BitForward, inicio"><img src="${base}/assets/brand/bitforward-logo-v2.webp" width="1000" height="560" alt="BitForward"><span>BY AFORTU</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" hidden>Menú <span aria-hidden="true">☰</span></button><nav class="main-nav" id="main-nav" aria-label="Navegación principal"><a href="${base}/misiones.html">Misiones Cripto</a><a href="${base}/laboratorio.html">Laboratorio</a><a href="${base}/atf.html">Aprende con ATF</a><a href="${base}/laboratorio.html?herramienta=bitacora">Mi bitácora</a><a class="nav-community" href="${base}/acceso.html">AFORTU OS ↗</a></nav></header>`;
+  `<header class="site-header"><a class="brand" href="${base}/" aria-label="BitForward, inicio"><img src="${base}/assets/brand/bitforward-logo-v2.webp" width="1000" height="560" alt="BitForward"><span>BY AFORTU</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" hidden>Menú <span aria-hidden="true">☰</span></button><nav class="main-nav" id="main-nav" aria-label="Navegación principal"><a href="${base}/ruta.html">Desde cero</a><a href="${base}/laboratorio.html">Laboratorio</a><a href="${base}/atf.html">Aprende con ATF</a><a href="${base}/laboratorio.html?herramienta=bitacora">Mi bitácora</a><a href="${base}/membresias.html">Planes</a><a class="nav-community" href="${base}/acceso.html">AFORTU OS ↗</a></nav></header>`;
 const footer = (base = '.') =>
   `<footer class="site-footer wrap"><div class="footer-top"><div><a class="footer-brand" href="${base}/">BitForward<span>BY AFORTU</span></a><p>Formación y análisis de criptoactivos.</p></div><nav aria-label="Comunidad y recursos"><a href="https://www.instagram.com/bitforward_aft/" target="_blank" rel="noopener noreferrer">Instagram ↗<span class="sr-only"> (nueva pestaña)</span></a><a href="${base}/misiones.html">Misiones</a><a href="${base}/laboratorio.html">Laboratorio</a><a href="${base}/membresias.html">Membresías</a></nav></div><div class="footer-bottom"><p>© 2026 BitForward | By AFORTU</p><p>Contenido educativo, no asesoría de inversión. El sitio no conecta wallets ni solicita fondos. Tu progreso y tus notas se guardan sólo en este navegador cuando eliges hacerlo.</p></div></footer></body></html>`;
 function checkpoint(m) {
@@ -26,7 +31,7 @@ for (const m of missions) {
   if (content[m.id]) {
     const c = content[m.id];
     const coin = assets.find(a => a.symbol === m.asset);
-    writeFileSync(
+    await writeHtml(
       path,
       head(m.title, m.outcome, '..', path) +
         header('..') +
@@ -52,10 +57,10 @@ for (const m of missions) {
         '</body>',
         '<script type="module" src="../src/ecosystem/learning.js"></script></body>'
       );
-    writeFileSync(path, html);
+    await writeHtml(path, html);
   }
 }
-writeFileSync(
+await writeHtml(
   'misiones.html',
   head(
     'Misiones Cripto',
@@ -80,7 +85,7 @@ writeFileSync(
       )}<div class="member-banner"><div><p class="eyebrow">PRÁCTICA Y HERRAMIENTAS</p><h2>Tu siguiente paso: el laboratorio.</h2><p>Practica las veces que necesites. Las herramientas gratuitas están disponibles sin registro.</p></div><a class="button button-primary" href="./laboratorio.html">Entrar al laboratorio ↗</a></div></main><script type="module" src="./src/ecosystem/learning.js"></script>` +
     footer()
 );
-writeFileSync(
+await writeHtml(
   'laboratorio.html',
   head(
     'Laboratorio Cripto',
@@ -93,20 +98,34 @@ writeFileSync(
     `<main class="wrap" id="contenido" tabindex="-1"><div class="portal-hero"><p class="eyebrow">LABORATORIO BITFORWARD <span class="access-tag">GRATUITO / SIN REGISTRO</span></p><h1>Laboratorio de<br><em>análisis cripto.</em></h1><p>Cinco herramientas para entender lo que estás analizando. Trabaja con tus propios supuestos, documenta tus fuentes y llévate el resultado.</p></div><div id="lab-root"><div class="tool-notice"><h2>Tu espacio de trabajo</h2><p>El laboratorio necesita JavaScript para realizar los cálculos y guardar datos locales. Mientras tanto, puedes explorar todas las misiones como artículos de lectura.</p><ul><li>Comparar: Bitcoin, Ethereum, Tether, Cardano, Solana y USDC.</li><li>Exposición: introduce valores en USD y calcula pérdidas bajo dos supuestos explícitos.</li><li>Gas: convierte unidades y precio efectivo en una comisión de Ethereum.</li><li>Ficha: documenta propósito, evidencia, fuente y riesgo.</li><li>Bitácora: guarda notas en este navegador y descarga una copia.</li></ul><p>No hay cotizaciones en vivo, conexión de wallet ni sincronización entre dispositivos.</p><a class="text-link" href="./misiones.html">Explorar las misiones →</a></div></div></main>` +
     footer()
 );
-writeFileSync(
+await writeHtml(
   'membresias.html',
   head(
-    'Membresías',
-    'Empieza gratis con Explorador. Conoce la propuesta de membresías para profundizar en el análisis cripto.',
+    'Formación y membresías',
+    'Empieza desde cero y explora los planes de formación, práctica y acompañamiento de BitForward.',
     '.',
-    'membresias.html'
+    'membresias.html',
+    'src/commerce/memberships.jsx'
   ) +
     header() +
-    `<main class="wrap" id="contenido" tabindex="-1"><div class="portal-hero"><p class="eyebrow">PLANES DE FORMACIÓN</p><h1>Formación y<br><em>acompañamiento.</em></h1><p>Empieza con las misiones y herramientas abiertas. Estamos definiendo cómo acompañarte después, con análisis documentado y espacios de aprendizaje.</p></div><div class="plans-grid"><article class="plan plan-live"><p class="eyebrow">DISPONIBLE AHORA</p><h2>Explorador</h2><p>Para dar tus primeros pasos y construir un método.</p><p class="plan-price">Acceso gratuito</p><ul><li>9 misiones con explicación, práctica y comprobación.</li><li>Comparador de 6 activos y calculadoras de gas y exposición.</li><li>Ficha de análisis y bitácora descargables.</li><li>Progreso y notas guardados en tu navegador.</li></ul><a class="button button-primary" href="./misiones.html">Comenzar gratis ↗</a></article><article class="plan"><p class="eyebrow">PROPUESTA / EN DESARROLLO</p><h2>Analista</h2><p>Para desarrollar un proceso de investigación constante.</p><p class="plan-price">Por definir</p><ul><li>Propuesta: biblioteca de casos con fuentes y metodología.</li><li>Propuesta: plantillas avanzadas y seguimiento de tesis.</li><li>Propuesta: cuenta para sincronizar tu trabajo.</li><li>Propuesta: sesiones de revisión del método de análisis.</li></ul><small>Sin contratación ni cobros habilitados. Precio, calendario y alcance pendientes de definir.</small></article><article class="plan"><p class="eyebrow">PROPUESTA / EN DESARROLLO</p><h2>Círculo AFORTU</h2><p>Para aprender en una comunidad con conversación y contexto.</p><p class="plan-price">Por definir</p><ul><li>Propuesta: encuentros educativos sobre temas cripto.</li><li>Propuesta: misiones temáticas y casos colaborativos.</li><li>Propuesta: biblioteca de sesiones y preguntas frecuentes.</li><li>Propuesta: participación en la selección de futuras misiones.</li></ul><small>Sin contratación ni cobros habilitados. No incluye gestión de fondos ni señales de compra.</small></article></div><section class="membership-faq" aria-labelledby="membership-questions"><h2 id="membership-questions">Antes de comenzar.</h2><details open><summary>¿Qué puedo usar hoy?</summary><p>Las nueve misiones y las cinco herramientas del laboratorio son gratuitas. No necesitas una cuenta, una wallet ni realizar una compra. Los cálculos utilizan valores manuales, no datos de mercado en tiempo real.</p></details><details><summary>¿Dónde se guarda mi trabajo?</summary><p>El progreso se guarda cuando completas una comprobación. Las fichas y notas se guardan cuando eliges hacerlo, sólo en este navegador. No hay sincronización. Descarga tus documentos para conservar una copia y usa las opciones de borrado de Mi bitácora cuando lo necesites.</p></details><details><summary>¿Ya puedo pagar una membresía?</summary><p>No. Analista y Círculo AFORTU son una propuesta de producto. Se publicarán precio, alcance, calendario, condiciones y disponibilidad cuando esos servicios estén preparados. Esta página no cobra ni activa suscripciones.</p></details><details><summary>¿Se trata de señales de inversión?</summary><p>El objetivo es aprender a analizar fuentes, riesgos y supuestos. Los contenidos y herramientas son educativos. No prometen rentabilidad ni ejecutan operaciones con tus activos.</p></details></section></main>` +
+    membershipBody +
+    footer()
+);
+await writeHtml(
+  'ruta.html',
+  head(
+    'Tu ruta desde cero',
+    'Aprende qué es una criptomoneda y explora una ruta desde seguridad y análisis hasta trading simulado y derivados.',
+    '.',
+    'ruta.html',
+    'src/commerce/route.jsx'
+  ) +
+    header() +
+    routeBody +
     footer()
 );
 console.log('Nine missions, curriculum, lab and memberships generated.');
-writeFileSync(
+await writeHtml(
   'atf.html',
   head(
     'Aprende con ATF',
@@ -119,7 +138,7 @@ writeFileSync(
     `<main class="wrap" id="contenido" tabindex="-1"><div class="portal-hero"><p class="eyebrow">ATF / ADVISOR OF THE FUTURE <span class="access-tag">RUTA PERSONAL</span></p><h1>Tu campus cripto.<br><em>Aprende con ATF.</em></h1><p>Conoce tus bases, explora tu mapa de conceptos y trabaja en las misiones. ATF adapta los ejercicios a tus respuestas y te ayuda a decidir qué estudiar después.</p></div><div id="tutor-root"><div class="tool-notice"><h2>Tu capacitación con ATF</h2><p>Activa JavaScript para elegir una ruta y realizar las comprobaciones. También puedes leer todas las lecciones desde Misiones Cripto. El campus usa un diagnóstico y ejercicios adaptados con contenido preparado, sin un chat de inteligencia artificial.</p><p>Comienza por entender activos y redes, continúa con custodia y exposición, y termina con una ficha de análisis y una nota de bitácora. Puedes repetir cada tema y consultar sus fuentes antes de avanzar.</p><p>El progreso que elijas guardar permanece en este navegador. El inicio de sesión con AFORTU OS todavía no está conectado.</p><a class="text-link" href="./misiones.html">Leer las misiones →</a></div></div></main>` +
     footer()
 );
-writeFileSync(
+await writeHtml(
   'acceso.html',
   head(
     'Tu cuenta AFORTU OS',
