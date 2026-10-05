@@ -72,6 +72,11 @@ jobs:
             kill $(cat /tmp/serve.pid) || true
           fi
 
+      - name: Unify public entry points with the AFORTU academy
+        run: |
+          node --test scripts/canonical-campus.test.mjs
+          node scripts/package-canonical-campus.mjs
+
       - name: Setup Pages
         uses: actions/configure-pages@v6
 
