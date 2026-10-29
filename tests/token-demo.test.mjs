@@ -94,7 +94,11 @@ test('doble envío y recarga son idempotentes; solo resuelve después de pendien
   assert.equal(done.history.length, 1);
   assert.equal(settleDemo(done, now + 10000), done);
   assert.equal(submitDemo(done, 'ready', now + 10000), done);
-  assert.deepEqual(balances(done), { USDC: 899700000n, ETH: 1049800000000000000n });
+  assert.deepEqual(balances(done), {
+    USDC: 899700000n,
+    ETH: 1049800000000000000n,
+    USDT: 1000000000n,
+  });
   const next = submitDemo(
     { ...done, stage: 'review', quote: readQuote('usdc-eth', '1', now) },
     'ready',

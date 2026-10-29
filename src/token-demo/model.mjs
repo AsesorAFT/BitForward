@@ -1,12 +1,39 @@
+import { CATALOG, capabilities } from './catalog.mjs';
+import { SPOT_FIXTURES } from './fixtures.mjs';
+
 export const NETWORK = 'Red DEMO · chainId ficticio 31337';
 export const TTL = 60_000;
 export const PAIRS = {
   'usdc-eth': { input: 'USDC', output: 'ETH', decimals: 6, outputDecimals: 18 },
   'eth-usdc': { input: 'ETH', output: 'USDC', decimals: 18, outputDecimals: 6 },
+  ...Object.fromEntries(
+    CATALOG.filter(item => capabilities(item).practice).map(item => [
+      item.key,
+      {
+        input: 'USDT',
+        output: item.base,
+        outputAsset: item.key,
+        instrumentKey: item.key,
+        decimals: 6,
+        outputDecimals: 8,
+      },
+    ])
+  ),
 };
 const ZERO = BigInt(0);
 const GAS = BigInt('200000000000000');
-const INITIAL = { USDC: BigInt('1000000000'), ETH: BigInt('1000000000000000000') };
+const INITIAL = {
+  USDC: BigInt('1000000000'),
+  ETH: BigInt('1000000000000000000'),
+  USDT: BigInt('1000000000'),
+};
+
+export function assetInfo(asset) {
+  const pair = Object.hasOwn(PAIRS, asset) ? PAIRS[asset] : null;
+  return pair?.instrumentKey
+    ? { label: `${pair.output} · Spot`, decimals: pair.outputDecimals }
+    : { label: asset, decimals: asset === 'ETH' ? 18 : 6 };
+}
 
 export function units(value, decimals) {
   if (!/^(0|[1-9]\d*)([.,]\d+)?$/.test(value) || value.length > 40)
@@ -28,17 +55,21 @@ export function format(value, decimals) {
 
 // Interfaz de lectura local: no importa wallets ni ejecutores.
 export function readQuote(pairId, amount, now) {
-  const pair = PAIRS[pairId];
+  const pair = Object.hasOwn(PAIRS, pairId) ? PAIRS[pairId] : null;
   if (!pair) throw new Error('Par de demostración no disponible.');
   const input = units(amount, pair.decimals);
   const fee = (input * BigInt(3) + BigInt(999)) / BigInt(1000);
   const scale = BigInt('1000000000000');
-  const output =
-    pair.input === 'USDC' ? (input * scale) / BigInt(2000) : (input * BigInt(2000)) / scale;
+  const fixture = SPOT_FIXTURES[pairId];
+  const output = fixture
+    ? (input * BigInt(10) ** BigInt(fixture.baseDecimals)) / BigInt(fixture.priceQuoteUnits)
+    : pair.input === 'USDC'
+      ? (input * scale) / BigInt(2000)
+      : (input * BigInt(2000)) / scale;
   const minimum = (output * BigInt(995)) / BigInt(1000);
   if (minimum === ZERO)
     throw new Error('El importe no produce una unidad mínima de salida protegida.');
-  const totals = { USDC: ZERO, ETH: GAS };
+  const totals = pair.instrumentKey ? { USDT: ZERO, ETH: GAS } : { USDC: ZERO, ETH: GAS };
   totals[pair.input] += input + fee;
   return {
     pairId,
@@ -49,6 +80,13 @@ export function readQuote(pairId, amount, now) {
     gas: GAS.toString(),
     totals: Object.fromEntries(Object.entries(totals).map(([k, v]) => [k, v.toString()])),
     expiresAt: now + TTL,
+    ...(fixture
+      ? {
+          instrumentKey: pair.instrumentKey,
+          source: fixture.source,
+          fixtureId: fixture.fixtureId,
+        }
+      : {}),
   };
 }
 
@@ -64,9 +102,11 @@ export function balances(state) {
   const result = { ...INITIAL };
   for (const row of state.history) {
     if (!['pending', 'confirmed'].includes(row.status)) continue;
-    for (const asset of ['USDC', 'ETH']) result[asset] -= BigInt(row.quote.totals[asset]);
+    for (const [asset, value] of Object.entries(row.quote.totals)) result[asset] -= BigInt(value);
     if (row.status === 'confirmed') {
-      result[PAIRS[row.quote.pairId].output] += BigInt(row.quote.output);
+      const pair = PAIRS[row.quote.pairId];
+      const asset = pair.outputAsset || pair.output;
+      result[asset] = (result[asset] || ZERO) + BigInt(row.quote.output);
     }
   }
   return result;
@@ -79,10 +119,10 @@ export function checkQuote(state, scenario, now) {
     throw new Error('Red incorrecta. Esta demo requiere la red ficticia 31337.');
   if (now >= state.quote.expiresAt) throw new Error('Cotización caducada. Vuelve a revisar.');
   const available = balances(state);
-  if (scenario === 'funds') available.USDC = available.ETH = ZERO;
+  if (scenario === 'funds') available.USDC = available.USDT = available.ETH = ZERO;
   if (scenario === 'gas') available.ETH = ZERO;
-  for (const asset of ['USDC', 'ETH']) {
-    if (BigInt(state.quote.totals[asset]) > available[asset])
+  for (const [asset, value] of Object.entries(state.quote.totals)) {
+    if (BigInt(value) > available[asset])
       throw new Error(`Fondos demo insuficientes para importe y comisiones en ${asset}.`);
   }
 }
@@ -132,7 +172,7 @@ export function restore(raw) {
     throw new Error('Estado demo no válido.');
   const quotes = [...state.history.map(row => row.quote), ...(state.quote ? [state.quote] : [])];
   for (const quote of quotes) {
-    const pair = PAIRS[quote.pairId];
+    const pair = Object.hasOwn(PAIRS, quote.pairId) ? PAIRS[quote.pairId] : null;
     if (!pair) throw new Error('Par no válido.');
     const expected = readQuote(
       quote.pairId,

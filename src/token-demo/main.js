@@ -10,7 +10,9 @@ import {
   settleDemo,
   balances,
   format,
+  assetInfo,
 } from './model.mjs';
+import { CATALOG, MARKETS, capabilities, filterCatalog, instrumentNotice } from './catalog.mjs';
 
 const $ = id => document.getElementById(id);
 const KEY = 'bitforward-token-demo-v1';
@@ -20,6 +22,8 @@ const statuses = {
   failed: 'Simulación fallida',
   confirmed: 'Simulación confirmada · sin tokens reales',
 };
+let selectedKey = CATALOG.find(item => item.market === 'spot' && item.base === 'BTC').key;
+let marketFilter = 'all';
 let state = freshState();
 let storageReady = true;
 try {
@@ -59,7 +63,106 @@ function detail(list, title, value) {
   list.append(term, description);
 }
 
-const assetText = (value, asset) => `${format(value, asset === 'ETH' ? 18 : 6)} ${asset} demo`;
+const assetText = (value, asset) => {
+  const info = assetInfo(asset);
+  return `${format(value, info.decimals)} ${info.label} demo`;
+};
+
+function renderInstrument() {
+  const instrument = CATALOG.find(item => item.key === selectedKey);
+  const ability = capabilities(instrument);
+  $('instrument-title').textContent =
+    `${instrument.base}${instrument.quote ? '/USDT' : ''} · ${MARKETS[instrument.market]}`;
+  $('instrument-notice').textContent = instrumentNotice(instrument);
+  $('instrument-details').replaceChildren();
+  for (const [label, value] of [
+    ['Proveedor de referencia · no conectado', 'Binance'],
+    ['Clave de selección', instrument.key],
+    [
+      'Nombre',
+      instrument.name
+        ? `${instrument.name}${instrument.nameStatus === 'selection-label' ? ' · etiqueta de selección, pendiente de metadata actual' : ''}`
+        : 'Pendiente de metadata oficial; sin inferir por ticker',
+    ],
+    ['Identidad / disponibilidad actual', 'Pendiente / desconocida · ejecución real bloqueada'],
+    ['Red / contrato', 'No verificados. USDT no determina una blockchain.'],
+  ])
+    detail($('instrument-details'), label, value);
+  if (instrument.market === 'alpha')
+    detail($('instrument-details'), 'Alpha ID', 'Pendiente del Token List oficial');
+  if (instrument.reportedSnapshot) {
+    detail($('instrument-details'), 'Tipo de contrato comunicado', instrument.contractType);
+    detail(
+      $('instrument-details'),
+      'Snapshot comunicado por el usuario',
+      'exchangeInfo Futures · 29/10/2026 · TRADING. No verificado aquí, no garantiza permisos ni disponibilidad futura.'
+    );
+  }
+  $('instrument-fixture').textContent = ability.practice
+    ? 'Fixture SIMULACIÓN: 1 unidad sintética = 10 USDT demo. No es un precio de mercado. Precisión demo de salida: 8 decimales, no decimales on-chain.'
+    : 'Sin cotización ni simulación de compra: solo consulta educativa de esta selección.';
+  $('catalog-practice').disabled = !ability.practice || state.stage === 'pending';
+  $('catalog-practice').textContent = ability.practice
+    ? 'Practicar Spot demo'
+    : 'Solo exploración · sin compra';
+  $('catalog-action-note').textContent =
+    state.stage === 'pending'
+      ? 'Espera el resultado pendiente antes de iniciar otro ejercicio.'
+      : 'Ninguna ruta real está configurada. Los distintivos 5x/10x no habilitan apalancamiento.';
+  document
+    .querySelectorAll('#catalog-list button')
+    .forEach(button =>
+      button.setAttribute('aria-pressed', String(button.dataset.key === selectedKey))
+    );
+}
+
+function renderCatalog() {
+  const entries = filterCatalog($('catalog-search').value, marketFilter);
+  $('catalog-count').textContent =
+    `${entries.length} de 43 entradas · ${MARKETS[marketFilter] || 'Todos'}`;
+  $('catalog-list').replaceChildren();
+  for (const instrument of entries) {
+    const item = document.createElement('li');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.key = instrument.key;
+    button.setAttribute('aria-pressed', String(instrument.key === selectedKey));
+    button.setAttribute(
+      'aria-label',
+      `Explorar ${instrument.instrumentId} · ${MARKETS[instrument.market]}`
+    );
+    const title = document.createElement('strong');
+    title.textContent = instrument.market === 'alpha' ? instrument.base : instrument.instrumentId;
+    const subtitle = document.createElement('span');
+    subtitle.textContent = `${MARKETS[instrument.market]} · ${capabilities(instrument).practice ? 'Práctica demo' : 'Solo explorar'}`;
+    button.append(title, subtitle);
+    button.onclick = () => {
+      selectedKey = instrument.key;
+      renderInstrument();
+    };
+    item.append(button);
+    $('catalog-list').append(item);
+  }
+  if (!entries.length) {
+    const empty = document.createElement('li');
+    empty.textContent = 'Sin coincidencias. Prueba otro símbolo o mercado.';
+    $('catalog-list').append(empty);
+  }
+  for (const button of $('catalog-filters').querySelectorAll('button'))
+    button.setAttribute('aria-pressed', String(button.dataset.market === marketFilter));
+}
+
+function updatePair() {
+  const pair = PAIRS[$('pair').value];
+  if (pair.instrumentKey) {
+    selectedKey = pair.instrumentKey;
+    renderInstrument();
+  }
+  $('input-unit').textContent = `(${pair.input} demo)`;
+  $('pair-context').textContent = pair.instrumentKey
+    ? `${pair.output}/USDT · Spot · Binance como referencia, sin conexión. Fixture: 1 unidad sintética = 10 USDT demo; red, contrato y disponibilidad real pendientes.`
+    : 'Caso educativo original USDC/ETH, fuera de los 43 favoritos.';
+}
 
 function render() {
   $('learn').hidden = state.stage !== 'learn';
@@ -67,6 +170,7 @@ function render() {
   $('review').hidden = state.stage !== 'review';
   $('result').hidden = !['pending', 'result'].includes(state.stage);
   $('scenario').disabled = state.stage === 'pending';
+  renderInstrument();
   $('balances').replaceChildren();
   for (const [asset, value] of Object.entries(balances(state)))
     detail($('balances'), `Disponible ${asset} demo`, assetText(value, asset));
@@ -79,16 +183,26 @@ function render() {
   if (state.stage === 'review') {
     const q = state.quote;
     const pair = PAIRS[q.pairId];
+    const outputAsset = pair.outputAsset || pair.output;
     $('quote-details').replaceChildren();
     for (const [label, value] of [
       ['Importe de entrada', assetText(q.input, pair.input)],
-      ['Salida estimada', assetText(q.output, pair.output)],
-      ['Mínimo a recibir · tolerancia 0,5 %', assetText(q.minimum, pair.output)],
+      ['Instrumento', pair.instrumentKey || 'Caso original USDC/ETH · fuera de favoritos'],
+      [
+        'Fuente',
+        q.source === 'simulation'
+          ? 'SIMULACIÓN · spot-uniform-v1 · no cotización de Binance'
+          : 'Fixture original USDC/ETH',
+      ],
+      ['Salida estimada', assetText(q.output, outputAsset)],
+      ['Mínimo a recibir · tolerancia 0,5 %', assetText(q.minimum, outputAsset)],
       ['Red', NETWORK],
       ['Proveedor ficticio · 0,3 % adicional, redondeo hacia arriba', assetText(q.fee, pair.input)],
       ['Coste de red fijo', assetText(q.gas, 'ETH')],
-      ['Total a descontar en USDC', assetText(q.totals.USDC, 'USDC')],
-      ['Total a descontar en ETH', assetText(q.totals.ETH, 'ETH')],
+      ...Object.entries(q.totals).map(([asset, value]) => [
+        `Total a descontar en ${asset}`,
+        assetText(value, asset),
+      ]),
       ['Caducidad local', new Date(q.expiresAt).toLocaleTimeString('es-MX')],
     ])
       detail($('quote-details'), label, value);
@@ -112,7 +226,7 @@ function render() {
   for (const row of state.history) {
     const item = document.createElement('li');
     const pair = PAIRS[row.quote.pairId];
-    item.textContent = `${row.id} · Compra/intercambio demo · ${assetText(row.quote.input, pair.input)} → ${assetText(row.quote.output, pair.output)} estimados · ${statuses[row.status]}. Costes: ${assetText(row.quote.fee, pair.input)} proveedor + ${assetText(row.quote.gas, 'ETH')} red. ${row.status === 'confirmed' ? 'Salida simulada igual a la estimada.' : 'No es una recepción confirmada.'}`;
+    item.textContent = `${row.id} · Compra/intercambio demo · ${pair.instrumentKey || 'Caso original USDC/ETH'} · ${assetText(row.quote.input, pair.input)} → ${assetText(row.quote.output, pair.outputAsset || pair.output)} estimados · ${statuses[row.status]}. Costes: ${assetText(row.quote.fee, pair.input)} proveedor + ${assetText(row.quote.gas, 'ETH')} red ficticia. ${row.quote.source === 'simulation' ? 'Fixture spot-uniform-v1, no cotización de mercado. ' : ''}${row.status === 'confirmed' ? 'Salida simulada igual a la estimada.' : 'No es una recepción confirmada.'}`;
     $('history').append(item);
   }
 }
@@ -131,9 +245,28 @@ $('practice').onclick = () =>
     commit({ ...state, stage: 'select' });
     $('pair').focus();
   });
-$('pair').onchange = () => {
-  $('input-unit').textContent = `(${PAIRS[$('pair').value].input} demo)`;
-};
+$('pair').onchange = updatePair;
+$('catalog-search').oninput = renderCatalog;
+for (const button of $('catalog-filters').querySelectorAll('button'))
+  button.onclick = () => {
+    marketFilter = button.dataset.market;
+    renderCatalog();
+  };
+$('catalog-practice').onclick = () =>
+  attempt(() => {
+    const instrument = CATALOG.find(item => item.key === selectedKey);
+    if (!capabilities(instrument).practice || state.stage === 'pending') return;
+    $('pair').value = instrument.key;
+    updatePair();
+    if (state.stage === 'learn') {
+      $('message').textContent = 'Favorito elegido. Lee los límites antes de empezar la práctica.';
+      $('practice').focus();
+      return;
+    }
+    $('consent').checked = false;
+    commit({ ...state, stage: 'select', quote: null });
+    $('pair').focus();
+  });
 $('selection').onsubmit = event => {
   event.preventDefault();
   attempt(() => {
@@ -169,4 +302,19 @@ setInterval(() => {
       }
     });
 }, 250);
+const spotOptions = document.createElement('optgroup');
+spotOptions.label = 'Favoritos Spot · USDT demo · sin deuda';
+for (const instrument of CATALOG.filter(item => capabilities(item).practice)) {
+  const option = document.createElement('option');
+  option.value = instrument.key;
+  option.textContent = `USDT demo → ${instrument.base} sintético · Spot`;
+  spotOptions.append(option);
+}
+$('pair').append(spotOptions);
+if (state.quote) {
+  $('pair').value = state.quote.pairId;
+  if (state.quote.instrumentKey) selectedKey = state.quote.instrumentKey;
+}
+updatePair();
+renderCatalog();
 render();

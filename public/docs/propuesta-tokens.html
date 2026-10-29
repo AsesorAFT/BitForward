@@ -67,14 +67,88 @@
       independiente, direcciones verificadas ni seguridad. No se reutiliza ninguna ejecución
       antigua.
     </p>
+    <h2>Ampliación: favoritos por mercado</h2>
+    <p>
+      Selección autorizada: 43 entradas únicas y 32 símbolos base, con buscador y filtros Todos /
+      Spot (22) / Alpha (4) / Futuros (14) / Valores tokenizados (3). Solo se transcriben los
+      símbolos aprobados; no se incorporan capturas originales, metadatos de imágenes, precios
+      históricos ni información de clientes. Las imágenes de evidencia son capturas nuevas del
+      prototipo con datos sintéticos.
+    </p>
+    <p>
+      <code>src/token-demo/catalog.mjs</code> contiene exclusivamente identidad y contexto, sin
+      precios ni saldos. Las claves combinan proveedor de referencia, mercado e identificador del
+      instrumento; no solo ticker. Alpha usa claves de selección provisionales con
+      <code>identity-pending</code>: no son Alpha ID reales. Una identidad on-chain verificada
+      requiere además red y contrato verificados en la clave. Los campos Alpha ID, red, contrato y
+      proveedor ejecutor permanecen vacíos; ninguna ruta real está configurada. La disponibilidad
+      actual es desconocida en todas las entradas y nunca habilita ejecución.
+    </p>
+    <p>
+      FORM y AVAX repetidos se deduplican por instrumento sin mezclar mercados. BTC Spot y BTC
+      perpetuo son entradas diferentes. <strong>0G</strong> empieza con cero, no es OG;
+      <strong>ONUSDT</strong> es diferente de <strong>ONTUSDT</strong>; <strong>FORM</strong> no es
+      <strong>4</strong>. El nombre oficial actual de AVNT sigue pendiente de metadata: no se
+      adivina a partir de una captura ni se equipara un ticker con una identidad.
+    </p>
+    <ul>
+      <li>
+        Spot: los 22 pares USDT permiten consulta local y práctica sintética sin deuda con la
+        revisión, consentimiento, pendiente e historial del recorrido original. USDT no identifica
+        blockchain. No se declaran todos los instrumentos ERC-20 ni BTC nativo como BTC envuelto.
+      </li>
+      <li>
+        Alpha: BTW, EVAA, 4 y LAB conservan sus símbolos, solo exploración. Antes de vincular una
+        ruta real se deberá resolver Alpha ID, red y contrato mediante Token List oficial y validar
+        el par.
+      </li>
+      <li>
+        Futuros: solo exploración, sin botón de compra ni simulación spot del contrato. El snapshot
+        de exchangeInfo del 29/10/2026, comunicado por el usuario y no revalidado aquí, indicaba
+        TRADING en los 14, PERPETUAL en 13 y TRADIFI_PERPETUAL en IBKRUSDT. No confirma permisos del
+        usuario ni disponibilidad futura. IBKRUSDT es un derivado, no compra de acciones de
+        Interactive Brokers. Los distintivos 5x/10x no autorizan margen o apalancamiento.
+      </li>
+      <li>
+        Valores tokenizados: USARBUSDT (USA Rare Earth), AXTIBUSDT (AXT) y SOXSBUSDT se mantienen
+        separados de cripto y son informativos, con etiquetas de selección pendientes de metadata
+        actual. SOXSB está ligado a un ETF inverso apalancado 3X, no es una acción ordinaria. No se
+        asumen derechos de accionista, canje o disponibilidad por proveedor/usuario.
+      </li>
+    </ul>
+    <h3>Contraste de fuentes y pendientes</h3>
+    <p>
+      En esta revisión se pudo consultar la documentación oficial
+      <a href="https://github.com/binance/binance-cli/blob/master/examples/alpha.md"
+        >Binance CLI Alpha</a
+      >: <code>binance-cli alpha token-list</code> documenta el GET público de
+      <code>/bapi/defi/v1/public/wallet-direct/buw/wallet/cex/alpha/all/token/list</code>. El modelo
+      oficial distingue Alpha ID, símbolo, red y dirección; la consulta de mercado usa Alpha ID, no
+      un ticker adivinado.
+    </p>
+    <p>
+      Las consultas directas a metadata de activos (incluido el nombre AVNT), Token List y páginas
+      de Binance no se pudieron completar por fallos de resolución/acceso. Esto no es evidencia de
+      inexistencia. No se afirma que la consulta Spot anterior, fallida, invalide mercados. Los
+      Alpha ID individuales, nombres actuales y condiciones de bStocks siguen sin verificación
+      actual. No se importan posibles coincidencias por nombre. El navegador del prototipo no hace
+      ninguna petición pública o privada de mercado: las consultas de investigación no forman parte
+      de la aplicación.
+    </p>
     <h2>Modelo económico de la demo</h2>
     <ul>
       <li>
-        Solo USDC demo ↔ ETH demo; red ficticia 31337, sin direcciones ni catálogo en cadena. No es
-        un token propio ni un proveedor configurado.
+        Se conservan USDC demo ↔ ETH demo como casos originales fuera de los 43 favoritos. Los
+        favoritos Spot añaden USDT demo → unidades sintéticas del símbolo elegido. Red ficticia
+        31337, sin direcciones ni catálogo en cadena. No es un token propio ni un proveedor
+        configurado; no identifica ninguna red o comisión real del activo o de Binance.
       </li>
       <li>
-        Fixture constante: 1 ETH demo = 2.000 USDC demo; no es un precio actual. Sin conversión MXN.
+        Fixture original: 1 ETH demo = 2.000 USDC demo. En
+        <code>src/token-demo/fixtures.mjs</code>, los 22 favoritos usan deliberadamente el mismo
+        supuesto uniforme <strong>1 unidad sintética = 10 USDT demo</strong>
+        (<code>spot-uniform-v1</code>). No procede de capturas ni de una cotización real, actual o
+        ejecutable. Sin conversión MXN.
       </li>
       <li>
         Entrada completa intercambiada, proveedor adicional del 0,3 % en moneda de entrada,
@@ -82,15 +156,17 @@
         es ETH se agregan en un único total ETH; nunca se suman monedas diferentes.
       </li>
       <li>
-        Salida calculada con unidades enteras (USDC 6 decimales, ETH 18), redondeada hacia abajo.
-        Mínimo: salida × 99,5 %, redondeada hacia abajo. Caducidad: 60 segundos de reloj local.
-        Ejemplo: 100 USDC → 0,05 ETH estimados, mínimo 0,04975 ETH; total 100,3 USDC y 0,0002 ETH.
-        No se resta de nuevo el proveedor de la salida.
+        Salida calculada con unidades enteras (USDC/USDT demo 6 decimales, ETH demo 18, unidades
+        sintéticas Spot 8), redondeada hacia abajo. No son metadatos de decimales on-chain. Mínimo:
+        salida × 99,5 %, redondeada hacia abajo. Caducidad: 60 segundos de reloj local. Ejemplo: 100
+        USDC → 0,05 ETH estimados, mínimo 0,04975 ETH; total 100,3 USDC y 0,0002 ETH. No se resta de
+        nuevo el proveedor de la salida.
       </li>
       <li>
-        Saldos iniciales ficticios: 1.000 USDC y 1 ETH. Pendientes reservan costes; confirmadas
-        descuentan entrada y costes y acreditan salida. Fallo/rechazo no descuentan. No se consulta
-        el saldo de ninguna cuenta.
+        Ejemplo Spot: 100 USDT demo → 10 unidades sintéticas; mínimo 9,95; total 100,3 USDT demo y
+        0,0002 ETH demo. Saldos iniciales ficticios: 1.000 USDC, 1.000 USDT y 1 ETH. Pendientes
+        reservan costes; confirmadas descuentan entrada y costes y acreditan salida. Fallo/rechazo
+        no descuentan. No se consulta el saldo de ninguna cuenta.
       </li>
     </ul>
     <h2>Estado, límites y privacidad</h2>
@@ -109,6 +185,12 @@
       Manipular o borrar el almacenamiento puede reiniciar el ejercicio; no es un libro mayor
       seguro. No se guardan datos personales. Transferencia y variación de precio son ejemplos
       educativos separados, nunca recepciones inventadas de esta sesión.
+    </p>
+    <p>
+      Cada cotización de favoritos e historial lleva la clave de instrumento, fuente
+      <code>simulation</code> e identificador de fixture; los saldos de salida se registran por
+      instrumento, no por ticker. No hay saldos inventados de futuros, bStocks o Alpha. El estado
+      del ejercicio inicial USDC/ETH sigue siendo recuperable sin reenviar operaciones.
     </p>
     <h2>Etapas obligatorias pendientes antes de fondos reales</h2>
     <ol>
@@ -154,8 +236,9 @@
       <code>http://127.0.0.1:4173/prototipo-tokens.html</code>. No requiere backend ni credenciales.
     </p>
     <p>
-      Pruebas: <code>node --test tests/token-demo.test.mjs</code>; con preview activo,
-      <code>node tests/token-demo.browser.mjs</code>. Capturas opcionales mediante
+      Pruebas: <code>node --test tests/token-demo.test.mjs tests/token-catalog.test.mjs</code>; con
+      preview activo, <code>node tests/token-demo.browser.mjs</code> y
+      <code>node tests/token-catalog.browser.mjs</code>. Capturas opcionales mediante
       <code>TOKEN_DEMO_SCREENSHOTS=/tmp/token-demo-capturas</code>. Se revisan 360px, 390px y
       escritorio, teclado, foco visible, reduced motion, estados, caducidad, rechazo, fallo, doble
       envío y recarga, y ausencia de llamadas externas/wallets.
@@ -163,8 +246,10 @@
     <h2>Resultados de esta revisión</h2>
     <p>
       Build de producción, lint y formato generales, validación estática, comprobaciones editorial y
-      de ecosistema: correctos. Pruebas existentes: 14 educativas y 10 Jest correctas. Pruebas
-      nuevas: 7 de modelo y recorrido en navegador a 360px, 390px y 1440px correctos. No se
+      de ecosistema: correctos. Pruebas existentes: 14 educativas y 10 Jest correctas. Pruebas del
+      prototipo: 15 de modelo/catálogo y ambos recorridos de navegador a 360px, 390px y 1440px
+      correctos. Se comprueban las 43 claves, deduplicación, símbolos ambiguos, mercados distintos,
+      capacidades cerradas, separación de metadata/fixtures, filtros y práctica idempotente. No se
       detectaron fallos preexistentes en esas comprobaciones. La validación editorial necesita
       ejecutar primero el build. Esta revisión no equivale a una auditoría de seguridad ni a validar
       dinero real.
@@ -172,10 +257,39 @@
     <p>
       Capturas de la página compilada, con datos ficticios:
       <a href="./token-demo-390.png">revisión móvil (390px)</a> y
-      <a href="./token-demo-1440.png">revisión de escritorio (1440px)</a>.
+      <a href="./token-demo-1440.png">revisión de escritorio (1440px)</a>. Evidencia de la
+      ampliación: <a href="./catalogo-demo-390.png">catálogo móvil (390px)</a> y
+      <a href="./catalogo-demo-1440.png">catálogo de escritorio (1440px)</a>.
     </p>
     <h2>Referencias de diseño para la futura integración</h2>
     <ul>
+      <li>
+        <a
+          href="https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Exchange-Information"
+          >Binance Futures: Exchange Information</a
+        >
+      </li>
+      <li>
+        <a href="https://github.com/binance/binance-cli/blob/master/examples/alpha.md"
+          >Binance Alpha: Token List y Alpha ID</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/binance/binance-connector-python/blob/13fda514bb2a4358712d849aa3163a0505d96da0/clients/alpha/src/binance_sdk_alpha/rest_api/models/token_list_response_data_inner.py#L29-L76"
+          >Modelo oficial Alpha: identidad, red y contrato</a
+        >
+      </li>
+      <li>
+        <a href="https://www.binance.com/en/blog/markets/7938718877635190290"
+          >Guía bStocks y SOXSB (pendiente de acceso directo)</a
+        >
+      </li>
+      <li>
+        <a href="https://www.binance.com/en/support/faq/detail/4f5444780f444bf6b39adbec77ef545a"
+          >Binance: condiciones y disponibilidad (pendiente de acceso directo)</a
+        >
+      </li>
       <li>
         <a href="https://developers.uniswap.org/docs/trading/overview"
           >Uniswap: visión general de trading</a
