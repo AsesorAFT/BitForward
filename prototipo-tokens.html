@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="dark" />
+    <title>Práctica de tokens · BitForward DEMO</title>
+    <link rel="icon" href="./assets/brand/bitforward-app-icon-192.png" />
+    <script type="module" src="./src/token-demo/main.js"></script>
+  </head>
+  <body class="token-demo">
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <header class="demo-header">
+      <a href="./" class="brand-wordmark">BitForward <small>BY AFORTU</small></a>
+      <strong class="demo-badge">DEMO · SIN DINERO REAL</strong>
+    </header>
+    <main id="contenido" tabindex="-1">
+      <section class="demo-hero">
+        <p class="eyebrow">LABORATORIO / COMPRA E INTERCAMBIO</p>
+        <h1>Aprende el recorrido.<br /><em>No arriesgues tus tokens.</em></h1>
+        <p>
+          Un ejercicio de intercambio al contado con activos y saldos sintéticos. Sin conexión de
+          wallet, firmas ni compras reales.
+        </p>
+      </section>
+      <section class="demo-panel demo-catalog" aria-labelledby="catalog-title">
+        <p class="eyebrow">TU SELECCIÓN / IDENTIDADES SEPARADAS POR MERCADO</p>
+        <h2 id="catalog-title">Favoritos para explorar</h2>
+        <p>
+          43 entradas de mercado · 32 símbolos base. Referencia de catálogo: Binance, sin conexión.
+          No son precios, permisos ni disponibilidad actual. Solo Spot permite practicar con
+          fixtures.
+        </p>
+        <label for="catalog-search">Buscar símbolo, par o etiqueta de selección</label>
+        <input id="catalog-search" type="search" placeholder="BTC, 0G, ONT…" autocomplete="off" />
+        <div
+          id="catalog-filters"
+          class="catalog-filters"
+          role="group"
+          aria-label="Filtrar por mercado"
+        >
+          <button type="button" data-market="all" aria-pressed="true">Todos</button>
+          <button type="button" data-market="spot" aria-pressed="false">Spot</button>
+          <button type="button" data-market="alpha" aria-pressed="false">Alpha</button>
+          <button type="button" data-market="futures" aria-pressed="false">Futuros</button>
+          <button type="button" data-market="bstocks" aria-pressed="false">
+            Valores tokenizados
+          </button>
+        </div>
+        <p id="catalog-count" role="status" aria-live="polite"></p>
+        <div class="catalog-workspace">
+          <ul id="catalog-list" aria-label="Entradas favoritas"></ul>
+          <section class="catalog-detail" aria-labelledby="instrument-title">
+            <p class="eyebrow">FICHA DEL INSTRUMENTO</p>
+            <h3 id="instrument-title"></h3>
+            <p id="instrument-notice"></p>
+            <dl id="instrument-details"></dl>
+            <p id="instrument-fixture"></p>
+            <button type="button" id="catalog-practice" class="primary">Practicar Spot demo</button>
+            <p id="catalog-action-note"></p>
+          </section>
+        </div>
+      </section>
+      <ol class="demo-steps" aria-label="Pasos del ejercicio">
+        <li>01 · Aprende</li>
+        <li>02 · Elige</li>
+        <li>03 · Revisa</li>
+        <li>04 · Resultado</li>
+      </ol>
+      <noscript>Activa JavaScript para practicar. No se realizará ninguna operación.</noscript>
+      <p id="message" role="status" aria-live="polite"></p>
+      <div class="demo-grid">
+        <section class="demo-panel" aria-label="Recorrido de práctica">
+          <div id="learn">
+            <p class="eyebrow">01 / ANTES DE EMPEZAR</p>
+            <h2>¿Qué vas a revisar?</h2>
+            <p>
+              Un intercambio cambia un activo por otro. La comisión del proveedor se cobra
+              <strong>además del importe de entrada</strong>; el coste de red se paga en ETH demo.
+            </p>
+            <p>
+              El mínimo a recibir limita la variación tolerada (0,5 % en este ejercicio). No es una
+              promesa de rendimiento ni evita todos los riesgos.
+            </p>
+            <p>
+              Todos los precios son fixtures: <strong>1 ETH demo = 2.000 USDC demo</strong> en los
+              casos iniciales; <strong>1 unidad sintética Spot = 10 USDT demo</strong> en cada
+              favorito. No representan precios actuales ni ejecutables. No hay referencia en MXN. No
+              hay deuda, margen ni apalancamiento habilitado.
+            </p>
+            <button id="practice" class="primary">Entendido, practicar con datos demo</button>
+          </div>
+          <form id="selection" hidden novalidate>
+            <p class="eyebrow">02 / CONFIGURA TU EJERCICIO</p>
+            <h2>Elige qué intercambiar</h2>
+            <label for="pair">Par de activos demo</label>
+            <select id="pair">
+              <optgroup label="Casos iniciales · fuera de favoritos">
+                <option value="usdc-eth">USDC demo → ETH demo</option>
+                <option value="eth-usdc">ETH demo → USDC demo</option>
+              </optgroup>
+            </select>
+            <p id="pair-context"></p>
+            <label for="amount">Importe de entrada <span id="input-unit">(USDC demo)</span></label>
+            <input
+              id="amount"
+              inputmode="decimal"
+              autocomplete="off"
+              value="100"
+              aria-describedby="amount-help"
+            />
+            <small id="amount-help">Usa coma o punto decimal, sin separadores de miles.</small>
+            <button class="primary" type="submit">Revisar cotización demo</button>
+          </form>
+          <section id="review" hidden aria-labelledby="review-title">
+            <p class="eyebrow">03 / TODO ANTES DE CONFIRMAR</p>
+            <h2 id="review-title" tabindex="-1">Revisa costes y límites</h2>
+            <dl id="quote-details"></dl>
+            <p id="expiry"></p>
+            <p>
+              El proveedor se suma una sola vez. Los totales se mantienen separados por moneda;
+              nunca sumamos USDC, USDT y ETH entre sí. La red 31337 y el coste ETH son supuestos
+              educativos: no identifican la red ni las comisiones de Binance o del activo.
+            </p>
+            <label class="consent"
+              ><input type="checkbox" id="consent" /> He revisado los costes y entiendo que no
+              recibiré tokens reales.</label
+            >
+            <button id="confirm" class="primary" disabled>Simular confirmación</button>
+            <button id="edit">Volver a elegir / renovar</button>
+          </section>
+          <section id="result" hidden aria-labelledby="result-title">
+            <p class="eyebrow">04 / RESULTADO SINTÉTICO</p>
+            <h2 id="result-title" tabindex="-1"></h2>
+            <p id="result-copy"></p>
+            <button id="again" class="primary">Practicar otro intercambio</button>
+          </section>
+        </section>
+        <aside class="demo-panel demo-context">
+          <p class="eyebrow">ENTORNO CONTROLADO</p>
+          <h2>Tu wallet ficticia</h2>
+          <p>
+            No se consulta ninguna extensión o cuenta. Los saldos demo solo existen en esta pestaña.
+          </p>
+          <dl id="balances"></dl>
+          <label for="scenario">Escenario para practicar</label>
+          <select id="scenario">
+            <option value="ready">Lista · confirmar demo</option>
+            <option value="disconnected">Wallet desconectada</option>
+            <option value="network">Red incorrecta</option>
+            <option value="funds">Sin fondos para el importe</option>
+            <option value="gas">Sin ETH para comisiones</option>
+            <option value="reject">Rechazo del usuario</option>
+            <option value="failure">Fallo después de pendiente</option>
+          </select>
+          <p>
+            Para practicar caducidad, deja pasar 60 segundos en revisión. Cada envío pasa primero
+            por pendiente; un fallo no descuenta saldo.
+          </p>
+          <a href="./docs/propuesta-tokens.html">Leer propuesta y etapas pendientes →</a>
+        </aside>
+      </div>
+      <section class="demo-panel demo-history" aria-labelledby="history-title">
+        <p class="eyebrow">BITÁCORA LOCAL / SIN HASHES EN CADENA</p>
+        <h2 id="history-title">Historial de demostración</h2>
+        <p>
+          Compra/intercambio cambia activos. Una transferencia mueve activos entre cuentas. Una
+          variación de precio solo cambia su valoración: no es una compra ni un ingreso.
+        </p>
+        <ul id="history"></ul>
+        <details>
+          <summary>Ejemplos educativos, no operaciones de esta sesión</summary>
+          <p>
+            DEMO-EJ-TRANSFERENCIA · Transferencia ficticia de 5 USDC entre cuentas demo; no es una
+            compra.
+          </p>
+          <p>
+            DEMO-EJ-PRECIO · Variación ilustrativa de ETH de 2.000 a 1.800 USDC; cantidad de tokens
+            sin cambios, sin ingreso ni rentabilidad garantizada.
+          </p>
+        </details>
+      </section>
+      <footer>Prototipo revisable · Sin proveedor externo · Sin fiat · Sin fondos reales</footer>
+    </main>
+  </body>
+</html>
