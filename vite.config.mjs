@@ -70,6 +70,7 @@ export default defineConfig({
         dailyPractice: resolve(__dirname, 'practica.html'),
         btcMarket: resolve(__dirname, 'mercado.html'),
         riskSimulator: resolve(__dirname, 'simulador.html'),
+        tokenDemo: resolve(__dirname, 'prototipo-tokens.html'),
         ...Object.fromEntries(
           readdirSync(resolve(__dirname, 'misiones'))
             .filter(file => file.endsWith('.html'))

@@ -1,0 +1,224 @@
+.token-demo main {
+  max-width: 1160px;
+  margin: auto;
+  padding: 32px 24px;
+}
+.demo-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 24px;
+  background: #070a13f5;
+  border-bottom: 1px solid var(--border);
+}
+.demo-header small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+.demo-badge {
+  color: #b6f9dc;
+  background: #12362d;
+  padding: 8px 12px;
+  border: 1px solid #377f68;
+  border-radius: 30px;
+  font-size: 12px;
+  text-align: center;
+}
+.demo-hero {
+  padding: 28px 0;
+  max-width: 830px;
+}
+.demo-hero h1 {
+  font-size: clamp(32px, 5vw, 58px);
+  line-height: 1.15;
+  margin: 14px 0 20px;
+}
+.demo-hero em {
+  color: var(--accent);
+  font-style: normal;
+}
+.demo-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  list-style: none;
+  padding: 0;
+  gap: 8px;
+  margin: 24px 0;
+}
+.demo-steps li {
+  padding: 12px 0;
+  border-top: 2px solid var(--border);
+  color: var(--muted);
+}
+.demo-steps [aria-current] {
+  color: #b6f9dc;
+  border-color: #b6f9dc;
+}
+.demo-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 24px;
+}
+.demo-panel {
+  min-width: 0;
+  padding: 28px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+.demo-panel h2 {
+  font-size: 24px;
+  margin: 8px 0 20px;
+  line-height: 1.3;
+}
+.demo-panel p {
+  margin: 16px 0;
+  color: var(--muted);
+}
+.demo-panel strong {
+  color: var(--ink);
+}
+.token-demo label {
+  display: block;
+  margin: 20px 0 8px;
+}
+.token-demo input:not([type='checkbox']),
+.token-demo select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 10px;
+  background: #070a13;
+  border: 1px solid #627491;
+  border-radius: 8px;
+  color: var(--ink);
+  font: inherit;
+}
+.token-demo small {
+  color: var(--muted);
+}
+.token-demo button {
+  padding: 12px 18px;
+  min-height: 48px;
+  margin: 16px 8px 0 0;
+  border: 1px solid #627491;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+}
+.token-demo .primary {
+  background: #a9c2ff;
+  color: #080f22;
+  border-color: #a9c2ff;
+  font-weight: 700;
+}
+.token-demo button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.token-demo :focus-visible {
+  outline: 3px solid #b6f9dc;
+  outline-offset: 4px;
+}
+.token-demo dl {
+  margin: 20px 0;
+}
+.token-demo dt {
+  color: var(--muted);
+  margin-top: 14px;
+  font-size: 14px;
+}
+.token-demo dd {
+  margin: 2px 0;
+  overflow-wrap: anywhere;
+  font-weight: 650;
+}
+.consent {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 12px;
+}
+.consent input {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+}
+.demo-context a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+#message:not(:empty) {
+  padding: 16px;
+  border-left: 3px solid #ffce8b;
+  margin-bottom: 20px;
+}
+#expiry {
+  color: #ffce8b;
+}
+.demo-history {
+  margin-top: 24px;
+}
+.demo-history ul {
+  padding-left: 20px;
+}
+.demo-history li {
+  padding: 14px 0;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+}
+.demo-history summary {
+  cursor: pointer;
+  color: var(--accent);
+  padding: 12px 0;
+}
+.token-demo footer {
+  padding: 28px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+@media (max-width: 700px) {
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+  .token-demo main {
+    padding: 20px 16px;
+  }
+  .demo-panel {
+    padding: 22px 18px;
+  }
+  .demo-header {
+    padding: 12px 16px;
+  }
+  .demo-badge {
+    max-width: 145px;
+    font-size: 11px;
+  }
+  .demo-steps {
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 14px;
+  }
+  .token-demo button {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .token-demo {
+    scroll-behavior: auto;
+  }
+  :root {
+    scroll-behavior: auto;
+  }
+  .token-demo *,
+  .token-demo *::before,
+  .token-demo *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

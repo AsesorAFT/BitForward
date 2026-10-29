@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Propuesta de compra/intercambio demo | BitForward</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font: 17px/1.7 system-ui;
+        background: #070a13;
+        color: #f3f5ff;
+      }
+      body {
+        max-width: 860px;
+        padding: 24px;
+        margin: auto;
+        overflow-wrap: anywhere;
+      }
+      h1,
+      h2 {
+        line-height: 1.25;
+      }
+      a {
+        color: #a9c2ff;
+      }
+      code {
+        white-space: normal;
+      }
+      :focus-visible {
+        outline: 3px solid #b6f9dc;
+        outline-offset: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <p><strong>DEMO · SIN DINERO REAL · PROPUESTA NO ACTIVADA</strong></p>
+    <a href="../prototipo-tokens.html">← Abrir prototipo de tokens</a>
+    <h1>Del aprendizaje a una operación comprensible</h1>
+    <p>
+      Entrega aislada para revisión: aprender, elegir par e importe, revisar costes, aceptar los
+      límites, simular un envío pendiente y consultar su resultado e historial. No integra dinero
+      real, fiat, contratos ni proveedores externos. No ofrece rendimientos.
+    </p>
+    <h2>Inspección y alcance reutilizable</h2>
+    <p>
+      Se revisaron README, DEVELOPMENT, configuración de Vite, ESLint y pruebas existentes. La
+      entrada pública activa es <code>index.html → src/editorial/main.js</code>;
+      <code>laboratorio.html</code> y <code>cockpit.html</code> son entradas independientes. Vite
+      enumera explícitamente sus páginas. Solo se añade una entrada aislada; no se modifica
+      navegación pública, landing, laboratorio, contratos, dependencias o despliegues.
+    </p>
+    <p>
+      Se reutilizan los tokens de color, tipografías locales, foco, enlace de salto e identidad de
+      <code>css/editorial.css</code>. Las abstracciones de eventos de cuenta/red en
+      <code>js/wallet.js</code> pueden orientar una futura interfaz, pero no se importan: detectan
+      proveedores reales. <code>js/wallet-manager-real.js</code> incluye redes mainnet y reconexión
+      desde almacenamiento; necesita revisión y consentimiento explícito antes de cualquier
+      reutilización. Su nombre no demuestra que sea seguro ni apropiado para compras spot.
+    </p>
+    <p>
+      <code>contracts/ForwardEngine.sol</code> y <code>contracts/Vault.sol</code> pertenecen al
+      recorrido de forwards/colateral, no a esta compra al contado. Se consideran fuera de alcance y
+      no verificados para este propósito. Los mocks son fixtures de pruebas. Los comentarios de
+      auditoría, interfaces, pantallas y archivos Solidity no acreditan despliegue, auditoría
+      independiente, direcciones verificadas ni seguridad. No se reutiliza ninguna ejecución
+      antigua.
+    </p>
+    <h2>Modelo económico de la demo</h2>
+    <ul>
+      <li>
+        Solo USDC demo ↔ ETH demo; red ficticia 31337, sin direcciones ni catálogo en cadena. No es
+        un token propio ni un proveedor configurado.
+      </li>
+      <li>
+        Fixture constante: 1 ETH demo = 2.000 USDC demo; no es un precio actual. Sin conversión MXN.
+      </li>
+      <li>
+        Entrada completa intercambiada, proveedor adicional del 0,3 % en moneda de entrada,
+        redondeado hacia arriba a su unidad mínima. Red: 0,0002 ETH demo adicionales. Si la entrada
+        es ETH se agregan en un único total ETH; nunca se suman monedas diferentes.
+      </li>
+      <li>
+        Salida calculada con unidades enteras (USDC 6 decimales, ETH 18), redondeada hacia abajo.
+        Mínimo: salida × 99,5 %, redondeada hacia abajo. Caducidad: 60 segundos de reloj local.
+        Ejemplo: 100 USDC → 0,05 ETH estimados, mínimo 0,04975 ETH; total 100,3 USDC y 0,0002 ETH.
+        No se resta de nuevo el proveedor de la salida.
+      </li>
+      <li>
+        Saldos iniciales ficticios: 1.000 USDC y 1 ETH. Pendientes reservan costes; confirmadas
+        descuentan entrada y costes y acreditan salida. Fallo/rechazo no descuentan. No se consulta
+        el saldo de ninguna cuenta.
+      </li>
+    </ul>
+    <h2>Estado, límites y privacidad</h2>
+    <p>
+      <code>readQuote</code> es la interfaz de lectura pura. <code>submitDemo/settleDemo</code> son
+      una interfaz de simulación separada, no un adaptador de ejecución real. No hay RPC, órdenes,
+      firmas, permisos, claves, frases de recuperación ni peticiones externas. La confirmación exige
+      revisión y aceptación; después de enviar se persiste un estado pendiente antes de resolver el
+      fixture a los 2,5 segundos. El clic no se trata como éxito.
+    </p>
+    <p>
+      Historial y secuencia viven exclusivamente en <code>sessionStorage</code>, con identificadores
+      DEMO-OP y sin hashes. Un doble clic o recarga en la misma pestaña conserva una sola operación.
+      Cerrar la pestaña termina el ejercicio; otras pestañas son sesiones demo independientes, no
+      una contabilidad compartida. Si el almacenamiento no está disponible, se bloquea el envío.
+      Manipular o borrar el almacenamiento puede reiniciar el ejercicio; no es un libro mayor
+      seguro. No se guardan datos personales. Transferencia y variación de precio son ejemplos
+      educativos separados, nunca recepciones inventadas de esta sesión.
+    </p>
+    <h2>Etapas obligatorias pendientes antes de fondos reales</h2>
+    <ol>
+      <li>
+        Seleccionar proveedor y red según jurisdicción, disponibilidad y condiciones; catálogo
+        verificado por <strong>chainId + dirección</strong>, decimales, activo nativo y listas de
+        riesgo.
+      </li>
+      <li>
+        Conectar la wallet del usuario solo bajo consentimiento explícito; validar cuenta, red y
+        saldos sin reconexión automática. Ninguna clave privada debe pasar por BitForward.
+      </li>
+      <li>
+        Implementar un servicio de cotización de solo lectura y simulación previa, separado de un
+        futuro ejecutor. Validar ruta, destinatario, mínimo, desglose de comisiones, gas y caducidad
+        contra cambios de cuenta, red o importe. Revisar slippage, liquidez y MEV.
+      </li>
+      <li>
+        Diseñar autorización limitada a activo, importe y destinatario/spender verificados; explicar
+        permisos, caducidad y revocación. No autorizaciones ilimitadas por defecto.
+      </li>
+      <li>
+        Implementar idempotencia durable y comprobación de recibos/confirmaciones en cadena: enviado
+        no es confirmado. Resolver reemplazos, reorgs, fallos y reconciliar cantidades y costes
+        reales en historial; distinguir swaps, transferencias y cambios de valoración.
+      </li>
+      <li>
+        Evaluar compras con fiat únicamente según soporte del proveedor: país, métodos,
+        cotizaciones, comisiones, KYC, privacidad, estados de pago, reembolsos y soporte. Este
+        intercambio demo no representa una compra fiat.
+      </li>
+      <li>
+        Evaluación independiente de seguridad y requisitos operativos, legales y de cumplimiento:
+        revisión de contratos/proveedores, pruebas, monitorización, incidentes, custodia, límites,
+        observabilidad sin secretos y aprobación humana antes de activar fondos reales.
+      </li>
+    </ol>
+    <h2>Cómo revisar</h2>
+    <p>
+      Desde la raíz del repositorio: <code>npm ci</code>, <code>npm run dev</code> y abrir
+      <code>http://localhost:5173/prototipo-tokens.html</code>. Para artefacto compilado:
+      <code>npm run build</code>, <code>npm run preview -- --host 127.0.0.1</code> y abrir
+      <code>http://127.0.0.1:4173/prototipo-tokens.html</code>. No requiere backend ni credenciales.
+    </p>
+    <p>
+      Pruebas: <code>node --test tests/token-demo.test.mjs</code>; con preview activo,
+      <code>node tests/token-demo.browser.mjs</code>. Capturas opcionales mediante
+      <code>TOKEN_DEMO_SCREENSHOTS=/tmp/token-demo-capturas</code>. Se revisan 360px, 390px y
+      escritorio, teclado, foco visible, reduced motion, estados, caducidad, rechazo, fallo, doble
+      envío y recarga, y ausencia de llamadas externas/wallets.
+    </p>
+    <h2>Resultados de esta revisión</h2>
+    <p>
+      Build de producción, lint y formato generales, validación estática, comprobaciones editorial y
+      de ecosistema: correctos. Pruebas existentes: 14 educativas y 10 Jest correctas. Pruebas
+      nuevas: 7 de modelo y recorrido en navegador a 360px, 390px y 1440px correctos. No se
+      detectaron fallos preexistentes en esas comprobaciones. La validación editorial necesita
+      ejecutar primero el build. Esta revisión no equivale a una auditoría de seguridad ni a validar
+      dinero real.
+    </p>
+    <p>
+      Capturas de la página compilada, con datos ficticios:
+      <a href="./token-demo-390.png">revisión móvil (390px)</a> y
+      <a href="./token-demo-1440.png">revisión de escritorio (1440px)</a>.
+    </p>
+    <h2>Referencias de diseño para la futura integración</h2>
+    <ul>
+      <li>
+        <a href="https://developers.uniswap.org/docs/trading/overview"
+          >Uniswap: visión general de trading</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://developers.uniswap.org/docs/trading/swapping-api/start-building/integration-guide"
+          >Uniswap: guía de integración</a
+        >
+      </li>
+      <li>
+        <a href="https://docs.transak.com/guides/widget-with-api-customization"
+          >Transak: widget y personalización</a
+        >
+      </li>
+    </ul>
+    <p>
+      Son referencias, no integraciones activas ni avales de seguridad. Publicación/merge,
+      despliegue y cualquier activación real requieren decisiones humanas posteriores.
+    </p>
+  </body>
+</html>
