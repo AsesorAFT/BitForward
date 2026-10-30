@@ -1,7 +1,7 @@
 {
   "name": "bitforward-enterprise",
   "version": "2.0.0",
-  "description": "Experiencia p\u00fablica educativa de AFORTU para documentar contexto, l\u00edmites y escenarios ilustrativos de activos digitales",
+  "description": "Experiencia pública educativa de AFORTU para documentar contexto, límites y escenarios ilustrativos de activos digitales",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -38,7 +38,9 @@
     "verify:ecosystem": "node scripts/check-ecosystem.mjs",
     "verify:learning": "node --test src/daily/model.test.mjs src/simulator/engine.test.mjs tests/market-model.test.mjs",
     "generate:learning": "node scripts/generate-learning.mjs",
-    "smoke:commerce": "node scripts/smoke-commerce.mjs"
+    "smoke:commerce": "node scripts/smoke-commerce.mjs",
+    "build:platform": "vite build --config vite.platform.config.mjs && node scripts/prepare-platform-preview.mjs",
+    "test:platform": "node --test tests/token-demo.test.mjs tests/token-catalog.test.mjs && node tests/platform.browser.mjs"
   },
   "keywords": [
     "defi",

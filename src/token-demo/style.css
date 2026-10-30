@@ -287,3 +287,30 @@
     transition: none !important;
   }
 }
+
+.token-demo.embedded {
+  background: #0b111b;
+}
+.embedded .demo-header,
+.embedded .demo-hero,
+.embedded .demo-catalog,
+.embedded footer,
+.embedded .demo-context > a {
+  display: none;
+}
+.token-demo.embedded main {
+  padding: 12px 4px;
+}
+.embedded .demo-steps {
+  margin-top: 0;
+}
+.token-demo.embedded .primary {
+  background: #7be9ce;
+  border-color: #7be9ce;
+  color: #081c17;
+}
+@media (max-width: 700px) {
+  .token-demo.embedded .demo-panel {
+    padding: 20px 16px;
+  }
+}
