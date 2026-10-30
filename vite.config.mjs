@@ -59,6 +59,7 @@ export default defineConfig({
     // Configuración de chunks
     rollupOptions: {
       input: {
+        plataforma: resolve(__dirname, 'plataforma.html'),
         main: resolve(__dirname, 'index.html'),
         cockpit: resolve(__dirname, 'cockpit.html'),
         curriculum: resolve(__dirname, 'misiones.html'),

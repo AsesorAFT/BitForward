@@ -1,0 +1,16 @@
+/* BitForward: shared tokens inspired by the red, graphite and white IBKR palette. */
+:root {
+  --bf-bg: #0c0d0f;
+  --bf-panel: #15171a;
+  --bf-surface: #202226;
+  --bf-border: #373a40;
+  --bf-ink: #f5f5f6;
+  --bf-muted: #b7bac1;
+  --bf-brand: #ff707b;
+  --bf-brand-wash: #31191d;
+  --bf-action: #cc1b2b;
+  --bf-action-hover: #b51625;
+  --bf-action-ink: #ffffff;
+  --bf-positive: #72d8a2;
+  --bf-negative: #ff8791;
+}

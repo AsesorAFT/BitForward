@@ -16,6 +16,8 @@ import { CATALOG, MARKETS, capabilities, filterCatalog, instrumentNotice } from 
 
 const $ = id => document.getElementById(id);
 const KEY = 'bitforward-token-demo-v1';
+const entryParams = new URLSearchParams(location.search);
+if (entryParams.get('embed') === '1') document.body.classList.add('embedded');
 const statuses = {
   pending: 'Pendiente de resolución demo',
   rejected: 'Simulación rechazada por el usuario',
@@ -311,6 +313,11 @@ for (const instrument of CATALOG.filter(item => capabilities(item).practice)) {
   spotOptions.append(option);
 }
 $('pair').append(spotOptions);
+const requestedInstrument = CATALOG.find(item => item.key === entryParams.get('instrument'));
+if (!state.quote && requestedInstrument && capabilities(requestedInstrument).practice) {
+  $('pair').value = requestedInstrument.key;
+  selectedKey = requestedInstrument.key;
+}
 if (state.quote) {
   $('pair').value = state.quote.pairId;
   if (state.quote.instrumentKey) selectedKey = state.quote.instrumentKey;

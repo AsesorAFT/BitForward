@@ -1,3 +1,13 @@
+@import '../shared/trader-theme.css';
+:root {
+  --bg: var(--bf-bg);
+  --panel: var(--bf-panel);
+  --ink: var(--bf-ink);
+  --muted: var(--bf-muted);
+  --accent: var(--bf-brand);
+  --border: var(--bf-border);
+  background: var(--bf-bg);
+}
 .token-demo main {
   max-width: 1160px;
   margin: auto;
@@ -12,7 +22,7 @@
   justify-content: space-between;
   gap: 12px;
   padding: 18px 24px;
-  background: #070a13f5;
+  background: #0e0e0ef5;
   border-bottom: 1px solid var(--border);
 }
 .demo-header small {
@@ -21,10 +31,10 @@
   letter-spacing: 0.18em;
 }
 .demo-badge {
-  color: #b6f9dc;
-  background: #12362d;
+  color: var(--bf-brand);
+  background: var(--bf-brand-wash);
   padding: 8px 12px;
-  border: 1px solid #377f68;
+  border: 1px solid #5f5f5f;
   border-radius: 30px;
   font-size: 12px;
   text-align: center;
@@ -56,8 +66,8 @@
   color: var(--muted);
 }
 .demo-steps [aria-current] {
-  color: #b6f9dc;
-  border-color: #b6f9dc;
+  color: var(--bf-brand);
+  border-color: var(--bf-brand);
 }
 .demo-grid {
   display: grid;
@@ -94,8 +104,8 @@
   min-width: 0;
   min-height: 48px;
   padding: 10px;
-  background: #070a13;
-  border: 1px solid #627491;
+  background: #0e0e0e;
+  border: 1px solid #646464;
   border-radius: 8px;
   color: var(--ink);
   font: inherit;
@@ -107,15 +117,15 @@
   padding: 12px 18px;
   min-height: 48px;
   margin: 16px 8px 0 0;
-  border: 1px solid #627491;
+  border: 1px solid #646464;
   border-radius: 10px;
   background: transparent;
   color: var(--ink);
 }
 .token-demo .primary {
-  background: #a9c2ff;
-  color: #080f22;
-  border-color: #a9c2ff;
+  background: var(--bf-action);
+  color: var(--bf-action-ink);
+  border-color: var(--bf-brand);
   font-weight: 700;
 }
 .token-demo button:disabled {
@@ -123,7 +133,7 @@
   cursor: not-allowed;
 }
 .token-demo :focus-visible {
-  outline: 3px solid #b6f9dc;
+  outline: 3px solid var(--bf-brand);
   outline-offset: 4px;
 }
 .token-demo dl {
@@ -155,11 +165,11 @@
 }
 #message:not(:empty) {
   padding: 16px;
-  border-left: 3px solid #ffce8b;
+  border-left: 3px solid var(--bf-action);
   margin-bottom: 20px;
 }
 #expiry {
-  color: #ffce8b;
+  color: var(--bf-brand);
 }
 .demo-history {
   margin-top: 24px;
@@ -179,8 +189,8 @@
 }
 .catalog-filters [aria-pressed='true'],
 #catalog-list [aria-pressed='true'] {
-  border-color: #b6f9dc;
-  background: #12362d;
+  border-color: var(--bf-brand);
+  background: var(--bf-brand-wash);
 }
 .catalog-workspace {
   display: grid;
@@ -213,7 +223,7 @@
   padding: 20px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #070a13;
+  background: #0e0e0e;
 }
 .catalog-detail h3 {
   overflow-wrap: anywhere;
@@ -285,5 +295,167 @@
   .token-demo *::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+.token-demo.embedded {
+  background: var(--bf-bg);
+}
+.embedded .demo-header,
+.embedded .demo-hero,
+.embedded .demo-catalog,
+.embedded footer,
+.embedded .demo-context > a {
+  display: none;
+}
+.token-demo.embedded main {
+  padding: 12px 4px;
+}
+.embedded .demo-steps {
+  margin-top: 0;
+}
+.token-demo.embedded .primary {
+  background: var(--bf-action);
+  border-color: var(--bf-brand);
+  color: var(--bf-action-ink);
+}
+@media (max-width: 700px) {
+  .token-demo.embedded .demo-panel {
+    padding: 20px 16px;
+  }
+}
+
+.token-demo {
+  background: var(--bf-bg);
+}
+.token-demo .primary:hover:not(:disabled) {
+  background: var(--bf-action-hover);
+  border-color: var(--bf-action-hover);
+}
+.token-demo input {
+  accent-color: var(--bf-brand);
+}
+.demo-steps [aria-current] {
+  color: var(--bf-brand);
+  border-color: var(--bf-brand);
+}
+.demo-panel {
+  border-radius: 12px;
+  box-shadow: 0 8px 30px #0002;
+}
+.token-demo #learn .eyebrow {
+  color: var(--bf-brand);
+}
+.token-demo .demo-panel h2 {
+  font-size: clamp(22px, 2vw, 28px);
+}
+.token-demo :focus-visible {
+  outline-color: var(--bf-brand);
+}
+.token-demo dd {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shared purchase surface, aligned with the platform's graphite trading shell. */
+.token-demo {
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+.token-demo .demo-panel {
+  background: #171a20;
+  border-color: #3c414d;
+  border-radius: 11px;
+  padding: 28px;
+}
+.token-demo .demo-panel p {
+  color: #bbc2cf;
+  line-height: 1.85;
+  font-size: 13px;
+}
+.token-demo .demo-panel h2 {
+  font-size: 27px;
+  letter-spacing: -0.7px;
+}
+.token-demo .demo-steps {
+  counter-reset: purchase;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.token-demo .demo-steps li {
+  counter-increment: purchase;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  padding: 13px;
+  border: 1px solid #393f4b;
+  border-radius: 7px;
+  background: #181c24;
+}
+.token-demo .demo-steps li::before {
+  content: none;
+  font: 12px monospace;
+  color: #a4adbd;
+}
+.token-demo .demo-steps [aria-current] {
+  background: #34212b;
+  border-color: #a84b61;
+  color: #ffc3ce;
+}
+.token-demo .demo-steps [aria-current]::before {
+  color: #ff8299;
+}
+.token-demo label {
+  font-size: 13px;
+  color: #d5d9e2;
+}
+.token-demo input:not([type='checkbox']),
+.token-demo select {
+  min-height: 48px;
+  border-color: #525b6c;
+  background: #0e121a;
+  color: #f1f4fa;
+  border-radius: 7px;
+  font-size: 15px;
+}
+.token-demo button {
+  min-height: 44px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+.token-demo .primary {
+  box-shadow: inset 0 1px #ffffff18;
+}
+.token-demo :focus-visible {
+  outline: 2px solid #ff9caf;
+  outline-offset: 3px;
+}
+.token-demo .demo-note {
+  background: #28232d;
+  border-color: #51404e;
+}
+.token-demo #learn {
+  background: radial-gradient(at top right, #3b252e, #171a21 70%);
+}
+.token-demo dl {
+  font-size: 13px;
+}
+.token-demo dd {
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 700px) {
+  .token-demo .demo-steps {
+    gap: 8px;
+  }
+  .token-demo .demo-steps li {
+    font-size: 11px;
+    padding: 12px 10px;
+  }
+  .token-demo .demo-panel,
+  .token-demo.embedded .demo-panel {
+    padding: 23px 18px;
+  }
+  .token-demo .demo-panel h2 {
+    font-size: 25px;
   }
 }
