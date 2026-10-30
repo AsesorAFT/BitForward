@@ -87,7 +87,7 @@ try {
     await frame.waitForFunction(() =>
       document.querySelector('#result-title').textContent.includes('confirmada')
     );
-    await route('#wallet');
+    await route('#wallet?modo=demo');
     assert.match(await page.$eval('#activity', x => x.textContent), /DEMO-OP-0001/);
     assert.match(await page.$eval('.asset-grid', x => x.textContent), /BTC/);
     await route('#portafolio');
@@ -104,7 +104,7 @@ try {
     await frame.waitForFunction(() =>
       document.querySelector('#result-title').textContent.includes('fallida')
     );
-    await route('#wallet');
+    await route('#wallet?modo=demo');
     assert.equal(await page.$$eval('.history-row', x => x.length), 2);
     assert.match(await page.$eval('#activity', x => x.textContent), /Fallida · sin cargo/);
     // Leave the form before its timer resolves; the shell must settle once.
@@ -119,7 +119,7 @@ try {
     await frame.waitForFunction(() =>
       document.querySelector('#result-title').textContent.includes('Pendiente')
     );
-    await route('#wallet');
+    await route('#wallet?modo=demo');
     await page.waitForFunction(() =>
       document.querySelector('.history-row').textContent.includes('Confirmada')
     );

@@ -1,4 +1,5 @@
 import './style.css';
+import { mountOwnWallet, unmountOwnWallet } from './wallet-view.mjs';
 import orbit from '../../assets/brand/orbital-mission-v2.webp';
 import astronaut from '../../assets/brand/pilot-astronaut-v3.webp';
 import { CATALOG, MARKETS, filterCatalog, capabilities } from '../token-demo/catalog.mjs';
@@ -154,7 +155,7 @@ function home() {
      'wallet',
      '03',
      'Conoce tu wallet',
-     'Consulta los activos ficticios de tu sesión y aprende a cuidarlos.',
+     'Conecta tu wallet para consultar o continúa con los activos de práctica.',
      'Ver mi wallet',
    ],
    [
@@ -328,7 +329,7 @@ function holdings(kind) {
       'Los movimientos y activos ficticios del ejercicio abierto en esta pestaña.',
       badge('ACTIVOS DEMO')
     ) +
-    `<div class="notice">La wallet real se conectará en una etapa posterior. Aquí no se reciben depósitos.</div><div class="asset-grid">${Object.entries(
+    `<div class="notice">Activos ficticios del simulador. Esta vista no utiliza tu wallet conectada.</div><div class="asset-grid">${Object.entries(
       available
     )
       .map(([asset, value]) => {
@@ -346,13 +347,33 @@ function holdings(kind) {
             })
             .join('')
         : '<div class="empty"><span class="empty-icon">↔</span><h3>Aquí empieza tu historial</h3><p>Completa un intercambio de práctica para ver su resultado y los activos de salida.</p><a href="#comprar">Ir al simulador →</a></div>'
-    }</div></section>${kind === 'wallet' ? '<section class="panel learn-note"><h2>Antes de conectar una wallet real</h2><p>Una wallet permite firmar operaciones. La red, el token y el contrato deben coincidir. Tu frase de recuperación es privada: BitForward nunca te la pedirá.</p><a href="#academia">Aprender sobre wallets →</a></section>' : ''}`;
+    }</div></section>${kind === 'wallet' ? '<section class="panel learn-note"><h2>Tu wallet propia, por separado</h2><p>Consulta tu dirección y saldo nativo en Mi wallet. Los activos de este ejercicio permanecen separados de esa lectura. Tu frase de recuperación es privada: BitForward nunca te la pedirá.</p><a href="#academia">Aprender sobre wallets →</a></section>' : ''}`;
   $('#export-history').onclick = () =>
     download('bitforward-historial-demo.json', {
       environment: 'simulation',
       exportedAt: new Date().toISOString(),
       ...state,
     });
+}
+const walletTabs = mode =>
+  `<nav class="wallet-tabs" aria-label="Tipo de wallet"><a href="#wallet" ${mode === 'consulta' ? 'aria-current="page"' : ''}>Mi wallet · consulta</a><a href="#wallet?modo=demo" ${mode === 'demo' ? 'aria-current="page"' : ''}>Wallet de práctica</a></nav>`;
+function walletPage(params = new URLSearchParams()) {
+  const mode = params.get('modo') === 'demo' ? 'demo' : 'consulta';
+  if (mode === 'demo') {
+    holdings('wallet');
+    content.insertAdjacentHTML('afterbegin', walletTabs(mode));
+  } else {
+    content.innerHTML =
+      header(
+        'WALLET / CONSULTA',
+        'Tu wallet, tus decisiones.',
+        'Consulta desde tu navegador y conserva el control de tus activos.',
+        badge('CONEXIÓN DE CONSULTA')
+      ) +
+      walletTabs(mode) +
+      '<div id="own-wallet-root"></div>';
+    mountOwnWallet($('#own-wallet-root'));
+  }
 }
 const lessons = [
   {
@@ -484,7 +505,7 @@ function account() {
       'Consulta qué está activo y conserva tus ejercicios.',
       badge('VISTA PREVIA')
     ) +
-    `<div class="two-column"><section class="panel"><h2>Disponible ahora</h2><ul class="feature-list"><li>43 mercados con buscador y favoritos</li><li>Intercambios Spot con activos ficticios</li><li>Wallet e historial del ejercicio</li><li>Ruta inicial con preguntas de comprensión</li><li>Calculadora de perpetuos y bitácora personal</li></ul><button class="button secondary" id="export-all">Descargar mi progreso</button></section><section class="panel"><h2>Próximas conexiones</h2><ul class="feature-list"><li>Identidad y acceso personal entre dispositivos</li><li>Wallet de prueba y confirmación en blockchain</li><li>Precios reales y proveedor de ejecución</li><li>Conversaciones compartidas y soporte</li></ul><p>Esta versión no acepta dinero, depósitos, claves privadas ni órdenes reales.</p></section></div><section class="panel faq"><h2>Preguntas frecuentes</h2><details><summary>¿Puedo comprar tokens reales aquí?</summary><p>Todavía no. El recorrido permite ensayar costes, errores y confirmaciones con activos ficticios.</p></details><details><summary>¿Dónde se guarda mi progreso?</summary><p>Favoritos, lecciones y notas en este navegador. Las operaciones demo se conservan al recargar esta pestaña; cerrarla puede finalizar esa sesión. Puedes descargar tu historial.</p></details><details><summary>¿Por qué un símbolo aparece dos veces?</summary><p>Un token al contado y un contrato perpetuo son instrumentos diferentes. BTW Alpha y BTWUSDT perpetuo se conservan por separado.</p></details></section>`;
+    `<div class="two-column"><section class="panel"><h2>Disponible ahora</h2><ul class="feature-list"><li>43 mercados con buscador y favoritos</li><li>Intercambios Spot con activos ficticios</li><li>Conexión de wallet propia para consulta</li><li>Wallet e historial del ejercicio, por separado</li><li>Ruta inicial con preguntas de comprensión</li><li>Calculadora de perpetuos y bitácora personal</li></ul><button class="button secondary" id="export-all">Descargar mi progreso</button></section><section class="panel"><h2>Próximas conexiones</h2><ul class="feature-list"><li>Identidad y acceso personal entre dispositivos</li><li>Transferencia de prueba y confirmación en blockchain</li><li>Precios reales y proveedor de ejecución</li><li>Conversaciones compartidas y soporte</li></ul><p>Esta versión no acepta dinero, depósitos, claves privadas ni órdenes reales.</p></section></div><section class="panel faq"><h2>Preguntas frecuentes</h2><details><summary>¿Puedo comprar tokens reales aquí?</summary><p>Todavía no. El recorrido permite ensayar costes, errores y confirmaciones con activos ficticios.</p></details><details><summary>¿Dónde se guarda mi progreso?</summary><p>Favoritos, lecciones y notas en este navegador. Las operaciones demo se conservan al recargar esta pestaña; cerrarla puede finalizar esa sesión. Puedes descargar tu historial.</p></details><details><summary>¿Por qué un símbolo aparece dos veces?</summary><p>Un token al contado y un contrato perpetuo son instrumentos diferentes. BTW Alpha y BTWUSDT perpetuo se conservan por separado.</p></details></section>`;
   $('#export-all').onclick = () =>
     download('bitforward-progreso-demo.json', {
       environment: 'simulation',
@@ -496,6 +517,7 @@ function account() {
 function renderRoute() {
   const [routeName, search = ''] = location.hash.slice(1).split('?');
   const route = Object.hasOwn(routes, routeName) ? routeName : 'inicio';
+  unmountOwnWallet();
   $('#trade-frame')?._observer?.disconnect();
   $('#crumb').textContent = routes[route];
   document.title = `${routes[route]} · BitForward`;
@@ -504,11 +526,16 @@ function renderRoute() {
     else a.removeAttribute('aria-current');
   });
   setNavigation(false);
+  const ownWallet = route === 'wallet' && new URLSearchParams(search).get('modo') !== 'demo';
+  $('.demo-chip').textContent = ownWallet ? 'CONSULTA' : 'DEMO';
+  $('.environment').innerHTML = ownWallet
+    ? '<span class="status-dot"></span> Wallet propia<small>Solo lectura.</small>'
+    : '<span class="status-dot"></span> Entorno de práctica<small>Explora a tu ritmo.</small>';
   ({
     inicio: home,
     mercados: markets,
     comprar: buy,
-    wallet: () => holdings('wallet'),
+    wallet: walletPage,
     portafolio: () => holdings('portafolio'),
     academia: academy,
     futuros: futures,
@@ -533,9 +560,14 @@ function reconcilePendingDemo() {
     sessionStorage.setItem('bitforward-token-demo-v1', JSON.stringify(next));
     settlementErrorReported = false;
     const route = location.hash.slice(1).split('?')[0];
-    if (['wallet', 'portafolio'].includes(route)) {
+    if (
+      route === 'portafolio' ||
+      (route === 'wallet' &&
+        new URLSearchParams(location.hash.split('?')[1]).get('modo') === 'demo')
+    ) {
       const exportFocused = document.activeElement === $('#export-history');
-      holdings(route);
+      if (route === 'wallet') walletPage(new URLSearchParams('modo=demo'));
+      else holdings(route);
       if (exportFocused) $('#export-history').focus({ preventScroll: true });
     }
   } catch {

@@ -7,11 +7,11 @@
 - Inicio con accesos a Mercados, Comprar tokens, Futuros, Wallet, Portafolio, Academia y Comunidad.
 - Catálogo de 43 mercados; búsqueda, filtros y favoritos persistentes. BTW Alpha y BTWUSDT perpetuo son entradas diferentes.
 - Práctica Spot integrada con selección por instrumento. Alpha, bStocks y futuros conservan su estado de exploración.
-- Wallet e historial derivados del mismo estado validado del simulador, con descarga. Las operaciones fallidas o rechazadas no cobran; las pendientes conservan la semántica de reserva del motor existente.
+- Wallet de práctica e historial derivados del mismo estado validado del simulador, con descarga. Las operaciones fallidas o rechazadas no cobran; las pendientes conservan la semántica de reserva del motor existente.
 - Tres lecciones con preguntas, progreso local, calculadora educativa de futuros y bitácora personal descargable.
 - Identidad visual BitForward, navegación por teclado, preferencias de movimiento reducido y tamaños móvil/escritorio.
 
-Favoritos, lecciones y notas se guardan en localStorage. Las operaciones demo usan sessionStorage: no se sincronizan entre dispositivos. Comunidad es una bitácora personal; no hay participantes ni conversaciones compartidas. Los importes y precios de la práctica son sintéticos. No se solicitan claves, firmas, depósitos ni permisos de wallet.
+Favoritos, lecciones y notas se guardan en localStorage. Las operaciones demo usan sessionStorage: no se sincronizan entre dispositivos. Comunidad es una bitácora personal; no hay participantes ni conversaciones compartidas. Los importes y precios de la práctica son sintéticos. La práctica no solicita claves, firmas, depósitos ni permisos de wallet. La vista de consulta propia solicita compartir la dirección solo al elegir una wallet.
 
 ## Ejecutar y comprobar
 
@@ -42,3 +42,7 @@ También se corrigen las dos observaciones de Copilot sobre PR #96: la navegaci�
 Conectar una wallet de prueba a una red de pruebas, validar red/contrato y registrar una operación de extremo a extremo con fondos de prueba. La ejecución real, custodia, precios en directo, identidad compartida y conversaciones multiusuario requieren una implementación posterior y no forman parte de esta vista previa.
 
 Referencia visual: https://www.interactivebrokers.com/en/home.php. Se conserva la marca BitForward; no hay integración ni afiliación de este prototipo con IBKR.
+
+## Wallet propia · 30 de octubre de 2026
+
+`#wallet` abre la consulta EVM de solo lectura. `#wallet?modo=demo` conserva los activos ficticios. La arquitectura, alcance y pasos pendientes están en [wallet-architecture.md](wallet-architecture.md). `npm run test:wallet` verifica el nuevo recorrido; `npm run verify:platform-wallet` comprueba el bundle después de compilar. La ejecución real sigue deshabilitada.

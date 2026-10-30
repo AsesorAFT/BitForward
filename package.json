@@ -40,7 +40,9 @@
     "generate:learning": "node scripts/generate-learning.mjs",
     "smoke:commerce": "node scripts/smoke-commerce.mjs",
     "build:platform": "vite build --config vite.platform.config.mjs && node scripts/prepare-platform-preview.mjs",
-    "test:platform": "node --test tests/token-demo.test.mjs tests/token-catalog.test.mjs && node tests/platform.browser.mjs"
+    "test:platform": "node --test tests/token-demo.test.mjs tests/token-catalog.test.mjs && node tests/platform.browser.mjs",
+    "test:wallet": "node --test tests/wallet-session.test.mjs && node tests/wallet.browser.mjs",
+    "verify:platform-wallet": "node scripts/check-platform-wallet.mjs"
   },
   "keywords": [
     "defi",
