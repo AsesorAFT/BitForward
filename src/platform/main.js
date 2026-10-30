@@ -1,14 +1,16 @@
 import './style.css';
 import orbit from '../../assets/brand/orbital-mission-v2.webp';
 import astronaut from '../../assets/brand/pilot-astronaut-v3.webp';
+import { CATALOG, MARKETS, filterCatalog, capabilities } from '../token-demo/catalog.mjs';
 import {
-  CATALOG,
-  MARKETS,
-  filterCatalog,
-  capabilities,
-  instrumentNotice,
-} from '../token-demo/catalog.mjs';
-import { restore, freshState, balances, assetInfo, format, PAIRS } from '../token-demo/model.mjs';
+  restore,
+  freshState,
+  balances,
+  assetInfo,
+  format,
+  PAIRS,
+  settleDemo,
+} from '../token-demo/model.mjs';
 
 const $ = selector => document.querySelector(selector);
 const content = $('#content');
@@ -100,15 +102,24 @@ $('#nav').innerHTML = Object.entries(routes)
       `<a href="#${key}" data-route="${key}">${icon(key)}<span>${label}</span>${key === 'comprar' ? '<small>DEMO</small>' : ''}</a>`
   )
   .join('');
-$('#menu').onclick = () => {
-  const expanded = $('#menu').getAttribute('aria-expanded') !== 'true';
-  $('#menu').setAttribute('aria-expanded', expanded);
+const mobileNavigation = matchMedia('(max-width: 800px)');
+function setNavigation(expanded) {
   $('#navigation').classList.toggle('open', expanded);
-};
+  $('#menu').setAttribute('aria-expanded', String(expanded));
+  $('#menu').setAttribute('aria-label', expanded ? 'Cerrar navegación' : 'Abrir navegación');
+  $('#navigation').inert = mobileNavigation.matches && !expanded;
+}
+$('#menu').onclick = () => setNavigation($('#menu').getAttribute('aria-expanded') !== 'true');
+mobileNavigation.addEventListener('change', () => {
+  const focusWasInside = $('#navigation').contains(document.activeElement);
+  setNavigation(false);
+  if (mobileNavigation.matches && focusWasInside) $('#menu').focus();
+});
+setNavigation(false);
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
-    $('#navigation').classList.remove('open');
-    $('#menu').setAttribute('aria-expanded', 'false');
+  if (event.key === 'Escape' && $('#navigation').classList.contains('open')) {
+    setNavigation(false);
+    $('#menu').focus();
   }
 });
 
@@ -116,9 +127,9 @@ function home() {
   content.innerHTML =
     header(
       'TU CENTRO DE OPERACIONES',
-      'Tu siguiente movimiento.',
-      'Todo tu universo digital, en un mismo lugar.',
-      badge('VISTA PREVIA · 01')
+      'Tu espacio de trading.',
+      'Mercados, práctica y aprendizaje. Tú marcas el siguiente paso.',
+      badge('TRADING LAB · DEMO')
     ) +
     `
  <section class="hero"><img src="${orbit}" alt="" class="hero-orbit"><div class="hero-copy"><span class="pill"><span class="status-dot"></span> BITFORWARD / PRIMERA TRIPULACIÓN</span><h2>Entiende el mercado.<br><em>Explora lo que sigue.</em></h2><p>Del primer concepto a tu primer intercambio de práctica. Una ruta para avanzar con criterio.</p><div class="actions"><a class="button primary" href="#academia">Comenzar mi ruta <span>↗</span></a><a class="button quiet" href="#mercados">Explorar mercados →</a></div></div><div class="orbital-label"><span>BF—01</span><i></i><small>ACADEMIA · MERCADOS · WALLET</small></div></section>
@@ -242,10 +253,44 @@ function renderMarkets() {
 function showInstrument(key) {
   const x = CATALOG.find(item => item.key === key);
   const dialog = $('#instrument-dialog');
-  dialog.innerHTML = `<button class="close-dialog" aria-label="Cerrar ficha">×</button><p class="eyebrow">${MARKETS[x.market]}</p><h2 id="instrument-title">${escape(x.base)}${x.quote ? ' / USDT' : ''}</h2><p>${escape(instrumentNotice(x))}</p><div class="info-block">${capabilities(x).practice ? 'Puedes practicar con unidades ficticias y revisar los costes antes de confirmar. Los precios de este ejercicio son sintéticos.' : 'Esta selección todavía no tiene una ruta de compra habilitada. Puedes guardarla en favoritos y consultar su categoría.'}</div><dl class="compact"><dt>Operación real</dt><dd>No habilitada</dd><dt>Identidad y disponibilidad</dt><dd>Pendientes de verificar con el proveedor</dd></dl>${capabilities(x).practice ? `<a class="button primary" href="#comprar?instrument=${encodeURIComponent(x.key)}">Practicar con ${escape(x.base)} ↗</a>` : '<button class="button secondary" id="close-detail">Volver al catálogo</button>'}`;
+  const practice = capabilities(x).practice;
+  const descriptions = {
+    alpha:
+      'Sigue este token en tu lista. La compra estará disponible cuando se verifiquen su red y contrato.',
+    futures:
+      'Contrato perpetuo: explora su categoría y practica cómo cambia el resultado de una posición en el laboratorio.',
+    bstocks:
+      'Valor tokenizado: consulta su categoría. La disponibilidad de compra se confirmará con el proveedor.',
+    spot: 'Practica el intercambio con activos ficticios. Revisa importe y costes antes de confirmar cada paso.',
+  };
+  const related = CATALOG.filter(item => item.base === x.base && item.key !== x.key);
+  const description =
+    x.base === 'IBKR' && x.market === 'futures'
+      ? 'Contrato perpetuo sobre Interactive Brokers. No equivale a comprar acciones de la empresa.'
+      : x.base === 'SOXSB'
+        ? 'Producto tokenizado ligado a un ETF inverso apalancado 3X. Su comportamiento difiere del de una acción ordinaria.'
+        : descriptions[x.market];
+  dialog.innerHTML = `<button class="close-dialog" aria-label="Cerrar ficha">×</button><p class="eyebrow">FICHA DE MERCADO / ${MARKETS[x.market]}</p><div class="instrument-heading"><span class="token-symbol color-${x.market}">${escape(x.base.slice(0, 2))}</span><div><h2 id="instrument-title" tabindex="-1">${escape(x.base)}${x.quote ? ' / USDT' : ''}</h2><p>${escape(x.name || (x.market === 'futures' ? 'Contrato perpetuo' : MARKETS[x.market]))}</p></div></div><span class="instrument-state">${practice ? 'Práctica Spot disponible' : 'Solo exploración'}</span><div class="info-block">${description}</div><dl class="compact"><dt>Tipo de mercado</dt><dd>${MARKETS[x.market]}</dd><dt>Precios</dt><dd>${practice ? 'Sintéticos · ejercicio demo' : 'Sin conexión en directo'}</dd><dt>Compra real</dt><dd>No habilitada</dd></dl><div class="instrument-actions"><button class="button secondary" id="detail-favorite" aria-pressed="${preferences.favorites.includes(key)}">${preferences.favorites.includes(key) ? '★ En favoritos' : '☆ Guardar en favoritos'}</button>${practice ? `<a class="button primary" href="#comprar?instrument=${encodeURIComponent(x.key)}">Practicar con ${escape(x.base)} ↗</a>` : x.market === 'futures' ? '<a class="button primary" href="#futuros">Abrir laboratorio ↗</a>' : '<button class="button secondary" id="close-detail">Volver al catálogo</button>'}</div>${related.length ? `<div class="related-markets"><p>OTROS MERCADOS DE ${escape(x.base)}</p>${related.map(item => `<button class="related-market" data-related="${escape(item.key)}"><span>${escape(item.base)}${item.quote ? ' / USDT' : ''}<small>${MARKETS[item.market]} · ${item.market === 'spot' ? 'Práctica' : 'Exploración'}</small></span><span aria-hidden="true">↗</span></button>`).join('')}</div>` : ''}`;
   dialog.querySelector('.close-dialog').onclick = () => dialog.close();
   dialog.querySelector('#close-detail')?.addEventListener('click', () => dialog.close());
-  dialog.showModal();
+  dialog.querySelector('#detail-favorite').onclick = e => {
+    const saved = !preferences.favorites.includes(key);
+    preferences.favorites = saved
+      ? [...preferences.favorites, key]
+      : preferences.favorites.filter(k => k !== key);
+    savePreferences();
+    e.currentTarget.setAttribute('aria-pressed', String(saved));
+    e.currentTarget.textContent = saved ? '★ En favoritos' : '☆ Guardar en favoritos';
+    renderMarkets();
+  };
+  dialog.querySelectorAll('[data-related]').forEach(button => {
+    button.onclick = () => {
+      showInstrument(button.dataset.related);
+      $('#instrument-title').focus();
+    };
+  });
+  dialog.onclose = () => document.querySelector(`[data-instrument="${CSS.escape(key)}"]`)?.focus();
+  if (!dialog.open) dialog.showModal();
 }
 function buy(params) {
   const key = params.get('instrument');
@@ -292,7 +337,7 @@ function holdings(kind) {
       })
       .join(
         ''
-      )}</div><div class="actions"><a href="#comprar" class="button primary">Practicar intercambio ↗</a><button id="export-history" class="button secondary">Descargar historial</button></div><section class="panel history-panel"><div class="section-heading"><h2>Actividad de esta sesión</h2><span>${state.history.length} operaciones demo</span></div><div id="activity">${
+      )}</div><div class="actions"><a href="#comprar" class="button primary">Practicar intercambio ↗</a><button id="export-history" class="button secondary">Descargar historial</button></div><section class="panel history-panel"><div class="section-heading"><h2>Actividad de esta sesión</h2><span>${state.history.length} operaciones demo</span></div><div id="activity" aria-live="polite">${
       state.history.length
         ? state.history
             .map(row => {
@@ -458,8 +503,7 @@ function renderRoute() {
     if (a.dataset.route === route) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
-  $('#navigation').classList.remove('open');
-  $('#menu').setAttribute('aria-expanded', 'false');
+  setNavigation(false);
   ({
     inicio: home,
     mercados: markets,
@@ -476,3 +520,30 @@ function renderRoute() {
 }
 window.addEventListener('hashchange', renderRoute);
 renderRoute();
+
+// The iframe owns the active form. Once it unmounts, the shell completes only
+// already submitted synthetic operations, using the same deterministic engine.
+let settlementErrorReported = false;
+function reconcilePendingDemo() {
+  if ($('#trade-frame')) return;
+  try {
+    const state = restore(sessionStorage.getItem('bitforward-token-demo-v1'));
+    const next = settleDemo(state, Date.now());
+    if (next === state) return;
+    sessionStorage.setItem('bitforward-token-demo-v1', JSON.stringify(next));
+    settlementErrorReported = false;
+    const route = location.hash.slice(1).split('?')[0];
+    if (['wallet', 'portafolio'].includes(route)) {
+      const exportFocused = document.activeElement === $('#export-history');
+      holdings(route);
+      if (exportFocused) $('#export-history').focus({ preventScroll: true });
+    }
+  } catch {
+    if (!settlementErrorReported) {
+      toast('No pudimos actualizar el ejercicio guardado. Vuelve a la práctica para revisarlo.');
+      settlementErrorReported = true;
+    }
+  }
+}
+setInterval(reconcilePendingDemo, 250);
+window.addEventListener('pageshow', reconcilePendingDemo);

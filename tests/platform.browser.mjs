@@ -55,12 +55,30 @@ try {
     await page.click('[data-instrument^="binance:alpha:selection-BTW"]');
     assert.match(await page.$eval('#instrument-dialog', x => x.textContent), /Solo exploración/);
     assert.equal(await page.$$eval('#instrument-dialog a[href^="#comprar"]', x => x.length), 0);
-    await page.click('.close-dialog');
+    assert.equal(await page.$eval('#detail-favorite', x => x.getAttribute('aria-pressed')), 'true');
+    await page.click('#detail-favorite');
+    assert.equal(await page.$$eval('.star[aria-pressed=true]', x => x.length), 0);
+    await page.click('#detail-favorite');
+    if (shots) await page.screenshot({ path: `${shots}/btw-ficha-${width}.png` });
+    await page.click('[data-related]');
+    assert.match(await page.$eval('#instrument-dialog', x => x.textContent), /Contrato perpetuo/);
+    assert.equal(await page.$$eval('#instrument-dialog a[href^="#comprar"]', x => x.length), 0);
+    assert.equal(
+      await page.$eval('#detail-favorite', x => x.getAttribute('aria-pressed')),
+      'false'
+    );
+    await page.click('#detail-favorite');
+    assert.equal(await page.$$eval('.star[aria-pressed=true]', x => x.length), 2);
+    await page.keyboard.press('Escape');
+    assert.equal(await page.$eval('#instrument-dialog', x => x.open), false);
+    await page.reload({ waitUntil: 'networkidle0' });
+    assert.equal(await page.$$eval('.star[aria-pressed=true]', x => x.length), 2);
     await route('#comprar?instrument=binance%3Aspot%3ABTCUSDT');
     await page.waitForSelector('#trade-frame');
     let frame = await (await page.$('#trade-frame')).contentFrame();
     await frame.waitForSelector('#practice');
     assert.equal(await frame.$eval('#pair', x => x.value), 'binance:spot:BTCUSDT');
+    if (shots) await page.screenshot({ path: `${shots}/comprar-${width}.png`, fullPage: true });
     await frame.click('#practice');
     await frame.click('#selection button');
     await frame.click('#consent');
@@ -89,6 +107,44 @@ try {
     await route('#wallet');
     assert.equal(await page.$$eval('.history-row', x => x.length), 2);
     assert.match(await page.$eval('#activity', x => x.textContent), /Fallida · sin cargo/);
+    // Leave the form before its timer resolves; the shell must settle once.
+    await route('#comprar');
+    frame = await (await page.$('#trade-frame')).contentFrame();
+    await frame.waitForSelector('#again');
+    await frame.click('#again');
+    await frame.click('#selection button');
+    await frame.click('#consent');
+    await frame.select('#scenario', 'ready');
+    await frame.click('#confirm');
+    await frame.waitForFunction(() =>
+      document.querySelector('#result-title').textContent.includes('Pendiente')
+    );
+    await route('#wallet');
+    await page.waitForFunction(() =>
+      document.querySelector('.history-row').textContent.includes('Confirmada')
+    );
+    assert.equal(await page.$$eval('.history-row', x => x.length), 3);
+    const settledBalance = await page.$eval('.asset-grid', x => x.textContent);
+    await page.reload({ waitUntil: 'networkidle0' });
+    assert.equal(await page.$$eval('.history-row', x => x.length), 3);
+    assert.equal(await page.$eval('.asset-grid', x => x.textContent), settledBalance);
+    await route('#comprar');
+    frame = await (await page.$('#trade-frame')).contentFrame();
+    await frame.waitForSelector('#again');
+    await frame.click('#again');
+    await frame.click('#selection button');
+    await frame.click('#consent');
+    await frame.select('#scenario', 'failure');
+    await frame.click('#confirm');
+    await frame.waitForFunction(() =>
+      document.querySelector('#result-title').textContent.includes('Pendiente')
+    );
+    await route('#portafolio');
+    await page.waitForFunction(() =>
+      document.querySelector('.history-row').textContent.includes('Fallida')
+    );
+    assert.equal(await page.$$eval('.history-row', x => x.length), 4);
+    assert.equal(await page.$eval('.asset-grid', x => x.textContent), settledBalance);
     await route('#academia');
     await page.click('[data-lesson="0"]');
     await page.click('input[name=answer][value="1"]');
@@ -109,8 +165,19 @@ try {
     await route('#cuenta');
     assert.match(await page.$eval('#content', x => x.textContent), /no acepta dinero/);
     if (width === 390) {
+      assert.equal(await page.$eval('#navigation', x => x.inert), true);
+      await page.click('#menu');
+      assert.equal(await page.$eval('#navigation', x => x.inert), false);
+      await page.focus('[data-route="inicio"]');
+      await page.keyboard.press('Escape');
+      assert.equal(await page.$eval('#navigation', x => x.inert), true);
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'menu');
       await page.click('#menu');
       assert.equal(await page.$eval('#menu', x => x.getAttribute('aria-expanded')), 'true');
+      await page.waitForFunction(() => {
+        const link = document.querySelector('[data-route="inicio"]');
+        return link.getBoundingClientRect().left > 0;
+      });
       await page.click('[data-route="inicio"]');
       assert.equal(await page.$eval('#menu', x => x.getAttribute('aria-expanded')), 'false');
     }

@@ -31,6 +31,14 @@ SMOKE_BASE_URL=http://127.0.0.1:4196 node tests/token-demo.browser.mjs
 
 La compilación aislada usa `publicDir: false` y copia exclusivamente los documentos de demostración incluidos en `scripts/prepare-platform-preview.mjs`. No incorpora bases de datos, archivos de clientes, credenciales ni el resto de `public/`.
 
+## Actualización visual · 30 de octubre de 2026
+
+Paleta compartida de grafito, blanco y rojo, siguiendo la referencia solicitada de Interactive Brokers, para la plataforma y la compra simulada. Los resultados mantienen colores semánticos independientes. La ficha de mercado incluye favoritos persistentes, clasificación y enlaces a otros mercados del mismo símbolo; BTW Alpha y BTWUSDT perpetuo mantienen identidades y favoritos separados. El modal de productos especiales conserva su explicación (IBKR perpetuo y SOXSB inverso 3X).
+
+También se corrigen las dos observaciones de Copilot sobre PR #96: la navegación cerrada queda fuera del foco en móvil y Escape vuelve al botón; las operaciones demo enviadas se resuelven en Wallet/Portafolio aunque el formulario se desmonte, conservando la lógica existente de reservas y resultados.
+
 ## Siguiente entrega propuesta
 
 Conectar una wallet de prueba a una red de pruebas, validar red/contrato y registrar una operación de extremo a extremo con fondos de prueba. La ejecución real, custodia, precios en directo, identidad compartida y conversaciones multiusuario requieren una implementación posterior y no forman parte de esta vista previa.
+
+Referencia visual: https://www.interactivebrokers.com/en/home.php. Se conserva la marca BitForward; no hay integración ni afiliación de este prototipo con IBKR.
