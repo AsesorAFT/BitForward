@@ -1,4 +1,5 @@
 import './style.css';
+import './design.css';
 import { mountOwnWallet, unmountOwnWallet } from './wallet-view.mjs';
 import orbit from '../../assets/brand/orbital-mission-v2.webp';
 import astronaut from '../../assets/brand/pilot-astronaut-v3.webp';
@@ -100,17 +101,39 @@ $('#nav').innerHTML = Object.entries(routes)
   .filter(([key]) => key !== 'cuenta')
   .map(
     ([key, label]) =>
-      `<a href="#${key}" data-route="${key}">${icon(key)}<span>${label}</span>${key === 'comprar' ? '<small>DEMO</small>' : ''}</a>`
+      ` ${key === 'inicio' ? '<span class="nav-group">PLATAFORMA</span>' : key === 'wallet' ? '<span class="nav-group">MIS ACTIVOS</span>' : key === 'academia' ? '<span class="nav-group">APRENDIZAJE</span>' : ''}<a href="#${key}" data-route="${key}">${icon(key)}<span>${label}</span>${key === 'comprar' ? '<small>DEMO</small>' : ''}</a>`
   )
   .join('');
+$('#mobile-dock').innerHTML =
+  ['inicio', 'mercados', 'comprar', 'wallet']
+    .map(
+      key =>
+        `<a href="#${key}" data-route="${key}" aria-label="${routes[key]}">${icon(key)}<span>${key === 'comprar' ? 'Practicar' : routes[key]}</span></a>`
+    )
+    .join('') +
+  '<button id="more-menu" aria-controls="navigation" aria-expanded="false"><span class="more-glyph" aria-hidden="true">•••</span><span>Más</span></button>';
 const mobileNavigation = matchMedia('(max-width: 800px)');
 function setNavigation(expanded) {
+  const modal = mobileNavigation.matches && expanded;
   $('#navigation').classList.toggle('open', expanded);
   $('#menu').setAttribute('aria-expanded', String(expanded));
+  $('#more-menu').setAttribute('aria-expanded', String(expanded));
   $('#menu').setAttribute('aria-label', expanded ? 'Cerrar navegación' : 'Abrir navegación');
   $('#navigation').inert = mobileNavigation.matches && !expanded;
+  $('#nav-backdrop').hidden = !modal;
+  $('.shell').inert = modal;
+  $('#mobile-dock').inert = modal;
+  document.body.classList.toggle('navigation-open', modal);
+  if (modal) $('#close-menu').focus();
 }
+const closeNavigation = () => {
+  setNavigation(false);
+  $('#menu').focus();
+};
 $('#menu').onclick = () => setNavigation($('#menu').getAttribute('aria-expanded') !== 'true');
+$('#more-menu').onclick = () => setNavigation(true);
+$('#close-menu').onclick = closeNavigation;
+$('#nav-backdrop').onclick = closeNavigation;
 mobileNavigation.addEventListener('change', () => {
   const focusWasInside = $('#navigation').contains(document.activeElement);
   setNavigation(false);
@@ -118,9 +141,25 @@ mobileNavigation.addEventListener('change', () => {
 });
 setNavigation(false);
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && $('#navigation').classList.contains('open')) {
-    setNavigation(false);
-    $('#menu').focus();
+  if (!mobileNavigation.matches || !$('#navigation').classList.contains('open')) return;
+  if (event.key === 'Escape') {
+    closeNavigation();
+    return;
+  }
+  if (event.key === 'Tab') {
+    const items = [...$('#navigation').querySelectorAll('a[href], button')].filter(
+      x => x.getClientRects().length
+    );
+    const first = items[0],
+      last = items.at(-1);
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    }
+    if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   }
 });
 
@@ -128,12 +167,15 @@ function home() {
   content.innerHTML =
     header(
       'TU CENTRO DE OPERACIONES',
-      'Tu espacio de trading.',
-      'Mercados, práctica y aprendizaje. Tú marcas el siguiente paso.',
-      badge('TRADING LAB · DEMO')
+      'Tu centro de trading.',
+      'Explora el catálogo, consulta tu wallet y sigue tu aprendizaje.',
+      '<a class="button secondary heading-action" href="#wallet">' +
+        icon('wallet') +
+        'Consultar mi wallet</a>'
     ) +
     `
- <section class="hero"><img src="${orbit}" alt="" class="hero-orbit"><div class="hero-copy"><span class="pill"><span class="status-dot"></span> BITFORWARD / PRIMERA TRIPULACIÓN</span><h2>Entiende el mercado.<br><em>Explora lo que sigue.</em></h2><p>Del primer concepto a tu primer intercambio de práctica. Una ruta para avanzar con criterio.</p><div class="actions"><a class="button primary" href="#academia">Comenzar mi ruta <span>↗</span></a><a class="button quiet" href="#mercados">Explorar mercados →</a></div></div><div class="orbital-label"><span>BF—01</span><i></i><small>ACADEMIA · MERCADOS · WALLET</small></div></section>
+ <div class="launch-grid"><section class="hero"><img src="${orbit}" alt="" class="hero-orbit"><div class="hero-copy"><span class="pill">BITFORWARD / TRADING LAB</span><h2>Tu siguiente<br><em>movimiento.</em></h2><p>Explora mercados, entiende cada operación y practica a tu ritmo.</p><div class="actions"><a class="button primary" href="#mercados">Explorar mercados <span>↗</span></a><a class="button quiet" href="#comprar">Practicar un intercambio →</a></div></div><div class="orbital-label" aria-hidden="true"><span>BF / 01</span><i></i><small>EXPLORA · APRENDE · PRACTICA</small></div></section>
+ <section class="launch-mission"><div class="mission-top"><span class="eyebrow">TU RUTA INICIAL</span><span class="mission-orbit" style="--progress:${(preferences.lessons.length / 3) * 100}%"><b>${preferences.lessons.length}/3</b></span></div><h2>Antes de operar,<br>comprende.</h2><p>Tres lecciones. Un ejercicio.<br>Empieza por lo esencial.</p><ol class="mission-checks">${['Wallet y claves', 'Smart contracts', 'Costes y confirmación'].map((name, i) => `<li><span class="${preferences.lessons.includes(i) ? 'lesson-done' : ''}">${preferences.lessons.includes(i) ? '✓' : '0' + (i + 1)}</span>${name}</li>`).join('')}</ol><a class="button secondary" href="#academia">${preferences.lessons.length ? 'Continuar mi ruta' : 'Comenzar mi ruta'} <span>↗</span></a></section></div>
  <div class="stats"><div><span>Mercados en el catálogo</span><strong>43 <small>entradas</small></strong></div><div><span>Modalidades</span><strong>04 <small>por explorar</small></strong></div><div><span>Mis favoritos</span><strong>${String(preferences.favorites.length).padStart(2, '0')} <small>guardados aquí</small></strong></div><div><span>Mi ruta inicial</span><strong>${preferences.lessons.length}<small> / 3 lecciones</small></strong></div></div>
  <div class="section-heading"><h2>Un espacio para cada paso</h2><span class="muted">Explora la plataforma</span></div>
  <div class="module-grid">${[
@@ -198,7 +240,14 @@ function markets(params) {
       'Tu selección de activos, organizada por tipo de mercado.',
       badge('CATÁLOGO DE PRÁCTICA')
     ) +
-    `<section class="panel market-panel"><div class="market-toolbar"><label class="search-field"><span>⌕</span><input id="market-search" type="search" placeholder="Buscar BTC, BTW, 0G…" aria-label="Buscar mercados" value="${escape(query)}"></label><button class="button secondary" id="favorites-toggle" aria-pressed="false">☆ Mis favoritos</button></div><div class="filter-row" role="group" aria-label="Tipo de mercado">${[['all', 'Todos'], ...Object.entries(MARKETS)].map(([key, label]) => `<button data-market="${key}" aria-pressed="${key === market}">${label}</button>`).join('')}</div><div class="table-meta"><span id="market-count" role="status"></span><span>Precios reales aún no conectados</span></div><div class="market-list" id="market-list"></div></section><dialog id="instrument-dialog" aria-labelledby="instrument-title"></dialog>`;
+    `<div class="market-overview" aria-label="Categorías del catálogo">${Object.entries(MARKETS)
+      .map(
+        ([key, label]) =>
+          `<a class="market-category ${key === market ? 'selected' : ''}" href="#mercados?market=${key}" data-category="${key}"><span>${label}</span><strong>${CATALOG.filter(x => x.market === key).length}<small>mercados</small></strong><span class="category-arrow" aria-hidden="true">↗</span></a>`
+      )
+      .join(
+        ''
+      )}</div><section class="panel market-panel"><div class="market-toolbar"><label class="search-field"><span>⌕</span><input id="market-search" type="search" placeholder="Buscar BTC, BTW, 0G…" aria-label="Buscar mercados" value="${escape(query)}"></label><button class="button secondary" id="favorites-toggle" aria-pressed="false">☆ Mis favoritos</button></div><div class="filter-row" role="group" aria-label="Tipo de mercado">${[['all', 'Todos'], ...Object.entries(MARKETS)].map(([key, label]) => `<button data-market="${key}" aria-pressed="${key === market}">${label}</button>`).join('')}</div><div class="table-meta"><span id="market-count" role="status"></span><span>Precios reales aún no conectados</span></div><div class="market-list" id="market-list"></div></section><dialog id="instrument-dialog" aria-labelledby="instrument-title"></dialog>`;
   $('#market-search').oninput = e => {
     query = e.target.value;
     renderMarkets();
@@ -221,6 +270,9 @@ function markets(params) {
   renderMarkets();
 }
 function renderMarkets() {
+  document
+    .querySelectorAll('[data-category]')
+    .forEach(a => a.classList.toggle('selected', a.dataset.category === market));
   const entries = filterCatalog(query, market).filter(
     x => !onlyFavorites || preferences.favorites.includes(x.key)
   );
@@ -517,6 +569,7 @@ function account() {
 function renderRoute() {
   const [routeName, search = ''] = location.hash.slice(1).split('?');
   const route = Object.hasOwn(routes, routeName) ? routeName : 'inicio';
+  content.dataset.view = route;
   unmountOwnWallet();
   $('#trade-frame')?._observer?.disconnect();
   $('#crumb').textContent = routes[route];
@@ -543,6 +596,7 @@ function renderRoute() {
     cuenta: account,
   })[route](new URLSearchParams(search));
   window.scrollTo(0, 0);
+  $('.shell').scrollTo(0, 0);
   content.focus({ preventScroll: true });
 }
 window.addEventListener('hashchange', renderRoute);

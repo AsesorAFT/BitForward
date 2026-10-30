@@ -41,6 +41,13 @@ try {
     };
     await fits();
     if (shots) await page.screenshot({ path: `${shots}/inicio-${width}.png`, fullPage: true });
+    await route('#mercados');
+    await page.click('[data-category="spot"]');
+    await page.waitForFunction(() => document.querySelectorAll('[data-instrument]').length === 22);
+    assert.match(await page.$eval('[data-category="spot"]', x => x.className), /selected/);
+    await page.click('[data-market="alpha"]');
+    assert.equal(await page.$$eval('[data-instrument]', x => x.length), 4);
+    assert.match(await page.$eval('[data-category="alpha"]', x => x.className), /selected/);
     await route('#mercados?q=BTW');
     assert.equal(await page.$$eval('[data-instrument]', x => x.length), 2);
     await page.click('[data-favorite]');
@@ -152,6 +159,9 @@ try {
     assert.match(await page.$eval('#quiz-result', x => x.textContent), /Correcto/);
     await page.reload({ waitUntil: 'networkidle0' });
     assert.match(await page.$eval('[data-lesson="0"]', x => x.textContent), /Completada/);
+    await route('#inicio');
+    assert.equal(await page.$eval('.mission-orbit b', x => x.textContent), '1/3');
+    assert.equal(await page.$$eval('.lesson-done', x => x.length), 1);
     await route('#comunidad');
     await page.type('#notes', 'Mi primera prueba de BitForward.');
     await page.click('#save-notes');
@@ -166,6 +176,32 @@ try {
     assert.match(await page.$eval('#content', x => x.textContent), /no acepta dinero/);
     if (width === 390) {
       assert.equal(await page.$eval('#navigation', x => x.inert), true);
+      await page.click('#mobile-dock [data-route="mercados"]');
+      await page.waitForSelector('#market-search');
+      assert.equal(
+        await page.$eval('#mobile-dock [data-route="mercados"]', x =>
+          x.getAttribute('aria-current')
+        ),
+        'page'
+      );
+      await page.click('#more-menu');
+      assert.equal(await page.$eval('.shell', x => x.inert), true);
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'close-menu');
+      await page.focus('#navigation .profile');
+      await page.keyboard.press('Tab');
+      assert.equal(
+        await page.evaluate(() => document.activeElement.classList.contains('wordmark')),
+        true
+      );
+      await page.keyboard.down('Shift');
+      await page.keyboard.press('Tab');
+      await page.keyboard.up('Shift');
+      assert.equal(
+        await page.evaluate(() => document.activeElement.classList.contains('profile')),
+        true
+      );
+      await page.click('#close-menu');
+      assert.equal(await page.$eval('.shell', x => x.inert), false);
       await page.click('#menu');
       assert.equal(await page.$eval('#navigation', x => x.inert), false);
       await page.focus('[data-route="inicio"]');
